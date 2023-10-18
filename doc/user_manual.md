@@ -10,3 +10,7 @@ make
 ```
 
 Los binarios se generan en la carpeta `build/bin/`
+
+## Testing
+
+Los tests se compilan como binarios ejecutables al realizar el proceso de compilación. Los ejecutables resultantes se guardan en la carpeta `build/bin/`.	
