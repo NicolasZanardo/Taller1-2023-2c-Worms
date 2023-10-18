@@ -12,6 +12,20 @@ set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR}/bin)
 include(FetchContent)
 
 #===============================================================================
+# libSDL2pp
+set(SDL2PP_WITH_IMAGE ON) # if you need SDL_image support
+set(SDL2PP_WITH_MIXER ON) # if you need SDL_mixer support
+set(SDL2PP_WITH_TTF ON) # if you need SDL_ttf support
+
+FetchContent_Declare(
+    libSDL2pp
+    GIT_REPOSITORY https://github.com/libSDL2pp/libSDL2pp.git
+    GIT_TAG        0.16.2
+)
+
+FetchContent_MakeAvailable(libSDL2pp)
+
+#===============================================================================
 # GTest
 FetchContent_Declare(
     googletest
