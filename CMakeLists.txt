@@ -4,12 +4,24 @@ project(tp_worms)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Werror -pedantic -pedantic-errors")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -pedantic")
 
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR}/bin)
 
 #===============================================================================
 include(FetchContent)
+
+#===============================================================================
+# Box2D
+set(BOX2D_BUILD_TESTBED OFF)
+
+FetchContent_Declare(
+    Box2D
+    GIT_REPOSITORY https://github.com/erincatto/box2d.git
+    GIT_TAG        main
+)
+
+FetchContent_MakeAvailable(Box2D)
 
 #===============================================================================
 # libSDL2pp
