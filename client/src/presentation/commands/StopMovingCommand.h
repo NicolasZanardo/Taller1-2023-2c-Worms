@@ -1,16 +1,13 @@
-//
-// Created by Juan Martin Duzac on 24/10/2023.
-//
+#ifndef STOPMOVINGCOMMAND_H
+#define STOPMOVINGCOMMAND_H
 
-#ifndef WORMS_STOPMOVINGCOMMAND_H
-#define WORMS_STOPMOVINGCOMMAND_H
+#include "Command.h"
 
-
-
-class StopMovingCommand {
-
+class StopMovingCommand : public Command
+{
+public:
+    StopMovingCommand();
+    void execute(Worm& worm);
 };
 
-
-
-#endif //WORMS_STOPMOVINGCOMMAND_H
+#endif

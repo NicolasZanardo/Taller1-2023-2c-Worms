@@ -1,6 +1,11 @@
 #ifndef __CLIENT_H__
 #define __CLIENT_H__
 
+#include <SDL2pp/SDL2pp.hh>
+#include <unistd.h>
+#include "presentation/EventHandler.h"
+#include "model/Worm.h"
+
 class Client {
 public:
     Client() = delete;
@@ -14,6 +19,10 @@ public:
     Client& operator=(Client&& other) = delete;
 
     void execute();
+
+private:
+    EventHandler eventHandler;
+    bool handleEvents(Worm &worm);
 };
 
 #endif  // __CLIENT_H__

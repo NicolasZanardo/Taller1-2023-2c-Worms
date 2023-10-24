@@ -1,10 +1,12 @@
-#ifndef WORMS_JUMP_H
-#define WORMS_JUMP_H
+#ifndef JUMP_H
+#define JUMP_H
 
-class Jump : public Command
-{
+#include "Command.h"
+
+class JumpCommand : public Command {
 public:
-    virtual void execute() { jump(); }
+    JumpCommand();
+    void execute(Worm& worm);
 };
 
-#endif //WORMS_JUMP_H
+#endif

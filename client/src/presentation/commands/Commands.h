@@ -1,8 +1,8 @@
-//
-// Created by Juan Martin Duzac on 24/10/2023.
-//
+#ifndef COMMANDS_H
+#define COMMANDS_H
 
-#ifndef WORMS_COMMANDS_H
-#define WORMS_COMMANDS_H
+#include "JumpCommand.h"
+#include "MoveCommand.h"
+#include "StopMovingCommand.h"
 
-#endif //WORMS_COMMANDS_H
+#endif

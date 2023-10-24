@@ -1,5 +1,4 @@
-//
-// Created by Juan Martin Duzac on 24/10/2023.
-//
-
 #include "StopMovingCommand.h"
+
+StopMovingCommand::StopMovingCommand(): Command() {}
+void StopMovingCommand::execute(Worm& worm) {}

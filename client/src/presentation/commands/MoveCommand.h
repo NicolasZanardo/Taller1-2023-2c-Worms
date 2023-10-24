@@ -1,10 +1,20 @@
 #ifndef MOVERIGHT_H
 #define MOVERIGHT_H
 
-class MoveRight : public Command
+#include "Command.h"
+
+enum class MovingDirection {
+    RIGHT, LEFT
+};
+
+class MoveCommand : public Command
 {
 public:
-    virtual void execute() { move(); }
+    MoveCommand(MovingDirection dir);
+    void execute(Worm& worm);
+
+private:
+    MovingDirection movingDirection;
 };
 
 
