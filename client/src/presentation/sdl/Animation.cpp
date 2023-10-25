@@ -4,16 +4,13 @@
  */
 #include <SDL2pp/SDL2pp.hh>
 
-#include <algorithm>
 #include <cassert>
-#include <iostream>
-#include <string>
 
 #include "Animation.h"
 
 Animation::Animation(SDL2pp::Texture &texture) : texture(texture), currentFrame(0),
-                                                  numFrames(this->texture.GetWidth() / this->texture.GetHeight()),
-                                                  size(this->texture.GetHeight()), elapsed(0.0f) {
+                                                  numFrames(this->texture.GetHeight() / this->texture.GetWidth()),
+                                                  size(this->texture.GetWidth()), elapsed(0.0f) {
     assert(this->numFrames > 0);
     assert(this->size > 0);
 }

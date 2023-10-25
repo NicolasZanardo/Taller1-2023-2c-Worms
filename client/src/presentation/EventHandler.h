@@ -1,8 +1,8 @@
-#ifndef INPUTHANDLER_H
-#define INPUTHANDLER_H
+#ifndef EVENTHANDLER_H
+#define EVENTHANDLER_H
 
 #include <SDL2pp/SDL2pp.hh>
-#include <string> // TODO DELETE
+#include <unordered_map>
 
 #include "../../../common_base/queue.h"
 #include "commands/Commands.h"

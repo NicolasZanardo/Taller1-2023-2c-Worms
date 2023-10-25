@@ -1,12 +1,14 @@
 #include "EventHandler.h"
 
-EventHandler::EventHandler() {}
+EventHandler::EventHandler() {
+    _bindKeycodes();
+}
 
 EventHandler::~EventHandler() {
 
 }
 
-Command* EventHandler::handleEvent(const SDL_Event &e) {
+Command *EventHandler::handleEvent(const SDL_Event &e) {
     GameEvent event = _getEvent(e);
 
     switch (event) {
@@ -20,29 +22,49 @@ Command* EventHandler::handleEvent(const SDL_Event &e) {
             return new MoveCommand(MovingDirection::RIGHT);
         }
         case MOVING_LEFT_EV: {
-            return new MoveCommand(MovingDirection::RIGHT);
+            return new MoveCommand(MovingDirection::LEFT);
         }
         case STOP_MOVING_EV: {
-            return new MoveCommand(MovingDirection::RIGHT); // TODO STOP MOVING
+            return new StopMovingCommand();
+        }
+        case EXIT_EV: {
+            return NULL; // TODO?
         }
     }
+    return NULL;
+}
+
+Key EventHandler::_getKey(const SDL_Keycode &key) {
+    if (keys.count(key)) {
+        return keys.at(key);
+    }
+
+    return UNMAPPED_KEY;
 }
 
 GameEvent EventHandler::_getEvent(const SDL_Event &e) {
     switch (e.type) {
         case SDL_QUIT: {
+            std::cout << "Quit" << std::endl;
             return EXIT_EV;
         }
 
         case SDL_KEYDOWN: {
+            std::cout << "Key down" << std::endl;
             return _getKeyDownEv(e);
         }
 
         case SDL_KEYUP: {
+            std::cout << "Key up" << std::endl;
             return _getKeyUpEv(e);
         }
 
+        case SDL_MOUSEMOTION: {
+            std::cout << "Oh! Mouse" << std::endl;
+            return INVALID_EV;
+        }
         default: {
+            std::cout << "Default" << std::endl;
             return INVALID_EV;
         }
     }
@@ -74,7 +96,7 @@ GameEvent EventHandler::_getKeyDownEv(const SDL_Event &e) {
     }
 }
 
-GameEvent EventHandler::_getKeyUpEv(const SDL_Event& e) {
+GameEvent EventHandler::_getKeyUpEv(const SDL_Event &e) {
     Key key = _getKey(e.key.keysym.sym);
 
     switch (key) {
@@ -93,8 +115,8 @@ GameEvent EventHandler::_getKeyUpEv(const SDL_Event& e) {
     return INVALID_EV;
 }
 
-    void EventHandler::_bindKeycodes() {
-        keys.emplace(SDLK_w, UP_KEY);
-        keys.emplace(SDLK_a, LEFT_KEY);
-        keys.emplace(SDLK_d, RIGHT_KEY);
-    }
+void EventHandler::_bindKeycodes() {
+    keys.emplace(SDLK_w, UP_KEY);
+    keys.emplace(SDLK_a, LEFT_KEY);
+    keys.emplace(SDLK_d, RIGHT_KEY);
+}

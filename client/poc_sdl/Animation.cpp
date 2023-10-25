@@ -4,11 +4,7 @@
  */
 #include <SDL2pp/SDL2pp.hh>
 
-#include <algorithm>
 #include <cassert>
-#include <iostream>
-#include <string>
-
 #include "Animation.h"
 
 Animation::Animation(SDL2pp::Texture &texture) : texture(texture), currentFrame(0),

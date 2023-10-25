@@ -22,7 +22,7 @@ int main(int argc, char** argv){
 
         // Usar factory
         SDL2pp::Texture im(renderer, 
-            SDL2pp::Surface("resources/soldier2.png").SetColorKey(true, 0));
+            SDL2pp::Surface("assets/soldier2.png").SetColorKey(true, 0));
 
         Player player(im);
         bool running = true;

@@ -1,6 +1,5 @@
 #===============================================================================
 add_subdirectory(poc_sdl)
-
 #===============================================================================
 include_directories(PUBLIC ${SDL2PP_INCLUDE_DIRS})
 file(COPY resources/sprites DESTINATION ${CMAKE_BINARY_DIR}/bin)
