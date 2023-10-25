@@ -1,5 +1,5 @@
 #===============================================================================
-cmake_minimum_required(VERSION 3.16.3)
+cmake_minimum_required(VERSION 3.22.0)
 project(tp_worms)
 
 set(CMAKE_CXX_STANDARD 17)
@@ -13,7 +13,7 @@ include(FetchContent)
 
 #===============================================================================
 # Box2D
-#[[set(BOX2D_BUILD_TESTBED OFF)
+set(BOX2D_BUILD_TESTBED OFF)
 
 FetchContent_Declare(
     Box2D
@@ -21,7 +21,7 @@ FetchContent_Declare(
     GIT_TAG        main
 )
 
-FetchContent_MakeAvailable(Box2D)]]
+FetchContent_MakeAvailable(Box2D)
 
 #===============================================================================
 # libSDL2pp
