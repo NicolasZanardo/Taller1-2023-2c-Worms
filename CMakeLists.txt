@@ -48,8 +48,8 @@ set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
 
 #===============================================================================
-add_subdirectory(client)
 add_subdirectory(common_base)
+add_subdirectory(client)
 add_subdirectory(server)
 
 add_subdirectory(test)
