@@ -20,8 +20,6 @@ target_include_directories(client_app PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/")
 target_include_directories(client PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/src/model")
 target_include_directories(client PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/src/presentation")
 
-target_link_libraries(client_app
-        PRIVATE common
-        PUBLIC ${SDL2PP_LIBRARIES}
-        PUBLIC client
-)
+target_link_libraries(client_app PRIVATE common)
+target_link_libraries(client_app PUBLIC client)
+target_link_libraries(client_app PUBLIC ${SDL2PP_LIBRARIES})

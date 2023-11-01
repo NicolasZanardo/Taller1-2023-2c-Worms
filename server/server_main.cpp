@@ -9,6 +9,9 @@
 int main(int argc, char* argv[]) {
     try {
         if (argc != (SERVER_CMND_LINE_ARGS + 1)) {
+            std::cerr << "Bad program call. Expected "
+                << argv[0]
+                << " <puerto/servicename>\n";
             return 1;
         }
 
