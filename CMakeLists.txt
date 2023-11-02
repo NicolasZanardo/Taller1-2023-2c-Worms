@@ -13,6 +13,7 @@ include(FetchContent)
 
 #===============================================================================
 # Box2D
+set(BOX2D_BUILD_UNIT_TESTS OFF)
 set(BOX2D_BUILD_TESTBED OFF)
 
 FetchContent_Declare(

@@ -22,15 +22,15 @@ class Thread : public Runnable {
     protected:
         // Subclasses that inherit from Thread will have access to these
         // flags, mostly to control how Thread::run() will behave
-        std::atomic<bool> _keep_running;
-        std::atomic<bool> _is_alive;
+        std::atomic<bool> keep_running_;
+        std::atomic<bool> is_alive_;
 
     public:
-        Thread() : _keep_running(true), _is_alive(false) {}
+        Thread() : keep_running_(true), is_alive_(false) {}
 
         void start() override {
-            _is_alive = true;
-            _keep_running = true;
+            is_alive_ = true;
+            keep_running_ = true;
             thread = std::thread(&Thread::main, this);
         }
 
@@ -47,18 +47,18 @@ class Thread : public Runnable {
                 std::cerr << "Unexpected exception: <unknown>\n";
             }
 
-            _is_alive = false;
+            is_alive_ = false;
         }
 
         // Note: it is up to the subclass to make something meaningful to
         // really stop the thread. The Thread::run() may be blocked and/or
         // it may not read _keep_running.
         void stop() override {
-            _keep_running = false;
+            keep_running_ = false;
         }
 
         bool is_alive() const override {
-            return _is_alive;
+            return is_alive_;
         }
 
         virtual void run() = 0;

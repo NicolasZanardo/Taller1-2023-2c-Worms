@@ -2,11 +2,15 @@
 include_directories(${SDL2PP_INCLUDE_DIRS})
 
 add_executable (sdlpp-events
-  example_sdl_events.cpp
+  client_main.cpp
+  client.cpp client.h
+  client_receiver.cpp client_receiver.h
+  client_sender.cpp client_sender.h
+  event_handler.cpp event_handler.h
   Player.cpp
   Animation.cpp
 )
 
-target_link_libraries(sdlpp-events ${SDL2PP_LIBRARIES})
+target_link_libraries(sdlpp-events common ${SDL2PP_LIBRARIES})
 
 file(COPY assets DESTINATION ${CMAKE_BINARY_DIR}/bin)
