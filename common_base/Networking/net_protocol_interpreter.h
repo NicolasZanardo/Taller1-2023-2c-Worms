@@ -1,7 +1,6 @@
 #ifndef COMMON_NET_PROTOCOL_INTERPRETER_H_
 #define COMMON_NET_PROTOCOL_INTERPRETER_H_
 
-#include <vector>
 #include <string>
 #include <cstdint>
 #include "../socket.h"
