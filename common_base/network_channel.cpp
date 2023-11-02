@@ -1,5 +1,5 @@
 #include "network_channel.h"
-#include "connection_lost_exception.h"
+#include "Networking/connection_lost_exception.h"
 #include <arpa/inet.h>
 #include <iostream>
 #include <iomanip>

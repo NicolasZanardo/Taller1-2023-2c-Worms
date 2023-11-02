@@ -1,5 +1,11 @@
 add_library(common
-    connection_lost_exception.cpp connection_lost_exception.h
+    Networking/connection_lost_exception.cpp 
+    Networking/connection_lost_exception.h 
+    Networking/net_buffer.cpp 
+    Networking/net_buffer.h 
+    Networking/net_protocol_interpreter.cpp 
+    Networking/net_protocol_interpreter.h
+
     liberror.cpp liberror.h
     network_channel.cpp network_channel.h
     protocol_consts.h
@@ -8,6 +14,16 @@ add_library(common
     resolvererror.cpp resolvererror.h
     socket.cpp socket.h
     thread.h
+    
+    Networking/Messages/net_message.cpp
+    Networking/Messages/net_message.h
+    Networking/Messages/net_message_factory.h
+    Networking/Messages/net_message_test.h
+
+    Networking/net_channel.cpp 
+    Networking/net_channel.h 
+
+    networking.h 
 )
 
 target_include_directories(common PUBLIC
