@@ -1,6 +1,6 @@
 add_library(common
-    Networking/connection_lost_exception.cpp 
-    Networking/connection_lost_exception.h 
+    Networking/socket_connection_lost_error.cpp 
+    Networking/socket_connection_lost_error.h 
     Networking/net_buffer.cpp 
     Networking/net_buffer.h 
     Networking/net_protocol_interpreter.cpp 
