@@ -1,5 +1,5 @@
 #include "network_channel.h"
-#include "Networking/connection_lost_exception.h"
+#include "Networking/socket_connection_lost_error.h"
 #include <arpa/inet.h>
 #include <iostream>
 #include <iomanip>
@@ -116,23 +116,23 @@ void NetworkChannel::clear() {
 uint8_t NetworkChannel::read_byte() {
     if (this->read(1))
         return this->get_byte();
-    throw SocketConnectionLost();
+    throw SocketConnectionLost(&skt);
 }
 uint16_t NetworkChannel::read_short() {
     if (this->read(2))
         return this->get_short();
-    throw SocketConnectionLost();
+    throw SocketConnectionLost(&skt);
 }
 uint32_t NetworkChannel::read_uint() {
     if (this->read(4))
         return this->get_uint();
-    throw SocketConnectionLost();
+    throw SocketConnectionLost(&skt);
 }
 // Formato de comunicacion <Long de string> <String sin '\0'>
 std::string NetworkChannel::read_string() {
     uint16_t size = this->read_short();
     if (this->read(size))
         return this->get_string(size);
-    throw SocketConnectionLost();
+    throw SocketConnectionLost(&skt);
 }
 

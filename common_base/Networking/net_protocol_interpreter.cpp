@@ -1,5 +1,5 @@
 #include "net_protocol_interpreter.h"
-#include "connection_lost_exception.h"
+#include "socket_connection_lost_error.h"
 #include <arpa/inet.h>
 #include <vector>
 using namespace std;
@@ -22,7 +22,7 @@ uint8_t NetProtocolInterpreter::read_byte() {
     if (read_from_channel(buffer, BYTE_SIZE)) {
         return buffer[0];
     }
-    throw SocketConnectionLost();
+    throw SocketConnectionLost(&channel);
 }
 
 uint16_t NetProtocolInterpreter::read_short() {
@@ -30,7 +30,7 @@ uint16_t NetProtocolInterpreter::read_short() {
     if (read_from_channel(buffer, SHORT_SIZE)) {
         return ntohs(*reinterpret_cast<uint16_t*>(buffer));
     }
-    throw SocketConnectionLost();
+    throw SocketConnectionLost(&channel);
 }
 
 uint32_t NetProtocolInterpreter::read_uint() {
@@ -38,7 +38,7 @@ uint32_t NetProtocolInterpreter::read_uint() {
     if (read_from_channel(buffer, UINT_SIZE)) {
         return ntohl(*reinterpret_cast<uint32_t*>(buffer));
     }
-    throw SocketConnectionLost();
+    throw SocketConnectionLost(&channel);
 }
 
 string NetProtocolInterpreter::read_string() {
@@ -49,5 +49,5 @@ string NetProtocolInterpreter::read_string() {
     if (read_from_channel(&buffer[0], size)) {
         return string(buffer.begin(),buffer.end());
     }
-    throw SocketConnectionLost();
+    throw SocketConnectionLost(&channel);
 }

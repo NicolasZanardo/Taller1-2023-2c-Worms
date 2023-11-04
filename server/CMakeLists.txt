@@ -1,10 +1,14 @@
 add_library( server
-    src/dumb_client.cpp
+
+    src/client/client.h
+    src/client/client.cpp
+
     src/dumb_client.h
-    src/lobby/host.cpp
+    src/dumb_client.cpp
     src/lobby/host.h
-    src/lobby/waiting_lobby.cpp
+    src/lobby/host.cpp
     src/lobby/waiting_lobby.h
+    src/lobby/waiting_lobby.cpp
 
     src/main/server.h
     src/main/server.cpp
