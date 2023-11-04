@@ -6,6 +6,7 @@ class Server {
 public:
     explicit Server(const char* servname);
     void execute();
+    void test_isHost(bool isHost);
 
 private:
     Server() = delete;

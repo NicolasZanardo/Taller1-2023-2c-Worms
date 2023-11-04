@@ -1,4 +1,5 @@
 #include "server.h"
+#include "../dumb_client.h"
 #include "../lobby/waiting_lobby.h"
 
 #include <iostream>
@@ -11,7 +12,6 @@ void Server::execute() {
 	WaitingLobby lobby(servname);
 	lobby.start();
 	
-	//cin.ignore();
 	string action;
 	do {
 		action = cin.get();
@@ -19,4 +19,14 @@ void Server::execute() {
 	
 	lobby.stop();
 	lobby.join();
+}
+
+void Server::test_isHost(bool isHost) {
+	if (isHost) {
+		execute();
+		return;
+	}
+
+	DumbClient cli("localhost", servname);
+	cli.forward();
 }

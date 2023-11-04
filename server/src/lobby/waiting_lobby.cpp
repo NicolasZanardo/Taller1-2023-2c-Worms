@@ -9,8 +9,9 @@ WaitingLobby::WaitingLobby(const char* servname) :
 void WaitingLobby::run() {
     while (keep_running_) {
         try {
-            std::cout << "Listening for clients.\n";
             NetChannel* channel = new NetChannel(host.accept());
+            clients.push_back(channel);
+            
         } catch (const std::exception& ex) {
             keep_running_ = false;
         }
@@ -25,4 +26,8 @@ void WaitingLobby::stop() {
         host.close();
     } 
     catch (const std::exception& e) {}
+
+    for (auto it : clients) {
+        delete(it);
+    }
 }
