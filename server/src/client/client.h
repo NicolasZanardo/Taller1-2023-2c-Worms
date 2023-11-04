@@ -9,7 +9,8 @@ class Client {
     public:
     const int id;
     Client(const int id, Socket skt);
-    ~Client();
     const bool is_alive() const;
+    
+    ~Client();
 };
 #endif 
