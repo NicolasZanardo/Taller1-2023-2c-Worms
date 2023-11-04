@@ -1,8 +1,8 @@
-#include "server.h"
+#include "simulation.h"
 #include <unistd.h>
 #include <box2d/box2d.h>
-#include <iostream>
 #include <iomanip>
+#include <iostream>
 using namespace std;
 
 void display(b2Body* bodyA, const char* name) {
@@ -10,14 +10,9 @@ void display(b2Body* bodyA, const char* name) {
 }
 
 
-Server::Server(const char* service_name) {}
-
-
-void Server::execute() {
-	cout << "    Begin simulation. \n\n\n\n";
+void Simulation::begin() {
+    cout << "    Begin simulation. \n\n\n\n";
 	cout << fixed << setprecision(2);
-
-
 	
 	// Define the gravity vector.
 	b2Vec2 gravity(0.0f, -10.0f);

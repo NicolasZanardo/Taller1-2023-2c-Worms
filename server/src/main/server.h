@@ -2,18 +2,17 @@
 #define __SERVER_H__
 
 class Server {
+    const char* servname;
 public:
-    Server() = delete;
-    explicit Server(const char* service_name);
-    ~Server() = default;
+    explicit Server(const char* servname);
+    void execute();
 
+private:
+    Server() = delete;
     Server(const Server& other) = delete;
     Server& operator=(const Server& other) = delete;
-
     Server(Server&& other) = delete;
     Server& operator=(Server&& other) = delete;
-
-    void execute();
 };
 
 #endif  // __SERVER_H__

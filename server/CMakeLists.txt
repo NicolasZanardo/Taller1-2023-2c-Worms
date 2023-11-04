@@ -1,11 +1,13 @@
 add_library( server
-    src/dumb_client.cpp 
-    src/dumb_client.h 
-    src/host.cpp 
-    src/host.h
+    src/dumb_client.cpp
+    src/dumb_client.h
+    src/lobby/host.cpp
+    src/lobby/host.h
+    src/lobby/waiting_lobby.cpp
+    src/lobby/waiting_lobby.h
 
-    server.h
-    server.cpp
+    src/main/server.h
+    src/main/server.cpp
 )
 
 add_executable(
