@@ -9,6 +9,7 @@
 class NetBuffer {
     uint32_t index;
     std::vector<char> data;
+    void extend_by(int extension);
 
     public:
     NetBuffer();
