@@ -7,6 +7,7 @@
 #include "../net_protocol_interpreter.h"
 
 #define NET_MESSAGE_TYPE_TEST 0
+#define NET_MESSAGE_TYPE_CHAT 1
 
 class NetMessage {
     protected:

@@ -23,7 +23,7 @@ class NetMessage_test : public NetMessage {
     public:
     uint16_t test_short;
     uint32_t test_uint;
-    string test_string;
+    std::string test_string;
     
     NetMessage_test() :
         NetMessage(NET_MESSAGE_TYPE_TEST),

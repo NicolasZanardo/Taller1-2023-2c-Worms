@@ -1,6 +1,7 @@
 #include "waiting_lobby.h"
 #include <exception>
 #include <iostream>
+using namespace std;
 
 WaitingLobby::WaitingLobby(const char* servname) :
     Thread(), 

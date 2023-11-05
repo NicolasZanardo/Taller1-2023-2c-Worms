@@ -4,11 +4,10 @@
 #include <vector>
 #include <string>
 #include "../socket.h"
-using namespace std;
 
 class NetBuffer {
     uint32_t index;
-    vector<char> data;
+    std::vector<char> data;
 
     public:
     NetBuffer();
@@ -16,7 +15,7 @@ class NetBuffer {
     void push_byte(const uint8_t  value);
     void push_short(const uint16_t value);
     void push_uint(const uint32_t value);
-    void push_string(const string  &value);
+    void push_string(const std::string  &value);
 
     bool send_by(Socket& channel);
 

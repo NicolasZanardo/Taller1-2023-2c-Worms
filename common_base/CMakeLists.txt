@@ -17,8 +17,11 @@ add_library(common
     
     Networking/Messages/net_message.cpp
     Networking/Messages/net_message.h
+    Networking/Messages/net_message_factory.cpp
     Networking/Messages/net_message_factory.h
     Networking/Messages/net_message_test.h
+    Networking/Messages/net_message_chat.cpp
+    Networking/Messages/net_message_chat.h
 
     Networking/net_channel.cpp 
     Networking/net_channel.h 

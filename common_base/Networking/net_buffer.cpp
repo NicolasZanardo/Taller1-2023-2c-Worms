@@ -1,5 +1,6 @@
 #include "net_buffer.h"
 #include <arpa/inet.h>
+using namespace std;
 
 NetBuffer::NetBuffer() :
     index(0),
