@@ -1,5 +1,7 @@
 add_library( server
 
+    src/client/client_reciever.h
+    src/client/client_reciever.cpp
     src/client/client.h
     src/client/client.cpp
 

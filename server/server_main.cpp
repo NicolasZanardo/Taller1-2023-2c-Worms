@@ -13,8 +13,7 @@ int main(int argc, char* argv[]) {
         if (argc == 3) {
             std::string action(argv[2]);
             isHost = "--testhost" == action;
-
-            testRun = "--testclient" || isHost;
+            testRun = "--testclient" == action || isHost;
             
             if (!testRun) {
                 std::cerr << "Bad program call. Expected "

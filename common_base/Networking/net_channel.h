@@ -15,7 +15,7 @@ class NetChannel {
     NetMessage* read_message();
 
     const bool is_open() const;
-
+    void dissconect();
 
     friend class SocketConnectionLost;
 };

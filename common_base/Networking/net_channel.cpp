@@ -2,6 +2,7 @@
 #include "net_buffer.h"
 #include "net_protocol_interpreter.h"
 #include "Messages/net_message_factory.h"
+#include "socket_connection_lost_error.h"
 
 NetChannel::NetChannel(Socket skt) :
     socket(std::move(skt)),
@@ -14,11 +15,10 @@ bool NetChannel::send_message(NetMessage& msg) {
 
     try {
         socket_open = buffer.send_by(socket);
-        return socket_open;
     } catch (...) {
         socket_open = false;
-        throw;
     }
+    return socket_open;
 }
 
 NetMessage* NetChannel::read_message() {
@@ -26,10 +26,15 @@ NetMessage* NetChannel::read_message() {
         return NetMessageFactory::recieve(socket);
     } catch (...) {
         socket_open = false;
-        throw;
+        throw SocketConnectionLost(&socket);
     }
 }
 
 const bool NetChannel::is_open() const {
     return socket_open;
+}
+
+void NetChannel::dissconect() {
+    socket.shutdown(2);
+    socket.close();
 }
