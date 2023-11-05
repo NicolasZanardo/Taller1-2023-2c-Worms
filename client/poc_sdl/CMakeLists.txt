@@ -7,6 +7,7 @@ add_executable (sdlpp-events
   client_receiver.cpp client_receiver.h
   client_sender.cpp client_sender.h
   event_handler.cpp event_handler.h
+  frame_selector.cpp frame_selector.h
   Player.cpp
   Animation.cpp
 )

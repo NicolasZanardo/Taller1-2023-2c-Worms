@@ -1,6 +1,7 @@
 #ifndef COMMON_NET_BUFFER_H_
 #define COMMON_NET_BUFFER_H_
 
+#include <cstdint>
 #include <vector>
 #include <string>
 #include "../socket.h"
