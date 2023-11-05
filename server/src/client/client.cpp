@@ -6,19 +6,25 @@ Client::Client(const int id, Socket skt) :
     send_queue(60),
     game_queue(nullptr),
     msg_reciever(id),
+    msg_sender(id),
     id(id)
     {
-        msg_reciever.set_channel(&this->channel);
+        msg_reciever.set_channel(&channel);
+        msg_sender.set_channel(&channel, &send_queue);
+
         msg_reciever.start();
+        msg_sender.start();
     }
 
 const bool Client::is_alive() const {
-    return channel.is_open() && msg_reciever.is_alive();
+    return channel.is_open() && msg_reciever.is_alive() && msg_sender.is_alive();
 }
 
 Client::~Client() {
-    send_queue.close();
+    msg_sender.stop();
     msg_reciever.stop();
+
+    send_queue.close();
     channel.dissconect();
     std::cout << "Dissconecting client " << id << "\n";
 }

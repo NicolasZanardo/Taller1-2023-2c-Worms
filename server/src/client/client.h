@@ -4,12 +4,14 @@
 #include "../../../common_base/networking.h"
 #include "../../../common_base/queue.h"
 #include "client_reciever.h"
+#include "client_sender.h"
 
 class Client {
     NetChannel channel;
     Queue<NetMessage*>  send_queue;
     Queue<NetMessage*>* game_queue;
     Reciever msg_reciever;
+    Sender msg_sender;
 
     public:
     const int id;
