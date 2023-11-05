@@ -42,7 +42,7 @@ void Server::execute() {
 		} else if (values[0] == "stop") {
 			break;
 		} else {
-			cout << "wrong action: " << action << "\n  item:" << values[0] << "\n";
+			cout << "wrong action: " << values[0] << " Full action: " << action << "\n";
 		}
 
 		getline(cin, action);
