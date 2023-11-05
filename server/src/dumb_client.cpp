@@ -33,6 +33,9 @@ void DumbInterpreter::run(NetMessageLeave* msg) {
     cout << "Bye\n";
 }
 
+void DumbInterpreter::run(NetMessageInformID* msg) {
+    cout << "I AM CLIENT "<< msg->client_id << "\n";
+}
 
 void DumbInterpreter::run(NetMessage_test* msg) {
     cout << "short: " << msg->test_short << " uint: " << msg->test_uint << " string: " << msg->test_string << "\n";

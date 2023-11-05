@@ -3,6 +3,7 @@
 #include "net_message_test.h"
 #include "net_message_chat.h"
 #include "net_message_leave.h"
+#include "net_message_inform_id.h"
 
 NetMessage* NetMessageFactory::recieve(Socket& channel) {
     NetProtocolInterpreter interpreter(channel);
@@ -18,6 +19,9 @@ NetMessage* NetMessageFactory::recieve(Socket& channel) {
             break;
         case NET_MESSAGE_TYPE_LEAVE:
             inst = new NetMessageLeave();
+            break;
+        case NET_MESSAGE_TYPE_INFORM_ID:
+            inst = new NetMessageInformID();
             break;
         default:
             break;

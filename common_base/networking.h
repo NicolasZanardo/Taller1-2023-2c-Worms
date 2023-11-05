@@ -13,6 +13,8 @@
 #include "Networking/Messages/net_message_test.h" 
 #include "Networking/Messages/net_message_chat.h" 
 #include "Networking/Messages/net_message_leave.h"
+#include "Networking/Messages/net_message_inform_id.h"
+
 #include "Networking/Messages/net_message_factory.h" 
 #include "Networking/Messages/net_message_behaviour.h"
 

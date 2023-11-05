@@ -4,11 +4,13 @@
 class NetMessageChat;
 class NetMessageLeave;
 class NetMessage_test;
+class NetMessageInformID;
 
 class NetMessageBehaviour {
     public:
     virtual void run(NetMessageChat* msg) = 0;
     virtual void run(NetMessageLeave* msg) = 0;
     virtual void run(NetMessage_test* msg) = 0;
+    virtual void run(NetMessageInformID* msg) = 0;
 };
 #endif

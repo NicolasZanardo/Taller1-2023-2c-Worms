@@ -24,6 +24,9 @@ add_library(common
     Networking/Messages/net_message_chat.h
     Networking/Messages/net_message_leave.cpp
     Networking/Messages/net_message_leave.h
+    Networking/Messages/net_message_inform_id.cpp
+    Networking/Messages/net_message_inform_id.h
+    
     Networking/Messages/net_message_behaviour.h
 
     Networking/net_channel.cpp 
