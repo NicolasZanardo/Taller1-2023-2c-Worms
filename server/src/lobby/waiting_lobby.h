@@ -19,5 +19,7 @@ class WaitingLobby : public Thread {
     void run() override;
     void stop() override;
     void kick(const int client_id);
+    void chat(const int client_id, const string& msg);
 };
 #endif
+

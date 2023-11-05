@@ -30,6 +30,10 @@ Client::~Client() {
 }
 
 void Client::switch_lobby(Queue<NetMessage*>* new_game_queue) {
-    this->game_queue = new_game_queue;
-    this->msg_reciever.switch_lobby(new_game_queue);
+    game_queue = new_game_queue;
+    msg_reciever.switch_lobby(new_game_queue);
+}
+
+void Client::communicate(NetMessage* net_message) {
+    send_queue.push(net_message);
 }

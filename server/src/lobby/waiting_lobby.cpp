@@ -55,6 +55,19 @@ void WaitingLobby::kick(const int client_id) {
     delete(instance);
 }
 
+void WaitingLobby::chat(const int client_id, const string& msg) {
+    remove_zombies();
+    std::lock_guard lock(clients_mtx);
+    
+    for (auto it : clients) {
+        if (!it->is_alive())
+            continue;
+
+        it->communicate(new NetMessageChat(client_id, msg));
+    }
+
+}
+
 bool purged_zombie(Client* cli);
 void WaitingLobby::remove_zombies() {
     std::lock_guard lock(clients_mtx);

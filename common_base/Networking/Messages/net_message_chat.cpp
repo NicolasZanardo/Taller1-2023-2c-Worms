@@ -21,3 +21,7 @@ void NetMessageChat::pull_data_from(NetProtocolInterpreter& channel) {
     client_id = channel.read_uint();
     chat = channel.read_string();
 }
+
+void NetMessageChat::execute(NetMessageBehaviour& interpreter) {
+    interpreter.run(this);
+}

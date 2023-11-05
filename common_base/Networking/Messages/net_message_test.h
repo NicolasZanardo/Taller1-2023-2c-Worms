@@ -5,6 +5,7 @@
 #include "../../socket.h"
 #include "../net_buffer.h"
 #include "../net_protocol_interpreter.h"
+#include "net_message_behaviour.h"
 #include "net_message.h"
 
 class NetMessage_test : public NetMessage {
@@ -20,6 +21,11 @@ class NetMessage_test : public NetMessage {
         test_uint = channel.read_uint();
         test_string = channel.read_string();
     }
+
+    void execute(NetMessageBehaviour& interpreter) override {
+        interpreter.run(this);
+    }
+
     public:
     uint16_t test_short;
     uint32_t test_uint;

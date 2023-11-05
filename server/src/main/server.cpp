@@ -4,8 +4,6 @@
 
 #include <iostream>
 #include <sstream>
-#include <string>
-#include <vector>
 using namespace std;
 
 vector<string> split(string& action) {
@@ -23,12 +21,10 @@ vector<string> split(string& action) {
 	return res;
 }
 
-Server::Server(const char* servname) : servname(servname) {}
+Server::Server(const char* servname) : servname(servname),lobby(servname) {}
 
 void Server::execute() {
-	WaitingLobby lobby(servname);
 	lobby.start();
-	
 	
 	string action = "initialization";
 	do {
@@ -37,8 +33,9 @@ void Server::execute() {
 		if (values[0] == "initialization") {
 			// do nothing
 		} else if (values[0] == "kick") {
-			int client_id(stoi(values[1]));
-			lobby.kick(client_id);
+			kick(values);
+		} else if (values[0] == "chat") {
+			chat(values);
 		} else if (values[0] == "stop") {
 			break;
 		} else {
@@ -62,3 +59,17 @@ void Server::test_isHost(bool isHost) {
 	cli.forward();
 }
 
+void Server::kick(vector<string>& values) {
+	int client_id(stoi(values[1]));
+	lobby.kick(client_id);
+}
+
+void Server::chat(vector<string>& values) {
+	int client_id(stoi(values[1]));
+
+	string msg(values[2]);
+	for (int i = 3; i < values.size(); i++)
+		msg += " " + values[i];
+
+	lobby.chat(client_id, msg);
+}

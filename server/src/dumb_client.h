@@ -11,4 +11,10 @@ class DumbClient {
 
     void forward();
 };
+
+class DumbInterpreter : public NetMessageBehaviour {
+    public:
+    virtual void run(NetMessageChat* msg) override;
+    virtual void run(NetMessage_test* msg) override;
+};
 #endif 

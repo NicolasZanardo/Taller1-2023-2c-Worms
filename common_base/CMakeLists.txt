@@ -22,6 +22,7 @@ add_library(common
     Networking/Messages/net_message_test.h
     Networking/Messages/net_message_chat.cpp
     Networking/Messages/net_message_chat.h
+    Networking/Messages/net_message_behaviour.h
 
     Networking/net_channel.cpp 
     Networking/net_channel.h 

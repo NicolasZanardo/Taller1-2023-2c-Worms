@@ -5,12 +5,21 @@ Sender::Sender(const int client_id) :
     {}
 
 void Sender::run() {
+    
+
     while (keep_running_) {
         try {
-            NetMessage* msg = channel->read_message();
+            if (client_queue == nullptr) {
+                stop();
+                return;
+            }
+            
+            NetMessage* msg = client_queue->pop();
+            if (client_queue != nullptr && channel != nullptr) {
+                channel->send_message(*msg);
+            }
+            delete msg;
 
-            if (client_queue != nullptr)
-                client_queue->push(msg);
         } catch (const std::exception& ex) {
             keep_running_ = false;
         }

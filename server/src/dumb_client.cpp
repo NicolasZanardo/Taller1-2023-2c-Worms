@@ -7,9 +7,19 @@ DumbClient::DumbClient(const char* serv, const char* port) :
     {}
 
 void DumbClient::forward() {
-    NetMessage_test* msg = (NetMessage_test*)channel.read_message();
-    cout << "\n\n" << msg->test_short << "\n" << msg->test_uint << "\n" << msg->test_string << "\n";
-    channel.send_message(*msg);
+    DumbInterpreter interpreter;
+    NetMessage* msg = channel.read_message();
+    msg->execute(interpreter);
+
+    //channel.send_message(*msg);
     
     delete(msg);
+}
+
+void DumbInterpreter::run(NetMessageChat* msg) {
+    cout << "Client " << msg->client_id << " said: " << msg->chat << "\n";
+}
+
+void DumbInterpreter::run(NetMessage_test* msg) {
+    cout << "short: " << msg->test_short << " uint: " << msg->test_uint << " string: " << msg->test_string << "\n";
 }

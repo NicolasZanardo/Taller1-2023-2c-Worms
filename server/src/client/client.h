@@ -19,6 +19,7 @@ class Client {
 
     const bool is_alive() const;
     void switch_lobby(Queue<NetMessage*>* game_queue);
+    void communicate(NetMessage* net_message);
     
     ~Client();
 };
