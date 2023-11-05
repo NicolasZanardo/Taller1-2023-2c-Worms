@@ -1,12 +1,7 @@
 #ifndef COMMON_NET_MESSAGE_TEST_H_
 #define COMMON_NET_MESSAGE_TEST_H_
 
-#include <cstdint>
-#include "../../socket.h"
-#include "../net_buffer.h"
-#include "../net_protocol_interpreter.h"
-#include "net_message_behaviour.h"
-#include "net_message.h"
+#include "net_message_dependencies.h"
 
 class NetMessage_test : public NetMessage {
     void push_data_into(NetBuffer& container) override {

@@ -29,8 +29,10 @@ int main(int argc, char* argv[]) {
 
         Server server(argv[1]);
         if (testRun) {
+            std::cout << "Running test " << (isHost ? "host\n" : "client\n");
             server.test_isHost(isHost);
         } else {
+            std::cout << "Running app\n";
             server.execute();
         }
 

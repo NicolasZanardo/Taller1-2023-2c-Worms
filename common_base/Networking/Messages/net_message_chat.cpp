@@ -5,7 +5,7 @@ NetMessageChat::NetMessageChat()
     {}
 
 
-NetMessageChat::NetMessageChat(const int client_id, const std::string chat)
+NetMessageChat::NetMessageChat(int client_id, std::string chat)
     : NetMessage(NET_MESSAGE_TYPE_CHAT),
     client_id(client_id),
     chat(chat)

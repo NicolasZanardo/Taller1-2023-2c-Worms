@@ -1,6 +1,5 @@
 #include "server.h"
 #include "../dumb_client.h"
-#include "../lobby/waiting_lobby.h"
 
 #include <iostream>
 #include <sstream>
@@ -11,7 +10,7 @@ vector<string> split(string& action) {
 	vector<string> res;
 	string item;
 
-	while((pos_end = action.find(" ",pos_start)) != string::npos) {
+	while((pos_end = action.find(";",pos_start)) != string::npos) {
 		item = action.substr(pos_start, pos_end - pos_start);
 		pos_start = pos_end + 1;
 		res.push_back(item);
@@ -21,10 +20,19 @@ vector<string> split(string& action) {
 	return res;
 }
 
-Server::Server(const char* servname) : servname(servname),lobby(servname) {}
+Server::Server(const char* servname) : 
+	servname(servname),
+	lobby(nullptr) 
+	{}
+
+Server::~Server() {
+	if (lobby != nullptr)
+		delete(lobby);
+}
 
 void Server::execute() {
-	lobby.start();
+	lobby = new WaitingLobby(servname);
+	lobby->start();
 	
 	string action = "initialization";
 	do {
@@ -45,8 +53,8 @@ void Server::execute() {
 		getline(cin, action);
 	} while (action != "q");
 	
-	lobby.stop();
-	lobby.join();
+	lobby->stop();
+	lobby->join();
 }
 
 void Server::test_isHost(bool isHost) {
@@ -61,15 +69,17 @@ void Server::test_isHost(bool isHost) {
 
 void Server::kick(vector<string>& values) {
 	int client_id(stoi(values[1]));
-	lobby.kick(client_id);
+
+	lobby->kick(client_id);
 }
 
 void Server::chat(vector<string>& values) {
 	int client_id(stoi(values[1]));
 
 	string msg(values[2]);
-	for (int i = 3; i < values.size(); i++)
+	for (size_t i = 3; i < values.size(); i++) {
 		msg += " " + values[i];
+	}
 
-	lobby.chat(client_id, msg);
+	lobby->chat(client_id, msg);
 }

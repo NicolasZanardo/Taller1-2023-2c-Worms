@@ -3,12 +3,14 @@
 
 #include <string>
 #include <vector>
+#include "../lobby/waiting_lobby.h"
 
 class Server {
     const char* servname;
-	WaitingLobby lobby;
+	WaitingLobby* lobby;
 public:
     explicit Server(const char* servname);
+    ~Server();
     void execute();
     void test_isHost(bool isHost);
 

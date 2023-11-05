@@ -9,6 +9,7 @@
 
 #define NET_MESSAGE_TYPE_TEST 0
 #define NET_MESSAGE_TYPE_CHAT 1
+#define NET_MESSAGE_TYPE_LEAVE 2
 
 class NetMessage {
     public:

@@ -3,6 +3,7 @@
 
 #include <list>
 #include <mutex>
+#include <string>
 #include "../client/client.h"
 #include "../../../common_base/thread.h"
 #include "../../../common_base/networking.h"
@@ -19,7 +20,7 @@ class WaitingLobby : public Thread {
     void run() override;
     void stop() override;
     void kick(const int client_id);
-    void chat(const int client_id, const string& msg);
+    void chat(const int client_id, std::string& msg);
 };
 #endif
 

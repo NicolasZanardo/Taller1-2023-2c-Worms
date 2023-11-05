@@ -5,16 +5,22 @@
 
 class DumbClient {
     NetChannel channel;
+    bool keep;
 
     public:
-    explicit DumbClient(const char* serv, const char* port);
+    DumbClient(const char* serv, const char* port);
 
     void forward();
+    void stop();
 };
 
 class DumbInterpreter : public NetMessageBehaviour {
+    DumbClient& cli;
+
     public:
+    explicit DumbInterpreter(DumbClient& cli);
     virtual void run(NetMessageChat* msg) override;
+    virtual void run(NetMessageLeave* msg) override;
     virtual void run(NetMessage_test* msg) override;
 };
 #endif 
