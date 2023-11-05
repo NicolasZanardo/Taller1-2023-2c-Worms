@@ -19,6 +19,7 @@ void WaitingLobby::run() {
             clients.push_back(newClient);
 
             cout << "Joined client: " << newClient->id << ".\n";
+            newClient->communicate(new NetMessageInformID(newClient->id));
 
             remove_zombies();
         } catch (const std::exception& ex) {
