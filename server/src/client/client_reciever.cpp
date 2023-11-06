@@ -1,7 +1,9 @@
 #include "client_reciever.h"
 
-Reciever::Reciever(const int client_id) : 
-    Thread(), client_id(client_id)
+Reciever::Reciever(const int client_id, NetChannel* channel) : 
+    Thread(), 
+    client_id(client_id),
+    channel(channel)
     {}
 
 void Reciever::run() {
@@ -22,15 +24,10 @@ void Reciever::stop() {
     game_queue = nullptr;
 }
 
-void Reciever::switch_lobby(Queue<NetMessage*>* new_game_queue) {
-    this->game_queue = new_game_queue;
+void Reciever::switch_lobby(NetQueue* new_game_queue) {
+    game_queue = new_game_queue;
 }
-
-void Reciever::set_channel(NetChannel* new_channel) {
-    this->channel = new_channel;
-}
-
 
 Reciever::~Reciever() {
-    this->join();
+    join();
 }

@@ -17,6 +17,8 @@ add_library(common
     
     Networking/Messages/net_message.cpp
     Networking/Messages/net_message.h
+    Networking/Messages/net_queue.cpp
+    Networking/Messages/net_queue.h
     Networking/Messages/net_message_factory.cpp
     Networking/Messages/net_message_factory.h
     Networking/Messages/net_message_test.h

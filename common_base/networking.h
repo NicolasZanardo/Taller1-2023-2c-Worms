@@ -8,7 +8,7 @@
 #include "Networking/net_protocol_interpreter.h"
 #include "Networking/net_channel.h"
 
-
+#include "Networking/Messages/net_queue.h"
 #include "Networking/Messages/net_message.h"
 #include "Networking/Messages/net_message_test.h" 
 #include "Networking/Messages/net_message_chat.h" 
