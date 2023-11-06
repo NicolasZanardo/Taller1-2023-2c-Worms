@@ -8,6 +8,7 @@
 #include "client_receiver.h"
 #include "client_sender.h"
 #include "event_handler.h"
+#include "game_loop.h"
 
 #include "queue.h"
 
@@ -26,9 +27,6 @@ public:
     void execute();
 
 private:
-    void render(SDL2pp::Renderer &renderer, Player &player);
-    void update(Player &player, float dt);
-
     Queue<GameEvent> event_queue;
     Queue<GameEvent> state_queue;
     Queue<GameEvent> echo_queue;  // temp.

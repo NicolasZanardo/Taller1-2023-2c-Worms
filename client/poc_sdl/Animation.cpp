@@ -2,7 +2,8 @@
 
 Animation::Animation(Sprite& sprite)
     : elapsed(0.0f)
-    , frame_selector(sprite.getWidth() / sprite.getHeight(), 0)
+    // , frame_selector(sprite.getWidth() / sprite.getHeight(), 0)
+    , frame_selector(sprite.getHeight() / sprite.getWidth(), 0)
     , sprite(&sprite) {}
 
 void Animation::update(float dt) {
