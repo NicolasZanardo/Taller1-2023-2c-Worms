@@ -15,13 +15,15 @@
 
 class Animation {
 public:
-    Animation(Sprite& sprite);
+    Animation() = delete;
+    explicit Animation(Sprite& sprite, bool img_looking_left);
     ~Animation() = default;
 
     void update(float dt);
-    void render(const SDL2pp::Rect dest, SDL_RendererFlip &flipType);
+    void render(const SDL2pp::Rect dest, bool facing_right);
 
 private:
+    bool img_looking_left;  // Sprite image orientarion.
     float elapsed;  // Time elapsed since last update.
     FrameSelector frame_selector;
     Sprite* sprite;

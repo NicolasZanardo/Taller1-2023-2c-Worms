@@ -1,7 +1,7 @@
 #include "Player.h"
 
 Player::Player(Sprite& sprite)
-    : an(sprite)
+    : an(sprite, true)
     , facingLeft(false)
     , moving(false)
     , x(300), y(300) {}
@@ -17,8 +17,7 @@ void Player::update(float dt) {
 }
 
 void Player::render() {
-    SDL_RendererFlip flip = facingLeft ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE;
-    an.render(SDL2pp::Rect(x, y, 200, 200), flip);
+    an.render(SDL2pp::Rect(x, y, 200, 200), this->facingLeft);
 }
 
 void Player::moveRigth() {

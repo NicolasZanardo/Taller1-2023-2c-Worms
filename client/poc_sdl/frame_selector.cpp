@@ -30,13 +30,11 @@ uint16_t FrameSelector::getCurrentFrame() const {
 }
 
 void FrameSelector::advanceFrame_bounce() {
-    if (mode == FrameSelectorMode::BOUNCE) {
-        this->current_frame += delta;
-        if ((this->current_frame == 0)
-            ||
-            (this->current_frame == (this->num_frames - 1))) {
-            delta *= -1;
-        }
+    this->current_frame += delta;
+    if ((this->current_frame == 0)
+        ||
+        (this->current_frame == (this->num_frames - 1))) {
+        delta *= -1;
     }
 }
 

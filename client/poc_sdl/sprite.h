@@ -11,7 +11,7 @@ public:
     explicit Sprite(SDL2pp::Renderer& renderer_ref);
     ~Sprite() = default;
 
-    void render(uint16_t num_frame, const SDL2pp::Rect dst, SDL_RendererFlip &flipType);
+    void render(uint16_t num_frame, const SDL2pp::Rect dst, SDL_RendererFlip &flip_type);
     uint32_t getWidth() const { return this->texture.GetWidth(); }
     uint32_t getHeight() const { return this->texture.GetHeight(); }
 
