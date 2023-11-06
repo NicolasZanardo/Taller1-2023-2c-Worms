@@ -5,6 +5,7 @@
 #include <thread>
 
 #include "Player.h"
+#include "./sprite.h"
 
 Client::Client(const char* host_name, const char* service_name)
     : receiver(state_queue, echo_queue)
@@ -16,15 +17,16 @@ void Client::execute() {
 
     SDL2pp::SDL sdl(SDL_INIT_VIDEO);
 
-    SDL2pp::Window window("Hello world", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
-        800, 600, SDL_WINDOW_RESIZABLE);
+    SDL2pp::Window window("Worms",
+        SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
+        800, 600,
+        SDL_WINDOW_RESIZABLE);
 
     SDL2pp::Renderer renderer(window, -1, SDL_RENDERER_ACCELERATED);
 
-    SDL2pp::Texture im(renderer, 
-        SDL2pp::Surface("assets/soldier2.png").SetColorKey(true, 0));
+    Sprite sprite(renderer);
 
-    Player player(im);
+    Player player(sprite);
     bool running = true;
 
     this->receiver.start();
@@ -96,6 +98,6 @@ void Client::update(Player &player, float dt) {
 
 void Client::render(SDL2pp::Renderer &renderer, Player &player) {
     renderer.Clear();
-    player.render(renderer);
+    player.render();
     renderer.Present();
 }

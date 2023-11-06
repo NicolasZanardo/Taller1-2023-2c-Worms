@@ -10,6 +10,7 @@ add_executable (sdlpp-events
   frame_selector.cpp frame_selector.h
   Player.cpp
   Animation.cpp
+  sprite.cpp sprite.h
 )
 
 target_link_libraries(sdlpp-events common ${SDL2PP_LIBRARIES})

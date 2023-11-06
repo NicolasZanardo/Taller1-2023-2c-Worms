@@ -1,13 +1,11 @@
 #include "Player.h"
 
-Player::Player(SDL2pp::Texture &texture): an(texture), facingLeft(false), moving(false), x(300), y(300) {}
+Player::Player(Sprite& sprite)
+    : an(sprite)
+    , facingLeft(false)
+    , moving(false)
+    , x(300), y(300) {}
 
-Player::~Player() {}
-
-/**
- * Notar que el manejo de eventos y la actualización de modelo ocurren en momentos distintos.
- * Esto les va a resultar muy util. 
- */
 void Player::update(float dt) {
     if (moving) {
         an.update(dt);
@@ -18,9 +16,9 @@ void Player::update(float dt) {
     }
 }
 
-void Player::render(SDL2pp::Renderer &renderer) {
+void Player::render() {
     SDL_RendererFlip flip = facingLeft ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE;
-    an.render(renderer, SDL2pp::Rect(x, y, 200, 200), flip);
+    an.render(SDL2pp::Rect(x, y, 200, 200), flip);
 }
 
 void Player::moveRigth() {

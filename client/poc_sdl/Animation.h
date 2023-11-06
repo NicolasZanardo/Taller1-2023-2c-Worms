@@ -9,29 +9,22 @@
 #include <SDL2pp/SDL2pp.hh>
 
 #include "./frame_selector.h"
+#include "./sprite.h"
 
 #define FRAME_RATE 1000000.0f/25.0f
 
-class SdlTexture;
-class Area;
-
 class Animation {
 public:
-    Animation(SDL2pp::Texture &texture);
-    ~Animation();
+    Animation(Sprite& sprite);
+    ~Animation() = default;
 
     void update(float dt);
-    void render(SDL2pp::Renderer &renderer, const SDL2pp::Rect dest, SDL_RendererFlip &flipType);
+    void render(const SDL2pp::Rect dest, SDL_RendererFlip &flipType);
 
 private:
-    /** SDL texture of the raw image. */
-    SDL2pp::Texture &texture;
-    /** Size of the sprite (height and width). */
-    int size;
-    /** Time elapsed since last update. */
-    float elapsed;
-
+    float elapsed;  // Time elapsed since last update.
     FrameSelector frame_selector;
+    Sprite* sprite;
 };
 
 #endif  //__ANIMATION_H__

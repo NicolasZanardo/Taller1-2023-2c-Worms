@@ -1,14 +1,16 @@
-#ifndef __WORM_H__
-#define __WORM_H__
+#ifndef __PLAYER_H__
+#define __PLAYER_H__
 
-#include <SDL2pp/SDL2pp.hh>
 #include "Animation.h"
+#include "./sprite.h"
+
 class Player {
 public:
-    Player(SDL2pp::Texture &texture);
-    ~Player();
+    Player(Sprite& sprite);
+    ~Player() = default;
+
     void update(float dt);
-    void render(SDL2pp::Renderer &renderer);
+    void render();
     void moveRigth();
     void moveLeft();
     void stopMoving();
@@ -21,4 +23,4 @@ private:
     int y;
 };
 
-#endif // __WORM_H__
+#endif // __PLAYER_H__
