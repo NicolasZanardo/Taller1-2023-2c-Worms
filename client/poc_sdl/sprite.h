@@ -8,8 +8,14 @@
 class Sprite {
 public:
     Sprite() = delete;
-    explicit Sprite(SDL2pp::Renderer& renderer_ref);
+    explicit Sprite(SDL2pp::Renderer& renderer_ref, const std::string& sprite_file);
     ~Sprite() = default;
+
+    Sprite(Sprite&& other);
+    Sprite& operator=( Sprite&& other);
+
+    Sprite(const Sprite& other) = delete;
+    Sprite& operator=(const Sprite& other) = delete;
 
     void render(uint16_t num_frame, const SDL2pp::Rect dst, SDL_RendererFlip &flip_type);
     uint32_t getWidth() const { return this->texture.GetWidth(); }

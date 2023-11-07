@@ -1,7 +1,7 @@
 #include "player_state.h"
 
-PlayerState::PlayerState(Sprite& sprite)
-    : an(sprite, true)
+PlayerState::PlayerState(SpritesManager& sprites_manager)
+    : an(sprites_manager, "wwalk", 12, true)
     , facingLeft(false)
     , moving(false)
     , x(300), y(300) {}

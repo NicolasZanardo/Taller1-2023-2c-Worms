@@ -1,9 +1,27 @@
 #include "./sprite.h"
 
-Sprite::Sprite(SDL2pp::Renderer& renderer_ref)
+Sprite::Sprite(SDL2pp::Renderer& renderer_ref, const std::string& sprite_file)
     : renderer_ptr(&renderer_ref)
-    , texture(*renderer_ptr, SDL2pp::Surface("assets/wwalk.png"))
+    , texture(*renderer_ptr, SDL2pp::Surface(sprite_file.c_str()))
+    // , texture(*renderer_ptr, SDL2pp::Surface("assets/wwalk.png"))
     , size(texture.GetWidth()) {}
+
+Sprite::Sprite(Sprite&& other)
+    : renderer_ptr(other.renderer_ptr)
+    , texture(std::move(other.texture))
+    , size(other.size) {}
+
+Sprite& Sprite::operator=(Sprite&& other) {
+    if (&other == this) {
+		return *this;
+    }
+
+	this->renderer_ptr = other.renderer_ptr;
+    this->texture = std::move(other.texture);
+    this->size = other.size;
+
+	return *this;
+}
 
 void Sprite::render(uint16_t num_frame, const SDL2pp::Rect dst, SDL_RendererFlip &flip_type) {
     this->renderer_ptr->Copy(

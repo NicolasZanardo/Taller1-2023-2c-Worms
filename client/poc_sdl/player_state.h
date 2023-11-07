@@ -2,11 +2,11 @@
 #define __PLAYER_STATE_H__
 
 #include "animation.h"
-#include "sprite.h"
+#include "sprites_manager.h"
 
 class PlayerState {
 public:
-    PlayerState(Sprite& sprite);
+    explicit PlayerState(SpritesManager& sprites_manager);
     ~PlayerState() = default;
 
     void update(float dt);

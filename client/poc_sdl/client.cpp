@@ -6,7 +6,8 @@
 
 #include "game_loop.h"
 #include "player_state.h"
-#include "./sprite.h"
+#include "sprite.h"
+#include "sprites_manager.h"
 
 Client::Client(const char* host_name, const char* service_name)
     : receiver(state_queue, echo_queue)
@@ -23,8 +24,10 @@ void Client::execute() {
 
     SDL2pp::Renderer renderer(window, -1, SDL_RENDERER_ACCELERATED);
 
-    Sprite sprite(renderer);
-    PlayerState player_state(sprite);
+    SpritesManager sprites_manager(renderer);
+    sprites_manager.addSprite("wwalk", "assets/wwalk.png");
+
+    PlayerState player_state(sprites_manager);
 
     this->receiver.start();
     this->sender.start();
