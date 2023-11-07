@@ -8,14 +8,13 @@
 class Sender : public Thread {
     const int client_id;
     NetChannel* channel;
-    Queue<NetMessage*>* client_queue;
+    NetQueue* client_queue;
 
     public:
-    Sender(const int client_id);
+    Sender(const int client_id, NetChannel* channel, NetQueue* client_queue);
     
     void run() override;
     void stop() override;
-    void set_channel(NetChannel* channel, Queue<NetMessage*>* client_queue);
     
     ~Sender();
 };

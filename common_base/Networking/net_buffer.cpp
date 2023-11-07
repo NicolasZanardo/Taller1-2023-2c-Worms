@@ -15,29 +15,29 @@ void NetBuffer::push_byte(const uint8_t  value) {
 void NetBuffer::push_short(const uint16_t value) {
     uint16_t transfer = htons(value);
     char* hostval = reinterpret_cast<char*>(&transfer);
+    extend_by(2);
     
-    data.push_back(hostval[0]);
-    data.push_back(hostval[1]);
-    index += 2;
+    data[index++] = hostval[0];
+    data[index++] = hostval[1];
 }
 
 void NetBuffer::push_uint(const uint32_t value) {
     uint32_t transfer = htonl(value);
     char* hostval = reinterpret_cast<char*>(&transfer);
     
-    data.push_back(hostval[0]);
-    data.push_back(hostval[1]);
-    data.push_back(hostval[2]);
-    data.push_back(hostval[3]);
-    index += 4;
+    extend_by(4);
+    data[index++] = hostval[0];
+    data[index++] = hostval[1];
+    data[index++] = hostval[2];
+    data[index++] = hostval[3];
 }
 
 void NetBuffer::push_string(const string  &value) {
     push_short(value.size());
+    extend_by(value.size());
 
     for (auto letter : value)
-        data.push_back(letter);
-    index += value.size();
+        data[index++] = letter;
 }
 
 bool NetBuffer::send_by(Socket& channel) {
@@ -45,4 +45,8 @@ bool NetBuffer::send_by(Socket& channel) {
     channel.sendall(&data[0], index, &was_closed);
     return !was_closed;
 
+}
+
+void NetBuffer::extend_by(int extension) {
+    data.resize(data.size() + extension);
 }
