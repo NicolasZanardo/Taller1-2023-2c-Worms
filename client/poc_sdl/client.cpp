@@ -5,7 +5,7 @@
 #include <thread>
 
 #include "game_loop.h"
-#include "Player.h"
+#include "player_state.h"
 #include "./sprite.h"
 
 Client::Client(const char* host_name, const char* service_name)
@@ -24,13 +24,13 @@ void Client::execute() {
     SDL2pp::Renderer renderer(window, -1, SDL_RENDERER_ACCELERATED);
 
     Sprite sprite(renderer);
-    Player player(sprite);
+    PlayerState player_state(sprite);
 
     this->receiver.start();
     this->sender.start();
 
     GameLoop game_loop(renderer, this->state_queue);
-    game_loop.execute(event_handler, player);
+    game_loop.execute(event_handler, player_state);
 
     this->event_queue.close();
     this->echo_queue.close();

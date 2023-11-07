@@ -6,7 +6,7 @@
 #include "queue.h"
 
 #include "event_handler.h"
-#include "Player.h"
+#include "player_state.h"
 
 class GameLoop {
 public:
@@ -14,11 +14,11 @@ public:
     explicit GameLoop(SDL2pp::Renderer& renderer, Queue<GameEvent>& state_queue);
     ~GameLoop() = default;
 
-    void execute(EventHandler& event_handler, Player& player);
+    void execute(EventHandler& event_handler, PlayerState& player);
 
 private:
-    void update(Player &player, float dt);
-    void render(Player &player);
+    void update(PlayerState &player, float dt);
+    void render(PlayerState &player);
 
     SDL2pp::Renderer* renderer;
     Queue<GameEvent>* state_queue;

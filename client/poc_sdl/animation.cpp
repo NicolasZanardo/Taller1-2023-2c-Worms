@@ -1,4 +1,4 @@
-#include "Animation.h"
+#include "animation.h"
 
 Animation::Animation(Sprite& sprite, bool img_looking_left)
     : img_looking_left(img_looking_left)

@@ -1,12 +1,12 @@
-#include "Player.h"
+#include "player_state.h"
 
-Player::Player(Sprite& sprite)
+PlayerState::PlayerState(Sprite& sprite)
     : an(sprite, true)
     , facingLeft(false)
     , moving(false)
     , x(300), y(300) {}
 
-void Player::update(float dt) {
+void PlayerState::update(float dt) {
     if (moving) {
         an.update(dt);
         if (facingLeft)
@@ -16,20 +16,20 @@ void Player::update(float dt) {
     }
 }
 
-void Player::render() {
+void PlayerState::render() {
     an.render(SDL2pp::Rect(x, y, 200, 200), this->facingLeft);
 }
 
-void Player::moveRigth() {
+void PlayerState::moveRigth() {
     moving = true;
     facingLeft = false;
 }
 
-void Player::moveLeft() {
+void PlayerState::moveLeft() {
     moving = true;
     facingLeft = true;
 }
 
-void Player::stopMoving() {
+void PlayerState::stopMoving() {
     moving = false;
 }

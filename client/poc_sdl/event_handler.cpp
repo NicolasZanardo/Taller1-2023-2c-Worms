@@ -1,6 +1,6 @@
 #include "event_handler.h"
 
-#include "Player.h"
+#include "player_state.h"
 
 EventHandler::EventHandler(Queue<GameEvent>& event_queue)
     : event_queue(event_queue) {}

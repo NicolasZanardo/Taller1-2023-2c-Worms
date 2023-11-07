@@ -1,13 +1,13 @@
-#ifndef __PLAYER_H__
-#define __PLAYER_H__
+#ifndef __PLAYER_STATE_H__
+#define __PLAYER_STATE_H__
 
-#include "Animation.h"
-#include "./sprite.h"
+#include "animation.h"
+#include "sprite.h"
 
-class Player {
+class PlayerState {
 public:
-    Player(Sprite& sprite);
-    ~Player() = default;
+    PlayerState(Sprite& sprite);
+    ~PlayerState() = default;
 
     void update(float dt);
     void render();
@@ -23,4 +23,4 @@ private:
     int y;
 };
 
-#endif // __PLAYER_H__
+#endif // __PLAYER_STATE_H__
