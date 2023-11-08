@@ -3,40 +3,16 @@
 PhysicsSystem::PhysicsSystem(
         float xGravity,
         float yGravity,
-        const GameScenario& map
+        const GameScenarioData& scenario
         ): world(b2Vec2(xGravity, yGravity)) {
-
+    populate_beams(scenario);
 }
 
 void PhysicsSystem::update() {
     world.Step(timeStep, velocityIterations, positionIterations);
 }
 
-void PhysicsSystem::populateWorld(const GameScenario& scenario) {
-    for (auto beam: scenario.beams) {
-        spawnBeam(beam);
-    }
-    for (auto worm: scenario.worms) {
-        spawnWorm(worm);
-    }
-}
-
-void PhysicsSystem::spawnBeam(BeamOnMapDto beam) {
-    b2BodyDef groundBodyDef;
-    groundBodyDef.position.Set(beam.x, beam.y);
-    b2Body* groundBody = world.CreateBody(&groundBodyDef);
-
-    b2PolygonShape groundBox;
-    if (beam.type == SHORT) {
-        groundBox.SetAsBox(0.80f, 3.0f);
-    } else {
-        groundBox.SetAsBox(0.80f, 6.0f);
-    }
-
-    groundBody->CreateFixture(&groundBox, 0.0f);
-}
-
-void PhysicsSystem::spawnWorm(WormOnMapDto worm) {
+b2Body* PhysicsSystem::spawn_worm(WormScenarioData worm) {
     b2BodyDef bodyDef;
     bodyDef.type = b2_dynamicBody;
     // bodyDef.fixedRotation = false;
@@ -55,4 +31,28 @@ void PhysicsSystem::spawnWorm(WormOnMapDto worm) {
     fixtureDef.friction = 0.3f;
 
     body->CreateFixture(&fixtureDef);
+    return body;
+}
+
+/* PRIVATE */
+
+void PhysicsSystem::populate_beams(const GameScenarioData& scenario) {
+    for (auto beam: scenario.beams) {
+        spawn_beam(beam);
+    }
+}
+
+void PhysicsSystem::spawn_beam(BeamScenarioData beam) {
+    b2BodyDef groundBodyDef;
+    groundBodyDef.position.Set(beam.x, beam.y);
+    b2Body* groundBody = world.CreateBody(&groundBodyDef);
+
+    b2PolygonShape groundBox;
+    if (beam.type == SHORT) {
+        groundBox.SetAsBox(0.80f, 3.0f);
+    } else {
+        groundBox.SetAsBox(0.80f, 6.0f);
+    }
+
+    groundBody->CreateFixture(&groundBox, 0.0f);
 }

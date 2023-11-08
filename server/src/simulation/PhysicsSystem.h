@@ -2,20 +2,22 @@
 #define SERVER_PHYSICSSYSTEM_H
 
 #include <box2d/box2d.h>
-#include "../model/GameScenario.h"
+#include "../model/scenario/GameScenarioData.h"
+#include "../model/scenario/WormScenarioData.h"
+#include "../model/scenario/BeamScenarioData.h"
 
 class PhysicsSystem {
 public:
-    PhysicsSystem(float xGravity, float yGravity, const GameScenario& map);
+    PhysicsSystem(float xGravity, float yGravity, const GameScenarioData& map);
     void update();
+    b2Body* spawn_worm(WormScenarioData worm);
 private:
     b2World world;
     const float timeStep = 1.0f / 60.0f;
     const int32 velocityIterations = 8;
     const int32 positionIterations = 3;
-    void populateWorld(const GameScenario& map);
-    void spawnBeam(BeamOnMapDto beam);
-    void spawnWorm(WormOnMapDto worm);
+    void populate_beams(const GameScenarioData& map);
+    void spawn_beam(BeamScenarioData beam);
 
 };
 
