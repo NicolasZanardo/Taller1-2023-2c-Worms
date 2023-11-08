@@ -16,6 +16,13 @@ add_library( server
 
     src/main/server.h
     src/main/server.cpp
+
+    src/GameInstance.h
+    src/GameInstance.cpp
+
+    src/simulation/PhysicsSystem.cpp
+    src/simulation/PhysicsSystem.h
+        src/model/GameScenario.h
 )
 
 add_executable(
