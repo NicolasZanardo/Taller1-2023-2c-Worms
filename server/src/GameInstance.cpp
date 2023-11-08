@@ -5,10 +5,10 @@ GameInstance::GameInstance(
         float yGravity,
         const GameScenarioData &scenario, // TODO Game config struct
         const std::list<Client*>& clients
-):  physicsSystem(xGravity, yGravity, scenario),
-    entityManager(physicsSystem),
-    clientWormsMap(),
-    gameQueue(50) {
+): physicsSystem(xGravity, yGravity, scenario),
+   instancesManager(physicsSystem),
+   clientWormsMap(),
+   gameQueue(50) {
     init_game(scenario, clients);
 }
 
@@ -28,22 +28,11 @@ void GameInstance::stop() {
 
 /* PRIVATE */
 
+// Init methods
 void GameInstance::init_game(const GameScenarioData &scenario, const std::list<Client *>& clients) {
     _create_and_assign_worms(scenario, clients);
-    // TODO Send to clients INITIAL MESSAGE (Beam Positions, etc)
-    // TODO Send first update()
-}
-
-void GameInstance::_process_actions() {
-    /* NetMessage* msg = nullptr;
-    while ((msg = gameQueue.pop())) {
-        try {
-            msg->exec(game);
-        } catch () {
-
-        }
-        delete msg;
-    } */
+    _broadcast_initial_game_state(scenario);
+    _broadcast_updated_game_state();
 }
 
 void GameInstance::_create_and_assign_worms(const GameScenarioData &scenario, const std::list<Client *>& clients) {
@@ -79,12 +68,12 @@ void GameInstance::_create_and_assign_worms(const GameScenarioData &scenario, co
                 size_t wormId = availableWorms.front();
                 availableWorms.pop_front();
                 WormScenarioData wormScenarioData = scenario.worms[wormsToAssign];
-                entityManager.create_worm(wormScenarioData); // TODO Test out of index
+                instancesManager.create_worm(wormScenarioData); // TODO Test out of index
                 assignedWorms.push_back(wormId);
             }
         }
 
-        clientWormsMap[client->id] = assignedWorms;
+        clientWormsMap[client] = assignedWorms;
     }
 
     // Adjust the health of worms owned by clients with less worms
@@ -97,7 +86,7 @@ void GameInstance::_create_and_assign_worms(const GameScenarioData &scenario, co
         if (clientWormCount < wormsPerClient) {
             for (size_t wormId : entry.second) {
                 // Increase the health of worms owned by this client
-                Worm* worm = entityManager.get_worm(wormId);
+                Worm* worm = instancesManager.get_worm(wormId);
                 if (worm) {
                     worm->health += extraHealth;
                 }
@@ -105,5 +94,51 @@ void GameInstance::_create_and_assign_worms(const GameScenarioData &scenario, co
         }
     }
 }
+
+void GameInstance::_broadcast_initial_game_state(const GameScenarioData &scenario) {
+
+    // TODO Generate the InitialStateMessage with the scenarioData
+
+    // Iterate and send it to every client
+    for (const auto& clientWormsPair: clientWormsMap) {
+        clientWormsPair.first->communicate(new NetMessageChat());
+    }
+
+    // Update message is ready to be sent
+
+}
+
+void GameInstance::_broadcast_updated_game_state() {
+    // TODO Maybe is not necessary that instanceManagers holds the reference to a map of <worm_id, worm>
+    // And clientsWormsMap instead of being <client_id, list<worms_id>> could be <client_id, list<Worms*>>
+
+    // Iterate every client worm populating the UpdateStateMessage
+    for (const auto& clientWormsPair: clientWormsMap) {
+
+    }
+
+    // TODO iterate the rest of instances in the map (Projectiles and suplly boxes)
+
+    // Iterate and send the generated UpdateStateMessage to every Client
+    for (const auto& clientWormsPair: clientWormsMap) {
+
+    }
+}
+
+
+// Loop methods
+void GameInstance::_process_actions() {
+    /* NetMessage* msg = nullptr;
+    while ((msg = gameQueue.pop())) {
+        try {
+            msg->exec(game);
+        } catch () {
+
+        }
+        delete msg;
+    } */
+}
+
+
 
 

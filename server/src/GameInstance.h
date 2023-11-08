@@ -10,18 +10,24 @@
 #include "model/instances/Worm.h"
 #include "model/instances/InstancesManager.h"
 
-typedef std::unordered_map<int, std::list<size_t>> ClientWormsMap;
+typedef std::unordered_map<Client*, std::list<size_t>> ClientWormsMap;
 
 class GameInstance: public Thread {
 private:
     PhysicsSystem physicsSystem;
-    InstancesManager entityManager;
+    InstancesManager instancesManager;
     ClientWormsMap clientWormsMap;
     NetQueue gameQueue;
 
+    // Init methods
     void init_game(const GameScenarioData& scenario, const std::list<Client*>& clients);
     void _create_and_assign_worms(const GameScenarioData &scenario, const std::list<Client *>& clients);
+    void _broadcast_initial_game_state(const GameScenarioData &scenario);
+    void _broadcast_updated_game_state();
+
+    // Loop methods
     void _process_actions();
+
 
 public:
     explicit GameInstance(float xGravity, float yGravity, const GameScenarioData& scenario, const std::list<Client*>& clients);
