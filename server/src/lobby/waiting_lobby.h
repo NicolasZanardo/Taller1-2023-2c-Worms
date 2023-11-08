@@ -5,10 +5,10 @@
 #include <mutex>
 #include <string>
 #include "../GameInstance.h"
-#include "../model/scenario/HardcodedScenarioData.h"
 #include "../client/client.h"
 #include "../../../common_base/thread.h"
 #include "../../../common_base/networking.h"
+#include "../../../common_base/Networking/dtos/HardcodedScenarioData.h"
 
 class WaitingLobby : public Thread {
     Socket host;

@@ -2,9 +2,7 @@
 #define SERVER_PHYSICSSYSTEM_H
 
 #include <box2d/box2d.h>
-#include "../model/scenario/GameScenarioData.h"
-#include "../model/scenario/WormScenarioData.h"
-#include "../model/scenario/BeamScenarioData.h"
+#include "../../../common_base/Networking/dtos/GameScenarioData.h"
 
 class PhysicsSystem {
 public:

@@ -7,15 +7,15 @@
 #include "../../common_base/thread.h"
 #include "simulation/PhysicsSystem.h"
 #include "client/client.h"
-#include "model/entities/Worm.h"
-#include "model/entities/EntityManager.h"
+#include "model/instances/Worm.h"
+#include "model/instances/InstancesManager.h"
 
 typedef std::unordered_map<int, std::list<size_t>> ClientWormsMap;
 
 class GameInstance: public Thread {
 private:
     PhysicsSystem physicsSystem;
-    EntityManager entityManager;
+    InstancesManager entityManager;
     ClientWormsMap clientWormsMap;
     NetQueue gameQueue;
 

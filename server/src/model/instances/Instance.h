@@ -3,10 +3,10 @@
 
 #include <cstddef>
 
-class Entity {
+class Instance {
 public:
     size_t id;
-    Entity(size_t id) : id(id) {}
+    Instance(size_t id) : id(id) {}
 };
 
 #endif

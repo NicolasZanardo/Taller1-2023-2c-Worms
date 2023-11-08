@@ -48,7 +48,7 @@ void PhysicsSystem::spawn_beam(BeamScenarioData beam) {
     b2Body* groundBody = world.CreateBody(&groundBodyDef);
 
     b2PolygonShape groundBox;
-    if (beam.type == SHORT) {
+    if (beam.type == BeamType::SHORT) {
         groundBox.SetAsBox(0.80f, 3.0f);
     } else {
         groundBox.SetAsBox(0.80f, 6.0f);
