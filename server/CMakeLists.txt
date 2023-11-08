@@ -22,7 +22,13 @@ add_library( server
 
     src/simulation/PhysicsSystem.cpp
     src/simulation/PhysicsSystem.h
-        src/model/GameScenario.h
+    src/model/scenario/GameScenarioData.h
+        src/model/scenario/HardcodedScenarioData.h
+        src/model/entities/Entity.h
+        src/model/entities/Worm.cpp
+        src/model/entities/Worm.h
+        src/model/entities/EntityManager.h
+        src/model/entities/EntityManager.cpp
 )
 
 add_executable(
