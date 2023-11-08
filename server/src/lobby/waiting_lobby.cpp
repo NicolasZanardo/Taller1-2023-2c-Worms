@@ -83,3 +83,11 @@ bool purged_zombie(Client* cli) {
     delete(cli);
     return true;
 }
+
+void WaitingLobby::start_game() {
+    auto game = new GameInstance(
+            0.0f, -10.f, HardcodedScenarioData::get(),  // TODO GameConfig struct
+            clients
+            );
+    game->start();
+} // TODO There is no Join for now
