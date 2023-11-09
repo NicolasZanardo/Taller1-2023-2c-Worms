@@ -7,7 +7,6 @@
 #include "../../Game/eventDto.h"
 #include "net_message_dependencies.h"
 
-
 struct NetMessageGameStateUpdate : public NetMessage {
     int id_active_entity;
     float wind_speed; // positivo o negativo
