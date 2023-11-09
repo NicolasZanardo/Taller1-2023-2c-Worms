@@ -6,6 +6,11 @@ add_library(common
     Networking/net_protocol_interpreter.cpp 
     Networking/net_protocol_interpreter.h
 
+    Game/beam.h    
+    Game/bullet.h
+    Game/event.h
+    Game/worm.h
+
     liberror.cpp liberror.h
     network_channel.cpp network_channel.h
     protocol_consts.h
@@ -33,6 +38,10 @@ add_library(common
     Networking/Messages/net_message_inform_id.h
     
     Networking/Messages/net_message_behaviour.h
+    Networking/Messages/net_message_initial_game_state.cpp
+    Networking/Messages/net_message_initial_game_state.h
+    Networking/Messages/net_message_game_state_update.cpp
+    Networking/Messages/net_message_game_state_update.h
 
     Networking/net_channel.cpp 
     Networking/net_channel.h 
