@@ -36,60 +36,42 @@ void GameInstance::init_game(const GameScenarioData &scenario, const std::list<C
 }
 
 void GameInstance::_create_and_assign_worms(const GameScenarioData &scenario, const std::list<Client *>& clients) {
-    // Calculate the number of clients and the total number of worms
+
     size_t numClients = clients.size();
     size_t numWorms = scenario.worms.size();
-
-    // Calculate the base number of worms per client
     size_t wormsPerClient = numWorms / numClients;
+    size_t extraWorms = numWorms % numClients;
 
-    // Calculate the number of clients that will have an extra worm
-    size_t clientsWithExtraWorm = numWorms % numClients;
-
-    // Create a list of available worms
-    std::list<int> availableWorms;
-    for (int i = 0; i < numWorms; i++) {
-        availableWorms.push_back(i);
-    }
+    int extraHealth = 25;
 
     // Assign worms to clients
+    auto wormIter = scenario.worms.begin();
     for (Client* client : clients) {
-        size_t wormsToAssign = wormsPerClient;
+        size_t wormsToAssign = wormsPerClient + (extraWorms-- > 0 ? 1 : 0);
+        std::list<Worm*> assignedWorms;
 
-        // Check if this client should have an extra worm
-        if (clientsWithExtraWorm > 0) {
-            wormsToAssign++;
-            clientsWithExtraWorm--;
-        }
+        for (size_t i = 0; i < wormsToAssign && wormIter != scenario.worms.end(); ++i) {
+            WormScenarioData wormScenarioData = *wormIter;
+            Worm* worm = instancesManager.create_worm(wormScenarioData);
 
-        std::list<size_t> assignedWorms;
-        for (int i = 0; i < wormsToAssign; i++) {
-            if (!availableWorms.empty()) {
-                size_t wormId = availableWorms.front();
-                availableWorms.pop_front();
-                WormScenarioData wormScenarioData = scenario.worms[wormsToAssign];
-                instancesManager.create_worm(wormScenarioData); // TODO Test out of index
-                assignedWorms.push_back(wormId);
+            if (worm) {
+                assignedWorms.push_back(worm);
             }
+
+            ++wormIter;
         }
 
+        // Update the assigned worms in clientWormsMap
         clientWormsMap[client] = assignedWorms;
     }
 
-    // Adjust the health of worms owned by clients with less worms
-    int extraHealth = 25;
-
-    // Iterates thorught the clients lists of worms
-    // If a client has a worm list with less worms than the normal adapt health for all worms in the list
+    // Adjust the health for clients with fewer worms
     for (const auto& entry : clientWormsMap) {
         size_t clientWormCount = entry.second.size();
         if (clientWormCount < wormsPerClient) {
-            for (size_t wormId : entry.second) {
-                // Increase the health of worms owned by this client
-                Worm* worm = instancesManager.get_worm(wormId);
-                if (worm) {
-                    worm->health += extraHealth;
-                }
+            for (Worm* worm : entry.second) {
+                // Increase the health of all worms owned by this client
+                worm->health += extraHealth;
             }
         }
     }

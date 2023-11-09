@@ -10,7 +10,7 @@
 #include "model/instances/Worm.h"
 #include "model/instances/InstancesManager.h"
 
-typedef std::unordered_map<Client*, std::list<size_t>> ClientWormsMap;
+typedef std::unordered_map<Client*, std::list<Worm *>> ClientWormsMap;
 
 class GameInstance: public Thread {
 private:
