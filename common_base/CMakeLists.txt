@@ -14,6 +14,9 @@ add_library(common
     resolvererror.cpp resolvererror.h
     socket.cpp socket.h
     thread.h
+
+    Networking/net_operator.cpp
+    Networking/net_operator.h
     
     Networking/Messages/net_message.cpp
     Networking/Messages/net_message.h
