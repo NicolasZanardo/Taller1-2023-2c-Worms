@@ -4,6 +4,13 @@ NetMessageInitialGameState::NetMessageInitialGameState()
     : NetMessage(NET_MESSAGE_TYPE_INITIAL_STATE)
     {}
 
+NetMessageInitialGameState::NetMessageInitialGameState(float room_width, float room_height, const std::vector<BeamDto>& beams)
+        : NetMessage(NET_MESSAGE_TYPE_INITIAL_STATE),
+        room_width(room_width),
+        room_height(room_height),
+        beams(beams)
+{}
+
 void NetMessageInitialGameState::push_data_into(NetBuffer& container) {
     NetMessage::push_data_into(container);
     container.push_float(room_width);
@@ -26,7 +33,7 @@ void NetMessageInitialGameState::pull_data_from(NetProtocolInterpreter& channel)
             channel.read_float(),
             channel.read_float(),
             channel.read_float(),
-            static_cast<Beam::Type>(channel.read_byte())
+            static_cast<BeamDto::Type>(channel.read_byte())
         );
     }
 }

@@ -4,6 +4,7 @@
 #include <list>
 #include <unordered_map>
 #include "../../common_base/Networking/Messages/net_queue.h"
+#include "../../common_base/networking.h"
 #include "../../common_base/thread.h"
 #include "simulation/PhysicsSystem.h"
 #include "client/client.h"
@@ -23,7 +24,7 @@ private:
     void init_game(const GameScenarioData& scenario, const std::list<Client*>& clients);
     void _create_and_assign_worms(const GameScenarioData &scenario, const std::list<Client *>& clients);
     void _broadcast_initial_game_state(const GameScenarioData &scenario);
-    void _broadcast_updated_game_state();
+    void _broadcast_game_state_update();
 
     // Loop methods
     void _process_actions();

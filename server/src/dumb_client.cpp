@@ -44,3 +44,11 @@ void DumbInterpreter::run(NetMessageInformID* msg) {
 void DumbInterpreter::run(NetMessage_test* msg) {
     cout << "short: " << msg->test_short << " uint: " << msg->test_uint << " string: " << msg->test_string << "\n";
 }
+
+void DumbInterpreter::run(NetMessageInitialGameState* msg) {
+    cout << "width: " << msg->room_width << " height: " << msg->room_height << " amount of beams on map: " << msg->beams.size() << "\n";
+}
+
+void DumbInterpreter::run(NetMessageGameStateUpdate* msg) {
+   // cout << "active worm id: " << msg->id_active_entity << "\n"; //<< " height: " << msg->room_height << " amount of beams on map: " << msg->beams.size() << "\n";
+}

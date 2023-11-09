@@ -25,5 +25,7 @@ class DumbInterpreter : public NetMessageBehaviour {
     virtual void run(NetMessageLeave* msg) override;
     virtual void run(NetMessage_test* msg) override;
     virtual void run(NetMessageInformID* msg) override;
+    virtual void run(NetMessageInitialGameState* msg) override;
+    virtual void run(NetMessageGameStateUpdate* msg) override;
 };
 #endif 

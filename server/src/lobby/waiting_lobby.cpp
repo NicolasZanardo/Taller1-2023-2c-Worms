@@ -88,3 +88,11 @@ void WaitingLobby::run(NetMessageInformID* msg) {
 void WaitingLobby::run(NetMessage_test* msg) {
     cerr << "A test message was recieved...";
 }
+
+void WaitingLobby::run(NetMessageInitialGameState* msg) {
+    cerr << "Shouldnt receive MessageInitialState...";
+}
+
+void WaitingLobby::run(NetMessageGameStateUpdate* msg) {
+    cerr << "Shouldnt receive MessageGameUpdate...";
+}

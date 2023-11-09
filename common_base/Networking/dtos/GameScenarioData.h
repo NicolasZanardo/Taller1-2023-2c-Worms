@@ -2,12 +2,14 @@
 #define SERVER_GAMEMAP_H
 
 #include <list>
-#include "BeamScenarioData.h"
 #include "WormScenarioData.h"
+#include "../../Game/beamDto.h"
 
 
-struct GameScenarioData {
-    std::vector<BeamScenarioData> beams;
+struct GameScenarioData { // TODO Have in server package
+    float room_width;
+    float room_height;
+    std::vector<BeamDto> beams;
     std::vector<WormScenarioData> worms;
 };
 

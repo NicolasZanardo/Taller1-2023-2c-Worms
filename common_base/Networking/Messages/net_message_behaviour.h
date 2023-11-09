@@ -23,5 +23,6 @@ class NetMessageBehaviour {
     virtual void run(NetMessageInformID* msg) = 0;
     virtual void run(NetMessageInitialGameState* msg) = 0;
     virtual void run(NetMessageGameStateUpdate* msg) = 0;
+
 };
 #endif

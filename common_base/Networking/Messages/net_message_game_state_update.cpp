@@ -16,9 +16,12 @@ NetMessageGameStateUpdate::NetMessageGameStateUpdate(
     remaining_turn_time(remaining_turn_time)
     {}
 
-void add(Worm& worm);
-void add(Bullet& bullet);
-void add(WorldEvent& event);
+void NetMessageGameStateUpdate::add(const WormDto& worm) {
+    worms.push_back(worm);
+}
+
+void add(BulletDto& bullet);
+void add(WorldEventDto& event);
 
 //virtual void execute(NetMessageBehaviour& interpreter) override;
 
@@ -71,7 +74,7 @@ void NetMessageGameStateUpdate::pull_data_from(NetProtocolInterpreter& channel) 
             channel.read_float(),
             channel.read_float(),
             channel.read_uint(),
-            static_cast<Worm::State>(channel.read_byte())
+            static_cast<WormDto::State>(channel.read_byte())
         );
     }
 
@@ -82,7 +85,7 @@ void NetMessageGameStateUpdate::pull_data_from(NetProtocolInterpreter& channel) 
             channel.read_float(),
             channel.read_float(),
             channel.read_float(),
-            static_cast<Bullet::Type>(channel.read_byte())
+            static_cast<BulletDto::Type>(channel.read_byte())
         );
     }
 
@@ -92,7 +95,7 @@ void NetMessageGameStateUpdate::pull_data_from(NetProtocolInterpreter& channel) 
             channel.read_uint(),
             channel.read_float(),
             channel.read_float(),
-            static_cast<WorldEvent::Type>(channel.read_byte())
+            static_cast<WorldEventDto::Type>(channel.read_byte())
         );
     }
 }

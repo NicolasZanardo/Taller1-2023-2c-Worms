@@ -1,5 +1,5 @@
-#ifndef COMMON_WORM_H_
-#define COMMON_WORM_H_
+#ifndef COMMON_WORM_DTO_H_
+#define COMMON_WORM_DTO_H_
 #include <cstdint>
 
 // TODO: servidor o cliente?
@@ -8,7 +8,7 @@
 //    right = 0x01
 //};
 
-struct Worm {
+struct WormDto {
     enum class State : uint8_t {
         idle    = 0x00,
         walking = 0x01,
@@ -26,7 +26,7 @@ struct Worm {
     int life;
     State state;
 
-    Worm(
+    WormDto(
         int client_id,
         int entity_id,
         float x,

@@ -43,13 +43,13 @@ void PhysicsSystem::populate_beams(const GameScenarioData& scenario) {
     }
 }
 
-void PhysicsSystem::spawn_beam(BeamScenarioData beam) {
+void PhysicsSystem::spawn_beam(BeamDto beam) {
     b2BodyDef groundBodyDef;
     groundBodyDef.position.Set(beam.x, beam.y);
     b2Body* groundBody = world.CreateBody(&groundBodyDef);
 
     b2PolygonShape groundBox;
-    if (beam.type == BeamType::SHORT) {
+    if (beam.type == BeamDto::Type::SHORT) {
         groundBox.SetAsBox(0.80f, 3.0f);
     } else {
         groundBox.SetAsBox(0.80f, 6.0f);

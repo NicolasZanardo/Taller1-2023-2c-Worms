@@ -18,7 +18,7 @@ void GameInstance::run() {
     _apply_physics();
     // _update_game() Turn, time, etc
     // _maintain_connections
-    _broadcast_updated_game_state();
+    _broadcast_game_state_update();
     // _synchronize()
 }
 
@@ -32,7 +32,7 @@ void GameInstance::stop() {
 void GameInstance::init_game(const GameScenarioData &scenario, const std::list<Client *>& clients) {
     _create_and_assign_worms(scenario, clients);
     _broadcast_initial_game_state(scenario);
-    _broadcast_updated_game_state();
+    _broadcast_game_state_update();
 }
 
 void GameInstance::_create_and_assign_worms(const GameScenarioData &scenario, const std::list<Client *>& clients) {
@@ -78,30 +78,39 @@ void GameInstance::_create_and_assign_worms(const GameScenarioData &scenario, co
 }
 
 void GameInstance::_broadcast_initial_game_state(const GameScenarioData &scenario) {
-
-    for (auto beamScenarioData: scenario.beams) {
-
-    }
+    auto initialStateMessage = std::make_unique<NetMessageInitialGameState>(
+            scenario.room_width,
+            scenario.room_height,
+            scenario.beams
+    );
 
     // Iterate and send it to every client
-    for (const auto& clientWormsPair: clientWormsMap) {
-        clientWormsPair.first->communicate(new NetMessageChat());
+    for (const auto& [client, _] : clientWormsMap) {
+        client->communicate(initialStateMessage.get());
     }
-
 }
 
-void GameInstance::_broadcast_updated_game_state() {
+void GameInstance::_broadcast_game_state_update() {
 
-    // Iterate every client worm populating the UpdateStateMessage
-    for (const auto& clientWormsPair: clientWormsMap) {
+    auto gameStateUpdateMessage = std::make_unique<NetMessageGameStateUpdate>(
+        1, // Active entity
+        1.0f, // Wind speed
+        240.f, // remaining game time
+        15.0f // remaining turn time
+    ); // TODO Hardcoded for now
 
+    for (const auto& [client, worms] : clientWormsMap) {
+        for(const auto worm: worms) {
+            const WormDto& wormDto = worm->toWormDto(client->id);
+            gameStateUpdateMessage->add(wormDto);
+        }
     }
 
-    // TODO iterate the rest of instances in the map (Projectiles and supply boxes)
+    // TODO ALSO ADD(&BulletDtos)
+    // TODO ALSO ADD(&EventDtos)
 
-    // Iterate and send the generated UpdateStateMessage to every Client
-    for (const auto& clientWormsPair: clientWormsMap) {
-
+    for (const auto& [client, _] : clientWormsMap) {
+        client->communicate(gameStateUpdateMessage.get());
     }
 }
 

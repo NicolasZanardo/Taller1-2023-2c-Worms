@@ -6,10 +6,10 @@ add_library(common
     Networking/net_protocol_interpreter.cpp 
     Networking/net_protocol_interpreter.h
 
-    Game/beam.h    
-    Game/bullet.h
-    Game/event.h
-    Game/worm.h
+        Game/beamDto.h
+        Game/bulletDto.h
+        Game/eventDto.h
+        Game/wormDto.h
 
     liberror.cpp liberror.h
     network_channel.cpp network_channel.h

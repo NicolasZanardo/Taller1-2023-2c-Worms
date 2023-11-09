@@ -29,6 +29,8 @@ class WaitingLobby : public Thread, public NetMessageBehaviour {
     void run(NetMessageLeave* msg) override;
     void run(NetMessage_test* msg) override;
     void run(NetMessageInformID* msg) override;
+    void run(NetMessageInitialGameState* msg) override;
+    void run(NetMessageGameStateUpdate* msg) override;
 };
 #endif
 

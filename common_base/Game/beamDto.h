@@ -1,8 +1,8 @@
-#ifndef COMMON_BULLET_H_
-#define COMMON_BULLET_H_
+#ifndef COMMON_BEAM_H_
+#define COMMON_BEAM_H_
 #include <cstdint>
 
-struct Beam {
+struct BeamDto {
     enum class Type : uint8_t {
         SHORT = 0x00,
         LONG = 0x01
@@ -13,11 +13,16 @@ struct Beam {
     float angle;
     Type type;
 
-    Beam(
+    BeamDto(
         float x,
         float y,
         float angle,
         Type type
-    );
+    ) :
+    x(x),
+    y(y),
+    angle(angle),
+    type(type)
+    {}
 };
 #endif
