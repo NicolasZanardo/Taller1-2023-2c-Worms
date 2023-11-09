@@ -17,6 +17,7 @@ class NetBuffer {
     void push_byte(const uint8_t  value);
     void push_short(const uint16_t value);
     void push_uint(const uint32_t value);
+    void push_float(const float value);
     void push_string(const std::string  &value);
 
     bool send_by(Socket& channel);
