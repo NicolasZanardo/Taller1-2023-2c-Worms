@@ -14,11 +14,11 @@ GameInstance::GameInstance(
 
 void GameInstance::run() {
     // TODO LOOP
-    // _process_actions();
-    // _apply_physics()
+    _process_actions();
+    _apply_physics();
     // _update_game() Turn, time, etc
     // _maintain_connections
-    // _send_game_state()
+    _broadcast_updated_game_state();
     // _synchronize()
 }
 
@@ -79,27 +79,25 @@ void GameInstance::_create_and_assign_worms(const GameScenarioData &scenario, co
 
 void GameInstance::_broadcast_initial_game_state(const GameScenarioData &scenario) {
 
-    // TODO Generate the InitialStateMessage with the scenarioData
+    for (auto beamScenarioData: scenario.beams) {
+
+    }
 
     // Iterate and send it to every client
     for (const auto& clientWormsPair: clientWormsMap) {
         clientWormsPair.first->communicate(new NetMessageChat());
     }
 
-    // Update message is ready to be sent
-
 }
 
 void GameInstance::_broadcast_updated_game_state() {
-    // TODO Maybe is not necessary that instanceManagers holds the reference to a map of <worm_id, worm>
-    // And clientsWormsMap instead of being <client_id, list<worms_id>> could be <client_id, list<Worms*>>
 
     // Iterate every client worm populating the UpdateStateMessage
     for (const auto& clientWormsPair: clientWormsMap) {
 
     }
 
-    // TODO iterate the rest of instances in the map (Projectiles and suplly boxes)
+    // TODO iterate the rest of instances in the map (Projectiles and supply boxes)
 
     // Iterate and send the generated UpdateStateMessage to every Client
     for (const auto& clientWormsPair: clientWormsMap) {
@@ -120,6 +118,11 @@ void GameInstance::_process_actions() {
         delete msg;
     } */
 }
+
+void GameInstance::_apply_physics() {
+    physicsSystem.update();
+}
+
 
 
 

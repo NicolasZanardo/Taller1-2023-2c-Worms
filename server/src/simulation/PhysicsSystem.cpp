@@ -12,7 +12,7 @@ void PhysicsSystem::update() {
     world.Step(timeStep, velocityIterations, positionIterations);
 }
 
-b2Body* PhysicsSystem::spawn_worm(WormScenarioData worm) {
+b2Body* PhysicsSystem::spawn_worm(WormScenarioData worm, Worm* wormModel) {
     b2BodyDef bodyDef;
     bodyDef.type = b2_dynamicBody;
     // bodyDef.fixedRotation = false;
@@ -29,8 +29,9 @@ b2Body* PhysicsSystem::spawn_worm(WormScenarioData worm) {
     fixtureDef.density = 1.0f;
     // Override the default friction.
     fixtureDef.friction = 0.3f;
-
+    fixtureDef.userData.pointer = reinterpret_cast<uintptr_t>(&wormModel);;
     body->CreateFixture(&fixtureDef);
+
     return body;
 }
 

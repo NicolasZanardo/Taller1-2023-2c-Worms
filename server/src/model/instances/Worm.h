@@ -4,12 +4,15 @@
 #include "Instance.h"
 #include <box2d/box2d.h>
 
+class InstancesManager;
+
 class Worm: public Instance {
 private:
+    friend class InstancesManager;
     b2Body* body;
+    Worm(size_t id);
 public:
     int health = 100;
-    Worm(size_t id, b2Body* body); // TODO Encapsulate body in a PhysicsComponent
 };
 
 #endif

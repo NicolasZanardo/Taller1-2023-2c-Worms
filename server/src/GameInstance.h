@@ -27,6 +27,7 @@ private:
 
     // Loop methods
     void _process_actions();
+    void _apply_physics();
 
 
 public:

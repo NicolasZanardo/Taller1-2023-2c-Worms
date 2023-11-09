@@ -22,13 +22,19 @@ add_library( server
     src/GameInstance.h
     src/GameInstance.cpp
 
-    src/simulation/PhysicsSystem.cpp
     src/simulation/PhysicsSystem.h
-        src/model/instances/Instance.h
-        src/model/instances/Worm.cpp
-        src/model/instances/Worm.h
-        src/model/instances/InstancesManager.h
-        src/model/instances/InstancesManager.cpp
+    src/simulation/PhysicsSystem.cpp
+
+    src/simulation/PhysicsCollisionListener.h
+    src/simulation/PhysicsCollisionListener.cpp
+    src/simulation/PhysicsSystem.h
+    src/simulation/PhysicsSystem.cpp
+    src/model/instances/Instance.h
+    src/model/instances/Worm.h
+    src/model/instances/Worm.cpp
+    src/model/instances/InstancesManager.h
+    src/model/instances/InstancesManager.cpp
+
 )
 
 add_executable(
