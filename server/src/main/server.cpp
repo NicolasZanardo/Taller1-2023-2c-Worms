@@ -5,35 +5,15 @@
 #include <sstream>
 using namespace std;
 
-vector<string> split(string& action) {
-	size_t pos_start = 0, pos_end;
-	vector<string> res;
-	string item;
-
-	while((pos_end = action.find(";",pos_start)) != string::npos) {
-		item = action.substr(pos_start, pos_end - pos_start);
-		pos_start = pos_end + 1;
-		res.push_back(item);
-	}
-	res.push_back(action.substr(pos_start));
-
-	return res;
-}
-
-Server::Server(const char* servname) : 
-	servname(servname),
-	lobby(nullptr) 
-	{}
-
-Server::~Server() {
-	if (lobby != nullptr)
-		delete(lobby);
-}
-
 void Server::execute() {
-	lobby = new WaitingLobby(servname);
-	lobby->start();
+	lobby.start();
+	accepter.start();
 	
+	handle_input();
+}
+
+vector<string> split(string& action);
+void Server::handle_input() {
 	string action = "initialization";
 	do {
 		vector<string> values = split(action);
@@ -52,34 +32,44 @@ void Server::execute() {
 
 		getline(cin, action);
 	} while (action != "q");
-	
-	lobby->stop();
-	lobby->join();
-}
-
-void Server::test_isHost(bool isHost) {
-	if (isHost) {
-		execute();
-		return;
-	}
-
-	DumbClient cli("localhost", servname);
-	cli.forward();
 }
 
 void Server::kick(vector<string>& values) {
 	int client_id(stoi(values[1]));
-
-	lobby->kick(client_id);
+	NetMessageLeave msg(client_id);
+	lobby.run(&msg);
 }
 
 void Server::chat(vector<string>& values) {
 	int client_id(stoi(values[1]));
 
-	string msg(values[2]);
+	string chat(values[2]);
 	for (size_t i = 3; i < values.size(); i++) {
-		msg += " " + values[i];
+		chat += " " + values[i];
 	}
 
-	lobby->chat(client_id, msg);
+	NetMessageChat msg(client_id, chat);
+	lobby.run(&msg);
+}
+
+
+Server::Server(const char* servname) : 
+	lobby(), accepter(servname, this->lobby)
+	{}
+
+Server::~Server() {}
+
+vector<string> split(string& action) {
+	size_t pos_start = 0, pos_end;
+	vector<string> res;
+	string item;
+
+	while((pos_end = action.find(";",pos_start)) != string::npos) {
+		item = action.substr(pos_start, pos_end - pos_start);
+		pos_start = pos_end + 1;
+		res.push_back(item);
+	}
+	res.push_back(action.substr(pos_start));
+
+	return res;
 }

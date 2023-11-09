@@ -1,25 +1,29 @@
 #include "dumb_client.h"
 #include <iostream>
+#include <memory>
+#include <utility>
 using namespace std;
 
 DumbClient::DumbClient(const char* serv, const char* port) :
-    channel(std::move(Socket(serv, port))),
-    keep(true)
+    keep(true), channel(std::move(Socket(serv, port))),
+    interpreter(new DumbInterpreter(*this))
     {}
 
 void DumbClient::forward() {
-    DumbInterpreter interpreter(*this);
-
-    while (keep)
-    {
-        NetMessage* msg = channel.read_message();
-        msg->execute(interpreter);
-        delete(msg);
+    try {
+        while (keep) {
+            auto msg = channel.read_message();
+            msg->execute(*interpreter);
+            delete(msg);
+        }
+    } catch (...) {
+        cout << "Exception thrown.\n";
     }
 }
 
 void DumbClient::stop() {
     keep = false;
+    channel.dissconect();
 }
 
 DumbInterpreter::DumbInterpreter(DumbClient& cli) : cli(cli) {}

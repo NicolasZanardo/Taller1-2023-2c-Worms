@@ -12,9 +12,10 @@ class NetProtocolInterpreter {
     public:
     explicit NetProtocolInterpreter(Socket& channel);
 
-    uint8_t  read_byte  ();
-    uint16_t read_short ();
-    uint32_t read_uint  ();
+    uint8_t  read_byte ();
+    uint16_t read_short();
+    uint32_t read_uint ();
+    float    read_float();
     std::string   read_string();
 
     // Esta clase solo se usara en el stack que fue instanciada.

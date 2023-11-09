@@ -32,6 +32,17 @@ void NetBuffer::push_uint(const uint32_t value) {
     data[index++] = hostval[3];
 }
 
+void NetBuffer::push_float(const float value) {
+    uint32_t transfer = htonl(value);
+    char* hostval = reinterpret_cast<char*>(&transfer);
+    
+    extend_by(4);
+    data[index++] = hostval[0];
+    data[index++] = hostval[1];
+    data[index++] = hostval[2];
+    data[index++] = hostval[3];
+}
+
 void NetBuffer::push_string(const string  &value) {
     push_short(value.size());
     extend_by(value.size());

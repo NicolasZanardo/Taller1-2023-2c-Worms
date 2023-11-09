@@ -4,24 +4,19 @@
 using namespace std;
 bool purged_zombie(Client* cli);
 
-WaitingLobby::WaitingLobby(const char* servname) :
-    Thread(), 
-    host(servname),
-    clients_mtx(),
-    clients()
+WaitingLobby::WaitingLobby() :
+    Thread(), clients_mtx(),
+    clients(), input_queue(60)
     {}
 
 void WaitingLobby::run() {
-    int next_id = 1;
     while (keep_running_) {
         try {
-            Client* newClient = new Client(next_id++, host.accept());
-            clients.push_back(newClient);
-
-            cout << "Joined client: " << newClient->id << ".\n";
-            newClient->communicate(new NetMessageInformID(newClient->id));
-
+            NetMessage* message = input_queue.pop();
             remove_zombies();
+            message->execute(*this);
+
+            delete(message);
         } catch (const std::exception& ex) {
             keep_running_ = false;
         }
@@ -31,44 +26,11 @@ void WaitingLobby::run() {
 void WaitingLobby::stop() {
     keep_running_ = false;
 
-    try {
-        host.shutdown(2);
-        host.close();
-    } 
-    catch (const std::exception& e) {}
-
-    std::lock_guard lock(clients_mtx);
+    lock_guard lock(clients_mtx);
     for (auto it : clients) {
         delete(it);
     }
     clients.clear();
-}
-
-void WaitingLobby::kick(const int client_id) {
-    remove_zombies();
-    std::lock_guard lock(clients_mtx);
-
-    for (auto it : clients) {
-        if (it->id == client_id) {
-            auto msg = new NetMessageLeave(client_id);
-            it->communicate(msg);
-        }
-    }
-
-    //clients.remove(instance);
-    //delete(instance);
-}
-
-void WaitingLobby::chat(const int client_id, string& msg) {
-    remove_zombies();
-    std::lock_guard lock(clients_mtx);
-    
-    for (auto it : clients) {
-        if (!it->is_alive())
-            continue;
-
-        it->communicate(new NetMessageChat(client_id, msg));
-    }
 }
 
 void WaitingLobby::remove_zombies() {
@@ -91,3 +53,38 @@ void WaitingLobby::start_game() {
             );
     game->start();
 } // TODO There is no Join for now
+
+void WaitingLobby::add(Client* new_client) {
+    std::lock_guard lock(clients_mtx);
+    clients.push_back(new_client);
+    new_client->switch_lobby(&input_queue);
+    new_client->communicate(new NetMessageInformID(new_client->id));
+}
+
+void WaitingLobby::run(NetMessageChat* msg) {
+    std::lock_guard lock(clients_mtx);
+    for (auto it : clients) {
+        it->communicate(new NetMessageChat(msg->client_id, msg->chat));
+    }
+    cout << "Client " << msg->client_id << ": said:" << msg->chat << "\n";
+}
+
+void WaitingLobby::run(NetMessageLeave* msg) {
+    std::lock_guard lock(clients_mtx);
+    for (auto it : clients) {
+        if (it->id == msg->client_id) {
+            it->disconnect();
+        } else {
+            it->communicate(new NetMessageChat(msg->client_id, "I'm leaving."));
+        }
+    }
+    cout << "Kicking client " << msg->client_id << "\n";
+}
+
+void WaitingLobby::run(NetMessageInformID* msg) {
+    cerr << "The client " << msg->client_id << " informed their id...";
+}
+
+void WaitingLobby::run(NetMessage_test* msg) {
+    cerr << "A test message was recieved...";
+}

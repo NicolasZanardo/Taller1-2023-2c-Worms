@@ -7,6 +7,7 @@
 #include "Networking/net_buffer.h"
 #include "Networking/net_protocol_interpreter.h"
 #include "Networking/net_channel.h"
+#include "Networking/net_operator.h" 
 
 #include "Networking/Messages/net_queue.h"
 #include "Networking/Messages/net_message.h"

@@ -1,0 +1,36 @@
+#include "net_message_initial_game_state.h"
+
+NetMessageInitialGameState::NetMessageInitialGameState()
+    : NetMessage(NET_MESSAGE_TYPE_INITIAL_STATE)
+    {}
+
+void NetMessageInitialGameState::push_data_into(NetBuffer& container) {
+    NetMessage::push_data_into(container);
+    container.push_float(room_width);
+    container.push_float(room_height);
+    container.push_short(beams.size());
+    for(auto it : beams) {
+        container.push_float(it.x);
+        container.push_float(it.y);
+        container.push_float(it.angle);
+        container.push_byte(static_cast<uint8_t>(it.type));
+    }
+}
+
+void NetMessageInitialGameState::pull_data_from(NetProtocolInterpreter& channel) {
+    room_width = channel.read_float();
+    room_height = channel.read_float();
+    short size = channel.read_short();
+    for(short i = 0; i < size; i++) {
+        beams.emplace_back(
+            channel.read_float(),
+            channel.read_float(),
+            channel.read_float(),
+            static_cast<Beam::Type>(channel.read_byte())
+        );
+    }
+}
+
+void NetMessageInitialGameState::execute(NetMessageBehaviour& interpreter) {
+    interpreter.run(this);
+}

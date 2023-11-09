@@ -13,6 +13,8 @@ add_library( server
     src/lobby/host.cpp
     src/lobby/waiting_lobby.h
     src/lobby/waiting_lobby.cpp
+    src/lobby/client_accepter.h
+    src/lobby/client_accepter.cpp
 
     src/main/server.h
     src/main/server.cpp

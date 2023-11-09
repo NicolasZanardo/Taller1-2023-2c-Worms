@@ -1,7 +1,9 @@
 #include <iostream>
 #include <stdexcept>
 #include <string>
+
 #include "src/main/server.h"
+#include "src/dumb_client.h"
 
 
 #define SERVER_CMND_LINE_ARGS 1
@@ -27,12 +29,18 @@ int main(int argc, char* argv[]) {
             return 1;
         }
 
-        Server server(argv[1]);
         if (testRun) {
             std::cout << "Running test " << (isHost ? "host\n" : "client\n");
-            server.test_isHost(isHost);
+            if (isHost) {
+                Server server(argv[1]);
+                server.execute();
+            } else {
+                DumbClient cli("localhost", argv[1]);
+                cli.forward();
+            }
         } else {
             std::cout << "Running app\n";
+            Server server(argv[1]);
             server.execute();
         }
 

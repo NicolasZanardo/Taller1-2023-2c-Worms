@@ -2,10 +2,12 @@
 #define SERVER_DUMB_CLIENT_H_
 
 #include "../../common_base/networking.h"
+class DumbInterpreter;
 
 class DumbClient {
-    NetChannel channel;
     bool keep;
+    NetChannel channel;
+    DumbInterpreter* interpreter;
 
     public:
     DumbClient(const char* serv, const char* port);

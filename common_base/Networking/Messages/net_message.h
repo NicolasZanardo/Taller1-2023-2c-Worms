@@ -7,10 +7,6 @@
 #include "../net_protocol_interpreter.h"
 #include "net_message_behaviour.h"
 
-#define NET_MESSAGE_TYPE_TEST 0
-#define NET_MESSAGE_TYPE_CHAT 1
-#define NET_MESSAGE_TYPE_LEAVE 2
-#define NET_MESSAGE_TYPE_INFORM_ID 3
 
 class NetMessage {
     public:

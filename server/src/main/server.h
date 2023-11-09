@@ -3,17 +3,19 @@
 
 #include <string>
 #include <vector>
+#include <memory>
 #include "../lobby/waiting_lobby.h"
+#include "../lobby/client_accepter.h"
 
 class Server {
-    const char* servname;
-	WaitingLobby* lobby;
+    WaitingLobby lobby;
+    ClientAccepter accepter;
 public:
     explicit Server(const char* servname);
     ~Server();
     void execute();
-    void test_isHost(bool isHost);
 
+    void handle_input();
     void kick(std::vector<std::string>&);
     void chat(std::vector<std::string>&);
     void error(std::vector<std::string>&, std::string&);

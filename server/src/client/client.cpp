@@ -18,12 +18,8 @@ const bool Client::is_alive() const {
 }
 
 Client::~Client() {
-    msg_sender.stop();
-    msg_reciever.stop();
-
-    send_queue.close();
-    channel.dissconect();
-    std::cout << "Dissconecting client " << id << "\n";
+    if (!is_alive())
+        disconnect();
 }
 
 void Client::switch_lobby(NetQueue* new_game_queue) {
@@ -32,5 +28,17 @@ void Client::switch_lobby(NetQueue* new_game_queue) {
 }
 
 void Client::communicate(NetMessage* net_message) {
-    send_queue.push(net_message);
+    try {
+        send_queue.push(net_message);
+    } catch (std::exception& ex) {
+        delete(net_message);
+    }
+}
+
+void Client::disconnect() {
+    msg_sender.stop();
+    msg_reciever.stop();
+
+    send_queue.close();
+    channel.dissconect();
 }
