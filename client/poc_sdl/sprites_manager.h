@@ -15,6 +15,7 @@ public:
     ~SpritesManager() = default;
 
     void addSprite(std::string id, std::string sprite_file);
+    void renderSprite(std::string id, const SDL2pp::Rect dst, SDL_RendererFlip &flip_type);
     void renderSprite(std::string id, uint16_t num_frame, const SDL2pp::Rect dst, SDL_RendererFlip &flip_type);
 
 private:

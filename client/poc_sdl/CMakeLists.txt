@@ -11,6 +11,7 @@ add_executable (sdlpp-events
     event_handler.cpp event_handler.h
     frame_selector.cpp frame_selector.h
     game_loop.cpp game_loop.h
+    icon.cpp icon.h
     player_state.cpp player_state.h
     sprite.cpp sprite.h
     sprites_manager.cpp sprites_manager.h

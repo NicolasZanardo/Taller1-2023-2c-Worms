@@ -17,6 +17,15 @@ void SpritesManager::addSprite(std::string id, std::string sprite_file) {
     );
 }
 
+void SpritesManager::renderSprite(std::string id, const SDL2pp::Rect dst, SDL_RendererFlip &flip_type) {
+    auto it = this->sprites.find(id);
+    if (it == this->sprites.end()) {
+        throw std::runtime_error("The name has alredy been used by another sprite");
+    }
+
+    it->second.render(dst, flip_type);
+}
+
 void SpritesManager::renderSprite(std::string id, uint16_t num_frame,
                                 const SDL2pp::Rect dst, SDL_RendererFlip &flip_type) {
     auto it = this->sprites.find(id);

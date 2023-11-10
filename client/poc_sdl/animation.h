@@ -16,7 +16,7 @@ public:
     ~Animation() = default;
 
     void update(float dt);
-    void render(const SDL2pp::Rect dest, bool facing_right);
+    void render(const SDL2pp::Rect dest, bool facing_left);
 
 private:
     bool img_looking_left;  // Sprite image orientarion.
