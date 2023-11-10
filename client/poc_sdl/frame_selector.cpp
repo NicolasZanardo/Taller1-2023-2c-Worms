@@ -2,15 +2,17 @@
 
 #include <stdexcept>
 
-FrameSelector::FrameSelector(uint16_t num_frames, uint16_t init_frame)
-    : mode(FrameSelectorMode::BOUNCE)
+FrameSelector::FrameSelector(FrameSelectorMode mode, uint16_t num_frames, uint16_t init_frame)
+    : mode(mode)
     , delta(+1)
     , num_frames(num_frames)
     , current_frame(init_frame) {
     if (mode == FrameSelectorMode::BOUNCE) {
         this->advance_frame = &FrameSelector::advanceFrame_bounce;
     } else if (mode == FrameSelectorMode::CIRCULAR) {
-    this->advance_frame = &FrameSelector::advanceFrame_circular;
+        this->advance_frame = &FrameSelector::advanceFrame_circular;
+    } else if (mode == FrameSelectorMode::STAY_LAST) {
+        this->advance_frame = &FrameSelector::advanceFrame_stayLast;
     } else {
         throw std::invalid_argument("Error: Invalid Mode in FrameSelector.");
     }
@@ -41,4 +43,10 @@ void FrameSelector::advanceFrame_bounce() {
 void FrameSelector::advanceFrame_circular() {
     this->current_frame += delta;
     this->current_frame %= this->num_frames;
+}
+
+void FrameSelector::advanceFrame_stayLast() {
+    if (this->current_frame < (this->num_frames - 1)) {
+        this->current_frame += delta;
+    }
 }

@@ -12,7 +12,7 @@ class Animation {
 public:
     Animation() = delete;
     explicit Animation(SpritesManager& sprites_manage, const std::string& id,
-                                    uint16_t num_frames, bool img_looking_left);
+                            FrameSelectorMode mode, uint16_t num_frames, bool img_looking_left);
     ~Animation() = default;
 
     void update(float dt);
@@ -21,6 +21,7 @@ public:
 private:
     bool img_looking_left;  // Sprite image orientarion.
     float elapsed;  // Time elapsed since last update.
+    FrameSelectorMode mode;
     FrameSelector frame_selector;
     SpritesManager* sprites_manager;
     std::string id;

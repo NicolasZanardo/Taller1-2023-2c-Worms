@@ -5,13 +5,14 @@
 
 enum class FrameSelectorMode : uint8_t {
     BOUNCE = 0x00,
-    CIRCULAR = 0x01
+    CIRCULAR = 0x01,
+    STAY_LAST = 0x02
 };
 
 class FrameSelector {
 public:
     FrameSelector() = delete;
-    explicit FrameSelector(uint16_t num_frames, uint16_t init_frame);
+    explicit FrameSelector(FrameSelectorMode mode, uint16_t num_frames, uint16_t init_frame);
     ~FrameSelector() = default;
 
     void advanceFrame();
@@ -21,6 +22,7 @@ public:
 private:
     void advanceFrame_bounce();
     void advanceFrame_circular();
+    void advanceFrame_stayLast();
 
     FrameSelectorMode mode;
     int8_t delta;

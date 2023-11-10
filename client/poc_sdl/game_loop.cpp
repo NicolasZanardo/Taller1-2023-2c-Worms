@@ -17,7 +17,7 @@ void GameLoop::execute(EventHandler& event_handler, PlayerState& player_state) {
     double it = FRAME_RATE;
     double it_prev = 0;
 
-    while (running) {
+    while (running) {        
         running = event_handler.handleEvents();
         double dt = it - it_prev;
         this->update(player_state, dt);

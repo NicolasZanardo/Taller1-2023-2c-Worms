@@ -4,6 +4,7 @@
 #include <chrono>
 #include <thread>
 
+#include "event_handler.h"
 #include "game_loop.h"
 #include "player_state.h"
 #include "sprite.h"
@@ -11,8 +12,7 @@
 
 Client::Client(const char* host_name, const char* service_name)
     : receiver(state_queue, echo_queue)
-    , sender(event_queue, echo_queue)
-    , event_handler(event_queue) {}
+    , sender(event_queue, echo_queue) {}
 
 void Client::execute() {
     SDL2pp::SDL sdl(SDL_INIT_VIDEO);
@@ -23,6 +23,8 @@ void Client::execute() {
         SDL_WINDOW_RESIZABLE);
 
     SDL2pp::Renderer renderer(window, -1, SDL_RENDERER_ACCELERATED);
+
+    EventHandler event_handler(window, event_queue);
 
     SpritesManager sprites_manager(renderer);
     sprites_manager.addSprite("wwalk", "assets/wwalk.png");

@@ -7,7 +7,6 @@
 
 #include "client_receiver.h"
 #include "client_sender.h"
-#include "event_handler.h"
 #include "game_loop.h"
 
 #include "queue.h"
@@ -33,8 +32,6 @@ private:
 
     ClientReceiver receiver;
     ClientSender sender;
-    
-    EventHandler event_handler;
 };
 
 #endif  // __CLIENT_H__
