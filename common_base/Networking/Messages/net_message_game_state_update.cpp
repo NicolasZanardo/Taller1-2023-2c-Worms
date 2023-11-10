@@ -33,7 +33,7 @@ void NetMessageGameStateUpdate::push_data_into(NetBuffer& container) {
     container.push_float(remaining_turn_time);
 
     container.push_short(worms.size());
-    for(int i = 0; i < worms.size(); i++) {
+    for(size_t i = 0; i < worms.size(); i++) {
         container.push_uint(worms[i].client_id);
         container.push_uint(worms[i].entity_id);
         container.push_float(worms[i].x);
@@ -43,7 +43,7 @@ void NetMessageGameStateUpdate::push_data_into(NetBuffer& container) {
     }
 
     container.push_short(bullets.size());
-    for(int i = 0; i < bullets.size(); i++) {
+    for(size_t i = 0; i < bullets.size(); i++) {
         container.push_uint(bullets[i].entity_id);
         container.push_float(bullets[i].x);
         container.push_float(bullets[i].y);
@@ -52,7 +52,7 @@ void NetMessageGameStateUpdate::push_data_into(NetBuffer& container) {
     }
 
     container.push_short(events.size());
-    for(int i = 0; i < events.size(); i++) {
+    for(size_t i = 0; i < events.size(); i++) {
         container.push_uint(events[i].entity_id);
         container.push_float(events[i].x);
         container.push_float(events[i].y);
