@@ -1,8 +1,6 @@
 #include "waiting_lobby.h"
 #include <exception>
 #include <iostream>
-#include "../GameInstance.h"
-#include "../client/client.h"
 
 using namespace std;
 bool purged_zombie(Client* cli);

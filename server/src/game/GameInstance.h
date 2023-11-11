@@ -2,6 +2,7 @@
 #define SERVER_GAMEINSTANCE_H
 
 #include <unordered_map>
+#include <list>
 #include <vector>
 #include <algorithm> // Include for std::random_shuffle
 #include <cstdlib>   // Include for std::srand and std::rand
