@@ -1,16 +1,24 @@
-//
-// Created by Juan Martin Duzac on 10/11/2023.
-//
+#ifndef SERVER_INGAMECLIENTS_H
+#define SERVER_INGAMECLIENTS_H
 
-#ifndef TP_WORMS_INGAMECLIENTS_H
-#define TP_WORMS_INGAMECLIENTS_H
-
-
+#include <unordered_map>
+#include <list>
+#include "../client/client.h"
 
 class InGameClients {
 
+    std::unordered_map<size_t, Client*> clients;
+
+public:
+    explicit InGameClients(const std::list<Client*>& clients);
+
+    void sendAll(NetMessage* msg);
+    void send(size_t clientId, NetMessage* msg);
+
+    size_t size();
+
+    void remove(size_t clientId);
 };
 
 
-
-#endif //TP_WORMS_INGAMECLIENTS_H
+#endif
