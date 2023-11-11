@@ -27,16 +27,13 @@ void WaitingLobby::run() {
 void WaitingLobby::stop() {
     keep_running_ = false;
     input_queue.close();
-
-    {
-        lock_guard lock(clients_mtx);
-        for (auto it : clients) {
-            delete(it);
-        }
-        clients.clear();
-    }
-
     join();
+
+    lock_guard lock(clients_mtx);
+    for (auto it : clients) {
+        delete(it);
+    }
+    clients.clear();
 }
 
 void WaitingLobby::remove_zombies() {
