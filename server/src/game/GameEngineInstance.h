@@ -3,13 +3,14 @@
 
 #include <list>
 #include <unordered_map>
-#include "../../common_base/Networking/Messages/net_queue.h"
-#include "../../common_base/networking.h"
-#include "../../common_base/thread.h"
-#include "simulation/PhysicsSystem.h"
-#include "client/client.h"
+#include "../../../common_base/Networking/Messages/net_queue.h"
+#include "../../../common_base/networking.h"
+#include "../../../common_base/thread.h"
+#include "../simulation/PhysicsSystem.h"
+#include "../client/client.h"
 #include "model/instances/Worm.h"
 #include "model/instances/InstancesManager.h"
+#include "GameNetMessageBehaviour.h"
 
 typedef std::unordered_map<Client*, std::list<Worm *>> ClientWormsMap;
 
@@ -19,6 +20,8 @@ private:
     InstancesManager instancesManager;
     ClientWormsMap clientWormsMap;
     NetQueue gameQueue;
+    GameNetMessageBehaviour netMessageBehaviour;
+
 
     // Init methods
     void init_game(const GameScenarioData& scenario, const std::list<Client*>& clients);

@@ -8,7 +8,8 @@ GameInstance::GameInstance(
 ): physicsSystem(xGravity, yGravity, scenario),
    instancesManager(physicsSystem),
    clientWormsMap(),
-   gameQueue(50) {
+   gameQueue(100),
+   netMessageBehaviour() {
     init_game(scenario, clients);
 }
 
@@ -117,15 +118,16 @@ void GameInstance::_broadcast_game_state_update() {
 
 // Loop methods
 void GameInstance::_process_actions() {
-    /* NetMessage* msg = nullptr;
+    NetMessage* msg = nullptr;
     while ((msg = gameQueue.pop())) {
         try {
-            msg->exec(game);
-        } catch () {
-
+            // TODO IF (msg is from active_client)
+            msg->execute(netMessageBehaviour);
+        } catch (const std::exception& ex) {
+            // TODO
         }
         delete msg;
-    } */
+    }
 }
 
 void GameInstance::_apply_physics() {

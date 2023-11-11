@@ -1,0 +1,8 @@
+//
+// Created by Juan Martin Duzac on 11/11/2023.
+//
+
+#ifndef TP_WORMS_BEAMSCENARIODATA_H
+#define TP_WORMS_BEAMSCENARIODATA_H
+
+#endif //TP_WORMS_BEAMSCENARIODATA_H

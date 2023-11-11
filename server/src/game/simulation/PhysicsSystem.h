@@ -2,8 +2,8 @@
 #define SERVER_PHYSICSSYSTEM_H
 
 #include <box2d/box2d.h>
-#include "../../../common_base/Networking/dtos/GameScenarioData.h"
-#include "../model/instances/Worm.h"
+#include "../game/scenario/GameScenarioData.h"
+#include "../game/model/instances/Worm.h"
 
 class PhysicsSystem {
 public:
@@ -16,7 +16,7 @@ private:
     const int32 velocityIterations = 8;
     const int32 positionIterations = 3;
     void populate_beams(const GameScenarioData& map);
-    void spawn_beam(BeamDto beam);
+    void spawn_beam(BeamScenarioData beam);
 
 };
 
