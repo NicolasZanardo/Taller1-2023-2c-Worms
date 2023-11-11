@@ -2,6 +2,7 @@
 #define __PLAYER_STATE_H__
 
 #include "animation.h"
+#include "icon.h"
 #include "sprites_manager.h"
 
 class PlayerState {

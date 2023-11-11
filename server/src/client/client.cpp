@@ -18,7 +18,7 @@ const bool Client::is_alive() const {
 }
 
 Client::~Client() {
-    if (!is_alive())
+    if (is_alive())
         disconnect();
 }
 

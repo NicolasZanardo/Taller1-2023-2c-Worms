@@ -20,10 +20,17 @@ void NetMessageGameStateUpdate::add(const WormDto& worm) {
     worms.push_back(worm);
 }
 
-void add(BulletDto& bullet);
-void add(WorldEventDto& event);
+void NetMessageGameStateUpdate::add(const BulletDto& bullet) {
+    bullets.push_back(bullet);
+}
 
-//virtual void execute(NetMessageBehaviour& interpreter) override;
+void NetMessageGameStateUpdate::add(const WorldEventDto& event) {
+    events.push_back(event);
+}
+
+void NetMessageGameStateUpdate::execute(NetMessageBehaviour& interpreter) {
+    interpreter.run(this);
+}
 
 void NetMessageGameStateUpdate::push_data_into(NetBuffer& container) {
     NetMessage::push_data_into(container);
@@ -33,7 +40,7 @@ void NetMessageGameStateUpdate::push_data_into(NetBuffer& container) {
     container.push_float(remaining_turn_time);
 
     container.push_short(worms.size());
-    for(int i = 0; i < worms.size(); i++) {
+    for(size_t i = 0; i < worms.size(); i++) {
         container.push_uint(worms[i].client_id);
         container.push_uint(worms[i].entity_id);
         container.push_float(worms[i].x);
@@ -43,7 +50,7 @@ void NetMessageGameStateUpdate::push_data_into(NetBuffer& container) {
     }
 
     container.push_short(bullets.size());
-    for(int i = 0; i < bullets.size(); i++) {
+    for(size_t i = 0; i < bullets.size(); i++) {
         container.push_uint(bullets[i].entity_id);
         container.push_float(bullets[i].x);
         container.push_float(bullets[i].y);
@@ -52,7 +59,7 @@ void NetMessageGameStateUpdate::push_data_into(NetBuffer& container) {
     }
 
     container.push_short(events.size());
-    for(int i = 0; i < events.size(); i++) {
+    for(size_t i = 0; i < events.size(); i++) {
         container.push_uint(events[i].entity_id);
         container.push_float(events[i].x);
         container.push_float(events[i].y);
@@ -98,8 +105,4 @@ void NetMessageGameStateUpdate::pull_data_from(NetProtocolInterpreter& channel) 
             static_cast<WorldEventDto::Type>(channel.read_byte())
         );
     }
-}
-
-void NetMessageGameStateUpdate::execute(NetMessageBehaviour& interpreter) {
-    interpreter.run(this);
 }

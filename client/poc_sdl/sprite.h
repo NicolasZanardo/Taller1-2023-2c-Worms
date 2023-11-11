@@ -17,6 +17,8 @@ public:
     Sprite(const Sprite& other) = delete;
     Sprite& operator=(const Sprite& other) = delete;
 
+    void setColorMod(uint8_t r, uint8_t g, uint8_t b);
+    void render(const SDL2pp::Rect dst, SDL_RendererFlip &flip_type);
     void render(uint16_t num_frame, const SDL2pp::Rect dst, SDL_RendererFlip &flip_type);
     uint32_t getWidth() const { return this->texture.GetWidth(); }
     uint32_t getHeight() const { return this->texture.GetHeight(); }

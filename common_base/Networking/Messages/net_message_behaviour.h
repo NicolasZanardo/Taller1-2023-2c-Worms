@@ -27,5 +27,6 @@ class NetMessageBehaviour {
     virtual void run(NetMessageGameStateUpdate* msg) = 0;
     virtual void run(NetMessageGameAction* msg) = 0;
 
+    virtual ~NetMessageBehaviour() {};
 };
 #endif

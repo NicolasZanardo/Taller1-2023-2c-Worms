@@ -1,7 +1,7 @@
 #ifndef SERVER_GAMEMAP_H
 #define SERVER_GAMEMAP_H
 
-#include <list>
+#include <vector>
 #include "WormScenarioData.h"
 #include "BeamScenarioData.h"
 

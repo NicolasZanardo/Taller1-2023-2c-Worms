@@ -18,6 +18,6 @@ class NetMessage {
     virtual void push_data_into(NetBuffer& container);
     virtual void execute(NetMessageBehaviour& interpreter) = 0;
 
-    virtual ~NetMessage() {}
+    virtual ~NetMessage();
 };
 #endif

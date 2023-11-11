@@ -11,6 +11,7 @@ class DumbClient {
 
     public:
     DumbClient(const char* serv, const char* port);
+    ~DumbClient();
 
     void forward();
     void stop();
@@ -28,5 +29,7 @@ class DumbInterpreter : public NetMessageBehaviour {
     virtual void run(NetMessageInitialGameState* msg) override;
     virtual void run(NetMessageGameStateUpdate* msg) override;
     virtual void run(NetMessageGameAction* msg) override;
+
+    ~DumbInterpreter() {}
 };
 #endif 
