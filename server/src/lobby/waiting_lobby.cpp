@@ -76,11 +76,11 @@ void WaitingLobby::run(NetMessageChat* msg) {
     for (auto it : clients) {
         it->communicate(new NetMessageChat(msg->client_id, msg->chat));
     }
-    cout << "Client " << msg->client_id << ": said:" << msg->chat << ".\n";
+    cout << "Client " << msg->client_id << ": said: " << msg->chat << ".\n";
 }
 
 void WaitingLobby::run(NetMessageLeave* msg) {
-    std::lock_guard lock(clients_mtx);
+    lock_guard lock(clients_mtx);
     for (auto it : clients) {
         if (it->id == msg->client_id) {
             it->disconnect();

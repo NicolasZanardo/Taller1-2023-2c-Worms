@@ -89,11 +89,9 @@ GameEvent EventHandler::_getKeyDownEv(const SDL_Event &e) {
         case RIGHT_KEY: {
             return MOVING_RIGHT_EV;
         }
-
-        default: {
-            break;
-        }
     }
+    
+    return INVALID_EV;
 }
 
 GameEvent EventHandler::_getKeyUpEv(const SDL_Event &e) {
