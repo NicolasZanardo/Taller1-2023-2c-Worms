@@ -4,17 +4,17 @@
 #include <list>
 #include <mutex>
 #include <string>
-#include "../GameInstance.h"
-#include "../client/client.h"
 #include "../../../common_base/thread.h"
 #include "../../../common_base/networking.h"
 #include "../../../common_base/Networking/dtos/HardcodedScenarioData.h"
+class Client;
+class GameInstance;
 
 class WaitingLobby : public Thread, public NetMessageBehaviour {
     std::mutex clients_mtx;
     std::list<Client*> clients;
     NetQueue input_queue;
-    
+
     void remove_zombies();
 
     public:
@@ -22,8 +22,8 @@ class WaitingLobby : public Thread, public NetMessageBehaviour {
 
     void run() override;
     void stop() override;
-    void start_game(); // TODO For now 1 Game
     void add(Client* new_client);
+    GameInstance* start_game(); // TODO For now 1 Game
 
 
     void run(NetMessageChat* msg) override;

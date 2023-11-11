@@ -1,6 +1,9 @@
 #include "waiting_lobby.h"
 #include <exception>
 #include <iostream>
+#include "../GameInstance.h"
+#include "../client/client.h"
+
 using namespace std;
 bool purged_zombie(Client* cli);
 
@@ -49,15 +52,14 @@ bool purged_zombie(Client* cli) {
     return true;
 }
 
-void WaitingLobby::start_game() {
+GameInstance* WaitingLobby::start_game() {
     auto game = new GameInstance(
         0.0f, -10.f, HardcodedScenarioData::get(),  // TODO GameConfig struct
         clients
         );
     game->start();
 
-    game->stop();
-    delete(game);
+    return game;
 } // TODO There is no Join for now
 
 void WaitingLobby::add(Client* new_client) {

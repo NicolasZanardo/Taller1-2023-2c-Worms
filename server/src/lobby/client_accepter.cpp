@@ -1,4 +1,5 @@
 #include "client_accepter.h"
+#include "../client/client.h"
 #include <utility>
 
 ClientAccepter::ClientAccepter(const char* servname, WaitingLobby& lobby) :
