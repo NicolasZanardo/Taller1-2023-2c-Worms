@@ -14,6 +14,7 @@ class WaitingLobby : public Thread, public NetMessageBehaviour {
     std::mutex clients_mtx;
     std::list<Client*> clients;
     NetQueue input_queue;
+    
     void remove_zombies();
 
     public:

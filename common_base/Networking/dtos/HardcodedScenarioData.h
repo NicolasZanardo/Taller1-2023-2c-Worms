@@ -52,6 +52,8 @@ public:
         worm4.x = 9.0f;
         worm4.y = 0.0f;
         scenario.worms.push_back(worm4);
+
+        return scenario;
     }
 };
 

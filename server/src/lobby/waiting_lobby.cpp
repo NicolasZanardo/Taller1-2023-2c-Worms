@@ -12,6 +12,7 @@ WaitingLobby::WaitingLobby() :
 void WaitingLobby::run() {
     while (keep_running_) {
         try {
+            return;
             NetMessage* message = input_queue.pop();
             remove_zombies();
             message->execute(*this);
@@ -25,16 +26,21 @@ void WaitingLobby::run() {
 
 void WaitingLobby::stop() {
     keep_running_ = false;
+    input_queue.close();
 
-    lock_guard lock(clients_mtx);
-    for (auto it : clients) {
-        delete(it);
+    {
+        lock_guard lock(clients_mtx);
+        for (auto it : clients) {
+            delete(it);
+        }
+        clients.clear();
     }
-    clients.clear();
+
+    join();
 }
 
 void WaitingLobby::remove_zombies() {
-    std::lock_guard lock(clients_mtx);
+    lock_guard lock(clients_mtx);
     clients.remove_if(purged_zombie);
 }
 
@@ -48,10 +54,13 @@ bool purged_zombie(Client* cli) {
 
 void WaitingLobby::start_game() {
     auto game = new GameInstance(
-            0.0f, -10.f, HardcodedScenarioData::get(),  // TODO GameConfig struct
-            clients
-            );
+        0.0f, -10.f, HardcodedScenarioData::get(),  // TODO GameConfig struct
+        clients
+        );
     game->start();
+
+    game->stop();
+    delete(game);
 } // TODO There is no Join for now
 
 void WaitingLobby::add(Client* new_client) {
@@ -84,17 +93,17 @@ void WaitingLobby::run(NetMessageLeave* msg) {
 }
 
 void WaitingLobby::run(NetMessageInformID* msg) {
-    cerr << "ERROR: The client " << msg->client_id << " informed their id...";
+    cout << "ERROR: The client " << msg->client_id << " informed their id...";
 }
 
 void WaitingLobby::run(NetMessage_test* msg) {
-    cerr << "ERROR: A test message was recieved...";
+    cout << "ERROR: A test message was recieved...";
 }
 
 void WaitingLobby::run(NetMessageInitialGameState* msg) {
-    cerr << "ERROR: Shouldnt receive MessageInitialState...";
+    cout << "ERROR: Shouldnt receive MessageInitialState...";
 }
 
 void WaitingLobby::run(NetMessageGameStateUpdate* msg) {
-    cerr << "ERROR: Shouldnt receive MessageGameUpdate...";
+    cout << "ERROR: Shouldnt receive MessageGameUpdate...";
 }

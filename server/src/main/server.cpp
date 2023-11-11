@@ -8,8 +8,11 @@ using namespace std;
 void Server::execute() {
 	lobby.start();
 	accepter.start();
-	
+
 	handle_input();
+
+	accepter.stop();
+	lobby.stop();
 }
 
 vector<string> split(string& action);
