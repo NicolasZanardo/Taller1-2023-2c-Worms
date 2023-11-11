@@ -1,6 +1,4 @@
 #include "server.h"
-#include "../dumb_client.h"
-#include "../GameInstance.h"
 
 #include <iostream>
 #include <sstream>

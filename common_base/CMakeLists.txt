@@ -6,6 +6,7 @@ add_library(common
     Networking/net_protocol_interpreter.cpp 
     Networking/net_protocol_interpreter.h
 
+        Game/ActionTypeDto.h
         Game/beamDto.h
         Game/bulletDto.h
         Game/eventDto.h
@@ -36,7 +37,9 @@ add_library(common
     Networking/Messages/net_message_leave.h
     Networking/Messages/net_message_inform_id.cpp
     Networking/Messages/net_message_inform_id.h
-    
+        Networking/Messages/net_message_game_action.h
+        Networking/Messages/net_message_game_action.cpp
+
     Networking/Messages/net_message_behaviour.h
     Networking/Messages/net_message_initial_game_state.cpp
     Networking/Messages/net_message_initial_game_state.h
@@ -46,7 +49,7 @@ add_library(common
     Networking/net_channel.cpp 
     Networking/net_channel.h 
 
-    networking.h 
+    networking.h
 )
 
 target_include_directories(common PUBLIC

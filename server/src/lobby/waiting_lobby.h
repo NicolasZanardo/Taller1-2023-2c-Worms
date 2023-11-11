@@ -4,11 +4,14 @@
 #include <list>
 #include <mutex>
 #include <string>
+#include "../game/GameEngineInstance.h"
+#include "../client/client.h"
 #include "../../../common_base/thread.h"
 #include "../../../common_base/networking.h"
-#include "../../../common_base/Networking/dtos/HardcodedScenarioData.h"
+
 class Client;
-class GameInstance;
+class GameEngineInstance;
+#include "../game/scenario/HardcodedScenarioData.h"
 
 class WaitingLobby : public Thread, public NetMessageBehaviour {
     std::mutex clients_mtx;
@@ -23,7 +26,7 @@ class WaitingLobby : public Thread, public NetMessageBehaviour {
     void run() override;
     void stop() override;
     void add(Client* new_client);
-    GameInstance* start_game(); // TODO For now 1 Game
+    GameEngineInstance* start_game(); // TODO For now 1 Game
 
 
     void run(NetMessageChat* msg) override;
@@ -32,6 +35,7 @@ class WaitingLobby : public Thread, public NetMessageBehaviour {
     void run(NetMessageInformID* msg) override;
     void run(NetMessageInitialGameState* msg) override;
     void run(NetMessageGameStateUpdate* msg) override;
+    void run(NetMessageGameAction* msg) override;
 };
 #endif
 

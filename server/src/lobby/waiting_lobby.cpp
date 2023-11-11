@@ -1,8 +1,6 @@
 #include "waiting_lobby.h"
 #include <exception>
 #include <iostream>
-#include "../GameInstance.h"
-#include "../client/client.h"
 
 using namespace std;
 bool purged_zombie(Client* cli);
@@ -52,13 +50,12 @@ bool purged_zombie(Client* cli) {
     return true;
 }
 
-GameInstance* WaitingLobby::start_game() {
-    auto game = new GameInstance(0.0f, -10.f,
-         HardcodedScenarioData::get(),  // TODO GameConfig struct
-        clients
-    );
-    //game->start();
-
+GameEngineInstance* WaitingLobby::start_game() {
+    auto game = new GameEngineInstance(
+            0.0f, -10.f, HardcodedScenarioData::get(),  // TODO GameConfig struct
+            clients
+            );
+    // game->start();
     return game;
 } // TODO There is no Join for now
 
@@ -105,4 +102,8 @@ void WaitingLobby::run(NetMessageInitialGameState* msg) {
 
 void WaitingLobby::run(NetMessageGameStateUpdate* msg) {
     cout << "ERROR: Shouldnt receive MessageGameUpdate...";
+}
+
+void WaitingLobby::run(NetMessageGameAction* msg) {
+    cerr << "Error: received action in lobby..";
 }

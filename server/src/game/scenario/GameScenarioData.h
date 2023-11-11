@@ -3,14 +3,15 @@
 
 #include <vector>
 #include "WormScenarioData.h"
-#include "../../Game/beamDto.h"
+#include "BeamScenarioData.h"
 
 
 struct GameScenarioData { // TODO Have in server package
     float room_width;
     float room_height;
-    std::vector<BeamDto> beams;
+    std::vector<BeamScenarioData> beams;
     std::vector<WormScenarioData> worms;
+
 };
 
 #endif

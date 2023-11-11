@@ -7,6 +7,7 @@
 #define NET_MESSAGE_TYPE_INFORM_ID 3
 #define NET_MESSAGE_TYPE_INITIAL_STATE 4
 #define NET_MESSAGE_TYPE_UPDATE_STATE 5
+#define NET_MESSAGE_TYPE_GAME_ACTION 6
 
 class NetMessageChat;
 class NetMessageLeave;
@@ -14,6 +15,7 @@ class NetMessage_test;
 class NetMessageInformID;
 class NetMessageInitialGameState;
 class NetMessageGameStateUpdate;
+class NetMessageGameAction;
 
 class NetMessageBehaviour {
     public:
@@ -23,6 +25,8 @@ class NetMessageBehaviour {
     virtual void run(NetMessageInformID* msg) = 0;
     virtual void run(NetMessageInitialGameState* msg) = 0;
     virtual void run(NetMessageGameStateUpdate* msg) = 0;
+    virtual void run(NetMessageGameAction* msg) = 0;
+
     virtual ~NetMessageBehaviour() {};
 };
 #endif

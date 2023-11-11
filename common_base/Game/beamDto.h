@@ -1,5 +1,5 @@
-#ifndef COMMON_BEAM_H_
-#define COMMON_BEAM_H_
+#ifndef COMMON_BEAM_DTO_H_
+#define COMMON_BEAM_DTO_H_
 #include <cstdint>
 
 struct BeamDto {
