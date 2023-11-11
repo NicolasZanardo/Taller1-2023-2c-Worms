@@ -1,5 +1,5 @@
 #include "PhysicsCollisionListener.h"
-#include "../game/model/instances/Instance.h"
+#include "../model/instances/Instance.h"
 
 void PhysicsCollisionListener::BeginContact(b2Contact *contact) {
     b2Fixture* fixtureA = contact->GetFixtureA();

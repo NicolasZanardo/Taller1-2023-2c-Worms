@@ -1,9 +1,9 @@
 #ifndef SERVER_PHYSICSSYSTEM_H
 #define SERVER_PHYSICSSYSTEM_H
 
-#include <box2d/box2d.h>
-#include "../game/scenario/GameScenarioData.h"
-#include "../game/model/instances/Worm.h"
+#include "box2d/box2d.h"
+#include "../scenario/GameScenarioData.h"
+#include "../model/instances/Worm.h"
 
 class PhysicsSystem {
 public:
