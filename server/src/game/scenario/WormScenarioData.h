@@ -4,6 +4,8 @@
 struct WormScenarioData {
     float x;
     float y;
-}; // TODO Use another Dto for that encapsulates all the worm state including this
+
+    WormScenarioData(float x, float y): x(x), y(y) {}
+};
 
 #endif

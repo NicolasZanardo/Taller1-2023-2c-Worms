@@ -1,16 +1,13 @@
-//
-// Created by Juan Martin Duzac on 11/11/2023.
-//
+#ifndef SERVER_SCENARIOREADER_H
+#define SERVER_SCENARIOREADER_H
 
-#ifndef TP_WORMS_SCENARIOREADER_H
-#define TP_WORMS_SCENARIOREADER_H
-
-
+#include <string>
+#include "GameScenarioData.h"
+#include "HardcodedScenarioData.h"
 
 class ScenarioReader {
-
+public:
+    GameScenarioData readScenario(std::string filePath);
 };
 
-
-
-#endif //TP_WORMS_SCENARIOREADER_H
+#endif

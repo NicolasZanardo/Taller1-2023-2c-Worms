@@ -1,5 +1,5 @@
-//
-// Created by Juan Martin Duzac on 11/11/2023.
-//
-
 #include "ScenarioReader.h"
+
+GameScenarioData ScenarioReader::readScenario(std::string filePath) {
+    return HardcodedScenarioData::get();
+}
