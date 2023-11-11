@@ -47,7 +47,7 @@ bool purged_zombie(Client* cli) {
 }
 
 void WaitingLobby::start_game() {
-    auto game = new GameInstance(
+    auto game = new GameEngineInstance(
             0.0f, -10.f, HardcodedScenarioData::get(),  // TODO GameConfig struct
             clients
             );
@@ -95,4 +95,8 @@ void WaitingLobby::run(NetMessageInitialGameState* msg) {
 
 void WaitingLobby::run(NetMessageGameStateUpdate* msg) {
     cerr << "Shouldnt receive MessageGameUpdate...";
+}
+
+void WaitingLobby::run(NetMessageGameAction* msg) {
+    cerr << "Error: received action in lobby..";
 }
