@@ -20,10 +20,17 @@ void NetMessageGameStateUpdate::add(const WormDto& worm) {
     worms.push_back(worm);
 }
 
-void add(BulletDto& bullet);
-void add(WorldEventDto& event);
+void NetMessageGameStateUpdate::add(const BulletDto& bullet) {
+    bullets.push_back(bullet);
+}
 
-//virtual void execute(NetMessageBehaviour& interpreter) override;
+void NetMessageGameStateUpdate::add(const WorldEventDto& event) {
+    events.push_back(event);
+}
+
+void NetMessageGameStateUpdate::execute(NetMessageBehaviour& interpreter) {
+    interpreter.run(this);
+}
 
 void NetMessageGameStateUpdate::push_data_into(NetBuffer& container) {
     NetMessage::push_data_into(container);
@@ -98,8 +105,4 @@ void NetMessageGameStateUpdate::pull_data_from(NetProtocolInterpreter& channel) 
             static_cast<WorldEventDto::Type>(channel.read_byte())
         );
     }
-}
-
-void NetMessageGameStateUpdate::execute(NetMessageBehaviour& interpreter) {
-    interpreter.run(this);
 }

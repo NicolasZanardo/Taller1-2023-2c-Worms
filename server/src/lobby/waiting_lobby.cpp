@@ -55,18 +55,20 @@ void WaitingLobby::start_game() {
 } // TODO There is no Join for now
 
 void WaitingLobby::add(Client* new_client) {
-    std::lock_guard lock(clients_mtx);
+    lock_guard lock(clients_mtx);
     clients.push_back(new_client);
     new_client->switch_lobby(&input_queue);
     new_client->communicate(new NetMessageInformID(new_client->id));
+
+    cout << "The client " << new_client->id << " just connected.\n";
 }
 
 void WaitingLobby::run(NetMessageChat* msg) {
-    std::lock_guard lock(clients_mtx);
+    lock_guard lock(clients_mtx);
     for (auto it : clients) {
         it->communicate(new NetMessageChat(msg->client_id, msg->chat));
     }
-    cout << "Client " << msg->client_id << ": said:" << msg->chat << "\n";
+    cout << "Client " << msg->client_id << ": said:" << msg->chat << ".\n";
 }
 
 void WaitingLobby::run(NetMessageLeave* msg) {
@@ -78,21 +80,21 @@ void WaitingLobby::run(NetMessageLeave* msg) {
             it->communicate(new NetMessageChat(msg->client_id, "I'm leaving."));
         }
     }
-    cout << "Kicking client " << msg->client_id << "\n";
+    cout << "Kicking client " << msg->client_id << ".\n";
 }
 
 void WaitingLobby::run(NetMessageInformID* msg) {
-    cerr << "The client " << msg->client_id << " informed their id...";
+    cerr << "ERROR: The client " << msg->client_id << " informed their id...";
 }
 
 void WaitingLobby::run(NetMessage_test* msg) {
-    cerr << "A test message was recieved...";
+    cerr << "ERROR: A test message was recieved...";
 }
 
 void WaitingLobby::run(NetMessageInitialGameState* msg) {
-    cerr << "Shouldnt receive MessageInitialState...";
+    cerr << "ERROR: Shouldnt receive MessageInitialState...";
 }
 
 void WaitingLobby::run(NetMessageGameStateUpdate* msg) {
-    cerr << "Shouldnt receive MessageGameUpdate...";
+    cerr << "ERROR: Shouldnt receive MessageGameUpdate...";
 }

@@ -9,6 +9,10 @@ DumbClient::DumbClient(const char* serv, const char* port) :
     interpreter(new DumbInterpreter(*this))
     {}
 
+DumbClient::~DumbClient() {
+    delete(interpreter);
+}
+
 void DumbClient::forward() {
     try {
         while (keep) {

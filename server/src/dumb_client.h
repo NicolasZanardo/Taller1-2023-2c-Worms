@@ -11,6 +11,7 @@ class DumbClient {
 
     public:
     DumbClient(const char* serv, const char* port);
+    ~DumbClient();
 
     void forward();
     void stop();
