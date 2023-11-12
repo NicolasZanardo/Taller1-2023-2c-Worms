@@ -1,6 +1,7 @@
 #ifndef COMMON_NET_MESSAGE_H_
 #define COMMON_NET_MESSAGE_H_
 
+#include <memory>
 #include <cstdint>
 #include "../../socket.h"
 #include "../net_buffer.h"
@@ -17,7 +18,7 @@ class NetMessage {
     virtual void pull_data_from(NetProtocolInterpreter& channel) = 0;
     virtual void push_data_into(NetBuffer& container);
     virtual void execute(NetMessageBehaviour& interpreter) = 0;
-
+    std::shared_ptr<NetMessage> share();
     virtual ~NetMessage();
 };
 #endif

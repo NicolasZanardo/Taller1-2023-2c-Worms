@@ -91,7 +91,7 @@ void DumbInterpreter::run(NetMessageInformID* msg) {
 }
 
 void DumbInterpreter::run(NetMessage_test* msg) {
-    cout << "short: " << msg->test_short << " uint: " << msg->test_uint << " string: " << msg->test_string << "\n";
+    cout << "short: " << msg->test_short << " uint: " << msg->test_uint << " float: " << msg->test_float << " string: " << msg->test_string << "\n";
 }
 
 void DumbInterpreter::run(NetMessageInitialGameState* msg) {

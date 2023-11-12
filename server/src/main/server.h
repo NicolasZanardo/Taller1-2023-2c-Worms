@@ -25,6 +25,7 @@ public:
     void kick(std::vector<std::string>&);
     void chat(std::vector<std::string>&);
     void start(std::vector<std::string>&);
+    void send_test_message(std::vector<std::string>&);
     void error(std::vector<std::string>&, std::string&);
 
 private:
