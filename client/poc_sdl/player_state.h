@@ -5,6 +5,8 @@
 #include "icon.h"
 #include "sprites_manager.h"
 
+#include "renderer_integer.h"
+
 class PlayerState {
 public:
     explicit PlayerState(SpritesManager& sprites_manager);

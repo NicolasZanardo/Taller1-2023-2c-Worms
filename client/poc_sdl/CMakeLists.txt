@@ -15,6 +15,7 @@ add_executable (sdlpp-events
     player_state.cpp player_state.h
     sprite.cpp sprite.h
     sprites_manager.cpp sprites_manager.h
+    renderer_integer.cpp renderer_integer.h
 )
 
 target_link_libraries(sdlpp-events common ${SDL2PP_LIBRARIES})

@@ -1,14 +1,18 @@
 #include "./sprite.h"
 
-Sprite::Sprite(SDL2pp::Renderer& renderer_ref, const std::string& sprite_file)
+Sprite::Sprite(SDL2pp::Renderer& renderer_ref, const std::string& sprite_file,
+                                uint16_t frame_width, uint16_t frame_height, uint16_t sep)
     : renderer_ptr(&renderer_ref)
     , texture(*renderer_ptr, SDL2pp::Surface(sprite_file.c_str()))
-    , size(texture.GetWidth()) {}
+    , frame_width(frame_width), frame_height(frame_height)
+    , sep(sep) {}
 
 Sprite::Sprite(Sprite&& other)
     : renderer_ptr(other.renderer_ptr)
     , texture(std::move(other.texture))
-    , size(other.size) {}
+    , frame_width(other.frame_width)
+    , frame_height(other.frame_height)
+    , sep(other.sep) {}
 
 Sprite& Sprite::operator=(Sprite&& other) {
     if (&other == this) {
@@ -17,7 +21,9 @@ Sprite& Sprite::operator=(Sprite&& other) {
 
 	this->renderer_ptr = other.renderer_ptr;
     this->texture = std::move(other.texture);
-    this->size = other.size;
+    this->frame_width = other.frame_width;
+    this->frame_height = other.frame_height;
+    this->sep = other.sep;
 
 	return *this;
 }
@@ -40,7 +46,7 @@ void Sprite::render(const SDL2pp::Rect dst, SDL_RendererFlip &flip_type) {
 void Sprite::render(uint16_t num_frame, const SDL2pp::Rect dst, SDL_RendererFlip &flip_type) {
     this->renderer_ptr->Copy(
         this->texture,
-        SDL2pp::Rect(0, this->size * num_frame, this->size, this->size),
+        SDL2pp::Rect(0, (this->frame_height + this->sep) * num_frame, this->frame_width, this->frame_height),
         dst,
         0.0,
         SDL2pp::NullOpt,

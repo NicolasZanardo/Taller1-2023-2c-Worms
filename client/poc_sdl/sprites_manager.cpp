@@ -5,7 +5,8 @@
 SpritesManager::SpritesManager(SDL2pp::Renderer& renderer)
     : renderer(&renderer) {}
 
-void SpritesManager::addSprite(std::string id, std::string sprite_file) {
+void SpritesManager::addSprite(std::string id, std::string sprite_file,
+                uint16_t frame_width, uint16_t frame_height, uint16_t sep) {
     if (this->sprites.find(id) != this->sprites.end()) {
         throw std::runtime_error("The name has alredy been used by another sprite");
     }
@@ -13,7 +14,7 @@ void SpritesManager::addSprite(std::string id, std::string sprite_file) {
     this->sprites.insert(
         std::pair<std::string, Sprite>(
             id,
-            std::move(Sprite(*(this->renderer), sprite_file)))
+            std::move(Sprite(*(this->renderer), sprite_file, frame_width, frame_height, sep)))
     );
 }
 

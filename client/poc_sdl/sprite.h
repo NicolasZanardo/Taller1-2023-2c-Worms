@@ -8,7 +8,8 @@
 class Sprite {
 public:
     Sprite() = delete;
-    explicit Sprite(SDL2pp::Renderer& renderer_ref, const std::string& sprite_file);
+    explicit Sprite(SDL2pp::Renderer& renderer_ref, const std::string& sprite_file,
+                                    uint16_t frame_width, uint16_t frame_height, uint16_t sep);
     ~Sprite() = default;
 
     Sprite(Sprite&& other);
@@ -26,7 +27,9 @@ public:
 private:
     SDL2pp::Renderer* renderer_ptr;
     SDL2pp::Texture texture;
-    uint16_t size;
+    uint16_t frame_width;
+    uint16_t frame_height;
+    uint16_t sep;
 };
 
 #endif  // __SPRITE_H__
