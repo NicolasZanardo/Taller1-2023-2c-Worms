@@ -10,11 +10,11 @@ size_t InGameClients::size(){
     return clients.size();
 }
 
-void InGameClients::send(size_t clientId, NetMessage* msg) {
+void InGameClients::send(size_t clientId, std::shared_ptr<NetMessage> msg) {
     clients[clientId]->communicate(msg);
 }
 
-void InGameClients::sendAll(NetMessage* msg) {
+void InGameClients::sendAll(std::shared_ptr<NetMessage> msg) {
     // Iterate and send it to every client
     for (const auto &[id, client]: clients) {
         client->communicate(msg);
@@ -26,7 +26,7 @@ void InGameClients::remove(size_t clientId) {
         if (id == clientId) {
             client->disconnect();
         } else {
-            client->communicate(new NetMessageChat(clientId, "I'm leaving."));
+            client->communicate(std::shared_ptr<NetMessage>(new NetMessageChat(clientId, "I'm leaving.")));
         }
     }
 }

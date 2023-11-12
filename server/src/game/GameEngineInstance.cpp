@@ -32,22 +32,17 @@ void GameEngineInstance::initial_broadcast(const GameScenarioData &scenario) {
 
 
 void GameEngineInstance::_broadcast_initial_game_state(const GameScenarioData &scenario) {
-    // map BeamScenarioData to BeamDto
-    std::vector<BeamDto> beamDtos;
-    beamDtos.reserve(scenario.beams.size());
-    std::transform(scenario.beams.begin(), scenario.beams.end(), std::back_inserter(beamDtos),
-                   [](const BeamScenarioData& beamScenarioData) {
-                       return beamScenarioData.toBeamDto();
-                   }
+    //map BeamScenarioData to BeamDto
+    auto message = new NetMessageInitialGameState(
+        scenario.room_width,
+        scenario.room_height
     );
 
-    auto initialStateMessage = new NetMessageInitialGameState(
-            scenario.room_width,
-            scenario.room_height,
-            beamDtos
-    );
-    gameClients.sendAll(initialStateMessage);
-    delete initialStateMessage;
+    for (auto item : scenario.beams) {
+        message->add(item.toBeamDto());
+    }
+
+    gameClients.sendAll(std::shared_ptr<NetMessage>(message));
 }
 
 void GameEngineInstance::_broadcast_game_state_update() {
@@ -69,24 +64,14 @@ void GameEngineInstance::_broadcast_game_state_update() {
     // TODO ALSO ADD(&BulletDtos)
     // TODO ALSO ADD(&EventDtos)
 
-    gameClients.sendAll(gameStateUpdateMessage);
-    delete gameStateUpdateMessage;
+    gameClients.sendAll(std::shared_ptr<NetMessage>(gameStateUpdateMessage));
 }
 
 
 // Loop methods
 void GameEngineInstance::_process_actions() {
-    NetMessage *msg = nullptr;
+    std::shared_ptr<NetMessage> msg = nullptr;
     while (gameQueue.try_pop(msg)) {
-        try {
-            auto *action = dynamic_cast<NetMessageGameAction *>(msg);
-            if (action != nullptr && game.isClientsTurn(action->client_id)) {
-                action->execute(netMessageBehaviour);
-            }
-        } catch (const std::exception &ex) {
-            // TODO
-        }
-        delete msg;
+        msg->execute(netMessageBehaviour);
     }
-
 }

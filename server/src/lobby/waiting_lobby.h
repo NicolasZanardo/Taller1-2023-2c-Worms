@@ -8,7 +8,7 @@
 #include "../client/client.h"
 #include "../../../common_base/thread.h"
 #include "../../../common_base/networking.h"
-#include "../../../common_base/Networking/dtos/HardcodedScenarioData.h"
+
 class Client;
 class GameEngineInstance;
 #include "../game/scenario/HardcodedScenarioData.h"

@@ -1,10 +1,10 @@
 #ifndef SERVER_TURNMANAGER_H
 #define SERVER_TURNMANAGER_H
 
+#include <vector>
 #include <cstdio>
 #include <unordered_map>
 #include "model/instances/Worm.h"
-
 
 typedef std::unordered_map<size_t, std::vector<Worm *>> ClientsWorms;
 

@@ -15,11 +15,10 @@ void Sender::run() {
                 return;
             }
             
-            NetMessage* msg = client_queue->pop();
+            std::shared_ptr<NetMessage> msg = client_queue->pop();
             if (client_queue != nullptr && channel != nullptr) {
                 channel->send_message(*msg);
             }
-            delete msg;
 
         } catch (const std::exception& ex) {
             keep_running_ = false;

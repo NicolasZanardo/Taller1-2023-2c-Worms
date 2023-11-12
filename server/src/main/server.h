@@ -14,7 +14,7 @@ class Server {
     ClientAccepter accepter;
 
     std::mutex active_games_mtx;
-    std::list<GameInstance*> active_games;
+    std::list<GameEngineInstance*> active_games;
     
 public:
     explicit Server(const char* servname);

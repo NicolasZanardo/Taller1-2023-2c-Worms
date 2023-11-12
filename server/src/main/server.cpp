@@ -1,6 +1,4 @@
 #include "server.h"
-#include "../dumb_client.h"
-#include "../GameInstance.h"
 
 #include <iostream>
 #include <sstream>
@@ -62,7 +60,8 @@ void Server::chat(vector<string>& values) {
 
 void Server::start(vector<string>& values) {
 	lock_guard lock(active_games_mtx);
-	active_games.push_back(lobby.start_game());
+	auto game = lobby.start_game();
+	active_games.push_back(game);
 }
 
 Server::Server(const char* servname) : 

@@ -30,7 +30,7 @@ private:
 
 
 public:
-    explicit GameEngineInstance(float xGravity, float yGravity, const GameScenarioData& scenario, const std::list<Client*>& clients);
+    GameEngineInstance(float xGravity, float yGravity, const GameScenarioData& scenario, const std::list<Client*>& clients);
     void run() override;
     void stop() override;
 

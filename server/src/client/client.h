@@ -18,7 +18,7 @@ class Client {
 
     const bool is_alive() const;
     void switch_lobby(NetQueue* game_queue);
-    void communicate(NetMessage* net_message);
+    void communicate(std::shared_ptr<NetMessage> net_message);
     void disconnect();
 
     ~Client();

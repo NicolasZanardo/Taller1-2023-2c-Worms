@@ -11,9 +11,10 @@ struct NetMessageInitialGameState : public NetMessage {
     std::vector<BeamDto> beams;
     
     NetMessageInitialGameState();
-    NetMessageInitialGameState(float room_width, float room_height, const std::vector<BeamDto>& beams);
+    NetMessageInitialGameState(float room_width, float room_height);
+    ~NetMessageInitialGameState() override {};
 
-    void add(BeamDto& beam);
+    void add(const BeamDto& beam);
 
     virtual void push_data_into(NetBuffer& container) override;
     virtual void pull_data_from(NetProtocolInterpreter& channel) override;
