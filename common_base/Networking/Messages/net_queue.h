@@ -4,7 +4,7 @@
 #include "../../queue.h"
 class NetMessage;
 
-class NetQueue : public Queue<NetMessage*> {
+class NetQueue : public Queue<std::shared_ptr<NetMessage>> {
     public:
     explicit NetQueue(const unsigned int size);
 };

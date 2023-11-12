@@ -12,8 +12,8 @@ class InGameClients {
 public:
     explicit InGameClients(const std::list<Client*>& clients);
 
-    void sendAll(NetMessage* msg);
-    void send(size_t clientId, NetMessage* msg);
+    void sendAll(std::shared_ptr<NetMessage> msg);
+    void send(size_t clientId, std::shared_ptr<NetMessage> msg);
 
     size_t size();
 

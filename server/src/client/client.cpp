@@ -27,11 +27,11 @@ void Client::switch_lobby(NetQueue* new_game_queue) {
     msg_reciever.switch_lobby(new_game_queue);
 }
 
-void Client::communicate(NetMessage* net_message) {
+void Client::communicate(std::shared_ptr<NetMessage> net_message) {
     try {
         send_queue.push(net_message);
     } catch (std::exception& ex) {
-        delete(net_message);
+        /// No le importa
     }
 }
 

@@ -6,7 +6,10 @@ GameNetMessageBehaviour::GameNetMessageBehaviour(InGameClients &gameClients, Gam
 
 
 void GameNetMessageBehaviour::run(NetMessageChat *msg) {
-    gameClients.sendAll(msg);
+    std::shared_ptr<NetMessage> message(new NetMessageChat(
+        msg->client_id, msg->chat
+    ));
+    gameClients.sendAll(message);
 }
 
 void GameNetMessageBehaviour::run(NetMessageLeave *msg) {
@@ -31,6 +34,9 @@ void GameNetMessageBehaviour::run(NetMessageGameStateUpdate *msg) {
 }
 
 void GameNetMessageBehaviour::run(NetMessageGameAction *msg) {
+    if (!game.isClientsTurn(msg->client_id)) {
+        return;
+    }
     // TODO separate in different messages?
     switch (msg->action) {
         case ActionTypeDto::moving_left_init: {

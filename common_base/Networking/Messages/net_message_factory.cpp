@@ -4,6 +4,9 @@
 #include "net_message_chat.h"
 #include "net_message_leave.h"
 #include "net_message_inform_id.h"
+#include "net_message_initial_game_state.h"
+#include "net_message_game_state_update.h"
+#include "net_message_game_action.h"
 
 NetMessage* NetMessageFactory::recieve(Socket& channel) {
     NetProtocolInterpreter interpreter(channel);
@@ -22,6 +25,15 @@ NetMessage* NetMessageFactory::recieve(Socket& channel) {
             break;
         case NET_MESSAGE_TYPE_INFORM_ID:
             inst = new NetMessageInformID();
+            break;
+        case NET_MESSAGE_TYPE_INITIAL_STATE:
+            inst = new NetMessageInitialGameState();
+            break;
+        case NET_MESSAGE_TYPE_UPDATE_STATE:
+            inst = new NetMessageGameStateUpdate();
+            break;
+        case NET_MESSAGE_TYPE_GAME_ACTION:
+            inst = new NetMessageGameAction();
             break;
         default:
             break;

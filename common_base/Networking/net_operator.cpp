@@ -1,5 +1,6 @@
 #include "net_operator.h"
 #include "Messages/net_message.h"
+
 using namespace std;
 
 NetOperator::NetOperator(NetMessageBehaviour* new_behaviour) :
@@ -22,9 +23,8 @@ void NetOperator::stop() {
 void NetOperator::run() {
     while (keep_running_) {
         try {
-            NetMessage* msg = queue.pop();
+            shared_ptr<NetMessage> msg = queue.pop();
             msg->execute(*behaviour);
-            delete msg;
         } catch (const ClosedQueue& ex) {
             keep_running_ = false;
         }

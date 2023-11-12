@@ -9,7 +9,7 @@ Reciever::Reciever(const int client_id, NetChannel* channel) :
 void Reciever::run() {
     while (keep_running_) {
         try {
-            NetMessage* msg = channel->read_message();
+            std::shared_ptr<NetMessage> msg(channel->read_message());
 
             if (game_queue != nullptr)
                 game_queue->push(msg);
