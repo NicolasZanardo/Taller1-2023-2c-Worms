@@ -31,10 +31,11 @@ b2Body* PhysicsSystem::spawn_worm(WormScenarioData worm, Worm* wormModel) {
     b2FixtureDef fixtureDef;
     fixtureDef.shape = &dynamicBox;
 
+
     // Set the box density to be non-zero, so it will be dynamic.
-    fixtureDef.density = 10.0f;
+    fixtureDef.density = 10.0f; // TODO Fine tune
     // Override the default friction.
-    fixtureDef.friction = 0.3f;
+    fixtureDef.friction = 0.2f;
     fixtureDef.userData.pointer = reinterpret_cast<uintptr_t>(&wormModel);;
     body->CreateFixture(&fixtureDef);
 

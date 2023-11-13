@@ -20,7 +20,7 @@ void GameInstance::update(const int it) {
     turnManager.update(it);
     int current_worm_id = turnManager.get_current_worm_id();
     if (current_worm_id != -1) {
-        std::cout << "Current worm id is: " << current_worm_id << std::endl;
+        // std::cout << "Current worm id is: " << current_worm_id << std::endl;
         auto worm = instancesManager.getWorm(current_worm_id);
         auto wormDto = worm->toWormDto(turnManager.get_current_client_id());
         std::cout << "Current worm position for client id 1 is: x: " << wormDto.x << "y: " << wormDto.y << std::endl;

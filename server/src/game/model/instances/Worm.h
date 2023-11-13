@@ -25,15 +25,16 @@ private:
 
 
     // Movement
-    const float speed = 0.2f;
+    const float speed = 0.5f;
     const float forwardJumpHeight = 1.0f;
     const float forwardJumpReach = 0.5f;
     const float backwardsJumpHeight = 1.2f;
     const float backwardsJumpReach = 0.2f;
     bool is_on_ground = false;
-    bool isFacingRight = true;
+    bool is_moving;
+    bool is_facing_right;
 
-    short getFacingDirectionSign() const;
+    int getFacingDirectionSign() const;
     WormDto::State stateToDto() const;
 
 
