@@ -12,10 +12,12 @@ NetMessageGameAction::NetMessageGameAction(size_t client_id, ActionTypeDto actio
 void NetMessageGameAction::push_data_into(NetBuffer& container) {
     NetMessage::push_data_into(container);
     container.push_uint(client_id);
+    container.push_byte(static_cast<uint8_t>(action));
 }
 
 void NetMessageGameAction::pull_data_from(NetProtocolInterpreter& channel) {
     client_id = channel.read_uint();
+    action = static_cast<ActionTypeDto>(channel.read_byte());
 }
 
 void NetMessageGameAction::execute(NetMessageBehaviour& interpreter) {
