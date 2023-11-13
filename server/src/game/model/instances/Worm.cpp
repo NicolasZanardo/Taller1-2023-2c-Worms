@@ -10,7 +10,7 @@ WormDto Worm::toWormDto(size_t clientId) {
             position.x,
             position.y,
             health,
-            WormDto::State::idle// Todo Hardcoded Server states do not necessarily map 1 to 1 to the dto states needed by client
+            stateToDto()
     );
 }
 
@@ -23,16 +23,17 @@ short Worm::getFacingDirectionSign() const {
     } else {
         return -1;
     }
-
 }
 
 void Worm::startMovingRight() {
     isFacingRight = true;
+    state = State::walking;
     body->SetLinearVelocity((b2Vec2(speed, 0.0f)));
 }
 
 void Worm::startMovingLeft() {
     isFacingRight = false;
+    state = State::walking;
     body->SetLinearVelocity((b2Vec2(-speed, 0.0f)));
 }
 
@@ -40,11 +41,13 @@ void Worm::stopMoving() {
     b2Vec2 velocity = body->GetLinearVelocity();
     velocity.x = 0.0f;
     body->SetLinearVelocity(velocity);
+    state = State::idle;
 }
 
 void Worm::jumpForward() {
     if (!isJumping) {
         isJumping = true;
+        state = State::jumping;
         body->ApplyLinearImpulseToCenter(b2Vec2(getFacingDirectionSign() * forwardJumpReach, forwardJumpHeight), true);
     }
 }
@@ -52,10 +55,31 @@ void Worm::jumpForward() {
 void Worm::jumpBackwards() {
     if (!isJumping) {
         isJumping = true;
+        state = State::jumping;
         body->ApplyLinearImpulseToCenter(b2Vec2(getFacingDirectionSign() * backwardsJumpReach, backwardsJumpHeight), true);
 
     }
 }
+
+WormDto::State Worm::stateToDto() const {
+    switch (state) {
+        case State::idle:
+            return WormDto::State::idle;
+        case State::walking:
+            return WormDto::State::walking;
+        case State::jumping:
+            return WormDto::State::jumping;
+        case State::shooting:
+            return WormDto::State::shooting;
+        case State::falling:
+            return WormDto::State::falling;
+        case State::damaged:
+            return WormDto::State::damaged;
+        case State::dead:
+            return WormDto::State::dead;
+    }
+}
+
 
 // TODO This? or detect jump false with collision?
 void Worm::onUpdatePhysics() {

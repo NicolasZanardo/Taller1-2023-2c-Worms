@@ -10,6 +10,8 @@ class InstancesManager {
 private:
     size_t total_entities_created = 0;
     PhysicsSystem& physicsSystem;
+
+    // Worm id to worm map
     std::unordered_map<size_t, Worm *> worms;
     Worm* createWorm(const WormScenarioData &wormScenarioData);
 public:
