@@ -34,25 +34,32 @@ void GameNetMessageBehaviour::run(NetMessageGameStateUpdate *msg) {
 }
 
 void GameNetMessageBehaviour::run(NetMessageGameAction *msg) {
+
     if (!game.isClientsTurn(msg->client_id)) {
         return;
     }
     // TODO separate in different messages?
     switch (msg->action) {
-        case ActionTypeDto::moving_left_init: {
-            game.startMovingCurrentWormLeft();
-        }
+
         case ActionTypeDto::moving_right_init: {
             game.startMovingCurrentWormRight();
+            break;
+        }
+        case ActionTypeDto::moving_left_init: {
+            game.startMovingCurrentWormLeft();
+            break;
         }
         case ActionTypeDto::stop_moving: {
             game.stopMovingCurrentWorm();
+            break;
         }
         case ActionTypeDto::jump_back: {
             game.jumpBackCurrentWorm();
+            break;
         }
         case ActionTypeDto::jump_forward: {
             game.jumpForwardCurrentWorm();
+            break;
         }
     }
 }
