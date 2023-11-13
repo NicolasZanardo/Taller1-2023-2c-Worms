@@ -3,6 +3,11 @@
 
 #include <list>
 #include <unordered_map>
+#include <atomic>
+#include <iostream>
+#include <chrono>
+#include <cmath>
+#include <thread>
 #include "GameInstance.h"
 #include "../../../common_base/Networking/Messages/net_queue.h"
 #include "../../../common_base/networking.h"
@@ -19,6 +24,8 @@ private:
     GameInstance game;
     NetQueue gameQueue;
     GameNetMessageBehaviour netMessageBehaviour;
+    int rate;
+    std::atomic_bool keep_executing;
 
     // Init methods
     void initial_broadcast(const GameScenarioData& scenario);

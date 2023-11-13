@@ -8,16 +8,57 @@ GameEngineInstance::GameEngineInstance(
 ) : gameClients(clients),
     game(xGravity, yGravity, scenario, clients),
     gameQueue(100),
-    netMessageBehaviour(gameClients, game) {
+    netMessageBehaviour(gameClients, game),
+    rate(30),
+    keep_executing(true) {
     initial_broadcast(scenario);
 }
 
 void GameEngineInstance::run() {
-    _process_actions();
-    game.update();
-    // _maintain_connections();
-    _broadcast_game_state_update();
-    // _synchronize()
+
+    // Variables para controlar el frame-rate
+    auto t1 = std::chrono::steady_clock::now();
+    auto t2 = t1;
+    std::chrono::duration<float, std::milli> diff;
+    int rest = 0, behind = 0, lost = 0;
+    int it = 1;
+
+    // Loop principal
+    while (keep_executing) {
+        _process_actions();
+        game.update(it);
+        // _maintain_connections();
+        _broadcast_game_state_update();
+        // _synchronize()
+
+        // https://eldipa.github.io/book-of-gehn/articles/2019/10/23/Constant-Rate-Loop.html
+        // Drop n rest
+        it = 0;
+        t2 = std::chrono::steady_clock::now();
+        diff = t2 - t1;
+        rest = rate - std::ceil(diff.count());
+
+        if (rest < 0) {
+            fprintf(stderr, ">> Ciclo principal: pérdida de frame/s.\n");
+            behind = -rest;
+            // lost = rate + (behind - behind % rate);
+            rest = rate - behind % rate;
+            lost = behind + rest;
+            t1 += std::chrono::milliseconds(lost);
+            it += std::floor(lost / rate);
+        }
+
+        // fprintf(stderr, "ENGINE: Sleeping for %i ms.\n", rest);
+
+        std::this_thread::sleep_for(std::chrono::milliseconds(rest));
+        t1 += std::chrono::milliseconds(rate);
+        it += 1;
+    }
+
+
+    // Terminamos las conexiones
+    // TODO game clients to lobby?
+    // gameQueue.close() ? or is it maneged by server
 }
 
 void GameEngineInstance::stop() {
@@ -51,7 +92,7 @@ void GameEngineInstance::_broadcast_game_state_update() {
             gameState.currentTurnClientId, // pass directly the game state?
             gameState.windSpeed,
             gameState.remainingGameTime,
-            gameState.remainingGameTime
+            gameState.remainingTurnTime
     );
 
     for (const auto &[clientId, worms]: game.getClientsWorms()) {
