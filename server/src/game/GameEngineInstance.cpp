@@ -8,10 +8,10 @@ GameEngineInstance::GameEngineInstance(
 ) : rate(60),
     gameClients(clients),
     game(xGravity, yGravity, scenario, clients, rate),
-    gameQueue(100),
+    gameQueue(1000),
     netMessageBehaviour(gameClients, game),
-
     keep_executing(true) {
+    switch_clients_game_queue(clients);
     initial_broadcast(scenario);
 }
 
@@ -66,7 +66,8 @@ void GameEngineInstance::stop() {
     // TODO Clients back to WaitingLobbyx
 }
 
-/* PRIVATE */
+// Init methods
+
 void GameEngineInstance::initial_broadcast(const GameScenarioData &scenario) {
     _broadcast_initial_game_state(scenario);
     _broadcast_game_state_update();
@@ -86,6 +87,14 @@ void GameEngineInstance::_broadcast_initial_game_state(const GameScenarioData &s
 
     gameClients.sendAll(std::shared_ptr<NetMessage>(message));
 }
+
+void GameEngineInstance::switch_clients_game_queue(std::list<Client*> clients) {
+    for (auto client: clients) {
+        client->switch_lobby(&gameQueue);
+    }
+}
+
+// Loop methods
 
 void GameEngineInstance::_broadcast_game_state_update() {
     auto gameState = game.getCurrentState();
@@ -111,7 +120,6 @@ void GameEngineInstance::_broadcast_game_state_update() {
 }
 
 
-// Loop methods
 void GameEngineInstance::_process_actions() {
     std::shared_ptr<NetMessage> msg = nullptr;
     while (gameQueue.try_pop(msg)) {

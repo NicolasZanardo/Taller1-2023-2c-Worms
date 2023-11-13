@@ -18,7 +18,7 @@
 #include "InGameClients.h"
 
 
-class GameEngineInstance: public Thread {
+class GameEngineInstance : public Thread {
 private:
     int rate;
     InGameClients gameClients;
@@ -28,17 +28,27 @@ private:
     std::atomic_bool keep_executing;
 
     // Init methods
-    void initial_broadcast(const GameScenarioData& scenario);
+    void switch_clients_game_queue(std::list<Client *> clients);
+    void initial_broadcast(const GameScenarioData &scenario);
+
     void _broadcast_initial_game_state(const GameScenarioData &scenario);
 
     // Loop methods
     void _process_actions();
+
     void _broadcast_game_state_update();
 
 
 public:
-    GameEngineInstance(float xGravity, float yGravity, const GameScenarioData& scenario, const std::list<Client*>& clients);
+    GameEngineInstance(
+            float xGravity,
+            float yGravity,
+            const GameScenarioData &scenario,
+            const std::list<Client *> &clients
+            );
+
     void run() override;
+
     void stop() override;
 
 };
