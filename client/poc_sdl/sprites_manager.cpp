@@ -19,20 +19,27 @@ void SpritesManager::addSprite(std::string id, std::string sprite_file,
 }
 
 void SpritesManager::renderSprite(std::string id, const SDL2pp::Rect dst, SDL_RendererFlip &flip_type) {
-    auto it = this->sprites.find(id);
-    if (it == this->sprites.end()) {
-        throw std::runtime_error("The name has alredy been used by another sprite");
-    }
+    Sprite& sprite = this->check_exists(id);
+    sprite.render(dst, flip_type);
+}
 
-    it->second.render(dst, flip_type);
+void SpritesManager::renderSprite(std::string id, const SDL2pp::Rect dst,
+                                        double angle, SDL_RendererFlip &flip_type) {
+    Sprite& sprite = this->check_exists(id);
+    sprite.render(dst, angle, flip_type);
 }
 
 void SpritesManager::renderSprite(std::string id, uint16_t num_frame,
                                 const SDL2pp::Rect dst, SDL_RendererFlip &flip_type) {
+    Sprite& sprite = this->check_exists(id);
+    sprite.render(num_frame, dst, flip_type);
+}
+
+Sprite& SpritesManager::check_exists(const std::string& id) {
     auto it = this->sprites.find(id);
     if (it == this->sprites.end()) {
-        throw std::runtime_error("The name has alredy been used by another sprite");
+        throw std::runtime_error("The sprite with this id not exists.");
     }
 
-    it->second.render(num_frame, dst, flip_type);
+    return it->second;
 }

@@ -2,10 +2,11 @@
 #define __PLAYER_STATE_H__
 
 #include "animation.h"
+#include "drawable_integer.h"
 #include "icon.h"
+#include "non_animation.h"
 #include "sprites_manager.h"
 
-#include "renderer_integer.h"
 
 class PlayerState {
 public:

@@ -1,5 +1,5 @@
-#ifndef __RENDERER_INTEGER_H__
-#define __RENDERER_INTEGER_H__
+#ifndef __DRAWABLE_INTEGER_H__
+#define __DRAWABLE_INTEGER_H__
 
 #include <map>
 #include <string>
@@ -15,11 +15,11 @@ enum class IntegerAlignmentMode : uint8_t {
     CENTER
 };
 
-class RendererInteger {
+class DrawableInteger {
 public:
-    RendererInteger() = delete;
-    explicit RendererInteger(SpritesManager& sprites_manager, const std::string& id, IntegerAlignmentMode mode);
-    ~RendererInteger() = default;
+    DrawableInteger() = delete;
+    explicit DrawableInteger(SpritesManager& sprites_manager, const std::string& id, IntegerAlignmentMode mode);
+    ~DrawableInteger() = default;
 
     void render(uint32_t number, uint32_t x, uint32_t y, uint32_t width, uint32_t height);
 
@@ -34,10 +34,10 @@ private:
     SDL_RendererFlip flip;
 
     IntegerAlignmentMode mode;
-    void (RendererInteger::*calculate_position)();
+    void (DrawableInteger::*calculate_position)();
     uint32_t len;
     uint16_t x;
     uint16_t width;
 };
 
-#endif  // __RENDERER_INTEGER_H__
+#endif  // __DRAWABLE_INTEGER_H__

@@ -1,21 +1,21 @@
-#include "renderer_integer.h"
+#include "drawable_integer.h"
 
 #include <stdexcept>
 
-RendererInteger::RendererInteger(SpritesManager& sprites_manager, const std::string& id, IntegerAlignmentMode mode)
+DrawableInteger::DrawableInteger(SpritesManager& sprites_manager, const std::string& id, IntegerAlignmentMode mode)
     : sprites_manager(&sprites_manager), id(id), flip(SDL_FLIP_NONE), mode(mode) {
     if (mode == IntegerAlignmentMode::LEFT) {
-        this->calculate_position = &RendererInteger::calculatePosition_left;
+        this->calculate_position = &DrawableInteger::calculatePosition_left;
     } else if (mode == IntegerAlignmentMode::RIGHT) {
-        this->calculate_position = &RendererInteger::calculatePosition_right;
+        this->calculate_position = &DrawableInteger::calculatePosition_right;
     } else if (mode == IntegerAlignmentMode::CENTER) {
-        this->calculate_position = &RendererInteger::calculatePosition_center;
+        this->calculate_position = &DrawableInteger::calculatePosition_center;
     } else {
         throw std::invalid_argument("Error: Invalid Mode in IntegerAlignment.");
     }
 }
 
-void RendererInteger::render(uint32_t number, uint32_t x, uint32_t y, uint32_t width, uint32_t height) {
+void DrawableInteger::render(uint32_t number, uint32_t x, uint32_t y, uint32_t width, uint32_t height) {
     this->digits_buffer.clear();
     std::string str_num = std::to_string(number);
 
@@ -41,14 +41,14 @@ void RendererInteger::render(uint32_t number, uint32_t x, uint32_t y, uint32_t w
     }
 }
 
-void RendererInteger::calculatePosition_left() {
+void DrawableInteger::calculatePosition_left() {
     // do nothing.
 }
 
-void RendererInteger::calculatePosition_right() {
+void DrawableInteger::calculatePosition_right() {
     this->x -= this->len*this->width;
 }
 
-void RendererInteger::calculatePosition_center() {
+void DrawableInteger::calculatePosition_center() {
     this->x -= ((this->len*this->width) / 2);
 }

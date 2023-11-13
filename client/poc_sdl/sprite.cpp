@@ -43,6 +43,17 @@ void Sprite::render(const SDL2pp::Rect dst, SDL_RendererFlip &flip_type) {
     );
 }
 
+void Sprite::render(const SDL2pp::Rect dst, double angle, SDL_RendererFlip &flip_type) {
+    this->renderer_ptr->Copy(
+        this->texture,
+        SDL2pp::NullOpt,
+        dst,
+        angle,
+        SDL2pp::NullOpt,
+        flip_type
+    );
+}
+
 void Sprite::render(uint16_t num_frame, const SDL2pp::Rect dst, SDL_RendererFlip &flip_type) {
     this->renderer_ptr->Copy(
         this->texture,
