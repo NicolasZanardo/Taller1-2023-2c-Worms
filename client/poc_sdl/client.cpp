@@ -27,7 +27,7 @@ void Client::execute() {
     EventHandler event_handler(window, event_queue);
 
     SpritesManager sprites_manager(renderer);
-    sprites_manager.addSprite("wwalk", "assets/wwalk.png");
+    sprites_manager.addSprite("wwalk", "assets/wwalk.png", 60, 60, 0);
 
     PlayerState player_state(sprites_manager);
 

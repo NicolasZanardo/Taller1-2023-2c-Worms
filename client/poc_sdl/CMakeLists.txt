@@ -8,10 +8,12 @@ add_executable (sdlpp-events
     client_receiver.cpp client_receiver.h
     client_sender.cpp client_sender.h
     cursor.cpp cursor.h
+    drawable_integer.cpp drawable_integer.h
     event_handler.cpp event_handler.h
     frame_selector.cpp frame_selector.h
     game_loop.cpp game_loop.h
     icon.cpp icon.h
+    non_animation.cpp non_animation.h
     player_state.cpp player_state.h
     sprite.cpp sprite.h
     sprites_manager.cpp sprites_manager.h
