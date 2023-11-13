@@ -32,7 +32,7 @@ b2Body* PhysicsSystem::spawn_worm(WormScenarioData worm, Worm* wormModel) {
     fixtureDef.shape = &dynamicBox;
 
     // Set the box density to be non-zero, so it will be dynamic.
-    fixtureDef.density = 1.0f;
+    fixtureDef.density = 10.0f;
     // Override the default friction.
     fixtureDef.friction = 0.3f;
     fixtureDef.userData.pointer = reinterpret_cast<uintptr_t>(&wormModel);;
@@ -51,14 +51,15 @@ void PhysicsSystem::populate_beams(const GameScenarioData& scenario) {
 
 void PhysicsSystem::spawn_beam(BeamScenarioData beam) {
     b2BodyDef groundBodyDef;
+    groundBodyDef.type = b2_staticBody;
     groundBodyDef.position.Set(beam.x, beam.y);
     b2Body* groundBody = world.CreateBody(&groundBodyDef);
 
     b2PolygonShape groundBox;
     if (beam.type == BeamScenarioData::Type::SHORT) {
-        groundBox.SetAsBox(0.80f, 3.0f);
+        groundBox.SetAsBox(3.0f / 2, 0.80f);
     } else {
-        groundBox.SetAsBox(0.80f, 6.0f);
+        groundBox.SetAsBox(6.0f / 2, 0.80f);
     }
 
     b2FixtureDef fixtureDef;
