@@ -36,7 +36,7 @@ int main(int argc, char* argv[]) {
                 server.execute();
             } else {
                 DumbClient cli("localhost", argv[1]);
-                cli.forward();
+                cli.start();
             }
         } else {
             std::cout << "Running app\n";

@@ -35,36 +35,31 @@ void DumbClient::forward() {
 
 void DumbClient::send_messages() {
     while (keep) {
-        std::unique_lock<std::mutex> lock(mutex_);
-        condition_variable_.wait(lock, [this] { return !messages.empty() || !keep; });
+        std::string user_input;
+        std::getline(std::cin, user_input);
 
-        if (!keep) {
+        if (user_input == "exit") {
+            stop();
             break;
         }
 
-        if (!console_input.empty()) {
-            std::string message = console_input.front();
-            console_input.pop();
-
-            lock.unlock();
-
-            if (message == "move right") {
-                // Send the specific message through the channel
-                // Assuming a function like channel.sendSpecificMessage()
-                NetMessageGameAction msg;
-                msg.client_id = 1;
-                msg.action = ActionTypeDto::moving_right_init;
-                channel.send_message(msg);
-            } else {
-
-            }
-        } else {
-            lock.unlock();
-            // Simulate some delay between checking for console input
-            std::this_thread::sleep_for(std::chrono::milliseconds(100));
+        if (user_input == "Move right") {
+            NetMessageGameAction msg(1, ActionTypeDto::moving_right_init);
+            channel.send_message(msg);
+        } else if (user_input == "Move left") {
+            NetMessageGameAction msg(1, ActionTypeDto::moving_left_init);
+            channel.send_message(msg);
+        } else if (user_input == "Stop move") {
+            NetMessageGameAction msg(1, ActionTypeDto::stop_moving);
+            channel.send_message(msg);
         }
+
+
+        // Simulate some delay between checking for console input
+        std::this_thread::sleep_for(std::chrono::milliseconds(100));
     }
 }
+
 
 void DumbClient::stop() {
     {
