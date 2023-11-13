@@ -13,7 +13,7 @@ GameInstance::GameInstance(
     turnManager.randomly_assign_clients_turn();
 }
 
-void GameInstance::update(const unsigned int it, const int diff) {
+void GameInstance::update(const unsigned int it, const float diff) {
     physicsSystem.update();
     turnManager.update(diff);
 }
@@ -24,7 +24,8 @@ bool GameInstance::isClientsTurn(size_t id) {
 
 GameState GameInstance::getCurrentState() {
     return GameState(
-            turnManager.get_current_client_id(), // turnManager
+            turnManager.get_current_client_id(),
+            turnManager.get_current_worm_id(), // turnManager
             1.0f, // wind physicsSystem
             120.0f, // turnManager
             15.0f// turnManager

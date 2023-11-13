@@ -26,7 +26,7 @@ void GameEngineInstance::run() {
     // Loop principal
     while (keep_executing) {
         _process_actions();
-        game.update(it, static_cast<int>(diff.count()));
+        game.update(it, diff.count());
         // _maintain_connections();
         _broadcast_game_state_update();
         // _synchronize()

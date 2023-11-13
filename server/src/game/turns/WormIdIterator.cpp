@@ -1,4 +1,5 @@
 #include "WormIdIterator.h"
+#include <iostream>
 
 WormIdIterator::WormIdIterator(const std::list<size_t>& worms_ids) :
     m_worms_ids(worms_ids),
@@ -13,11 +14,12 @@ size_t WormIdIterator::advance_to_next_worm_id() {
     if (m_worms_ids.empty()) {
         throw std::out_of_range("No remaining worms in the list");
     }
-
+    std::cout << "Current worm id was: " << *current_worm_iterator << std::endl;
     ++current_worm_iterator;
     if (current_worm_iterator == m_worms_ids.end()) {
         current_worm_iterator = m_worms_ids.begin();
     }
+    std::cout << "Current worm id is: " << *current_worm_iterator << std::endl;
     return *current_worm_iterator;
 }
 

@@ -3,7 +3,7 @@
 
 TurnManager::TurnManager(): clients_ids_to_worms_ids_iterator() {}
 
-void TurnManager::update(const int elapsed_time) {
+void TurnManager::update(const float elapsed_time) {
     // Check if the game time has run out
     if (game_time_left <= 0) {
         return;
@@ -72,7 +72,8 @@ void TurnManager::add_player(size_t client_id, const std::list<size_t>& worm_ids
     std::cout << std::endl;
 
     clients_ids_to_worms_ids_iterator.emplace(client_id, worm_ids_from_client);
-    // WormIdIterator worms_id_iterator(worm_ids_from_client);
+
+    //     WormIdIterator worms_id_iterator(worm_ids_from_client);
     // clients_ids_to_worms_ids_iterator[client_id] = worms_id_iterator;
 }
 
@@ -97,6 +98,7 @@ void TurnManager::randomly_assign_clients_turn() {
 
     // Retrieve the corresponding client ID
     current_client_id = random_iterator->first;
+    current_worm_id = random_iterator->second.getCurrentWorm();
 }
 
 bool TurnManager::is_clients_turn(size_t client_id) const {

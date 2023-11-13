@@ -18,16 +18,19 @@ typedef std::unordered_map<size_t, std::vector<Worm *>> ClientsWorms;
 
 struct GameState {
     size_t currentTurnClientId;
+    size_t current_worm_id;
     float windSpeed;
     float remainingGameTime;
     float remainingTurnTime;
 
     GameState(
             size_t currentTurnClientId,
+            size_t current_worm_id,
             float windSpeed,
             float remainingGameTime,
             float remainingTurnTime
     ) : currentTurnClientId(currentTurnClientId),
+        current_worm_id(current_worm_id),
         windSpeed(windSpeed),
         remainingGameTime(remainingGameTime),
         remainingTurnTime(remainingTurnTime) {}
@@ -53,7 +56,7 @@ public:
     ClientsWorms getClientsWorms();
     GameState getCurrentState();
 
-    void update(const unsigned int it, const int diff);
+    void update(const unsigned int it, const float diff);
     bool isClientsTurn(size_t id);
 
     // Actions
