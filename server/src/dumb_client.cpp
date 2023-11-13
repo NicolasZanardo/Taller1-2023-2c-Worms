@@ -13,6 +13,14 @@ DumbClient::~DumbClient() {
     delete(interpreter);
 }
 
+void DumbClient::start() {
+    std::thread receiveThread(&DumbClient::forward, this);
+    std::thread sendThread(&DumbClient::send_messages, this);
+
+    receiveThread.join();
+    sendThread.join();
+}
+
 void DumbClient::forward() {
     try {
         while (keep) {
@@ -25,8 +33,45 @@ void DumbClient::forward() {
     }
 }
 
+void DumbClient::send_messages() {
+    while (keep) {
+        std::unique_lock<std::mutex> lock(mutex_);
+        condition_variable_.wait(lock, [this] { return !messages.empty() || !keep; });
+
+        if (!keep) {
+            break;
+        }
+
+        if (!console_input.empty()) {
+            std::string message = console_input.front();
+            console_input.pop();
+
+            lock.unlock();
+
+            if (message == "move right") {
+                // Send the specific message through the channel
+                // Assuming a function like channel.sendSpecificMessage()
+                NetMessageGameAction msg;
+                msg.client_id = 1;
+                msg.action = ActionTypeDto::moving_right_init;
+                channel.send_message(msg);
+            } else {
+
+            }
+        } else {
+            lock.unlock();
+            // Simulate some delay between checking for console input
+            std::this_thread::sleep_for(std::chrono::milliseconds(100));
+        }
+    }
+}
+
 void DumbClient::stop() {
-    keep = false;
+    {
+        std::lock_guard<std::mutex> lock(mutex_);
+        keep = false;
+    }
+    condition_variable_.notify_all();
     channel.dissconect();
 }
 
@@ -54,7 +99,7 @@ void DumbInterpreter::run(NetMessageInitialGameState* msg) {
 }
 
 void DumbInterpreter::run(NetMessageGameStateUpdate* msg) {
-    cout << "Its turn of client id: " << msg->active_client_id << " and its current worm id is: " << msg->active_entity_id << "\n"; //<< " height: " << msg->room_height << " amount of beams on map: " << msg->beams.size() << "\n";
+    // cout << "Its turn of client id: " << msg->active_client_id << " and its current worm id is: " << msg->active_entity_id << "\n"; //<< " height: " << msg->room_height << " amount of beams on map: " << msg->beams.size() << "\n";
 }
 
 void DumbInterpreter::run(NetMessageGameAction* msg) {

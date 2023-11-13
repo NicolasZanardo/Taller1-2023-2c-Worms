@@ -1,25 +1,25 @@
 #include "TurnManager.h"
 #include <iostream>
 
-TurnManager::TurnManager(): clients_ids_to_worms_ids_iterator() {}
+TurnManager::TurnManager(int rate): rate(rate), clients_ids_to_worms_ids_iterator() {}
 
-void TurnManager::update(const float elapsed_time) {
+void TurnManager::update(const int it) {
     // Check if the game time has run out
     if (game_time_left <= 0) {
         return;
     }
 
     // Update times
-    game_time_left -= elapsed_time;
+    game_time_left -= it * rate;
     if (!waiting_to_start_next_turn) {
-        turn_time_left -= elapsed_time;
+        turn_time_left -= it * rate;
         // std::cout << "Time left on turn: " << turn_time_left << "\n";
         // Check if the turn time has run out
         if (turn_time_left <= 0) {
             end_actual_turn();
         }
     } else {
-        inside_turns_time_left -= elapsed_time;
+        inside_turns_time_left -= it * rate;
         // std::cout << "Time left inside turns: " << inside_turns_time_left << "\n";
         // Check if the inside turns time has run out
         if (inside_turns_time_left <= 0) {
@@ -97,14 +97,14 @@ void TurnManager::randomly_assign_clients_turn() {
 
     // Retrieve the corresponding client ID
     current_client_id = random_iterator->first;
-    current_worm_id = random_iterator->second.getCurrentWorm();
+    this->current_worm_id = random_iterator->second.getCurrentWorm();
 }
 
 bool TurnManager::is_clients_turn(size_t client_id) const {
     return client_id == current_client_id;
 }
 
-size_t TurnManager::get_current_client_id() const {
+int TurnManager::get_current_client_id() const {
     if (waiting_to_start_next_turn) {
         return -1;
     } else {
@@ -112,7 +112,7 @@ size_t TurnManager::get_current_client_id() const {
     }
 }
 
-size_t TurnManager::get_current_worm_id() const {
+int TurnManager::get_current_worm_id() const {
     if (waiting_to_start_next_turn) {
         return -1;
     } else {
@@ -121,7 +121,7 @@ size_t TurnManager::get_current_worm_id() const {
 }
 
 float TurnManager::get_remaining_game_time() const {
-    return game_time_left;
+    return game_time_left; // via network we are sending float TODO test what is client receiving
 }
 
 float TurnManager::get_remaining_turn_time() const {

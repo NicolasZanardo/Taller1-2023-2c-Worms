@@ -5,11 +5,12 @@ GameEngineInstance::GameEngineInstance(
         float yGravity,
         const GameScenarioData &scenario, // TODO Game config struct
         const std::list<Client *> &clients
-) : gameClients(clients),
-    game(xGravity, yGravity, scenario, clients),
+) : rate(60),
+    gameClients(clients),
+    game(xGravity, yGravity, scenario, clients, rate),
     gameQueue(100),
     netMessageBehaviour(gameClients, game),
-    rate(30),
+
     keep_executing(true) {
     initial_broadcast(scenario);
 }
@@ -26,7 +27,7 @@ void GameEngineInstance::run() {
     // Loop principal
     while (keep_executing) {
         _process_actions();
-        game.update(it, diff.count());
+        game.update(it);
         // _maintain_connections();
         _broadcast_game_state_update();
         // _synchronize()

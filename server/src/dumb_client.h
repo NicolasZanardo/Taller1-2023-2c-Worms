@@ -8,13 +8,19 @@ class DumbClient {
     bool keep;
     NetChannel channel;
     DumbInterpreter* interpreter;
+    std::mutex mutex_;
+    std::condition_variable condition_variable_;
+    std::queue<std::string> messages;
+    std::queue<std::string> console_input;
 
     public:
     DumbClient(const char* serv, const char* port);
     ~DumbClient();
 
-    void forward();
+    void start();
     void stop();
+    void forward();
+    void send_messages();
 };
 
 class DumbInterpreter : public NetMessageBehaviour {

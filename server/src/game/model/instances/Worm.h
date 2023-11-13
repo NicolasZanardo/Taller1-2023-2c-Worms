@@ -30,7 +30,7 @@ private:
     const float forwardJumpReach = 0.5f;
     const float backwardsJumpHeight = 1.2f;
     const float backwardsJumpReach = 0.2f;
-    bool isJumping = false;
+    bool is_on_ground = false;
     bool isFacingRight = true;
 
     short getFacingDirectionSign() const;

@@ -20,11 +20,11 @@
 
 class GameEngineInstance: public Thread {
 private:
+    int rate;
     InGameClients gameClients;
     GameInstance game;
     NetQueue gameQueue;
     GameNetMessageBehaviour netMessageBehaviour;
-    int rate;
     std::atomic_bool keep_executing;
 
     // Init methods

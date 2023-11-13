@@ -50,13 +50,14 @@ public:
             float xGravity,
             float yGravity,
             const GameScenarioData &scenario,
-            const std::list<Client *> &clients
+            const std::list<Client *> &clients,
+            int rate
     );
 
     ClientsWorms getClientsWorms();
     GameState getCurrentState();
 
-    void update(const unsigned int it, const float diff);
+    void update(const int it);
     bool isClientsTurn(size_t id);
 
     // Actions

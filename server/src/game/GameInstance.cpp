@@ -4,18 +4,29 @@ GameInstance::GameInstance(
         float xGravity,
         float yGravity,
         const GameScenarioData &scenarioData,
-        const std::list<Client *> &clients
+        const std::list<Client *> &clients,
+        int rate
 ) :
-        physicsSystem(xGravity, yGravity, scenarioData),
+        physicsSystem(rate, xGravity, yGravity, scenarioData),
         instancesManager(physicsSystem, scenarioData),
-        clientsWorms() {
+        clientsWorms(),
+        turnManager(rate) {
     assign_worms_to_clients(clients);
     turnManager.randomly_assign_clients_turn();
 }
 
-void GameInstance::update(const unsigned int it, const float diff) {
-    physicsSystem.update();
-    turnManager.update(diff);
+void GameInstance::update(const int it) {
+    physicsSystem.update(instancesManager.getWorms());
+    turnManager.update(it);
+    int current_worm_id = turnManager.get_current_worm_id();
+    if (current_worm_id != -1) {
+        std::cout << "Current worm id is: " << current_worm_id << std::endl;
+        auto worm = instancesManager.getWorm(current_worm_id);
+        auto wormDto = worm->toWormDto(turnManager.get_current_client_id());
+        std::cout << "Current worm position for client id 1 is: x: " << wormDto.x << "y: " << wormDto.y << std::endl;
+    } else {
+        std::cout << "No ones turn, inside turns time " << std::endl;
+    };
 }
 
 bool GameInstance::isClientsTurn(size_t id) {

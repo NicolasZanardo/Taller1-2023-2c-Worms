@@ -45,19 +45,18 @@ void Worm::stopMoving() {
 }
 
 void Worm::jumpForward() {
-    if (!isJumping) {
-        isJumping = true;
+    if (is_on_ground) {
         state = State::jumping;
         body->ApplyLinearImpulseToCenter(b2Vec2(getFacingDirectionSign() * forwardJumpReach, forwardJumpHeight), true);
+        is_on_ground = false;
     }
 }
 
 void Worm::jumpBackwards() {
-    if (!isJumping) {
-        isJumping = true;
+    if (is_on_ground) {
         state = State::jumping;
         body->ApplyLinearImpulseToCenter(b2Vec2(getFacingDirectionSign() * backwardsJumpReach, backwardsJumpHeight), true);
-
+        is_on_ground = false;
     }
 }
 
@@ -81,11 +80,11 @@ WormDto::State Worm::stateToDto() const {
 }
 
 
-// TODO This? or detect jump false with collision?
 void Worm::onUpdatePhysics() {
-    // Update method to be called in the main game loop
-    // Reset the jump state when the worm is on the ground
-    if (body->GetLinearVelocity().y == 0.0f) {
-        isJumping = false;
+    float y_velocity = body->GetLinearVelocity().y;
+    if (y_velocity == 0.0f) {
+        is_on_ground = true;
+    } else if (y_velocity < 0.0f) {
+        state = State::falling;
     }
 }
