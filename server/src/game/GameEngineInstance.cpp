@@ -89,7 +89,8 @@ void GameEngineInstance::_broadcast_initial_game_state(const GameScenarioData &s
 void GameEngineInstance::_broadcast_game_state_update() {
     auto gameState = game.getCurrentState();
     auto gameStateUpdateMessage = new NetMessageGameStateUpdate(
-            gameState.currentTurnClientId, // pass directly the game state?
+            gameState.current_client_id,
+            gameState.current_worm_id,
             gameState.windSpeed,
             gameState.remainingGameTime,
             gameState.remainingTurnTime

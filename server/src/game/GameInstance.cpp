@@ -27,8 +27,8 @@ GameState GameInstance::getCurrentState() {
             turnManager.get_current_client_id(),
             turnManager.get_current_worm_id(), // turnManager
             1.0f, // wind physicsSystem
-            120.0f, // turnManager
-            15.0f// turnManager
+            turnManager.get_remaining_game_time(), // turnManager
+            turnManager.get_remaining_turn_time()// turnManager
     );
 }
 

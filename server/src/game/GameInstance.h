@@ -17,7 +17,7 @@
 typedef std::unordered_map<size_t, std::vector<Worm *>> ClientsWorms;
 
 struct GameState {
-    size_t currentTurnClientId;
+    size_t current_client_id;
     size_t current_worm_id;
     float windSpeed;
     float remainingGameTime;
@@ -29,7 +29,7 @@ struct GameState {
             float windSpeed,
             float remainingGameTime,
             float remainingTurnTime
-    ) : currentTurnClientId(currentTurnClientId),
+    ) : current_client_id(currentTurnClientId),
         current_worm_id(current_worm_id),
         windSpeed(windSpeed),
         remainingGameTime(remainingGameTime),

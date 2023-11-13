@@ -9,7 +9,8 @@
 
 class NetMessageGameStateUpdate : public NetMessage {
 public:
-    int id_active_entity;
+    int active_client_id;
+    int active_entity_id;
     float wind_speed; // positivo o negativo
     float remaining_game_time;
     float remaining_turn_time;
@@ -19,7 +20,8 @@ public:
     
     NetMessageGameStateUpdate();
     NetMessageGameStateUpdate(
-        int id_active_entity,
+        int active_client_id,
+        int active_entity_id,
         float wind_speed,
         float remaining_game_time,
         float remaining_turn_time

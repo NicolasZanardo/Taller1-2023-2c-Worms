@@ -13,15 +13,14 @@ void TurnManager::update(const float elapsed_time) {
     game_time_left -= elapsed_time;
     if (!waiting_to_start_next_turn) {
         turn_time_left -= elapsed_time;
-        std::cout << "Time left on turn: " << turn_time_left << "\n";
+        // std::cout << "Time left on turn: " << turn_time_left << "\n";
         // Check if the turn time has run out
         if (turn_time_left <= 0) {
-            std::cout << "Time left on game: " << game_time_left << "\n";
             end_actual_turn();
         }
     } else {
         inside_turns_time_left -= elapsed_time;
-        std::cout << "Time left inside turns: " << inside_turns_time_left << "\n";
+        // std::cout << "Time left inside turns: " << inside_turns_time_left << "\n";
         // Check if the inside turns time has run out
         if (inside_turns_time_left <= 0) {
             advance_to_next_turn();
@@ -119,4 +118,12 @@ size_t TurnManager::get_current_worm_id() const {
     } else {
         return current_worm_id;
     }
+}
+
+float TurnManager::get_remaining_game_time() const {
+    return game_time_left;
+}
+
+float TurnManager::get_remaining_turn_time() const {
+    return turn_time_left;
 }
