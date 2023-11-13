@@ -5,7 +5,8 @@
 #include "../../Game/beamDto.h"
 #include "net_message_dependencies.h"
 
-struct NetMessageInitialGameState : public NetMessage {
+class NetMessageInitialGameState : public NetMessage {
+public:
     float room_width;
     float room_height;
     std::vector<BeamDto> beams;

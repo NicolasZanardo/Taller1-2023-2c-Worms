@@ -52,8 +52,10 @@ add_library( server
         src/game/scenario/ScenarioReader.h
         src/game/scenario/ScenarioReader.cpp
 
-        src/game/TurnManager.h
-        src/game/TurnManager.cpp
+        src/game/turns/TurnManager.h
+        src/game/turns/TurnManager.cpp
+        src/game/turns/WormIdIterator.h
+        src/game/turns/WormIdIterator.cpp
 )
 
 add_executable(

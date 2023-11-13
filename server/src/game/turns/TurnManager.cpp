@@ -1,31 +1,27 @@
 #include "TurnManager.h"
+#include <iostream>
 
-TurnManager::TurnManager(ClientsWorms &clientsWorms) : clientsWorms(clientsWorms) {}
+TurnManager::TurnManager(): clients_ids_to_worms_ids_iterator() {}
 
-void TurnManager::update(const unsigned int it) {
-    if (lastUpdateTime == 0) {
-        lastUpdateTime = it;
-        return;
-    }
-
+void TurnManager::update(const int elapsed_time) {
     // Check if the game time has run out
     if (game_time_left <= 0) {
         return;
     }
 
-    unsigned int elapsedTime = it - lastUpdateTime;
-    lastUpdateTime = it;
-
     // Update times
-    game_time_left -= elapsedTime;
+    game_time_left -= elapsed_time;
     if (!waiting_to_start_next_turn) {
-        turn_time_left -= elapsedTime;
+        turn_time_left -= elapsed_time;
+        std::cout << "Time left on turn: " << turn_time_left << "\n";
         // Check if the turn time has run out
         if (turn_time_left <= 0) {
+            std::cout << "Time left on game: " << game_time_left << "\n";
             end_actual_turn();
         }
     } else {
-        inside_turns_time_left -= elapsedTime;
+        inside_turns_time_left -= elapsed_time;
+        std::cout << "Time left inside turns: " << inside_turns_time_left << "\n";
         // Check if the inside turns time has run out
         if (inside_turns_time_left <= 0) {
             advance_to_next_turn();
@@ -37,8 +33,6 @@ void TurnManager::update(const unsigned int it) {
 void TurnManager::end_actual_turn() {
     waiting_to_start_next_turn = true;
     inside_turns_time_left = inside_turns_duration;
-    currentClientId = -1; // No ones turn
-    currentWormId = -1; // No ones turn
 }
 
 void TurnManager::advance_to_next_turn() {
@@ -46,31 +40,81 @@ void TurnManager::advance_to_next_turn() {
     turn_time_left = turn_duration;
 
     // Find the iterator for the current client
-    auto currentClientIterator = clientsWorms.find(currentClientId);
+    auto currentClientIterator = clients_ids_to_worms_ids_iterator.find(current_client_id);
 
     // If the current client was not found or it was the last client, reset to the first client
-    if (currentClientIterator == clientsWorms.end() || std::next(currentClientIterator) == clientsWorms.end()) {
-        currentClientIterator = clientsWorms.begin();
+    if (currentClientIterator == clients_ids_to_worms_ids_iterator.end() || std::next(currentClientIterator) == clients_ids_to_worms_ids_iterator.end()) {
+        currentClientIterator = clients_ids_to_worms_ids_iterator.begin();
     } else {
         // Otherwise, move to the next client
         currentClientIterator++;
     }
 
-    // Update currentClientId
-    currentClientId = currentClientIterator->first;
+    // Update currentClientId to the next client
+    current_client_id = currentClientIterator->first;
 
-    // Reset to the first worm for the next client's turn
-    currentWormIndex = 0;
+    // Update currentWormId to the next worm from that client
+    current_worm_id = currentClientIterator->second.advance_to_next_worm_id();
 }
 
-bool TurnManager::isClientsTurn(size_t clientId) {
-    return clientId == currentClientId;
+void TurnManager::add_player(size_t client_id, const std::list<size_t>& worm_ids_from_client) {
+    if (worm_ids_from_client.empty()) {
+        throw std::runtime_error("Worm id list could not be empty");
+    }
+
+    std::cout << "Added client id: " << client_id << " to the turn system with worms: ";
+
+    // Iterate through the list of worm IDs and print each one
+    for (const auto& worm_id : worm_ids_from_client) {
+        std::cout << worm_id << " ";
+    }
+
+    std::cout << std::endl;
+
+    clients_ids_to_worms_ids_iterator.emplace(client_id, worm_ids_from_client);
+    // WormIdIterator worms_id_iterator(worm_ids_from_client);
+    // clients_ids_to_worms_ids_iterator[client_id] = worms_id_iterator;
 }
 
-size_t TurnManager::getCurrentClientId() {
-    return currentClientId;
+void TurnManager::remove_worm(size_t worm_id) {
+    for (auto& entry : clients_ids_to_worms_ids_iterator) {
+        // Iterate every wormIdIterator until one has that worm_id and its removed from its list
+        if (entry.second.remove_worm_id(worm_id)) {
+            return;
+        }
+    }
 }
 
-size_t TurnManager::getCurrentWormId() {
-    return currentWormId;
+void TurnManager::randomly_assign_clients_turn() {
+    if (clients_ids_to_worms_ids_iterator.empty()) {
+        // Handle the case when there are no clients
+        return;
+    }
+
+    // Generate a random iterator to one of the keys
+    auto random_iterator = std::next(std::begin(clients_ids_to_worms_ids_iterator),
+                                     std::rand() % clients_ids_to_worms_ids_iterator.size());
+
+    // Retrieve the corresponding client ID
+    current_client_id = random_iterator->first;
+}
+
+bool TurnManager::is_clients_turn(size_t client_id) const {
+    return client_id == current_client_id;
+}
+
+size_t TurnManager::get_current_client_id() const {
+    if (waiting_to_start_next_turn) {
+        return -1;
+    } else {
+        return current_client_id;
+    }
+}
+
+size_t TurnManager::get_current_worm_id() const {
+    if (waiting_to_start_next_turn) {
+        return -1;
+    } else {
+        return current_worm_id;
+    }
 }

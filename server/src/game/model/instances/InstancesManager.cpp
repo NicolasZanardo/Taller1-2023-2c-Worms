@@ -1,4 +1,5 @@
 #include "InstancesManager.h"
+#include <iostream>
 
 InstancesManager::InstancesManager(
         PhysicsSystem &physicsSystem,
@@ -8,9 +9,10 @@ InstancesManager::InstancesManager(
 }
 
 Worm * InstancesManager::createWorm(const WormScenarioData &wormScenarioData) {
-    auto worm = new Worm(total_entities_created++);
+    auto worm = new Worm(++total_entities_created);
     b2Body *body = physicsSystem.spawn_worm(wormScenarioData, worm);
     worm->body = body;
+    std::cout << "Worm with id: " << total_entities_created << "was created."<< std::endl;
     return worm;
 }
 

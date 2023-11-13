@@ -11,7 +11,7 @@
 #include "model/instances/Worm.h"
 #include "model/instances/InstancesManager.h"
 #include "../client/client.h"
-#include "TurnManager.h"
+#include "turns/TurnManager.h"
 
 
 typedef std::unordered_map<size_t, std::vector<Worm *>> ClientsWorms;
@@ -36,11 +36,11 @@ struct GameState {
 class GameInstance {
 
     PhysicsSystem physicsSystem;
-    InstancesManager instancesManager; // Entities? we are also using instances naming for games
+    InstancesManager instancesManager;
     ClientsWorms clientsWorms;
     TurnManager turnManager;
 
-    void assignWormsToClients(const std::list<Client *> &clients);
+    void assign_worms_to_clients(const std::list<Client *> &clients);
 
 public:
     GameInstance(
@@ -53,7 +53,7 @@ public:
     ClientsWorms getClientsWorms();
     GameState getCurrentState();
 
-    void update();
+    void update(const unsigned int it, const int diff);
     bool isClientsTurn(size_t id);
 
     // Actions

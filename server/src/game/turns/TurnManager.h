@@ -2,37 +2,43 @@
 #define SERVER_TURNMANAGER_H
 
 #include <vector>
+#include <list>
 #include <cstdio>
 #include <unordered_map>
-#include "model/instances/Worm.h"
+#include "WormIdIterator.h"
 
-typedef std::unordered_map<size_t, std::vector<Worm *>> ClientsWorms;
+typedef std::unordered_map<size_t, WormIdIterator> ClientsIdsToWormsIdsIterator;
 
 class TurnManager {
-    ClientsWorms& clientsWorms;
-    size_t currentClientId = 1;
-    size_t currentWormId = 1;
-    unsigned int game_time_left;
+    ClientsIdsToWormsIdsIterator clients_ids_to_worms_ids_iterator;
+    size_t current_client_id;
+    size_t current_worm_id;
 
-    unsigned int turn_time_left;
-    const unsigned int turn_duration = 60;
+    int game_time_left = 6000;// 1080000; // millis
 
-    unsigned int inside_turns_time_left;
-    const unsigned int inside_turns_duration = 3;
+    int turn_time_left = 600;// 60000;
+    const int turn_duration = 600;// 60000; // millis
 
-    unsigned int lastUpdateTime;
-    bool waiting_to_start_next_turn;
+    int inside_turns_time_left = 200; // 3000;
+    const int inside_turns_duration = 200; // 3000; // millis
+
+    bool waiting_to_start_next_turn = false;
 
 public:
-    TurnManager(ClientsWorms& clientsWorms);
+    TurnManager();
 
-    bool isClientsTurn(size_t clientId);
-    size_t getCurrentClientId();
-    size_t getCurrentWormId();
+    void add_player(size_t client_id, const std::list<size_t>& worm_ids_from_client);
+    void remove_worm(size_t worm_id);
+    void randomly_assign_clients_turn();
 
-    void update(unsigned int it);
+    bool is_clients_turn(size_t client_id) const;
+    size_t get_current_client_id() const;
+    size_t get_current_worm_id() const;
+
+    void update(const int diff);
     void end_actual_turn();
     void advance_to_next_turn();
+
 
 };
 

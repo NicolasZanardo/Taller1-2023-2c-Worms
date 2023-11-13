@@ -53,7 +53,7 @@ GameEngineInstance* WaitingLobby::start_game() {
             0.0f, -10.f, HardcodedScenarioData::get(),  // TODO GameConfig struct
             clients
             );
-    // game->start();
+    game->start();
     
     return game;
 } // TODO There is no Join for now

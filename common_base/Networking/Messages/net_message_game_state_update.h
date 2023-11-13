@@ -7,7 +7,8 @@
 #include "../../Game/eventDto.h"
 #include "net_message_dependencies.h"
 
-struct NetMessageGameStateUpdate : public NetMessage {
+class NetMessageGameStateUpdate : public NetMessage {
+public:
     int id_active_entity;
     float wind_speed; // positivo o negativo
     float remaining_game_time;

@@ -1,18 +1,18 @@
-#ifndef TP_WORMS_WORMIDLIST_H
-#define TP_WORMS_WORMIDLIST_H
+#ifndef TP_WORMS_WORMIDITERATOR_H
+#define TP_WORMS_WORMIDITERATOR_H
 
 #include <list>
 
-class WormIdList {
+class WormIdIterator {
 private:
     std::list<size_t> m_worms_ids;
     std::list<size_t>::iterator current_worm_iterator;
 public:
-    WormIdList(const std::list<size_t>& worms_ids);
+    explicit WormIdIterator(const std::list<size_t>& worms_ids);
 
     size_t getCurrentWorm() const;
-    void advanceToNextWorm();
+    size_t advance_to_next_worm_id();
+    bool remove_worm_id(size_t worm_id);
 };
-
 
 #endif
