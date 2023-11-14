@@ -99,7 +99,18 @@ void DumbInterpreter::run(NetMessageInitialGameState* msg) {
 }
 
 void DumbInterpreter::run(NetMessageGameStateUpdate* msg) {
-    // cout << "Its turn of client id: " << msg->active_client_id << " and its current worm id is: " << msg->active_entity_id << "\n"; //<< " height: " << msg->room_height << " amount of beams on map: " << msg->beams.size() << "\n";
+    cout << "active client id: " << msg->active_client_id << "\n";
+    cout << "active worm id: " << msg->active_entity_id << "\n";
+    cout << "wind strength: " << msg->wind_speed << "\n";
+    cout << "time turn: " << msg->remaining_turn_time << " time game: " << msg->remaining_game_time << "\n";
+
+    for (auto& wrm : msg->worms) {
+        cout << "Worm "<< wrm.entity_id 
+            << " belongs to " << wrm.client_id 
+            << " and is in ("<< wrm.x << "," << wrm.y << ")"
+            << " has " << wrm.life << "hp and is in state " 
+            << (char)wrm.state << "\n";
+    }
 }
 
 void DumbInterpreter::run(NetMessageGameAction* msg) {
