@@ -44,7 +44,8 @@ uint32_t NetProtocolInterpreter::read_uint() {
 float NetProtocolInterpreter::read_float() {
     char buffer[UINT_SIZE];
     if (read_from_channel(buffer, UINT_SIZE)) {
-        return ntohl(*reinterpret_cast<float*>(buffer));
+        uint32_t val = ntohl(*reinterpret_cast<uint32_t*>(buffer));
+        return  *(float*)(&val);
     }
     throw SocketConnectionLost(&channel);
 }
