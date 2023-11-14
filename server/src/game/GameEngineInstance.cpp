@@ -16,7 +16,6 @@ GameEngineInstance::GameEngineInstance(
 }
 
 void GameEngineInstance::run() {
-
     // Variables para controlar el frame-rate
     auto t1 = std::chrono::steady_clock::now();
     auto t2 = t1;
@@ -85,7 +84,7 @@ void GameEngineInstance::_broadcast_initial_game_state(const GameScenarioData &s
         message->add(item.toBeamDto());
     }
 
-    gameClients.sendAll(std::shared_ptr<NetMessage>(message));
+    gameClients.sendAll(message->share());
 }
 
 void GameEngineInstance::switch_clients_game_queue(std::list<Client*> clients) {
@@ -108,15 +107,14 @@ void GameEngineInstance::_broadcast_game_state_update() {
 
     for (const auto &[clientId, worms]: game.getClientsWorms()) {
         for (auto worm: worms) {
-            const WormDto &wormDto = worm->toWormDto(clientId);
-            gameStateUpdateMessage->add(wormDto);
+            gameStateUpdateMessage->add(worm->toWormDto(clientId));
         }
     }
 
     // TODO ALSO ADD(&BulletDtos)
     // TODO ALSO ADD(&EventDtos)
 
-    gameClients.sendAll(std::shared_ptr<NetMessage>(gameStateUpdateMessage));
+    gameClients.sendAll(gameStateUpdateMessage->share());
 }
 
 
