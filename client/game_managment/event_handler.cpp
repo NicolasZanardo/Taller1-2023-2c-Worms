@@ -1,6 +1,6 @@
 #include "event_handler.h"
 
-#include "player_state.h"
+#include "client_game_state.h"
 
 EventHandler::EventHandler(SDL2pp::Window& window_ref, Queue<GameEvent>& event_queue)
     : window(&window_ref)

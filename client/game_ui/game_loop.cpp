@@ -7,7 +7,7 @@ GameLoop::GameLoop(SDL2pp::Renderer& renderer, Queue<GameEvent>& state_queue)
     : renderer(&renderer)
     , state_queue(&state_queue) {}
 
-void GameLoop::execute(EventHandler& event_handler, PlayerState& player_state) {
+void GameLoop::execute(EventHandler& event_handler, ClientGameState& game_state) {
     using namespace std::chrono;
 
     bool running = true;
@@ -20,8 +20,8 @@ void GameLoop::execute(EventHandler& event_handler, PlayerState& player_state) {
     while (running) {        
         running = event_handler.handleEvents();
         double dt = it - it_prev;
-        this->update(player_state, dt);
-        this->render(player_state);
+        this->update(game_state, dt);
+        this->render(game_state);
 
         it_prev = it;
         time_point t2 = steady_clock::now();
@@ -40,25 +40,25 @@ void GameLoop::execute(EventHandler& event_handler, PlayerState& player_state) {
     }
 }
 
-void GameLoop::update(PlayerState &player_state, float dt) {
+void GameLoop::update(ClientGameState &game_state, float dt) {
     GameEvent event;
 
     while(this->state_queue->try_pop(event)) {
         switch(static_cast<uint8_t>(event)) {
             case static_cast<uint8_t>(GameEvent::MOVE_LEFT_INIT): {
-                player_state.moveLeft();
+                game_state.moveLeft();
                 break;
             }
             case static_cast<uint8_t>(GameEvent::MOVE_RIGHT_INIT): {
-                player_state.moveRigth();
+                game_state.moveRigth();
                 break;
             }
             case static_cast<uint8_t>(GameEvent::MOVE_LEFT_END): {
-                player_state.stopMoving();
+                game_state.stopMoving();
                 break;
             }
             case static_cast<uint8_t>(GameEvent::MOVE_RIGHT_END): {
-                player_state.stopMoving();
+                game_state.stopMoving();
                 break;
             }
             default:
@@ -66,11 +66,11 @@ void GameLoop::update(PlayerState &player_state, float dt) {
         }
     }
 
-    player_state.update(dt);
+    game_state.update(dt);
 }
 
-void GameLoop::render(PlayerState &player_state) {
+void GameLoop::render(ClientGameState &game_state) {
     this->renderer->Clear();
-    player_state.render();
+    game_state.render();
     this->renderer->Present();
 }

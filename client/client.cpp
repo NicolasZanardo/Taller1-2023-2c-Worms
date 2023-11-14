@@ -4,9 +4,9 @@
 #include <chrono>
 #include <thread>
 
+#include "client_game_state.h"
 #include "event_handler.h"
 #include "game_loop.h"
-#include "player_state.h"
 #include "sprite.h"
 #include "sprites_manager.h"
 
@@ -27,15 +27,15 @@ void Client::execute() {
     EventHandler event_handler(window, event_queue);
 
     SpritesManager sprites_manager(renderer);
-    sprites_manager.addSprite("wwalk", "assets/wwalk.png", 60, 60, 0);
+    sprites_manager.addSprite("wwalk", "resources/sprites/wwalk.png", 60, 60, 0);
 
-    PlayerState player_state(sprites_manager);
+    ClientGameState game_state(sprites_manager);
 
     this->receiver.start();
     this->sender.start();
 
     GameLoop game_loop(renderer, this->state_queue);
-    game_loop.execute(event_handler, player_state);
+    game_loop.execute(event_handler, game_state);
 
     this->event_queue.close();
     this->echo_queue.close();
