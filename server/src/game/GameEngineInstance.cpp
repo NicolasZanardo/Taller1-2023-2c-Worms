@@ -107,7 +107,7 @@ void GameEngineInstance::_broadcast_game_state_update() {
     );
 
     for (const auto &[clientId, worms]: game.getClientsWorms()) {
-        for (const auto worm: worms) {
+        for (auto worm: worms) {
             const WormDto &wormDto = worm->toWormDto(clientId);
             gameStateUpdateMessage->add(wormDto);
         }
