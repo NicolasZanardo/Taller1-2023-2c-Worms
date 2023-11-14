@@ -36,13 +36,14 @@ add_library( server
         src/game/simulation/PhysicsSystem.h
         src/game/simulation/PhysicsSystem.cpp
 
+        src/game/model/WormMovement.h
+        src/game/model/WormMovement.cpp
         src/game/model/instances/Instance.h
         src/game/model/instances/Worm.h
         src/game/model/instances/Worm.cpp
         src/game/model/instances/InstancesManager.h
         src/game/model/instances/InstancesManager.cpp
-        src/game/model/WormMovement.h
-        src/game/model/WormMovement.cpp
+
 
         src/game/GameNetMessageBehaviour.h
         src/game/GameNetMessageBehaviour.cpp

@@ -38,7 +38,6 @@ void GameNetMessageBehaviour::run(NetMessageGameAction *msg) {
     if (!game.isClientsTurn(msg->client_id)) {
         return;
     }
-    // TODO separate in different messages?
     switch (msg->action) {
 
         case ActionTypeDto::moving_right_init: {

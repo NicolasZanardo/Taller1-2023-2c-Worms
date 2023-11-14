@@ -1,48 +1,21 @@
 #ifndef SERVER_WORM_H
 #define SERVER_WORM_H
 
+#include <memory>
 #include "Instance.h"
 #include "../../../../../common_base/Game/wormDto.h"
-#include "box2d/box2d.h"
+#include "../WormMovement.h"
 
 class InstancesManager;
 
 class Worm : public Instance {
 private:
-    enum class State : uint8_t {
-        idle = 0x00,
-        walking = 0x01,
-        jumping = 0x02,
-        shooting = 0x03,
-        dead = 0x04,
-        falling = 0x05,
-        damaged = 0x06
-    };
-    State state;
     friend class InstancesManager;
-
-    b2Body *body;
-
-
-    // Movement
-    const float speed = 0.5f;
-    const float forwardJumpHeight = 1.0f;
-    const float forwardJumpReach = 0.5f;
-    const float backwardsJumpHeight = 1.2f;
-    const float backwardsJumpReach = 0.2f;
-    bool is_on_ground = false;
-    bool is_moving;
-    bool is_facing_right;
-
-    int getFacingDirectionSign() const;
-    WormDto::State stateToDto() const;
-
-
-    Worm(size_t id);
+    explicit Worm(size_t id);
 
 public:
+    std::shared_ptr<WormMovement> movement;
     int health = 100;
-
 
     WormDto toWormDto(size_t clientId);
 
@@ -56,7 +29,7 @@ public:
 
     void jumpBackwards();
 
-    void onUpdatePhysics();
+    // void on_update_physics();
 };
 
 #endif

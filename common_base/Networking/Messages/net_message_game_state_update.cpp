@@ -83,7 +83,7 @@ void NetMessageGameStateUpdate::pull_data_from(NetProtocolInterpreter &channel) 
                 channel.read_float(),
                 channel.read_float(),
                 channel.read_uint(),
-                static_cast<WormDto::State>(channel.read_byte())
+                static_cast<WormDto::MovementState>(channel.read_byte())
         );
     }
 

@@ -52,8 +52,13 @@ void DumbClient::send_messages() {
         } else if (user_input == "Stop move") {
             NetMessageGameAction msg(1, ActionTypeDto::stop_moving);
             channel.send_message(msg);
+        } else if (user_input == "Jump f") {
+            NetMessageGameAction msg(1, ActionTypeDto::jump_forward);
+            channel.send_message(msg);
+        } else if (user_input == "Jump b") {
+            NetMessageGameAction msg(1, ActionTypeDto::jump_back);
+            channel.send_message(msg);
         }
-
 
         // Simulate some delay between checking for console input
         std::this_thread::sleep_for(std::chrono::milliseconds(100));

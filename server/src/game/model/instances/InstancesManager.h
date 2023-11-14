@@ -1,6 +1,7 @@
 #ifndef SERVER_ENTITYMANAGER_H
 #define SERVER_ENTITYMANAGER_H
 
+#include <memory>
 #include <vector>
 #include <unordered_map>
 #include "Worm.h"
@@ -12,15 +13,15 @@ private:
     PhysicsSystem& physicsSystem;
 
     // Worm id to worm map
-    std::unordered_map<size_t, Worm *> worms;
-    Worm* createWorm(const WormScenarioData &wormScenarioData);
+    std::unordered_map<size_t, std::shared_ptr<Worm>> worms;
+    std::shared_ptr<Worm> createWorm(const WormScenarioData &wormScenarioData);
 public:
     InstancesManager(PhysicsSystem& physicsSystem, const GameScenarioData& map);
 
     // Worms
     void createWorms(const GameScenarioData& map);
-    std::unordered_map<size_t, Worm *> getWorms();
-    Worm * getWorm(size_t wormId);
+    std::unordered_map<size_t, std::shared_ptr<Worm>> getWorms();
+    std::shared_ptr<Worm> getWorm(size_t wormId);
 };
 
 
