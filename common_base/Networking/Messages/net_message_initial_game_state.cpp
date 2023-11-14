@@ -29,12 +29,12 @@ void NetMessageInitialGameState::pull_data_from(NetProtocolInterpreter& channel)
     room_height = channel.read_float();
     short size = channel.read_short();
     for(short i = 0; i < size; i++) {
-        beams.emplace_back(
-            channel.read_float(),
-            channel.read_float(),
-            channel.read_float(),
-            static_cast<BeamDto::Type>(channel.read_byte())
-        );
+        auto x     = channel.read_float();
+        auto y     = channel.read_float();
+        auto angle = channel.read_float();
+        auto type  = static_cast<BeamDto::Type>(channel.read_byte());
+
+        beams.emplace_back(x, y, angle, type);
     }
 }
 
