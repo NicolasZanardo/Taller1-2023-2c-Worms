@@ -58,7 +58,7 @@ void WormMovement::jump_forward() {
 void WormMovement::jump_backwards() {
     if (is_on_ground) {
         is_moving = false;
-        body->ApplyLinearImpulseToCenter(b2Vec2(getFacingDirectionSign() * backwardsJumpReach, backwardsJumpHeight),
+        body->ApplyLinearImpulseToCenter(b2Vec2((-getFacingDirectionSign()) * backwardsJumpReach, backwardsJumpHeight),
                                          true);
         is_on_ground = false;
         state = MovementState::jumping;

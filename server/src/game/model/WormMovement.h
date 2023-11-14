@@ -14,11 +14,11 @@ class WormMovement {
     };
     b2Body *body;
     MovementState state;
-    const float speed = 0.5f;
-    const float forwardJumpHeight = 1.0f;
-    const float forwardJumpReach = 0.5f;
-    const float backwardsJumpHeight = 1.2f;
-    const float backwardsJumpReach = 0.2f;
+    const float speed = 2.0f;
+    const float forwardJumpHeight = 3.0f;
+    const float forwardJumpReach = 0.4f;
+    const float backwardsJumpHeight = 5.0f;
+    const float backwardsJumpReach = 0.1f;
     bool is_on_ground;
     bool is_moving;
     bool is_facing_right;
