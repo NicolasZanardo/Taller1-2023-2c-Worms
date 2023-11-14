@@ -97,7 +97,12 @@ void WaitingLobby::run(NetMessageInformID* msg) {
 }
 
 void WaitingLobby::run(NetMessage_test* msg) {
-    cout << "ERROR: A test message was recieved...";
+    lock_guard lock(clients_mtx);
+    std::shared_ptr<NetMessage> net_message(msg);
+
+    for (auto it : clients) {
+        it->communicate(net_message);
+    }
 }
 
 void WaitingLobby::run(NetMessageInitialGameState* msg) {

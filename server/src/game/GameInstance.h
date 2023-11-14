@@ -1,6 +1,7 @@
 #ifndef SERVER_GAMEINSTANCE_H
 #define SERVER_GAMEINSTANCE_H
 
+#include <memory>
 #include <unordered_map>
 #include <list>
 #include <vector>
@@ -14,7 +15,7 @@
 #include "turns/TurnManager.h"
 
 
-typedef std::unordered_map<size_t, std::vector<Worm *>> ClientsWorms;
+typedef std::unordered_map<size_t, std::vector<std::shared_ptr<Worm>>> ClientsWorms;
 
 struct GameState {
     size_t current_client_id;

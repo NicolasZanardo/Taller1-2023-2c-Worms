@@ -8,11 +8,12 @@ InstancesManager::InstancesManager(
     createWorms(gameScenarioData);
 }
 
-Worm * InstancesManager::createWorm(const WormScenarioData &wormScenarioData) {
-    auto worm = new Worm(++total_entities_created);
+std::shared_ptr<Worm> InstancesManager::createWorm(const WormScenarioData &wormScenarioData) {
+    auto worm = std::shared_ptr<Worm>(new Worm(++total_entities_created)); // TODO SHARED PTR
     b2Body *body = physicsSystem.spawn_worm(wormScenarioData, worm);
-    worm->body = body;
-    std::cout << "Worm with id: " << total_entities_created << "was created."<< std::endl;
+    worm->movement = std::make_shared<WormMovement>(body);
+    std::cout << "Worm with id: " << total_entities_created << "was created at" <<
+    "x: " << worm->movement->x() << " y: " << worm->movement->y() << std::endl;
     return worm;
 }
 
@@ -23,10 +24,10 @@ void InstancesManager::createWorms(const GameScenarioData &gameScenarioData) {
     }
 }
 
-std::unordered_map<size_t, Worm *> InstancesManager::getWorms() {
+std::unordered_map<size_t, std::shared_ptr<Worm>> InstancesManager::getWorms() {
     return worms;
 }
 
-Worm * InstancesManager::getWorm(size_t id) {
+std::shared_ptr<Worm> InstancesManager::getWorm(size_t id) {
     return worms[id];
 }

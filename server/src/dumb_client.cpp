@@ -52,8 +52,13 @@ void DumbClient::send_messages() {
         } else if (user_input == "Stop move") {
             NetMessageGameAction msg(1, ActionTypeDto::stop_moving);
             channel.send_message(msg);
+        } else if (user_input == "Jump f") {
+            NetMessageGameAction msg(1, ActionTypeDto::jump_forward);
+            channel.send_message(msg);
+        } else if (user_input == "Jump b") {
+            NetMessageGameAction msg(1, ActionTypeDto::jump_back);
+            channel.send_message(msg);
         }
-
 
         // Simulate some delay between checking for console input
         std::this_thread::sleep_for(std::chrono::milliseconds(100));
@@ -86,7 +91,7 @@ void DumbInterpreter::run(NetMessageInformID* msg) {
 }
 
 void DumbInterpreter::run(NetMessage_test* msg) {
-    cout << "short: " << msg->test_short << " uint: " << msg->test_uint << " string: " << msg->test_string << "\n";
+    cout << "short: " << msg->test_short << " uint: " << msg->test_uint << " float: " << msg->test_float << " string: " << msg->test_string << "\n";
 }
 
 void DumbInterpreter::run(NetMessageInitialGameState* msg) {
@@ -94,7 +99,18 @@ void DumbInterpreter::run(NetMessageInitialGameState* msg) {
 }
 
 void DumbInterpreter::run(NetMessageGameStateUpdate* msg) {
-    // cout << "Its turn of client id: " << msg->active_client_id << " and its current worm id is: " << msg->active_entity_id << "\n"; //<< " height: " << msg->room_height << " amount of beams on map: " << msg->beams.size() << "\n";
+    cout << "active client id: " << msg->active_client_id << "\n";
+    cout << "active worm id: " << msg->active_entity_id << "\n";
+    cout << "wind strength: " << msg->wind_speed << "\n";
+    cout << "time turn: " << msg->remaining_turn_time << " time game: " << msg->remaining_game_time << "\n";
+
+    for (auto& wrm : msg->worms) {
+        cout << "Worm "<< wrm.entity_id 
+            << " belongs to " << wrm.client_id 
+            << " and is in ("<< wrm.x << "," << wrm.y << ")"
+            << " has " << wrm.life << "hp and is in state " 
+            << (char)wrm.state << "\n";
+    }
 }
 
 void DumbInterpreter::run(NetMessageGameAction* msg) {

@@ -8,12 +8,14 @@ class NetMessage_test : public NetMessage {
         NetMessage::push_data_into(container);
         container.push_short(test_short);
         container.push_uint(test_uint);
+        container.push_float(test_float);
         container.push_string(test_string);
     }
 
     void pull_data_from(NetProtocolInterpreter& channel) override {
         test_short = channel.read_short();
         test_uint = channel.read_uint();
+        test_float = channel.read_float();
         test_string = channel.read_string();
     }
 
@@ -25,12 +27,10 @@ class NetMessage_test : public NetMessage {
     uint16_t test_short;
     uint32_t test_uint;
     std::string test_string;
+    float test_float;
     
     NetMessage_test() :
-        NetMessage(NET_MESSAGE_TYPE_TEST),
-        test_short(250),
-        test_uint(313131),
-        test_string("Test string")
+        NetMessage(NET_MESSAGE_TYPE_TEST)
     {}
 };
 #endif

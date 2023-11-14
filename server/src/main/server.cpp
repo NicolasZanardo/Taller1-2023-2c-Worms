@@ -24,6 +24,8 @@ void Server::handle_input() {
 
 		if (values[0] == "initialization") {
 			// do nothing
+		} else if (values[0] == "test") {
+			send_test_message(values);
 		} else if (values[0] == "kick") {
 			kick(values);
 		} else if (values[0] == "chat") {
@@ -56,6 +58,24 @@ void Server::chat(vector<string>& values) {
 
 	NetMessageChat msg(client_id, chat);
 	lobby.run(&msg);
+}
+
+void Server::send_test_message(vector<string>& values) {
+	int test_int(stoi(values[1]));
+	short test_short(stoi(values[2]));
+	float test_float(stof(values[3]));
+
+	string chat(values[4]);
+	for (size_t i = 5; i < values.size(); i++) {
+		chat += " " + values[i];
+	}
+	auto msg = new NetMessage_test();
+	msg->test_float = test_float;
+	msg->test_short = test_short;
+	msg->test_uint = test_int;
+	msg->test_string = chat;
+
+	lobby.run(msg);
 }
 
 void Server::start(vector<string>& values) {

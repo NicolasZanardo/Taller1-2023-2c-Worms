@@ -43,7 +43,7 @@ GameState GameInstance::getCurrentState() {
     );
 }
 
-std::unordered_map<size_t, std::vector<Worm *>> GameInstance::getClientsWorms() {
+ClientsWorms GameInstance::getClientsWorms() {
     return clientsWorms;
 }
 
@@ -52,9 +52,9 @@ void GameInstance::assign_worms_to_clients(const std::list<Client *> &clients) {
     std::srand(static_cast<unsigned int>(std::time(nullptr)));
 
     // Convert the unordered_map to a vector for shuffling
-    std::vector<Worm *> allWorms;
-    for (const auto &entry: instancesManager.getWorms()) {
-        allWorms.push_back(entry.second);
+    std::vector<std::shared_ptr<Worm>> allWorms;
+    for (const auto &[_, worm]: instancesManager.getWorms()) {
+        allWorms.push_back(worm);
     }
 
     // Shuffle the worms randomly
@@ -72,7 +72,7 @@ void GameInstance::assign_worms_to_clients(const std::list<Client *> &clients) {
 
         // Assign worms to the client
         size_t numWormsToAssign = wormsPerPlayer + (extraWorms > 0 ? 1 : 0);
-        std::vector<Worm *> assignedSubset(allWorms.begin(), allWorms.begin() + numWormsToAssign);
+        std::vector<std::shared_ptr<Worm>> assignedSubset(allWorms.begin(), allWorms.begin() + numWormsToAssign);
 
         // Adjust health for worms of players with fewer worms
         if (extraWorms > 0) {
