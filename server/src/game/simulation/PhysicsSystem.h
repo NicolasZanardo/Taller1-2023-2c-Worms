@@ -1,6 +1,7 @@
 #ifndef SERVER_PHYSICSSYSTEM_H
 #define SERVER_PHYSICSSYSTEM_H
 
+#include <memory>
 #include <unordered_map>
 #include "box2d/box2d.h"
 #include "../scenario/GameScenarioData.h"
@@ -10,9 +11,9 @@ class PhysicsSystem {
 public:
     PhysicsSystem(int rate, float xGravity, float yGravity, const GameScenarioData &map);
 
-    void update(const std::unordered_map<size_t, Worm *> &worms);
+    void update(const std::unordered_map<size_t, std::shared_ptr<Worm>> &worms);
 
-    b2Body *spawn_worm(WormScenarioData wormScenarioData, Worm *wormModel);
+    b2Body *spawn_worm(WormScenarioData wormScenarioData, std::shared_ptr<Worm> wormModel);
 
 private:
     const float timeStep;

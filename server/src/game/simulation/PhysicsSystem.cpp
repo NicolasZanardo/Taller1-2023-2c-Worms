@@ -11,14 +11,16 @@ PhysicsSystem::PhysicsSystem(
     populate_beams(scenario);
 }
 
-void PhysicsSystem::update(const std::unordered_map<size_t, Worm *>& worms) {
+void PhysicsSystem::update(const std::unordered_map<size_t, std::shared_ptr<Worm>>& worms) {
     world.Step(timeStep, velocityIterations, positionIterations);
     for (const auto& [_, worm] : worms) {
-        worm->onUpdatePhysics();
+        if (worm->movement) {
+            worm->movement->on_update_physics();
+        }
     }
 }
 
-b2Body* PhysicsSystem::spawn_worm(WormScenarioData worm, Worm* wormModel) {
+b2Body* PhysicsSystem::spawn_worm(WormScenarioData worm, std::shared_ptr<Worm> wormModel) {
     b2BodyDef bodyDef;
     bodyDef.type = b2_dynamicBody;
     // bodyDef.fixedRotation = false;
