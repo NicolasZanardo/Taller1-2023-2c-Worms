@@ -1,7 +1,4 @@
 #===============================================================================
-# add_subdirectory(poc_sdl)
-
-#===============================================================================
 include_directories(${SDL2PP_INCLUDE_DIRS})
 
 add_executable (sdlpp-events
@@ -20,6 +17,7 @@ add_executable (sdlpp-events
     game_ui/non_animation.cpp game_ui/non_animation.h
     game_ui/sprite.cpp game_ui/sprite.h
     game_ui/sprites_manager.cpp game_ui/sprites_manager.h
+    game_ui/worm_state.cpp game_ui/worm_state.h
 )
 
 target_include_directories(sdlpp-events PUBLIC

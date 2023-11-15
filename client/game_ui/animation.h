@@ -15,6 +15,9 @@ public:
                             FrameSelectorMode mode, uint16_t num_frames, bool img_looking_left);
     ~Animation() = default;
 
+    Animation(Animation&& other);
+    Animation& operator=(Animation&& other);
+
     void update(float dt);
     void render(const SDL2pp::Rect dest, bool facing_left);
 

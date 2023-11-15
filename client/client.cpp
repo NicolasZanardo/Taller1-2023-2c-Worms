@@ -30,6 +30,7 @@ void Client::execute() {
     sprites_manager.addSprite("wwalk", "resources/sprites/wwalk.png", 60, 60, 0);
 
     ClientGameState game_state(sprites_manager);
+    game_state.load();
 
     this->receiver.start();
     this->sender.start();
