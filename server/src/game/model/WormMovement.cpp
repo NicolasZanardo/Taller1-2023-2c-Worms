@@ -80,7 +80,7 @@ void WormMovement::on_update_physics() {
 
     // x
     if (is_moving) {
-        body->ApplyLinearImpulseToCenter((b2Vec2(getFacingDirectionSign() * speed, 0.0f)), true);
+        body->ApplyLinearImpulseToCenter((b2Vec2(getFacingDirectionSign() * speed * 0.1f, 0.0f)), true);
     }
 }
 
