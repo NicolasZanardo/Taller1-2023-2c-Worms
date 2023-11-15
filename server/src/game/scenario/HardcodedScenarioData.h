@@ -30,10 +30,10 @@ public:
         }*/
 
         // Populate worms on each side of the map
-        scenario.worms.emplace_back(1.0f, 2.5f);
-        // scenario.worms.emplace_back(3.0f, 2.5f);
-        // scenario.worms.emplace_back(7.0f, 2.5f);
-        // scenario.worms.emplace_back(9.0f, 2.5f);
+        scenario.worms.emplace_back(1.0f, 20.5f);
+        //scenario.worms.emplace_back(15.0f, 12.5f);
+        //scenario.worms.emplace_back(30.0f, 32.5f);
+        //scenario.worms.emplace_back(50.0f, 40.5f);
         return scenario;
     }
 };

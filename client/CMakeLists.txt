@@ -1,9 +1,11 @@
 #===============================================================================
 include_directories(${SDL2PP_INCLUDE_DIRS})
 
-add_executable (sdlpp-events
+add_executable (client_app
     client_main.cpp
     client.cpp client.h
+    dumb_simple_client/dumb_client.cpp dumb_simple_client/dumb_client.h
+
     game_managment/client_receiver.cpp game_managment/client_receiver.h
     game_managment/client_sender.cpp game_managment/client_sender.h
     game_managment/cursor.cpp game_managment/cursor.h
@@ -20,13 +22,13 @@ add_executable (sdlpp-events
     game_ui/worm_state.cpp game_ui/worm_state.h
 )
 
-target_include_directories(sdlpp-events PUBLIC
+target_include_directories(client_app PUBLIC
     "${CMAKE_CURRENT_SOURCE_DIR}/"
     "${CMAKE_CURRENT_SOURCE_DIR}/game_managment"
     "${CMAKE_CURRENT_SOURCE_DIR}/game_ui"
 )
 
-target_link_libraries(sdlpp-events common ${SDL2PP_LIBRARIES})
+target_link_libraries(client_app common ${SDL2PP_LIBRARIES})
 
 file(COPY resources DESTINATION ${CMAKE_BINARY_DIR}/bin)
 
