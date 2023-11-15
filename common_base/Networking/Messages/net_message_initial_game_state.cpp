@@ -8,7 +8,8 @@ NetMessageInitialGameState::NetMessageInitialGameState(float room_width, float r
         : NetMessage(NET_MESSAGE_TYPE_INITIAL_STATE),
         room_width(room_width),
         room_height(room_height),
-        beams()
+        beams(),
+        worms()
 {}
 
 void NetMessageInitialGameState::push_data_into(NetBuffer& container) {
