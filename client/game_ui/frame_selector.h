@@ -18,6 +18,7 @@ public:
     FrameSelector(const FrameSelector&) = default;
     FrameSelector& operator=(const FrameSelector&) = default;
 
+    void reset();
     void advanceFrame();
     void advanceFrames(uint16_t num_frames);
     uint16_t getCurrentFrame() const;

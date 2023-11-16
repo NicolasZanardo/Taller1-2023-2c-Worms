@@ -11,7 +11,8 @@
 #include "sprites_manager.h"
 
 Client::Client(const char* host_name, const char* service_name)
-    : receiver(state_queue, echo_queue)
+    : channel(std::move(Socket(host_name, service_name)))
+    , receiver(state_queue, channel)
     , sender(event_queue, echo_queue) {}
 
 void Client::execute() {
@@ -30,7 +31,7 @@ void Client::execute() {
     sprites_manager.addSprite("wwalk", "resources/sprites/wwalk.png", 60, 60, 0);
 
     ClientGameState game_state(sprites_manager);
-    game_state.load();
+    // game_state.load();
 
     this->receiver.start();
     this->sender.start();

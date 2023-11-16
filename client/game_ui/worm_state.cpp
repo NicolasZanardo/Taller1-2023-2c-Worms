@@ -3,10 +3,15 @@
 #include "client_game_state.h"
 
 WormState::WormState(SpritesManager& sprites_manager)
-    : an(sprites_manager, "wwalk", FrameSelectorMode::BOUNCE, 12, true)
+    // : an(sprites_manager, "wwalk", FrameSelectorMode::BOUNCE, 12, true)
     , facingLeft(false)
     , moving(false)
-    , x(300), y(300) {}
+    , x(300), y(300)
+    , animations{
+        // {MovementState::idle, },
+        // {MovementState::jumping,},
+        {MovementState::walking, Animation(sprites_manager, "wwalk", 15, FrameSelectorMode::BOUNCE, true)}
+    } {}
 
 WormState::WormState(WormState&& other)
     : an(std::move(an))
@@ -28,30 +33,39 @@ WormState& WormState::operator=(WormState&& other) {
     return *this;
 }
 
-void WormState::update(float dt) {
-    if (moving) {
-        an.update(dt);
-        if (facingLeft)
-            x -= 3;
-        else
-            x += 3;
+void WormState::update(WormDTO& update_data, float dt) {
+    if (this->x < update_data.x) {
+        this->x = update_data.x;
+        this->facingLeft = false;
+    } else if (this->x > update_data.x) {
+        this->x = update_data.x;
+        this->facingLeft = true;
     }
+
+    this->y = update_data.y;
+
+    if (this->state != updata_date.state) {
+        this->current_animation = this->animations[updata_date.state];
+        this->current_animation.reset();
+    }
+
+    this->current_animation.update(dt);
 }
 
 void WormState::render() {
     an.render(SDL2pp::Rect(x, y, 200, 200), this->facingLeft);
 }
 
-void WormState::moveRigth() {
-    moving = true;
-    facingLeft = false;
-}
+// void WormState::moveRigth() {
+//     moving = true;
+//     facingLeft = false;
+// }
 
-void WormState::moveLeft() {
-    moving = true;
-    facingLeft = true;
-}
+// void WormState::moveLeft() {
+//     moving = true;
+//     facingLeft = true;
+// }
 
-void WormState::stopMoving() {
-    moving = false;
-}
+// void WormState::stopMoving() {
+//     moving = false;
+// }

@@ -3,6 +3,7 @@
 
 #include <vector>
 #include "../../Game/beamDto.h"
+#include "../../Game/wormDto.h"
 #include "net_message_dependencies.h"
 
 class NetMessageInitialGameState : public NetMessage {
@@ -10,12 +11,14 @@ public:
     float room_width;
     float room_height;
     std::vector<BeamDto> beams;
+    std::vector<WormDto> worms;
     
     NetMessageInitialGameState();
     NetMessageInitialGameState(float room_width, float room_height);
     ~NetMessageInitialGameState() override {};
 
     void add(const BeamDto& beam);
+    void add(const WormDto& worm);
 
     virtual void push_data_into(NetBuffer& container) override;
     virtual void pull_data_from(NetProtocolInterpreter& channel) override;

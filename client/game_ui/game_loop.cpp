@@ -41,32 +41,16 @@ void GameLoop::execute(EventHandler& event_handler, ClientGameState& game_state)
 }
 
 void GameLoop::update(ClientGameState &game_state, float dt) {
-    GameEvent event;
+    std::unique_ptr<ClientGameStateDTO> game_state_dto;
 
-    while(this->state_queue->try_pop(event)) {
-        switch(static_cast<uint8_t>(event)) {
-            case static_cast<uint8_t>(GameEvent::MOVE_LEFT_INIT): {
-                game_state.moveLeft();
-                break;
-            }
-            case static_cast<uint8_t>(GameEvent::MOVE_RIGHT_INIT): {
-                game_state.moveRigth();
-                break;
-            }
-            case static_cast<uint8_t>(GameEvent::MOVE_LEFT_END): {
-                game_state.stopMoving();
-                break;
-            }
-            case static_cast<uint8_t>(GameEvent::MOVE_RIGHT_END): {
-                game_state.stopMoving();
-                break;
-            }
-            default:
-                break;
-        }
+    bool receive_new_state = false;
+    while(this->state_queue->try_pop(game_state_dto)) {
+        receive_new_state = true;
     }
 
-    game_state.update(dt);
+    if (receive_new_state) {
+        game_state.update(dt, game_state_dto);
+    }
 }
 
 void GameLoop::render(ClientGameState &game_state) {

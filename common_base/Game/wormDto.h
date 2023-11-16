@@ -2,14 +2,15 @@
 #define COMMON_WORM_DTO_H_
 #include <cstdint>
 
+enum class MovementState : uint8_t {
+    idle    = 0x00,
+    walking = 0x01,
+    jumping = 0x02,
+    shooting= 0x03,
+    falling = 0x05,
+};
+
 struct WormDto {
-    enum class MovementState : uint8_t {
-        idle    = 0x00,
-        walking = 0x01,
-        jumping = 0x02,
-        shooting= 0x03,
-        falling = 0x05,
-    };
 
     int client_id;
     int entity_id;

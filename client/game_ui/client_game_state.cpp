@@ -14,17 +14,24 @@ ClientGameState::ClientGameState(SpritesManager& sprites_manager)
 void ClientGameState::load() {
     // this->worms.emplace(std::make_pair(1, WormState(*(this->sprites_manager))));
 
-    std::cout << "loading\n";
-    this->worms.emplace(
-        std::make_pair<std::string, WormState>(
-            std::string("hola"),
-            std::move(WormState(*(this->sprites_manager)))
-        )
-    );
-    std::cout << "loaded\n";
+    // std::cout << "loading\n";
+    // this->worms.emplace(
+    //     std::make_pair<int, WormState>(
+    //         id,
+    //         std::move(WormState(*(this->sprites_manager)))
+    //     )
+    // );
+    // std::cout << "loaded\n";
 }
 
-void ClientGameState::update(float dt) {
+void ClientGameState::update(std::unique_ptr<ClientGameStateDTO> game_state_dto, float dt) {
+    this-> game_remaining_time = game_state_dto.game_remaining_time;
+    this-> turn_remaining_time = game_state_dto.turn_remaining_time;
+    
+    for (auto& worm_state : game_state_dto->worms) {
+        this->worms_state[worm.entity_id].update(worm_state, dt);
+    }
+
     // if (moving) {
     //     an.update(dt);
     //     if (facingLeft)
@@ -39,7 +46,8 @@ void ClientGameState::update(float dt) {
 
 void ClientGameState::render() {
     // an.render(SDL2pp::Rect(x, y, 200, 200), this->facingLeft);
-    worm_state.render();
+    this->beam_state.render();
+    this->worm_state.render();
     // this->worms[1].render();
 }
 

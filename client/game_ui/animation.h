@@ -11,13 +11,14 @@
 class Animation {
 public:
     Animation() = delete;
-    explicit Animation(SpritesManager& sprites_manage, const std::string& id,
+    explicit Animation(SpritesManager& sprites_manager, const std::string& id,
                             FrameSelectorMode mode, uint16_t num_frames, bool img_looking_left);
     ~Animation() = default;
 
     Animation(Animation&& other);
     Animation& operator=(Animation&& other);
 
+    void reser();
     void update(float dt);
     void render(const SDL2pp::Rect dest, bool facing_left);
 

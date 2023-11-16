@@ -29,6 +29,10 @@ Animation& Animation::operator=(Animation&& other) {
     return *this;
 }
 
+void Animation::reset() {
+    this->frame_selector.reset();
+}
+
 void Animation::update(float dt) {
     this->elapsed += dt;
     while (this->elapsed > FRAME_RATE) {
