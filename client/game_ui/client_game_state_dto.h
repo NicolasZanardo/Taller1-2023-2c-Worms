@@ -2,11 +2,14 @@
 #define __CLIENT_GAME_STATE_DTO_H__
 
 #include <vector>
+#include "Game/wormDto.h"
+#include "Game/beamDto.h"
+#include "Game/bulletDto.h"
+#include "Game/eventDto.h"
 
 class ClientGameStateDTO {
 public:
-    ClientGameStateDTO() = delete;
-    explicit ClientGameStateDTO(float width, float height);
+    ClientGameStateDTO() = default;
     ~ClientGameStateDTO() = default;
 
     float width;
@@ -19,7 +22,7 @@ public:
     float remaining_game_time;
     float remaining_turn_time;
     
-    std::vector<WormDTO> worms;
+    std::vector<WormDto> worms;
     std::vector<BeamDto> beams;
     std::vector<BulletDto> bullets;
     std::vector<WorldEventDto> events;

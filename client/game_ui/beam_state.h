@@ -3,13 +3,12 @@
 
 #include "non_animation.h"
 #include "sprites_manager.h"
-
-#include "beamDto.h"
+#include "Game/beamDto.h"
 
 class BeamState {
 public:
     BeamState() = delete;
-    explicit BeamState(SpritesManager& sprites_manager, beamDto& beam_dto);
+    explicit BeamState(SpritesManager& sprites_manager, BeamDto& beam_dto);
     ~BeamState() = default;
 
     // BeamState(BeamState&& other);
@@ -24,6 +23,8 @@ private:
 
     float x;
     float y;
+    float angle;
+    BeamDto::Type type;
 };
 
 #endif  // __BEAM_STATE_H__

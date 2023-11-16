@@ -1,11 +1,10 @@
 #ifndef __WORM_STATE_H__
 #define __WORM_STATE_H__
 
+#include <unordered_map>
 #include "client_game_state_dto.h"
 #include "animation.h"
 #include "sprites_manager.h"
-
-#include "wormDto.h"
 
 class WormState {
 public:
@@ -13,10 +12,10 @@ public:
     explicit WormState(SpritesManager& sprites_manager);
     ~WormState() = default;
 
-    WormState(WormState&& other);
-    WormState& operator=(WormState&& other);
+    WormState(WormState&& other) noexcept ;
+    WormState& operator=(WormState&& other) noexcept ;
 
-    void update(WormDTO& update_data, float dt);
+    void update(WormDto& updated_data, float dt);
     void render();
     // void moveRigth();
     // void moveLeft();
@@ -24,15 +23,15 @@ public:
 
 private:
     // Animation an;
-    MovementState state;
+    MovementStateDto state;
     bool facingLeft;
     // bool moving;
     int x;
     int y;
 
-    Animation* current_animation;
+    std::shared_ptr<Animation> current_animation;
 
-    std::map<MovementState, Animation> animations;
+    std::unordered_map<MovementStateDto, std::shared_ptr<Animation>> animations;
 };
 
 #endif  // __WORM_STATE_H__

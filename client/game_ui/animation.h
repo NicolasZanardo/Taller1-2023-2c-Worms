@@ -15,17 +15,16 @@ public:
                             FrameSelectorMode mode, uint16_t num_frames, bool img_looking_left);
     ~Animation() = default;
 
-    Animation(Animation&& other);
-    Animation& operator=(Animation&& other);
+    Animation(Animation&& other) noexcept ;
+    Animation& operator=(Animation&& other) noexcept ;
 
-    void reser();
+    void reset();
     void update(float dt);
     void render(const SDL2pp::Rect dest, bool facing_left);
 
 private:
-    bool img_looking_left;  // Sprite image orientarion.
+    bool img_looking_left{};  // Sprite image orientarion.
     float elapsed;  // Time elapsed since last update.
-    FrameSelectorMode mode;
     FrameSelector frame_selector;
     SpritesManager* sprites_manager;
     std::string id;

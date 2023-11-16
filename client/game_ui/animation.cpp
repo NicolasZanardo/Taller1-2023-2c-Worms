@@ -8,20 +8,18 @@ Animation::Animation(SpritesManager& sprites_manager, const std::string& id,
     , sprites_manager(&sprites_manager)
     , id(id) {}
 
-Animation::Animation(Animation&& other)
+Animation::Animation(Animation&& other) noexcept
     : elapsed(other.elapsed)
-    , mode(other.mode)
     , frame_selector(other.frame_selector)
     , sprites_manager(other.sprites_manager)
     , id(other.id) {}
 
-Animation& Animation::operator=(Animation&& other) {
+Animation& Animation::operator=(Animation&& other) noexcept {
     if (&other == this) {
 		return *this;
     }
 
     this->elapsed = other.elapsed;
-    this->mode = other.mode;
     this->frame_selector = other.frame_selector;
     this->sprites_manager = other.sprites_manager;
     this->id = other.id;

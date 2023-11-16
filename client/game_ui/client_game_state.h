@@ -11,6 +11,7 @@
 #include "sprites_manager.h"
 #include "client_game_state_dto.h"
 #include "worm_state.h"
+#include "beam_state.h"
 
 class ClientGameState {
 public:
@@ -28,7 +29,7 @@ public:
 private:
     SpritesManager* sprites_manager;
     // std::map<std::string, WormState> worms;  // The key is the id.
-    WormState worm_state;
+    // WormState worm_state;
 
     int game_remaining_time;
     int turn_remaining_time;

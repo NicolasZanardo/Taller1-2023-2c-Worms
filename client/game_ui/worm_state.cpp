@@ -2,58 +2,65 @@
 
 #include "client_game_state.h"
 
-WormState::WormState(SpritesManager& sprites_manager)
+WormState::WormState(SpritesManager& sprites_manager) :
     // : an(sprites_manager, "wwalk", FrameSelectorMode::BOUNCE, 12, true)
-    , facingLeft(false)
-    , moving(false)
+    facingLeft(false)
     , x(300), y(300)
-    , animations{
-        // {MovementState::idle, },
-        // {MovementState::jumping,},
-        {MovementState::walking, Animation(sprites_manager, "wwalk", 15, FrameSelectorMode::BOUNCE, true)}
-    } {}
+    , animations({
+        {MovementStateDto::idle, std::make_shared<Animation>(sprites_manager, "wwalk", FrameSelectorMode::BOUNCE, 15,  true)},
+        {MovementStateDto::jumping,std::make_shared<Animation>(sprites_manager, "wwalk", FrameSelectorMode::BOUNCE, 15, true)},
+        {MovementStateDto::walking, std::make_shared<Animation>(sprites_manager, "wwalk",FrameSelectorMode::BOUNCE, 15,  true)}
+    }) {}
 
-WormState::WormState(WormState&& other)
-    : an(std::move(an))
-    , facingLeft(other.facingLeft)
-    , moving(other.moving)
-    , x(other.x), y(other.x) {std::cout << "worm state move consturctor\n";}
+WormState::WormState(WormState&& other) noexcept
+        : current_animation(nullptr) // TODO
+{
+    std::cout << "worm state move constructor\n";
+    *this = std::move(other);  // Reuse the move assignment operator
+}
 
-WormState& WormState::operator=(WormState&& other) {
+WormState& WormState::operator=(WormState&& other) noexcept {
     if (this == &other) {
         return *this;
     }
 
-    this->an = std::move(other.an);
+    this->current_animation = nullptr;  // Ensure proper cleanup
+
+    // Move data members
     this->facingLeft = other.facingLeft;
-    this->moving = other.moving;
-    this->x = x;
-    this->y = y;
+    this->x = other.x;
+    this->y = other.y;
+
+    // Move animations map
+    this->animations = std::move(other.animations);
+
+    // Move current animation pointer
+    this->current_animation = std::exchange(other.current_animation, nullptr);
 
     return *this;
 }
 
-void WormState::update(WormDTO& update_data, float dt) {
-    if (this->x < update_data.x) {
-        this->x = update_data.x;
+void WormState::update(WormDto& updated_data, float dt) {
+    if (this->x < updated_data.x) {
+        this->x = updated_data.x;
         this->facingLeft = false;
-    } else if (this->x > update_data.x) {
-        this->x = update_data.x;
+    } else if (this->x > updated_data.x) {
+        this->x = updated_data.x;
         this->facingLeft = true;
     }
 
-    this->y = update_data.y;
+    this->y = updated_data.y;
 
-    if (this->state != updata_date.state) {
-        this->current_animation = this->animations[updata_date.state];
-        this->current_animation.reset();
+    if (this->state != updated_data.state) {
+        this->current_animation = this->animations.at(updated_data.state);
+        this->current_animation->reset();
     }
 
-    this->current_animation.update(dt);
+    this->current_animation->update(dt);
 }
 
 void WormState::render() {
-    an.render(SDL2pp::Rect(x, y, 200, 200), this->facingLeft);
+    current_animation->render(SDL2pp::Rect(x, y, 200, 200), this->facingLeft);
 }
 
 // void WormState::moveRigth() {

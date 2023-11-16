@@ -2,7 +2,7 @@
 
 WormMovement::WormMovement(b2Body *body) :
         body(body),
-        state(MovementState::idle),
+        state(State::idle),
         is_on_ground(false),
         is_moving(false),
         is_facing_right(true) {};
@@ -24,18 +24,18 @@ int WormMovement::getFacingDirectionSign() const {
 }
 
 void WormMovement::start_moving_right() {
-    if (state != MovementState::jumping) {
+    if (state != State::jumping) {
         is_facing_right = true;
         is_moving = true;
-        state = MovementState::walking;
+        state = State::walking;
     }
 }
 
 void WormMovement::start_moving_left() {
-    if (state != MovementState::jumping) {
+    if (state != State::jumping) {
         is_facing_right = false;
         is_moving = true;
-        state = MovementState::walking;
+        state = State::walking;
     }
 }
 
@@ -51,7 +51,7 @@ void WormMovement::jump_forward() {
         is_moving = false;
         body->ApplyLinearImpulseToCenter(b2Vec2(getFacingDirectionSign() * forwardJumpReach, forwardJumpHeight), true);
         is_on_ground = false;
-        state = MovementState::jumping;
+        state = State::jumping;
     }
 }
 
@@ -61,7 +61,7 @@ void WormMovement::jump_backwards() {
         body->ApplyLinearImpulseToCenter(b2Vec2((-getFacingDirectionSign()) * backwardsJumpReach, backwardsJumpHeight),
                                          true);
         is_on_ground = false;
-        state = MovementState::jumping;
+        state = State::jumping;
     }
 }
 
@@ -71,11 +71,11 @@ void WormMovement::on_update_physics() {
     if (y_velocity == 0.0f) {
         is_on_ground = true;
         if (body->GetLinearVelocity().x == 0.0f) {
-            state = MovementState::idle;
+            state = State::idle;
         }
 
     } else if (y_velocity < 0.0f) {
-        state = MovementState::falling;
+        state = State::falling;
     }
 
     // x
@@ -84,17 +84,17 @@ void WormMovement::on_update_physics() {
     }
 }
 
-WormDto::MovementState WormMovement::state_to_dto() const {
+MovementStateDto WormMovement::state_to_dto() const {
     switch (state) {
-        case MovementState::idle:
-            return WormDto::MovementState::idle;
-        case MovementState::walking:
-            return WormDto::MovementState::walking;
-        case MovementState::jumping:
-            return WormDto::MovementState::jumping;
-        case MovementState::shooting:
-            return WormDto::MovementState::shooting;
-        case MovementState::falling:
-            return WormDto::MovementState::falling;
+        case State::idle:
+            return MovementStateDto::idle;
+        case State::walking:
+            return MovementStateDto::walking;
+        case State::jumping:
+            return MovementStateDto::jumping;
+        case State::shooting:
+            return MovementStateDto::shooting;
+        case State::falling:
+            return MovementStateDto::falling;
     }
 }

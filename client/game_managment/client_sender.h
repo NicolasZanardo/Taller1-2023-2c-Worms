@@ -3,6 +3,7 @@
 
 #include "queue.h"
 #include "thread.h"
+#include "networking.h"
 
 #include "client_defs.h"
 

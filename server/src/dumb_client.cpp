@@ -99,7 +99,7 @@ void DumbInterpreter::run(NetMessageInitialGameState* msg) {
 }
 
 void DumbInterpreter::run(NetMessageGameStateUpdate* msg) {
-    cout << "active client id: " << msg->active_client_id << "\n";
+    /*cout << "active client id: " << msg->active_client_id << "\n";
     cout << "active worm id: " << msg->active_entity_id << "\n";
     cout << "wind strength: " << msg->wind_speed << "\n";
     cout << "time turn: " << msg->remaining_turn_time << " time game: " << msg->remaining_game_time << "\n";
@@ -110,7 +110,7 @@ void DumbInterpreter::run(NetMessageGameStateUpdate* msg) {
             << " and is in ("<< wrm.x << "," << wrm.y << ")"
             << " has " << wrm.life << "hp and is in state " 
             << (char)wrm.state << "\n";
-    }
+    }*/
 }
 
 void DumbInterpreter::run(NetMessageGameAction* msg) {

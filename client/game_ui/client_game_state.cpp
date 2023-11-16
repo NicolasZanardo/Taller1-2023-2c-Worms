@@ -8,8 +8,7 @@
 
 ClientGameState::ClientGameState(SpritesManager& sprites_manager)
     : sprites_manager(&sprites_manager)
-    , worms()
-    , worm_state(sprites_manager) {}
+    , worms_state() {}
 
 void ClientGameState::load() {
     // this->worms.emplace(std::make_pair(1, WormState(*(this->sprites_manager))));
@@ -25,11 +24,11 @@ void ClientGameState::load() {
 }
 
 void ClientGameState::update(std::unique_ptr<ClientGameStateDTO> game_state_dto, float dt) {
-    this-> game_remaining_time = game_state_dto.game_remaining_time;
-    this-> turn_remaining_time = game_state_dto.turn_remaining_time;
+    this-> game_remaining_time = game_state_dto->remaining_game_time;
+    this-> turn_remaining_time = game_state_dto->remaining_turn_time;
     
-    for (auto& worm_state : game_state_dto->worms) {
-        this->worms_state[worm.entity_id].update(worm_state, dt);
+    for (auto& worm_state_dto : game_state_dto->worms) {
+        this->worms_state[worm_state_dto.entity_id].update(worm_state_dto, dt);
     }
 
     // if (moving) {
@@ -39,7 +38,7 @@ void ClientGameState::update(std::unique_ptr<ClientGameStateDTO> game_state_dto,
     //     else
     //         x += 3;
     // }
-    worm_state.update(dt);
+    // worm_state.update(dt);
     // this->worms[1].update(dt);
 }
 

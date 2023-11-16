@@ -8,16 +8,16 @@
 // explicit ClientReceiver(Queue<GameEvent>& state_queue, NetChannel& net_channel)
 //     : state_queue(state_queue), net_channel(&net_channel) {}
 
-explicit ClientReceiver(Queue<ClientGameStateDTO>& state_queue, NetChannel& net_channel)
+ClientReceiver::ClientReceiver(Queue<std::shared_ptr<ClientGameStateDTO>>& state_queue, NetChannel& net_channel)
     : state_queue(state_queue), net_channel(&net_channel) {}
 
 void ClientReceiver::run() {
     while (Thread::keep_running_) {
         try {
             // GameEvent game_event = this->echo_queue.pop();
-            std::shared_ptr<NetMessage> msg(this->channel->read_message());
+            std::shared_ptr<NetMessage> msg(this->net_channel->read_message());
 
-            msg->execute(this);
+            msg->execute(*this);
 
             // this->state_queue.push(game_event);
         } catch (const ClosedQueue& e) {
@@ -27,10 +27,10 @@ void ClientReceiver::run() {
 }
 
 void ClientReceiver::run(NetMessageInitialGameState* msg) {
-    auto game_state_dto = std::make_unique<ClientGameStateDTO>();
+    auto game_state_dto = std::make_shared<ClientGameStateDTO>();
 
-    game_state_dto->width = msg->width;
-    game_state_dto->height = msg->height;
+    game_state_dto->width = msg->room_width;
+    game_state_dto->height = msg->room_height;
     game_state_dto->beams = std::move(msg->beams);
     game_state_dto->worms = std::move(msg->worms);
 
@@ -38,7 +38,7 @@ void ClientReceiver::run(NetMessageInitialGameState* msg) {
 }
 
 void ClientReceiver::run(NetMessageGameStateUpdate* msg) {
-    auto game_state_dto = std::make_unique<ClientGameStateDTO>();
+    auto game_state_dto = std::make_shared<ClientGameStateDTO>();
 
     game_state_dto->active_client_id = msg->active_client_id;
     game_state_dto->active_entity_id = msg->active_entity_id;

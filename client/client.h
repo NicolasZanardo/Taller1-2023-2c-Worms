@@ -9,12 +9,11 @@
 
 #include <SDL2pp/SDL2pp.hh>
 
-#include "client_game_state_dto.h"
+#include "networking.h"
 #include "client_receiver.h"
 #include "client_sender.h"
 #include "game_loop.h"
-
-#include "net_channel.h"
+#include "client_game_state_dto.h"
 
 class Client {
 public:

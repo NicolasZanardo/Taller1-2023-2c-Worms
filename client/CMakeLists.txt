@@ -20,6 +20,7 @@ add_executable (client_app
     game_ui/sprite.cpp game_ui/sprite.h
     game_ui/sprites_manager.cpp game_ui/sprites_manager.h
     game_ui/worm_state.cpp game_ui/worm_state.h
+    game_ui/beam_state.cpp game_ui/beam_state.h
 )
 
 target_include_directories(client_app PUBLIC
