@@ -1,24 +1,33 @@
 #include "beam_state.h"
+#include "ui_utils.h"
+#include "constants.h"
 
 BeamState::BeamState(SpritesManager& sprites_manager, BeamDto& beam_dto)
-    : sprites_manager(&sprites_manager), // TODO
-      non_animation(sprites_manager, "ACA VA EL SPRITE DEL BEAM", true),
-      x(beam_dto.x),
-      y(beam_dto.y),
-      angle(beam_dto.angle),
-      type(beam_dto.type){
-    // inicializar estado con el dto
+    : sprites_manager(&sprites_manager),
+      non_animation(sprites_manager, "beam_large", true), // TODO Esta hardcoded el beam long
+      x(UiUtils::x_meters_pos_to_x_pixel_pos(beam_dto.x)),
+      y(UiUtils::y_meters_pos_to_y_pixel_pos(beam_dto.y)),
+      angle(beam_dto.angle){
+    _set_dimens(beam_dto.type);
 }
 
 void BeamState::render() {
-    float beamHeight = 0.8f * 25;
-    float beamWidth;
-    if (this->type == BeamDto::Type::LONG) {
-        beamWidth = 6.0f * 25; // TODO 0.8 is beam height have a constant in common or passed height, width on dto, 25 is the constat for pixels
-    } else {
-        beamWidth = 3.0f * 25;
-    }
+    SDL2pp::Rect dest(this->x, this->y, width, height);
+    this->non_animation.render(dest, this->angle, true);
+}
 
-    SDL2pp::Rect dest(this->x, this->y, beamWidth, beamHeight);
-    this->non_animation.render(dest, this->angle, false);
+void BeamState::_set_dimens(BeamDto::Type type) {
+    switch (type) {
+        case BeamDto::Type::LONG: {
+            height = UiUtils::meters_to_pixels(LARGE_BEAM_HEIGHT);
+            width = UiUtils::meters_to_pixels(LARGE_BEAM_WIDTH);
+            return;
+        }
+
+        case BeamDto::Type::SHORT: {
+            height = UiUtils::meters_to_pixels(SHORT_BEAM_HEIGHT);
+            width = UiUtils::meters_to_pixels(SHORT_BEAM_WIDTH);
+            return;
+        }
+    }
 }

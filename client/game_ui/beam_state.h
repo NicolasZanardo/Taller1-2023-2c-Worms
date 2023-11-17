@@ -21,10 +21,13 @@ private:
     SpritesManager* sprites_manager;
     NonAnimation non_animation;
 
-    float x;
-    float y;
+    int x;
+    int y;
+    int height;
+    int width;
     float angle;
-    BeamDto::Type type;
+
+    void _set_dimens(BeamDto::Type type);
 };
 
 #endif  // __BEAM_STATE_H__
