@@ -10,6 +10,7 @@ class NetChannel {
 
     public:
     explicit NetChannel(Socket skt);
+    explicit NetChannel(const char *host, const char* service);
 
     bool send_message(NetMessage& msg);
     NetMessage* read_message();

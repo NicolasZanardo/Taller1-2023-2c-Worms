@@ -56,6 +56,7 @@ void GameLoop::update(ClientGameState &game_state, float dt) {
     if (receive_new_state) {
         if (this->game_state_was_initialized == false) {
             game_state.load(game_state_dto);
+            this->game_state_was_initialized = true;
         } else {
             game_state.update(game_state_dto, dt);
         }

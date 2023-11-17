@@ -9,6 +9,10 @@ NetChannel::NetChannel(Socket skt) :
     socket_open(true)
     {}
 
+NetChannel::NetChannel(const char *host, const char* service)
+    : socket(host, service)
+    , socket_open(true) {}
+
 bool NetChannel::send_message(NetMessage& msg) {
     NetBuffer buffer;
     msg.push_data_into(buffer);

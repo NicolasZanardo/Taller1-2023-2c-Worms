@@ -37,11 +37,11 @@ bool EventHandler::handleEvents() {
                 }
                 break;
             case SDL_MOUSEMOTION:
-                std::cout << "Oh! Mouse" << std::endl;
+                // std::cout << "Oh! Mouse" << std::endl;
 
                 // SDL_GetMouseState(&x, &y);
-                std::cout << "x: " << cursor.getPosX() << " - y: " << cursor.getPosY() << '\n';
-                std::cout << "xn: " << cursor.getNormPosX() << " - yn: " << cursor.getNormPosY() << '\n';
+                // std::cout << "x: " << cursor.getPosX() << " - y: " << cursor.getPosY() << '\n';
+                // std::cout << "xn: " << cursor.getNormPosX() << " - yn: " << cursor.getNormPosY() << '\n';
                 // std::cout << "W: " << this->window->GetWidth() << " - H: " << this->window->GetHeight() << '\n';
                 break;
             case SDL_QUIT:

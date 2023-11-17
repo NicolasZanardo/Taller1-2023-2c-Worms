@@ -42,14 +42,14 @@ WormState& WormState::operator=(WormState&& other) noexcept {
 
 void WormState::update(WormDto& updated_data, float dt) {
     if (this->x < updated_data.x) {
-        this->x = updated_data.x;
+        this->x = 300;//updated_data.x;
         this->facingLeft = false;
     } else if (this->x > updated_data.x) {
-        this->x = updated_data.x;
+        this->x = 300;//updated_data.x;
         this->facingLeft = true;
     }
 
-    this->y = updated_data.y;
+    this->y = 300;//updated_data.y;
 
     if (this->state != updated_data.state) {
         this->current_animation = this->animations.at(updated_data.state);

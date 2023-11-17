@@ -4,7 +4,7 @@ include_directories(${SDL2PP_INCLUDE_DIRS})
 add_executable (client_app
     client_main.cpp
     client.cpp client.h
-    dumb_simple_client/dumb_client.cpp dumb_simple_client/dumb_client.h
+    # dumb_simple_client/dumb_client.cpp dumb_simple_client/dumb_client.h
 
     game_managment/client_receiver.cpp game_managment/client_receiver.h
     game_managment/client_sender.cpp game_managment/client_sender.h

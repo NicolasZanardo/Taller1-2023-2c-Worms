@@ -11,6 +11,8 @@ ClientGameState::ClientGameState(SpritesManager& sprites_manager)
     , worms_state() {}
 
 void ClientGameState::load(std::shared_ptr<ClientGameStateDTO> game_state_dto) {
+    std::cout << "Loading scenario\n";
+
     this->width = game_state_dto->width;
     this->height = game_state_dto->height;
 
