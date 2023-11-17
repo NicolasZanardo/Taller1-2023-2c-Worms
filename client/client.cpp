@@ -31,10 +31,9 @@ void Client::execute() {
     sprites_manager.addSprite("wwalk", "resources/sprites/wwalk.png", 60, 60, 0);
 
     ClientGameState game_state(sprites_manager);
-    // game_state.load();
 
     this->receiver.start();
-    this->sender.start();
+    // this->sender.start();
 
     GameLoop game_loop(renderer, this->state_queue);
     game_loop.execute(event_handler, game_state);
@@ -44,5 +43,5 @@ void Client::execute() {
     this->state_queue.close();
 
     this->receiver.join();
-    this->sender.join();
+    // this->sender.join();
 }

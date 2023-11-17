@@ -7,9 +7,10 @@
 //     : renderer(&renderer)
 //     , state_queue(&state_queue) {}
 
-GameLoop(SDL2pp::Renderer& renderer, Queue<std::shared_ptr<ClientGameStateDTO>>& state_queue)
+GameLoop::GameLoop(SDL2pp::Renderer& renderer, Queue<std::shared_ptr<ClientGameStateDTO>>& state_queue)
     : renderer(&renderer)
-    , state_queue(&state_queue) {}
+    , state_queue(&state_queue)
+    , game_state_was_initialized(false) {}
 
 void GameLoop::execute(EventHandler& event_handler, ClientGameState& game_state) {
     using namespace std::chrono;
@@ -45,7 +46,7 @@ void GameLoop::execute(EventHandler& event_handler, ClientGameState& game_state)
 }
 
 void GameLoop::update(ClientGameState &game_state, float dt) {
-    std::unique_ptr<ClientGameStateDTO> game_state_dto;
+    std::shared_ptr<ClientGameStateDTO> game_state_dto;
 
     bool receive_new_state = false;
     while(this->state_queue->try_pop(game_state_dto)) {
@@ -53,7 +54,11 @@ void GameLoop::update(ClientGameState &game_state, float dt) {
     }
 
     if (receive_new_state) {
-        game_state.update(dt, game_state_dto);
+        if (this->game_state_was_initialized == false) {
+            game_state.load(game_state_dto);
+        } else {
+            game_state.update(game_state_dto, dt);
+        }
     }
 }
 

@@ -25,7 +25,9 @@ private:
 
     SDL2pp::Renderer* renderer;
     // Queue<GameEvent>* state_queue;
-    Queue<std::shared_ptr<ClientGameStateDTO>>& state_queue;
+    Queue<std::shared_ptr<ClientGameStateDTO>>* state_queue;
+
+    bool game_state_was_initialized;
 };
 
 #endif  // __GAME_LOOP_H__
