@@ -47,6 +47,9 @@ void NetBuffer::push_string(const string  &value) {
 
 bool NetBuffer::send_by(Socket& channel) {
     bool was_closed = false;
+    channel.sendall(&data[0], index, &was_closed);
+    return !was_closed;
+
 }
 
 void NetBuffer::extend_by(int extension) {
