@@ -2,9 +2,8 @@
 #define CLIENT_CLIENT_UTILS_H
 
 class UiUtils {
-    static const int PIXEL_CONVERSION_CONSTANT = 25;
+    static const int PIXEL_CONVERSION_CONSTANT = 30;
     static const int Y_OFFSET = 25;
-
 
 public:
     static const int WINDOW_HEIGHT = 600; // px

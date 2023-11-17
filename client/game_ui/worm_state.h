@@ -20,6 +20,8 @@ public:
 
     int x;
     int y;
+    int pixel_width;
+    int pixel_height;
 
 private:
     // Animation an;

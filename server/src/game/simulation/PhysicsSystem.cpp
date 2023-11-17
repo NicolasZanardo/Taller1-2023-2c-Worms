@@ -29,7 +29,7 @@ b2Body* PhysicsSystem::spawn_worm(WormScenarioData worm, std::shared_ptr<Worm> w
     b2Body* body = world.CreateBody(&bodyDef);
 
     b2PolygonShape dynamicBox;
-    dynamicBox.SetAsBox(WORM_SIZE, WORM_SIZE);
+    dynamicBox.SetAsBox(WORM_SIZE / 2, WORM_SIZE / 2);
 
     b2FixtureDef fixtureDef;
     fixtureDef.shape = &dynamicBox;

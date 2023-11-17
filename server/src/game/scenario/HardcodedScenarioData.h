@@ -13,7 +13,7 @@ public:
         for (int i = 0; i < 10; i++) {
             scenario.beams.emplace_back(
                     i * 6.0f + (3), // x
-                    0.0f, // y
+                    1.0f, // y
                     0.0f, // angle
                     BeamScenarioData::Type::LONG
             );

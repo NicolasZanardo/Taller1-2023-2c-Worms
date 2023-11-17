@@ -31,6 +31,8 @@ void Client::execute() {
     sprites_manager.addSprite("wwalk", "resources/sprites/wwalk.png", 60, 60, 0);
     sprites_manager.addSprite("wfall", "resources/sprites/wfall.png", 60, 60, 0);
     sprites_manager.addSprite("beam_large", "resources/sprites/beam_large.png", 140, 20, 0);
+    // TODO Mover todo esto al constructor del sprite manager
+
 
     ClientGameState game_state(sprites_manager);
 

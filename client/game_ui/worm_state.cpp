@@ -6,6 +6,8 @@
 WormState::WormState(SpritesManager &sprites_manager) :
         x(300), // TODO CORRECTLY INITIALIZE RECEIVING A WORMDTO
         y(300),
+        pixel_width(UiUtils::meters_to_pixels(WORM_SIZE)),
+        pixel_height(UiUtils::meters_to_pixels(WORM_SIZE)),
         state(MovementStateDto::idle),
         facingLeft(false),
         animations({
@@ -82,10 +84,10 @@ void WormState::update(WormDto &updated_data, float dt) {
 void WormState::render() {
     current_animation->render(
             SDL2pp::Rect(
-                    x,
-                    y,
-                    UiUtils::meters_to_pixels(WORM_SIZE),
-                    UiUtils::meters_to_pixels(WORM_SIZE)),
+                    x - (pixel_width / 2),
+                    y - (pixel_height / 2),
+                    pixel_width,
+                    pixel_height),
             this->facingLeft
     );
 }

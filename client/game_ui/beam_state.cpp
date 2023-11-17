@@ -4,16 +4,17 @@
 
 BeamState::BeamState(SpritesManager& sprites_manager, BeamDto& beam_dto)
     : sprites_manager(&sprites_manager),
-      non_animation(sprites_manager, "beam_large", true), // TODO Esta hardcoded el beam long
+      non_animation(sprites_manager, "beam_large", false), // TODO Esta hardcoded el beam long
       x(UiUtils::x_meters_pos_to_x_pixel_pos(beam_dto.x)),
       y(UiUtils::y_meters_pos_to_y_pixel_pos(beam_dto.y)),
-      angle(beam_dto.angle){
+      angle(beam_dto.angle) {
+    std::cout << "Beam in pixels x: " << x << " y: " << y  << std::endl;
     _set_dimens(beam_dto.type);
 }
 
 void BeamState::render() {
-    SDL2pp::Rect dest(this->x, this->y, width, height);
-    this->non_animation.render(dest, this->angle, true);
+    SDL2pp::Rect dest(this->x - (width / 2), this->y - (height/ 2), width, height);
+    this->non_animation.render(dest, this->angle, false);
 }
 
 void BeamState::_set_dimens(BeamDto::Type type) {
