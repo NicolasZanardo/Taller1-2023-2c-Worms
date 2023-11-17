@@ -19,8 +19,8 @@ public:
     explicit ClientGameState(SpritesManager& sprites_manager);
     ~ClientGameState() = default;
 
-    void load();
-    void update(std::unique_ptr<ClientGameStateDTO> game_state_dto, float dt);
+    void load(std::shared_ptr<ClientGameStateDTO> game_state_dto);
+    void update(std::shared_ptr<ClientGameStateDTO> game_state_dto, float dt);
     void render();
     void moveRigth();
     void moveLeft();
@@ -33,6 +33,8 @@ private:
 
     int game_remaining_time;
     int turn_remaining_time;
+    float width;
+    float height;
 
     // std::unique_ptr<ClientGameStateDTO> game_state_dto;
     std::map<int, WormState> worms_state;
@@ -43,8 +45,6 @@ private:
     // bool moving;
     // int x;
     // int y;
-
-    // std::map<>
 };
 
 #endif // __PLAYER_STATE_H__

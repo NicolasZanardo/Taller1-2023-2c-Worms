@@ -10,25 +10,25 @@ ClientGameState::ClientGameState(SpritesManager& sprites_manager)
     : sprites_manager(&sprites_manager)
     , worms_state() {}
 
-void ClientGameState::load() {
-    // this->worms.emplace(std::make_pair(1, WormState(*(this->sprites_manager))));
+void ClientGameState::load(std::shared_ptr<ClientGameStateDTO> game_state_dto) {
+    this->width = game_state_dto->width;
+    this->height = game_state_dto->height;
 
-    // std::cout << "loading\n";
-    // this->worms.emplace(
-    //     std::make_pair<int, WormState>(
-    //         id,
-    //         std::move(WormState(*(this->sprites_manager)))
-    //     )
-    // );
-    // std::cout << "loaded\n";
+    for (auto& worm_state_dto : game_state_dto->worms) {
+        this->worms_state.emplace(worm_state_dto.entity_id, *(this->sprites_manager));
+    }
 }
 
-void ClientGameState::update(std::unique_ptr<ClientGameStateDTO> game_state_dto, float dt) {
+void ClientGameState::update(std::shared_ptr<ClientGameStateDTO> game_state_dto, float dt) {
     this-> game_remaining_time = game_state_dto->remaining_game_time;
     this-> turn_remaining_time = game_state_dto->remaining_turn_time;
     
     for (auto& worm_state_dto : game_state_dto->worms) {
-        this->worms_state[worm_state_dto.entity_id].update(worm_state_dto, dt);
+        auto it = this->worms_state.find(worm_state_dto.entity_id);
+        if (it != this->worms_state.end()) {
+            it->second.update(worm_state_dto, dt);
+        }
+        // this->worms_state[worm_state_dto.entity_id].update(worm_state_dto, dt);
     }
 
     // if (moving) {

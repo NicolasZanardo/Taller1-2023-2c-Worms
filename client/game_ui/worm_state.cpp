@@ -24,7 +24,7 @@ WormState& WormState::operator=(WormState&& other) noexcept {
         return *this;
     }
 
-    this->current_animation = nullptr;  // Ensure proper cleanup
+    // this->current_animation = nullptr;  // Ensure proper cleanup
 
     // Move data members
     this->facingLeft = other.facingLeft;
@@ -35,7 +35,7 @@ WormState& WormState::operator=(WormState&& other) noexcept {
     this->animations = std::move(other.animations);
 
     // Move current animation pointer
-    this->current_animation = std::exchange(other.current_animation, nullptr);
+    this->current_animation = other.current_animation;
 
     return *this;
 }
