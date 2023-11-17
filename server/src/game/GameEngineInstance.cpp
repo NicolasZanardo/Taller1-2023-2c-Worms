@@ -69,6 +69,7 @@ void GameEngineInstance::stop() {
 
 void GameEngineInstance::initial_broadcast(const GameScenarioData &scenario) {
     _broadcast_initial_game_state(scenario);
+    std::this_thread::sleep_for(std::chrono::seconds(2));
     _broadcast_game_state_update();
 }
 
