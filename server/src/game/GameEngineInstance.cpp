@@ -69,13 +69,12 @@ void GameEngineInstance::stop() {
 
 void GameEngineInstance::initial_broadcast(const GameScenarioData &scenario) {
     _broadcast_initial_game_state(scenario);
-    std::this_thread::sleep_for(std::chrono::seconds(2));
+    std::this_thread::sleep_for(std::chrono::seconds(1));
     _broadcast_game_state_update();
 }
 
 
 void GameEngineInstance::_broadcast_initial_game_state(const GameScenarioData &scenario) {
-    //map BeamScenarioData to BeamDto
     auto message = new NetMessageInitialGameState(
         scenario.room_width,
         scenario.room_height
@@ -87,8 +86,8 @@ void GameEngineInstance::_broadcast_initial_game_state(const GameScenarioData &s
 
     for (const auto &[clientId, worms]: game.getClientsWorms()) {
         for (const auto& wrm: worms) {
-            std::cout << "Worm id: " << wrm->toWormDto(clientId).entity_id
-            << "with client id: " << wrm->toWormDto(clientId).client_id << std::endl;
+            std::cout << "Init Worm id: " << wrm->toWormDto(clientId).entity_id
+            << " with client id: " << wrm->toWormDto(clientId).client_id << std::endl;
             message->add(wrm->toWormDto(clientId));
         }
     }

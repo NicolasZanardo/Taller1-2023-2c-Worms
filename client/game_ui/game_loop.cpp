@@ -64,7 +64,6 @@ void GameLoop::update(ClientGameState &game_state, float dt) {
             receive_new_state = true;
         }
         if (receive_new_state) {
-            std::cout << "Actualizando estado del juego.\n";
             game_state.update(game_state_dto, dt);
         }
     }

@@ -18,7 +18,7 @@ void TurnManager::update(const int it) {
         if (turn_time_left <= 0) {
             end_actual_turn();
         }
-    } else {
+    } else { // TODO THIS IS A HARDCODED TIME NOW BUT SHOULD UNTIL ALL EXPLOSIONS AND WORMS MOVING HAS ENDED
         inside_turns_time_left -= it * rate;
          std::cout << "Time left inside turns: " << inside_turns_time_left << "\n";
         // Check if the inside turns time has run out

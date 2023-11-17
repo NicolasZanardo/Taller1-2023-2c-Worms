@@ -16,28 +16,23 @@ void ClientGameState::load(std::shared_ptr<ClientGameStateDTO> game_state_dto) {
     this->width = game_state_dto->width;
     this->height = game_state_dto->height;
 
-    std::cout << "w: " << width << " - h: " << height << '\n';
-    std::cout << "worms in dto: " << game_state_dto->worms.size() << '\n';
-
     for (auto& worm_state_dto : game_state_dto->worms) {
         this->worms_state.emplace(worm_state_dto.entity_id, *(this->sprites_manager));
+        this->worms_state.at(worm_state_dto.entity_id).update(worm_state_dto, 0); // TODO 0 dt on load?
+        // Worms were appearing in the middle on the screen in the load
+        // Because we weren't setting its x and y values until the first update
     }
 
-    std::cout << "worms populated\n";
 }
 
 void ClientGameState::update(std::shared_ptr<ClientGameStateDTO> game_state_dto, float dt) {
-    std::cout << "Init time \n";
     this-> game_remaining_time = game_state_dto->remaining_game_time;
     this-> turn_remaining_time = game_state_dto->remaining_turn_time;
-    std::cout << "After time \n";
     
     for (auto& worm_state_dto : game_state_dto->worms) {
         auto it = this->worms_state.find(worm_state_dto.entity_id);
         if (it != this->worms_state.end()) {
-            std::cout << "Init worm update \n";
             it->second.update(worm_state_dto, dt);
-            std::cout << "Show pos after worm update, x: " << it->second.x << "y: "<< it->second.y << "\n";
         }
         // this->worms_state[worm_state_dto.entity_id].update(worm_state_dto, dt);
     }
@@ -57,9 +52,7 @@ void ClientGameState::update(std::shared_ptr<ClientGameStateDTO> game_state_dto,
 void ClientGameState::render() {
     // an.render(SDL2pp::Rect(x, y, 200, 200), this->facingLeft);
     // for (auto& beam : this->beams_state) { beam.render(); }
-    std::cout << "init render worms\n";
     for (auto& worm : this->worms_state) { worm.second.render(); }
-    std::cout << "end render worms\n";
     // this->worms[1].render();
 }
 

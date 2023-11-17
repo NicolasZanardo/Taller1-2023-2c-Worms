@@ -48,7 +48,7 @@ void WormState::update(WormDto& updated_data, float dt) {
         this->facingLeft = true;
     }
 
-    this->y = 600 - updated_data.y * 25; // Screen height - (x converted to pixels)
+    this->y = 575 - updated_data.y * 25; // (Screen height - 25 offset ) - (x converted to pixels)
 
     if (this->state != updated_data.state) {
         auto new_anim = this->animations.at(updated_data.state);

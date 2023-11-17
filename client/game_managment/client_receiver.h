@@ -33,12 +33,7 @@ public:
     void run(NetMessageGameAction* msg) override;
 
 private:
-    // Queue<GameEvent>& state_queue;
     Queue<std::shared_ptr<ClientGameStateDTO>>& state_queue;
-
-
-    // Queue<GameEvent>& echo_queue;
-
     NetChannel* net_channel;
 };
 

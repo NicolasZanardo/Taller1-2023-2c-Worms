@@ -27,7 +27,6 @@ private:
     bool facingLeft;
     // bool moving;
 
-
     std::unordered_map<MovementStateDto, std::shared_ptr<Animation>> animations;
     std::shared_ptr<Animation> current_animation;
 };

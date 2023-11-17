@@ -101,26 +101,41 @@ void GameInstance::assign_worms_to_clients(const std::list<Client *> &clients) {
 
 // Actions
 void GameInstance::startMovingCurrentWormLeft() {
-    auto worm = instancesManager.getWorm(turnManager.get_current_worm_id());
-    worm->startMovingLeft();
+    auto worm_id = turnManager.get_current_worm_id();
+    if (worm_id != -1) {
+        auto worm = instancesManager.getWorm(worm_id);
+        worm->startMovingLeft();
+    }
 }
 
 void GameInstance::startMovingCurrentWormRight() {
-    auto worm = instancesManager.getWorm(turnManager.get_current_worm_id());
-    worm->startMovingRight();
+    auto worm_id = turnManager.get_current_worm_id();
+    if (worm_id != -1) {
+        auto worm = instancesManager.getWorm(worm_id);
+        worm->startMovingRight();
+    }
 }
 
 void GameInstance::stopMovingCurrentWorm() {
-    auto worm = instancesManager.getWorm(turnManager.get_current_worm_id());
-    worm->stopMoving();
+    auto worm_id = turnManager.get_current_worm_id();
+    if (worm_id != -1) {
+        auto worm = instancesManager.getWorm(worm_id);
+        worm->stopMoving();
+    }
 }
 
 void GameInstance::jumpBackCurrentWorm() {
-    auto worm = instancesManager.getWorm(turnManager.get_current_worm_id());
-    worm->jumpBackwards();
+    auto worm_id = turnManager.get_current_worm_id();
+    if (worm_id != -1) {
+        auto worm = instancesManager.getWorm(worm_id);
+        worm->jumpBackwards();
+    }
 }
 
 void GameInstance::jumpForwardCurrentWorm() {
-    auto worm = instancesManager.getWorm(turnManager.get_current_worm_id());
-    worm->jumpForward();
+    auto worm_id = turnManager.get_current_worm_id();
+    if (worm_id != -1) {
+        auto worm = instancesManager.getWorm(worm_id);
+        worm->jumpForward();
+    }
 }

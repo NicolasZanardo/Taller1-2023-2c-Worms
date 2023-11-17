@@ -13,7 +13,7 @@
 Client::Client(const char* host_name, const char* service_name)
     : channel(host_name, service_name)
     , receiver(state_queue, channel)
-    , sender(event_queue, echo_queue) {}
+    , sender(event_queue, channel) {}
 
 void Client::execute() {
     SDL2pp::SDL sdl(SDL_INIT_VIDEO);
@@ -33,7 +33,7 @@ void Client::execute() {
     ClientGameState game_state(sprites_manager);
 
     this->receiver.start();
-    // this->sender.start();
+    this->sender.start();
 
     GameLoop game_loop(renderer, this->state_queue);
     game_loop.execute(event_handler, game_state);

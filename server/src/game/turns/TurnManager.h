@@ -15,13 +15,13 @@ class TurnManager {
     size_t current_client_id;
     size_t current_worm_id;
 
-    int game_time_left = 60000;// 1080000; // millis
+    int game_time_left = 60000; // millis
 
-    int turn_time_left = 6000;// 60000;
-    const int turn_duration = 6000;// 60000; // millis
+    int turn_time_left = 10000; // 60000;
+    const int turn_duration = 10000; // 60000;
 
-    int inside_turns_time_left = 2000; // 3000;
-    const int inside_turns_duration = 2000; // 3000; // millis
+    int inside_turns_time_left = 0; // For testing in the client
+    const int inside_turns_duration = 0;
 
     bool waiting_to_start_next_turn = false;
 
