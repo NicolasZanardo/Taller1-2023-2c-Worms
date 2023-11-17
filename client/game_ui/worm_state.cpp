@@ -2,15 +2,17 @@
 
 #include "client_game_state.h"
 
-WormState::WormState(SpritesManager& sprites_manager) :
+WormState::WormState(SpritesManager& sprites_manager)
     // : an(sprites_manager, "wwalk", FrameSelectorMode::BOUNCE, 12, true)
-    facingLeft(false)
-    , x(300), y(300)
+    : x(300), y(300)
+    , state(MovementStateDto::idle)
+    , facingLeft(false)
     , animations({
         {MovementStateDto::idle, std::make_shared<Animation>(sprites_manager, "wwalk", FrameSelectorMode::BOUNCE, 15,  true)},
         {MovementStateDto::jumping,std::make_shared<Animation>(sprites_manager, "wwalk", FrameSelectorMode::BOUNCE, 15, true)},
         {MovementStateDto::walking, std::make_shared<Animation>(sprites_manager, "wwalk",FrameSelectorMode::BOUNCE, 15,  true)}
-    }) {}
+    })
+    , current_animation(animations[state]) {}
 
 WormState::WormState(WormState&& other) noexcept
         : current_animation(nullptr) // TODO

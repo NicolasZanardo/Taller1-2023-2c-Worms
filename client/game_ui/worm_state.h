@@ -20,18 +20,18 @@ public:
     // void moveRigth();
     // void moveLeft();
     // void stopMoving();
+    int x;
+    int y;
 
 private:
     // Animation an;
     MovementStateDto state;
     bool facingLeft;
     // bool moving;
-    int x;
-    int y;
 
-    std::shared_ptr<Animation> current_animation;
 
     std::unordered_map<MovementStateDto, std::shared_ptr<Animation>> animations;
+    std::shared_ptr<Animation> current_animation;
 };
 
 #endif  // __WORM_STATE_H__
