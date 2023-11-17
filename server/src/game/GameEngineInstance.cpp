@@ -85,6 +85,14 @@ void GameEngineInstance::_broadcast_initial_game_state(const GameScenarioData &s
         message->add(item.toBeamDto());
     }
 
+    for (const auto &[clientId, worms]: game.getClientsWorms()) {
+        for (const auto& wrm: worms) {
+            std::cout << "Worm id: " << wrm->toWormDto(clientId).entity_id
+            << "with client id: " << wrm->toWormDto(clientId).client_id << std::endl;
+            message->add(wrm->toWormDto(clientId));
+        }
+    }
+
     gameClients.sendAll(message->share());
 }
 

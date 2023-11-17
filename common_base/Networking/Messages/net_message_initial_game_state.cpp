@@ -67,6 +67,10 @@ void NetMessageInitialGameState::add(const BeamDto& beam) {
     beams.emplace_back(beam.x, beam.y, beam.angle, beam.type);
 }
 
+void NetMessageInitialGameState::add(const WormDto &worm) {
+    worms.push_back(worm);
+}
+
 void NetMessageInitialGameState::execute(NetMessageBehaviour& interpreter) {
     interpreter.run(this);
 }
