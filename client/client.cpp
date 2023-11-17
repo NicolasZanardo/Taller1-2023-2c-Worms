@@ -11,7 +11,7 @@
 #include "sprites_manager.h"
 
 Client::Client(const char* host_name, const char* service_name)
-    : channel(std::move(Socket(host_name, service_name)))
+    : channel(host_name, service_name)
     , receiver(state_queue, channel)
     , sender(event_queue, echo_queue) {}
 
