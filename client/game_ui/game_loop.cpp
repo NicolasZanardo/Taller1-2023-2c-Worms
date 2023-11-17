@@ -26,7 +26,9 @@ void GameLoop::execute(EventHandler& event_handler, ClientGameState& game_state)
         running = event_handler.handleEvents();
         double dt = it - it_prev;
         this->update(game_state, dt);
+        std::cout << "init render phase\n";
         this->render(game_state);
+        std::cout << "end renader phase\n";
 
         it_prev = it;
         time_point t2 = steady_clock::now();
@@ -48,19 +50,40 @@ void GameLoop::execute(EventHandler& event_handler, ClientGameState& game_state)
 void GameLoop::update(ClientGameState &game_state, float dt) {
     std::shared_ptr<ClientGameStateDTO> game_state_dto;
 
-    bool receive_new_state = false;
-    while(this->state_queue->try_pop(game_state_dto)) {
-        receive_new_state = true;
-    }
-
-    if (receive_new_state) {
-        if (this->game_state_was_initialized == false) {
-            game_state.load(game_state_dto);
-            this->game_state_was_initialized = true;
-        } else {
+    if (this->game_state_was_initialized == false) {
+        std::cout << "Inicializando estado del juego.\n";
+        this->state_queue->try_pop(game_state_dto);
+        if (game_state_dto == nullptr) {
+            return;
+        }
+        game_state.load(game_state_dto);
+        this->game_state_was_initialized = true;
+    } else {
+        bool receive_new_state = false;
+        while (this->state_queue->try_pop(game_state_dto)) {
+            receive_new_state = true;
+        }
+        if (receive_new_state) {
+            std::cout << "Actualizando estado del juego.\n";
             game_state.update(game_state_dto, dt);
         }
     }
+
+    // bool receive_new_state = false;
+    // while(this->state_queue->try_pop(game_state_dto)) {
+    //     receive_new_state = true;
+    // }
+
+    // if (receive_new_state) {
+    //     std::cout << "w: " << game_state_dto->width << " - h: " << game_state_dto->height << '\n';
+
+    //     if (this->game_state_was_initialized == false) {
+    //         game_state.load(game_state_dto);
+    //         this->game_state_was_initialized = true;
+    //     } else {
+    //         game_state.update(game_state_dto, dt);
+    //     }
+    // }
 }
 
 void GameLoop::render(ClientGameState &game_state) {

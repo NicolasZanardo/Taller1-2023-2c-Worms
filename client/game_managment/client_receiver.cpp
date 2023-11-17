@@ -15,6 +15,7 @@ void ClientReceiver::run() {
     while (Thread::keep_running_) {
         try {
             // GameEvent game_event = this->echo_queue.pop();
+            std::cout << "Receiver waiting for a message\n";
             std::shared_ptr<NetMessage> msg(this->net_channel->read_message());
 
             msg->execute(*this);
@@ -27,10 +28,15 @@ void ClientReceiver::run() {
 }
 
 void ClientReceiver::run(NetMessageInitialGameState* msg) {
+    std::cout << "Receiving initial game state.\n";
     auto game_state_dto = std::make_shared<ClientGameStateDTO>();
 
     game_state_dto->width = msg->room_width;
     game_state_dto->height = msg->room_height;
+
+    std::cout << "w: " << msg->room_width << " - h: " << msg->room_height << '\n';
+    std::cout << "worms in msg " << msg->worms.size() << '\n';
+
     game_state_dto->beams = std::move(msg->beams);
     game_state_dto->worms = std::move(msg->worms);
 
@@ -38,6 +44,7 @@ void ClientReceiver::run(NetMessageInitialGameState* msg) {
 }
 
 void ClientReceiver::run(NetMessageGameStateUpdate* msg) {
+    std::cout << "Receiving update game state\n";
     auto game_state_dto = std::make_shared<ClientGameStateDTO>();
 
     game_state_dto->active_client_id = msg->active_client_id;

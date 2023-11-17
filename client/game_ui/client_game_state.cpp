@@ -16,9 +16,14 @@ void ClientGameState::load(std::shared_ptr<ClientGameStateDTO> game_state_dto) {
     this->width = game_state_dto->width;
     this->height = game_state_dto->height;
 
+    std::cout << "w: " << width << " - h: " << height << '\n';
+    std::cout << "worms in dto: " << game_state_dto->worms.size() << '\n';
+
     for (auto& worm_state_dto : game_state_dto->worms) {
         this->worms_state.emplace(worm_state_dto.entity_id, *(this->sprites_manager));
     }
+
+    std::cout << "worms populated\n";
 }
 
 void ClientGameState::update(std::shared_ptr<ClientGameStateDTO> game_state_dto, float dt) {
@@ -31,6 +36,11 @@ void ClientGameState::update(std::shared_ptr<ClientGameStateDTO> game_state_dto,
             it->second.update(worm_state_dto, dt);
         }
         // this->worms_state[worm_state_dto.entity_id].update(worm_state_dto, dt);
+    }
+
+    std::cout << "Show pos\n";
+    for (auto& worm : this->worms_state) {
+        std::cout << "x: " << worm.second.x << "- y: " << worm.second.y << '\n';
     }
 
     // if (moving) {
@@ -47,8 +57,10 @@ void ClientGameState::update(std::shared_ptr<ClientGameStateDTO> game_state_dto,
 
 void ClientGameState::render() {
     // an.render(SDL2pp::Rect(x, y, 200, 200), this->facingLeft);
-    for (auto& beam : this->beams_state) { beam.render(); }
+    // for (auto& beam : this->beams_state) { beam.render(); }
+    std::cout << "init render worms\n";
     for (auto& worm : this->worms_state) { worm.second.render(); }
+    std::cout << "end render worms\n";
     // this->worms[1].render();
 }
 
