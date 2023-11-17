@@ -1,26 +1,44 @@
 #include "worm_state.h"
 
-#include "client_game_state.h"
+#include "ui_utils.h"
+#include "constants.h"
 
-WormState::WormState(SpritesManager& sprites_manager)
-    : x(300), y(300)
-    , state(MovementStateDto::idle)
-    , facingLeft(false)
-    , animations({
-        {MovementStateDto::idle, std::make_shared<Animation>(sprites_manager, "wwalk", FrameSelectorMode::BOUNCE, 15,  true)},
-        {MovementStateDto::falling, std::make_shared<Animation>(sprites_manager, "wwalk", FrameSelectorMode::BOUNCE, 15,  true)},
-        {MovementStateDto::jumping,std::make_shared<Animation>(sprites_manager, "wwalk", FrameSelectorMode::BOUNCE, 15, true)},
-        {MovementStateDto::walking, std::make_shared<Animation>(sprites_manager, "wwalk",FrameSelectorMode::BOUNCE, 15,  true)}
-    })
-    , current_animation(animations[state]) {}
+WormState::WormState(SpritesManager &sprites_manager) :
+        x(300), // TODO CORRECTLY INITIALIZE RECEIVING A WORMDTO
+        y(300),
+        state(MovementStateDto::idle),
+        facingLeft(false),
+        animations({
+                           {MovementStateDto::idle,    std::make_shared<Animation>(
+                                   sprites_manager,
+                                   "wwalk",
+                                   FrameSelectorMode::BOUNCE,
+                                   15, true)},
+                           {MovementStateDto::falling, std::make_shared<Animation>(
+                                   sprites_manager,
+                                   "wfall",
+                                   FrameSelectorMode::STAY_LAST,
+                                   2, true)},
+                           {MovementStateDto::jumping, std::make_shared<Animation>(
+                                   sprites_manager,
+                                   "wwalk",
+                                   FrameSelectorMode::BOUNCE,
+                                   15, true)},
+                           {MovementStateDto::walking, std::make_shared<Animation>(
+                                   sprites_manager,
+                                   "wwalk",
+                                   FrameSelectorMode::BOUNCE,
+                                   15, true)}
+                   }),
+        current_animation(animations[state]) {}
 
-WormState::WormState(WormState&& other) noexcept
+WormState::WormState(WormState &&other) noexcept
         : current_animation(nullptr) // TODO
 {
     *this = std::move(other);  // Reuse the move assignment operator
 }
 
-WormState& WormState::operator=(WormState&& other) noexcept {
+WormState &WormState::operator=(WormState &&other) noexcept {
     if (this == &other) {
         return *this;
     }
@@ -39,16 +57,16 @@ WormState& WormState::operator=(WormState&& other) noexcept {
     return *this;
 }
 
-void WormState::update(WormDto& updated_data, float dt) {
+void WormState::update(WormDto &updated_data, float dt) {
     if (this->x < updated_data.x) {
-        this->x = updated_data.x * 25;
+        this->x = UiUtils::x_meters_pos_to_x_pixel_pos(updated_data.x);
         this->facingLeft = false;
     } else if (this->x > updated_data.x) {
-        this->x = updated_data.x * 25;
+        this->x = UiUtils::x_meters_pos_to_x_pixel_pos(updated_data.x);
         this->facingLeft = true;
     }
 
-    this->y = 575 - updated_data.y * 25; // (Screen height - 25 offset ) - (x converted to pixels)
+    this->y = UiUtils::y_meters_pos_to_y_pixel_pos(updated_data.y);
 
     if (this->state != updated_data.state) {
         auto new_anim = this->animations.at(updated_data.state);
@@ -62,19 +80,13 @@ void WormState::update(WormDto& updated_data, float dt) {
 }
 
 void WormState::render() {
-    current_animation->render(SDL2pp::Rect(x, y, 50, 50), this->facingLeft);
+    current_animation->render(
+            SDL2pp::Rect(
+                    x,
+                    y,
+                    UiUtils::meters_to_pixels(WORM_SIZE),
+                    UiUtils::meters_to_pixels(WORM_SIZE)),
+            this->facingLeft
+    );
 }
 
-// void WormState::moveRigth() {
-//     moving = true;
-//     facingLeft = false;
-// }
-
-// void WormState::moveLeft() {
-//     moving = true;
-//     facingLeft = true;
-// }
-
-// void WormState::stopMoving() {
-//     moving = false;
-// }
