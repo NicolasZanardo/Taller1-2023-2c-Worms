@@ -20,7 +20,7 @@ void Client::execute() {
 
     SDL2pp::Window window("Worms",
         SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
-        800, 600,
+        UiUtils::WINDOW_WIDTH, UiUtils::WINDOW_HEIGHT,
         SDL_WINDOW_RESIZABLE);
 
     SDL2pp::Renderer renderer(window, -1, SDL_RENDERER_ACCELERATED);
@@ -29,6 +29,8 @@ void Client::execute() {
 
     SpritesManager sprites_manager(renderer);
     sprites_manager.addSprite("wwalk", "resources/sprites/wwalk.png", 60, 60, 0);
+    sprites_manager.addSprite("wfall", "resources/sprites/wfall.png", 60, 60, 0);
+    sprites_manager.addSprite("beam_large", "resources/sprites/beam_large.png", 140, 20, 0);
 
     ClientGameState game_state(sprites_manager);
 
