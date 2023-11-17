@@ -9,6 +9,7 @@ WormState::WormState(SpritesManager& sprites_manager)
     , facingLeft(false)
     , animations({
         {MovementStateDto::idle, std::make_shared<Animation>(sprites_manager, "wwalk", FrameSelectorMode::BOUNCE, 15,  true)},
+        {MovementStateDto::falling, std::make_shared<Animation>(sprites_manager, "wwalk", FrameSelectorMode::BOUNCE, 15,  true)},
         {MovementStateDto::jumping,std::make_shared<Animation>(sprites_manager, "wwalk", FrameSelectorMode::BOUNCE, 15, true)},
         {MovementStateDto::walking, std::make_shared<Animation>(sprites_manager, "wwalk",FrameSelectorMode::BOUNCE, 15,  true)}
     })
@@ -44,21 +45,31 @@ WormState& WormState::operator=(WormState&& other) noexcept {
 
 void WormState::update(WormDto& updated_data, float dt) {
     if (this->x < updated_data.x) {
+        std::cout << "Enters facing right if \n";
         this->x = 300;//updated_data.x;
         this->facingLeft = false;
     } else if (this->x > updated_data.x) {
+        std::cout << "Enters facing left if \n";
         this->x = 300;//updated_data.x;
         this->facingLeft = true;
     }
 
     this->y = 300;//updated_data.y;
+    std::cout << "Updates y \n";
 
     if (this->state != updated_data.state) {
-        this->current_animation = this->animations.at(updated_data.state);
-        this->current_animation->reset();
+        std::cout << "Enters different state detected if\n";
+        auto new_anim = this->animations.at(updated_data.state);
+        if (new_anim) {
+            this->current_animation = new_anim;
+            std::cout << "Sets the new animation\n";
+            this->current_animation->reset();
+            std::cout << "Resets the new animation\n";
+        }
     }
 
     this->current_animation->update(dt);
+    std::cout << "Updates animation\n";
 }
 
 void WormState::render() {

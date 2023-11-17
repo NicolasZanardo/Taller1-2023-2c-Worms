@@ -17,9 +17,7 @@ public:
 
     void update(WormDto& updated_data, float dt);
     void render();
-    // void moveRigth();
-    // void moveLeft();
-    // void stopMoving();
+
     int x;
     int y;
 

@@ -27,20 +27,19 @@ void ClientGameState::load(std::shared_ptr<ClientGameStateDTO> game_state_dto) {
 }
 
 void ClientGameState::update(std::shared_ptr<ClientGameStateDTO> game_state_dto, float dt) {
+    std::cout << "Init time \n";
     this-> game_remaining_time = game_state_dto->remaining_game_time;
     this-> turn_remaining_time = game_state_dto->remaining_turn_time;
+    std::cout << "After time \n";
     
     for (auto& worm_state_dto : game_state_dto->worms) {
         auto it = this->worms_state.find(worm_state_dto.entity_id);
         if (it != this->worms_state.end()) {
+            std::cout << "Init worm update \n";
             it->second.update(worm_state_dto, dt);
+            std::cout << "Show pos after worm update, x: " << it->second.x << "y: "<< it->second.y << "\n";
         }
         // this->worms_state[worm_state_dto.entity_id].update(worm_state_dto, dt);
-    }
-
-    std::cout << "Show pos\n";
-    for (auto& worm : this->worms_state) {
-        std::cout << "x: " << worm.second.x << "- y: " << worm.second.y << '\n';
     }
 
     // if (moving) {
