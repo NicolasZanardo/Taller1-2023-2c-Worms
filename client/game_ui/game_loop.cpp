@@ -3,7 +3,11 @@
 #include <chrono>
 #include <thread>
 
-GameLoop::GameLoop(SDL2pp::Renderer& renderer, Queue<GameEvent>& state_queue)
+// GameLoop::GameLoop(SDL2pp::Renderer& renderer, Queue<GameEvent>& state_queue)
+//     : renderer(&renderer)
+//     , state_queue(&state_queue) {}
+
+GameLoop(SDL2pp::Renderer& renderer, Queue<std::shared_ptr<ClientGameStateDTO>>& state_queue)
     : renderer(&renderer)
     , state_queue(&state_queue) {}
 

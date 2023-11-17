@@ -45,27 +45,27 @@ void ClientGameState::update(std::unique_ptr<ClientGameStateDTO> game_state_dto,
 
 void ClientGameState::render() {
     // an.render(SDL2pp::Rect(x, y, 200, 200), this->facingLeft);
-    this->beam_state.render();
-    this->worm_state.render();
+    for (auto& beam : this->beams_state) { beam.render(); }
+    for (auto& worm : this->worms_state) { worm.second.render(); }
     // this->worms[1].render();
 }
 
 void ClientGameState::moveRigth() {
     // moving = true;
     // facingLeft = false;
-    worm_state.moveRigth();
+    // worm_state.moveRigth();
     // this->worms[1].moveRigth();
 }
 
 void ClientGameState::moveLeft() {
     // moving = true;
     // facingLeft = true;
-    worm_state.moveLeft();
+    // worm_state.moveLeft();
     // this->worms[1].moveLeft();
 }
 
 void ClientGameState::stopMoving() {
     // moving = false;
-    worm_state.stopMoving();
+    // worm_state.stopMoving();
     // this->worms[1].stopMoving();
 }

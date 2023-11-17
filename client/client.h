@@ -30,8 +30,10 @@ public:
     void execute();
 
 private:
+    Queue<GameEvent> echo_queue;  // temp.
+
     Queue<GameEvent> event_queue;
-    Queue<std::unique_ptr<ClientGameStateDTO>> state_queue;
+    Queue<std::shared_ptr<ClientGameStateDTO>> state_queue;
 
     NetChannel channel;
 
