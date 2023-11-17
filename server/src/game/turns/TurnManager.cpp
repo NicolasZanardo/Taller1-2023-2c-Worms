@@ -13,14 +13,14 @@ void TurnManager::update(const int it) {
     game_time_left -= it * rate;
     if (!waiting_to_start_next_turn) {
         turn_time_left -= it * rate;
-         std::cout << "Time left on turn: " << turn_time_left << "\n";
+         // std::cout << "Time left on turn: " << turn_time_left << "\n";
         // Check if the turn time has run out
         if (turn_time_left <= 0) {
             end_actual_turn();
         }
     } else { // TODO THIS IS A HARDCODED TIME NOW BUT SHOULD UNTIL ALL EXPLOSIONS AND WORMS MOVING HAS ENDED
         inside_turns_time_left -= it * rate;
-         std::cout << "Time left inside turns: " << inside_turns_time_left << "\n";
+         // std::cout << "Time left inside turns: " << inside_turns_time_left << "\n";
         // Check if the inside turns time has run out
         if (inside_turns_time_left <= 0) {
             advance_to_next_turn();
