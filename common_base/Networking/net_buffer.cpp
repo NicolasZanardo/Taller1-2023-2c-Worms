@@ -12,6 +12,11 @@ void NetBuffer::push_byte(const uint8_t  value) {
     index++;
 }
 
+void NetBuffer::push_bool(const bool value) {
+    data.push_back(value);
+    index++;
+}
+
 void NetBuffer::push_short(const uint16_t value) {
     uint16_t transfer = htons(value);
     char* hostval = reinterpret_cast<char*>(&transfer);

@@ -25,6 +25,14 @@ uint8_t NetProtocolInterpreter::read_byte() {
     throw SocketConnectionLost(&channel);
 }
 
+bool NetProtocolInterpreter::read_bool() {
+    char buffer[BYTE_SIZE];
+    if (read_from_channel(buffer, BYTE_SIZE)) {
+        return static_cast<bool>(buffer[0]);
+    }
+    throw SocketConnectionLost(&channel);
+}
+
 uint16_t NetProtocolInterpreter::read_short() {
     char buffer[SHORT_SIZE];
     if (read_from_channel(buffer, SHORT_SIZE)) {

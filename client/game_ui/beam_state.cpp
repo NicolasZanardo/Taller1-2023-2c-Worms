@@ -8,7 +8,6 @@ BeamState::BeamState(SpritesManager& sprites_manager, BeamDto& beam_dto)
       x(UiUtils::x_meters_pos_to_x_pixel_pos(beam_dto.x)),
       y(UiUtils::y_meters_pos_to_y_pixel_pos(beam_dto.y)),
       angle(beam_dto.angle) {
-    std::cout << "Beam in pixels x: " << x << " y: " << y  << std::endl;
     _set_dimens(beam_dto.type);
 }
 

@@ -1,4 +1,5 @@
 #include "WormMovement.h"
+#include <iostream>
 
 WormMovement::WormMovement(b2Body *body) :
         body(body),
@@ -13,6 +14,10 @@ float WormMovement::x() const {
 
 float WormMovement::y() const {
     return body->GetPosition().y;
+}
+
+bool WormMovement::facing_right() const {
+    return is_facing_right;
 }
 
 int WormMovement::getFacingDirectionSign() const {

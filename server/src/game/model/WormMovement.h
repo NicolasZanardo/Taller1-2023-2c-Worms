@@ -34,6 +34,7 @@ public:
 
     float x() const;
     float y() const;
+    bool facing_right() const;
 
     MovementStateDto state_to_dto() const;
 

@@ -15,6 +15,7 @@ struct WormDto {
     int entity_id;
     float x;
     float y;
+    bool is_facing_right;
     int life;
     MovementStateDto state;
 
@@ -23,12 +24,15 @@ struct WormDto {
             int entity_id,
             float x,
             float y,
+            bool is_facing_right,
             int life,
             MovementStateDto state
     ) : 
     client_id(client_id),
     entity_id(entity_id),
-    x(x), y(y), life(life),
+    x(x), y(y),
+    is_facing_right(is_facing_right),
+    life(life),
     state(state) 
     {}
 

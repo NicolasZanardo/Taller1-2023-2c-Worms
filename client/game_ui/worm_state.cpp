@@ -61,13 +61,8 @@ WormState &WormState::operator=(WormState &&other) noexcept {
 
 void WormState::update(WormDto &updated_data, float dt) {
     // Update x
-    if (this->x < updated_data.x) {
-        this->x = UiUtils::x_meters_pos_to_x_pixel_pos(updated_data.x);
-        this->facingLeft = false;
-    } else if (this->x > updated_data.x) {
-        this->x = UiUtils::x_meters_pos_to_x_pixel_pos(updated_data.x);
-        this->facingLeft = true;
-    }
+    this->facingLeft = !updated_data.is_facing_right;
+    this->x = UiUtils::x_meters_pos_to_x_pixel_pos(updated_data.x);
 
     // Update y
     this->y = UiUtils::y_meters_pos_to_y_pixel_pos(updated_data.y);
@@ -77,14 +72,13 @@ void WormState::update(WormDto &updated_data, float dt) {
         this->state = updated_data.state;
         auto new_anim = this->animations.at(this->state);
         if (new_anim) {
-            std::cout << "Found new anim for moving" << std::endl;
             this->current_animation = new_anim;
             this->current_animation->reset();
         }
     }
 
     // TODO DELETE
-    switch (state) {
+    /* switch (state) {
         case MovementStateDto::idle:
             std::cout << "idle" << std::endl;
             break;
@@ -100,7 +94,7 @@ void WormState::update(WormDto &updated_data, float dt) {
         default:
             std::cout << "unknown" << std::endl;
             break;
-    }
+    }*/
 
 
     // Update anim

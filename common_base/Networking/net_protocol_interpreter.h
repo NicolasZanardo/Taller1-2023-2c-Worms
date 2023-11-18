@@ -13,6 +13,7 @@ class NetProtocolInterpreter {
     explicit NetProtocolInterpreter(Socket& channel);
 
     uint8_t  read_byte ();
+    bool  read_bool ();
     uint16_t read_short();
     uint32_t read_uint ();
     float    read_float();

@@ -31,6 +31,7 @@ void NetMessageInitialGameState::push_data_into(NetBuffer& container) {
         container.push_uint(it.entity_id);
         container.push_float(it.x);
         container.push_float(it.y);
+        container.push_bool(it.is_facing_right);
         container.push_uint(it.life);
         container.push_byte(static_cast<uint8_t>(it.state));
     }
@@ -56,10 +57,11 @@ void NetMessageInitialGameState::pull_data_from(NetProtocolInterpreter& channel)
         auto entity_id = channel.read_uint();
         auto x         = channel.read_float();
         auto y         = channel.read_float();
+        auto is_facing_right     = channel.read_bool();
         auto life      = channel.read_uint();
         auto state     = static_cast<MovementStateDto>(channel.read_byte());
 
-        worms.emplace_back(client_id, entity_id, x, y, life, state);
+        worms.emplace_back(client_id, entity_id, x, y, is_facing_right,life, state);
     }
 }
 
