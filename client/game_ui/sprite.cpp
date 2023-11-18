@@ -7,6 +7,13 @@ Sprite::Sprite(SDL2pp::Renderer& renderer_ref, const std::string& sprite_file,
     , frame_width(frame_width), frame_height(frame_height)
     , sep(sep) {}
 
+Sprite::Sprite(SDL2pp::Renderer& renderer_ref, const std::string& sprite_file,
+               uint16_t frame_width, uint16_t frame_height, uint16_t sep, bool flag, Uint32 key)
+        : renderer_ptr(&renderer_ref)
+        , texture(*renderer_ptr, SDL2pp::Surface(sprite_file.c_str()).SetColorKey(flag, key))
+        , frame_width(frame_width), frame_height(frame_height)
+        , sep(sep) {}
+
 Sprite::Sprite(Sprite&& other)
     : renderer_ptr(other.renderer_ptr)
     , texture(std::move(other.texture))

@@ -110,6 +110,7 @@ void WormState::update(WormDto &updated_data, float dt) {
 }
 
 void WormState::render() {
+
     current_animation->render(
             SDL2pp::Rect(
                     x - (pixel_width / 2),

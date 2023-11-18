@@ -28,9 +28,11 @@ void Client::execute() {
     EventHandler event_handler(window, event_queue);
 
     SpritesManager sprites_manager(renderer);
-    sprites_manager.addSprite("wwalk", "resources/sprites/wwalk.png", 60, 60, 0);
-    sprites_manager.addSprite("wfall", "resources/sprites/wfall.png", 60, 60, 0);
-    sprites_manager.addSprite("wjumpu", "resources/sprites/wjumpu.png", 60, 60, 0);
+    // worm
+    sprites_manager.addSprite("wwalk", "resources/sprites/wwalk.png", 60, 60, 0, true, 0);
+    sprites_manager.addSprite("wfall", "resources/sprites/wfall.png", 60, 60, 0, true, 0);
+    sprites_manager.addSprite("wjumpu", "resources/sprites/wjumpu.png", 60, 60, 0, true, 0);
+    // beam
     sprites_manager.addSprite("beam_large", "resources/sprites/beam_large.png", 140, 20, 0);
     // TODO Move this to the SpriteManager constructor
 
