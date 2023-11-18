@@ -27,7 +27,7 @@ struct BeamScenarioData {
     {}
 
     BeamDto toBeamDto() const{
-        return {x, y, angle, BeamDto::Type(type)};
+        return { x, y, angle, BeamDto::Type(type)};
     }
 
 };

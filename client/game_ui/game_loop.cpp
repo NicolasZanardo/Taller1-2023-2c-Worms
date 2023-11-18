@@ -3,9 +3,14 @@
 #include <chrono>
 #include <thread>
 
-GameLoop::GameLoop(SDL2pp::Renderer& renderer, Queue<GameEvent>& state_queue)
+// GameLoop::GameLoop(SDL2pp::Renderer& renderer, Queue<GameEvent>& state_queue)
+//     : renderer(&renderer)
+//     , state_queue(&state_queue) {}
+
+GameLoop::GameLoop(SDL2pp::Renderer& renderer, Queue<std::shared_ptr<ClientGameStateDTO>>& state_queue)
     : renderer(&renderer)
-    , state_queue(&state_queue) {}
+    , state_queue(&state_queue)
+    , game_state_was_initialized(false) {}
 
 void GameLoop::execute(EventHandler& event_handler, ClientGameState& game_state) {
     using namespace std::chrono;
@@ -21,7 +26,9 @@ void GameLoop::execute(EventHandler& event_handler, ClientGameState& game_state)
         running = event_handler.handleEvents();
         double dt = it - it_prev;
         this->update(game_state, dt);
+        std::cout << "init render phase\n";
         this->render(game_state);
+        std::cout << "end renader phase\n";
 
         it_prev = it;
         time_point t2 = steady_clock::now();
@@ -41,32 +48,41 @@ void GameLoop::execute(EventHandler& event_handler, ClientGameState& game_state)
 }
 
 void GameLoop::update(ClientGameState &game_state, float dt) {
-    GameEvent event;
+    std::shared_ptr<ClientGameStateDTO> game_state_dto;
 
-    while(this->state_queue->try_pop(event)) {
-        switch(static_cast<uint8_t>(event)) {
-            case static_cast<uint8_t>(GameEvent::MOVE_LEFT_INIT): {
-                game_state.moveLeft();
-                break;
-            }
-            case static_cast<uint8_t>(GameEvent::MOVE_RIGHT_INIT): {
-                game_state.moveRigth();
-                break;
-            }
-            case static_cast<uint8_t>(GameEvent::MOVE_LEFT_END): {
-                game_state.stopMoving();
-                break;
-            }
-            case static_cast<uint8_t>(GameEvent::MOVE_RIGHT_END): {
-                game_state.stopMoving();
-                break;
-            }
-            default:
-                break;
+    if (this->game_state_was_initialized == false) {
+        std::cout << "Inicializando estado del juego.\n";
+        this->state_queue->try_pop(game_state_dto);
+        if (game_state_dto == nullptr) {
+            return;
+        }
+        game_state.load(game_state_dto);
+        this->game_state_was_initialized = true;
+    } else {
+        bool receive_new_state = false;
+        while (this->state_queue->try_pop(game_state_dto)) {
+            receive_new_state = true;
+        }
+        if (receive_new_state) {
+            game_state.update(game_state_dto, dt);
         }
     }
 
-    game_state.update(dt);
+    // bool receive_new_state = false;
+    // while(this->state_queue->try_pop(game_state_dto)) {
+    //     receive_new_state = true;
+    // }
+
+    // if (receive_new_state) {
+    //     std::cout << "w: " << game_state_dto->width << " - h: " << game_state_dto->height << '\n';
+
+    //     if (this->game_state_was_initialized == false) {
+    //         game_state.load(game_state_dto);
+    //         this->game_state_was_initialized = true;
+    //     } else {
+    //         game_state.update(game_state_dto, dt);
+    //     }
+    // }
 }
 
 void GameLoop::render(ClientGameState &game_state) {

@@ -57,7 +57,7 @@ void NetMessageInitialGameState::pull_data_from(NetProtocolInterpreter& channel)
         auto x         = channel.read_float();
         auto y         = channel.read_float();
         auto life      = channel.read_uint();
-        auto state     = static_cast<WormDto::MovementState>(channel.read_byte());
+        auto state     = static_cast<MovementStateDto>(channel.read_byte());
 
         worms.emplace_back(client_id, entity_id, x, y, life, state);
     }
@@ -65,6 +65,10 @@ void NetMessageInitialGameState::pull_data_from(NetProtocolInterpreter& channel)
 
 void NetMessageInitialGameState::add(const BeamDto& beam) {
     beams.emplace_back(beam.x, beam.y, beam.angle, beam.type);
+}
+
+void NetMessageInitialGameState::add(const WormDto &worm) {
+    worms.push_back(worm);
 }
 
 void NetMessageInitialGameState::execute(NetMessageBehaviour& interpreter) {

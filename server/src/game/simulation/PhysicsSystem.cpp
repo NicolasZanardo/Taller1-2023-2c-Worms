@@ -1,5 +1,6 @@
 #include "PhysicsSystem.h"
 
+
 PhysicsSystem::PhysicsSystem(
         int rate,
         float xGravity,
@@ -23,19 +24,20 @@ void PhysicsSystem::update(const std::unordered_map<size_t, std::shared_ptr<Worm
 b2Body* PhysicsSystem::spawn_worm(WormScenarioData worm, std::shared_ptr<Worm> wormModel) {
     b2BodyDef bodyDef;
     bodyDef.type = b2_dynamicBody;
-    // bodyDef.fixedRotation = false;
+    bodyDef.fixedRotation = true;
     bodyDef.position.Set(worm.x, worm.y);
+    bodyDef.linearDamping = 0.0f;
     b2Body* body = world.CreateBody(&bodyDef);
 
     b2PolygonShape dynamicBox;
-    dynamicBox.SetAsBox(0.5f, 0.5f); // TODO
+    dynamicBox.SetAsBox(WORM_SIZE / 2, WORM_SIZE / 2);
 
     b2FixtureDef fixtureDef;
     fixtureDef.shape = &dynamicBox;
 
 
     // Set the box density to be non-zero, so it will be dynamic.
-    fixtureDef.density = 1.0f; // TODO Fine tune
+    fixtureDef.density = 60.0f;
     // Override the default friction.
     fixtureDef.friction = 0.2f;
     fixtureDef.userData.pointer = reinterpret_cast<uintptr_t>(&wormModel);;
@@ -60,9 +62,9 @@ void PhysicsSystem::spawn_beam(BeamScenarioData beam) {
 
     b2PolygonShape groundBox;
     if (beam.type == BeamScenarioData::Type::SHORT) {
-        groundBox.SetAsBox(3.0f / 2, 0.80f);
+        groundBox.SetAsBox(SHORT_BEAM_WIDTH / 2, SHORT_BEAM_HEIGHT / 2);
     } else {
-        groundBox.SetAsBox(6.0f / 2, 0.80f);
+        groundBox.SetAsBox(LARGE_BEAM_WIDTH / 2, LARGE_BEAM_HEIGHT / 2);
     }
 
     b2FixtureDef fixtureDef;
@@ -70,13 +72,14 @@ void PhysicsSystem::spawn_beam(BeamScenarioData beam) {
 
     // Set the box density to be non-zero, so it will be dynamic.
     fixtureDef.density = 1.0f;
+    fixtureDef.restitution = 0;
 
     // Set the friction based on the angle of the ground
     float groundAngle = groundBody->GetAngle();
-    float maxWalkableAngle = 45.0f;
+    float maxWalkableAngle = MAX_BEAM_WALKABLE_ANGLE;
 
     if (std::abs(groundAngle) <= maxWalkableAngle) {
-        fixtureDef.friction = 0.3f;  // Friction for walking
+        fixtureDef.friction = 0.8f;  // Friction for walking
     } else {
         fixtureDef.friction = 0.01f; // Lower friction for sliding
     }

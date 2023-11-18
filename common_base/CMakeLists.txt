@@ -50,6 +50,8 @@ add_library(common
     Networking/net_channel.h 
 
     networking.h
+
+    constants.h
 )
 
 target_include_directories(common PUBLIC

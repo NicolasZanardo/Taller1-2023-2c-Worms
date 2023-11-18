@@ -6,6 +6,8 @@
 #include <cstdio>
 #include <unordered_map>
 #include "WormIdIterator.h"
+#include "../model/instances/Instance.h"
+#include "../model/instances/Worm.h"
 
 typedef std::unordered_map<size_t, WormIdIterator> ClientsIdsToWormsIdsIterator;
 
@@ -15,15 +17,14 @@ class TurnManager {
     size_t current_client_id;
     size_t current_worm_id;
 
-    int game_time_left = 60000;// 1080000; // millis
+    int game_time_left = 60000; // millis
 
-    int turn_time_left = 6000;// 60000;
-    const int turn_duration = 6000;// 60000; // millis
-
-    int inside_turns_time_left = 2000; // 3000;
-    const int inside_turns_duration = 2000; // 3000; // millis
+    int turn_time_left = 10000; // 60000;
+    const int turn_duration = 10000; // 60000;
 
     bool waiting_to_start_next_turn = false;
+
+    bool worms_are_still(std::unordered_map<size_t, std::shared_ptr<Worm>>& worms);
 
 public:
     TurnManager(const int rate);
@@ -40,8 +41,8 @@ public:
     bool is_clients_turn(size_t client_id) const;
 
 
-    void update(const int it);
-    void end_actual_turn();
+    void update(const int it, std::unordered_map<size_t, std::shared_ptr<Worm>>& worms);
+    void end_actual_turn(std::unordered_map<size_t, std::shared_ptr<Worm>>& worms);
     void advance_to_next_turn();
 
 

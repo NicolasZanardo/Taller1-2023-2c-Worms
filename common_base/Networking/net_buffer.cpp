@@ -33,8 +33,8 @@ void NetBuffer::push_uint(const uint32_t value) {
 }
 
 void NetBuffer::push_float(const float value) {
-    uint32_t temp = value * 1000.0f;
-    push_uint(temp);
+    const int newval = value*1000;
+    push_uint(newval);
 }
 
 void NetBuffer::push_string(const string  &value) {

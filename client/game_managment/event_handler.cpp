@@ -21,6 +21,12 @@ bool EventHandler::handleEvents() {
                     case SDLK_RIGHT:
                         this->event_queue.push(GameEvent::MOVE_RIGHT_INIT);
                         break;
+                    case SDLK_RETURN:
+                        this->event_queue.push(GameEvent::JUMP_FORWARD);
+                        break;
+                    case SDLK_SPACE:
+                        this->event_queue.push(GameEvent::JUMP_BACKWARDS);
+                        break;
                     }
                 }
                 break;
@@ -37,11 +43,11 @@ bool EventHandler::handleEvents() {
                 }
                 break;
             case SDL_MOUSEMOTION:
-                std::cout << "Oh! Mouse" << std::endl;
+                // std::cout << "Oh! Mouse" << std::endl;
 
                 // SDL_GetMouseState(&x, &y);
-                std::cout << "x: " << cursor.getPosX() << " - y: " << cursor.getPosY() << '\n';
-                std::cout << "xn: " << cursor.getNormPosX() << " - yn: " << cursor.getNormPosY() << '\n';
+                // std::cout << "x: " << cursor.getPosX() << " - y: " << cursor.getPosY() << '\n';
+                // std::cout << "xn: " << cursor.getNormPosX() << " - yn: " << cursor.getNormPosY() << '\n';
                 // std::cout << "W: " << this->window->GetWidth() << " - H: " << this->window->GetHeight() << '\n';
                 break;
             case SDL_QUIT:

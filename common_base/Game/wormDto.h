@@ -2,21 +2,22 @@
 #define COMMON_WORM_DTO_H_
 #include <cstdint>
 
+enum class MovementStateDto : uint8_t {
+    idle    = 0x00,
+    walking = 0x01,
+    jumping = 0x02,
+    shooting= 0x03,
+    falling = 0x05,
+};
+
 struct WormDto {
-    enum class MovementState : uint8_t {
-        idle    = 0x00,
-        walking = 0x01,
-        jumping = 0x02,
-        shooting= 0x03,
-        falling = 0x05,
-    };
 
     int client_id;
     int entity_id;
     float x;
     float y;
     int life;
-    MovementState state;
+    MovementStateDto state;
 
     WormDto(
             int client_id,
@@ -24,7 +25,7 @@ struct WormDto {
             float x,
             float y,
             int life,
-            MovementState state
+            MovementStateDto state
     ) : 
     client_id(client_id),
     entity_id(entity_id),

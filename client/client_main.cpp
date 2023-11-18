@@ -1,7 +1,9 @@
 #include <iostream>
 #include <stdexcept>
+#include <string>
 
 #include "client.h"
+#include "dumb_simple_client/dumb_client.h"
 
 #define CLIENT_CMND_LINE_ARGS 2
 #define CLIENT_MSG_ERROR_NUM_CLARGS "Invalid numbers of arguments."
@@ -13,6 +15,9 @@ int main(int argc, char* argv[]) {
             return 1;
         }
 
+        // DumbClient client(argv[1], argv[2]);
+        // client.start();
+        
         Client client(argv[1], argv[2]);
         client.execute();
 
