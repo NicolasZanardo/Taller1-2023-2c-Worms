@@ -38,6 +38,16 @@ std::shared_ptr<NetMessage> ClientSender::game_event_to_net_message(GameEvent& e
                     this->client_id,
                     ActionTypeDto::stop_moving
             );
+        case GameEvent::JUMP_FORWARD:
+            return std::make_shared<NetMessageGameAction>(
+                    this->client_id,
+                    ActionTypeDto::jump_forward
+            );
+        case GameEvent::JUMP_BACKWARDS:
+            return std::make_shared<NetMessageGameAction>(
+                    this->client_id,
+                    ActionTypeDto::jump_back
+            );
     }
 }
 

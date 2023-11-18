@@ -24,8 +24,9 @@ void PhysicsSystem::update(const std::unordered_map<size_t, std::shared_ptr<Worm
 b2Body* PhysicsSystem::spawn_worm(WormScenarioData worm, std::shared_ptr<Worm> wormModel) {
     b2BodyDef bodyDef;
     bodyDef.type = b2_dynamicBody;
-    // bodyDef.fixedRotation = false;
+    bodyDef.fixedRotation = true;
     bodyDef.position.Set(worm.x, worm.y);
+    bodyDef.linearDamping = 0.0f;
     b2Body* body = world.CreateBody(&bodyDef);
 
     b2PolygonShape dynamicBox;
@@ -36,7 +37,7 @@ b2Body* PhysicsSystem::spawn_worm(WormScenarioData worm, std::shared_ptr<Worm> w
 
 
     // Set the box density to be non-zero, so it will be dynamic.
-    fixtureDef.density = 1.0f; // TODO Fine tune
+    fixtureDef.density = 60.0f;
     // Override the default friction.
     fixtureDef.friction = 0.2f;
     fixtureDef.userData.pointer = reinterpret_cast<uintptr_t>(&wormModel);;
@@ -78,7 +79,7 @@ void PhysicsSystem::spawn_beam(BeamScenarioData beam) {
     float maxWalkableAngle = MAX_BEAM_WALKABLE_ANGLE;
 
     if (std::abs(groundAngle) <= maxWalkableAngle) {
-        fixtureDef.friction = 0.3f;  // Friction for walking
+        fixtureDef.friction = 0.8f;  // Friction for walking
     } else {
         fixtureDef.friction = 0.01f; // Lower friction for sliding
     }

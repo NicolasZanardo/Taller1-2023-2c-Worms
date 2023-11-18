@@ -49,7 +49,11 @@ void WormMovement::stop_moving() {
 void WormMovement::jump_forward() {
     if (is_on_ground) {
         is_moving = false;
-        body->ApplyLinearImpulseToCenter(b2Vec2(getFacingDirectionSign() * forwardJumpReach, forwardJumpHeight), true);
+        body->ApplyLinearImpulseToCenter(
+                b2Vec2(
+                        getFacingDirectionSign() * forwardJumpReach * body->GetMass(),
+                        forwardJumpHeight* body->GetMass()
+                        ), true);
         is_on_ground = false;
         state = State::jumping;
     }
@@ -58,8 +62,12 @@ void WormMovement::jump_forward() {
 void WormMovement::jump_backwards() {
     if (is_on_ground) {
         is_moving = false;
-        body->ApplyLinearImpulseToCenter(b2Vec2((-getFacingDirectionSign()) * backwardsJumpReach, backwardsJumpHeight),
-                                         true);
+        body->ApplyLinearImpulseToCenter(
+                b2Vec2(
+                        (-getFacingDirectionSign())  * backwardsJumpReach * body->GetMass(),
+                        backwardsJumpHeight * body->GetMass()
+                        ),
+                true);
         is_on_ground = false;
         state = State::jumping;
     }
@@ -80,8 +88,17 @@ void WormMovement::on_update_physics() {
 
     // x
     if (is_moving) {
-        body->ApplyLinearImpulseToCenter((b2Vec2(getFacingDirectionSign() * speed * 0.1f, 0.0f)), true);
+        body->SetLinearVelocity((b2Vec2(getFacingDirectionSign() * speed, body->GetLinearVelocity().y)));
     }
+
+}
+
+bool WormMovement::is_still_moving() {
+    return body->GetLinearVelocity().x != 0 && body->GetLinearVelocity().y != 0;
+}
+
+void WormMovement::stop_movement_from_input() {
+    is_moving = false;
 }
 
 MovementStateDto WormMovement::state_to_dto() const {

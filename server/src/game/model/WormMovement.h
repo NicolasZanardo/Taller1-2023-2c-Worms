@@ -14,11 +14,11 @@ class WormMovement {
     };
     b2Body *body;
     State state;
-    const float speed = 2.0f;
+    const float speed = 4.0f;
     const float forwardJumpHeight = 3.0f;
-    const float forwardJumpReach = 0.4f;
-    const float backwardsJumpHeight = 5.0f;
-    const float backwardsJumpReach = 0.1f;
+    const float forwardJumpReach = 1.0f;
+    const float backwardsJumpHeight = 6.0f;
+    const float backwardsJumpReach = 0.5f;
     bool is_on_ground;
     bool is_moving;
     bool is_facing_right;
@@ -26,6 +26,7 @@ class WormMovement {
     int getFacingDirectionSign() const;
 
 public:
+
     WormMovement(b2Body* body);
 
     float x() const;
@@ -44,6 +45,10 @@ public:
     void jump_backwards();
 
     void on_update_physics();
+
+    bool is_still_moving();
+
+    void stop_movement_from_input();
 
 };
 

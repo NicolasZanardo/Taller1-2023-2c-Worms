@@ -21,6 +21,12 @@ bool EventHandler::handleEvents() {
                     case SDLK_RIGHT:
                         this->event_queue.push(GameEvent::MOVE_RIGHT_INIT);
                         break;
+                    case SDLK_RETURN:
+                        this->event_queue.push(GameEvent::JUMP_FORWARD);
+                        break;
+                    case SDLK_SPACE:
+                        this->event_queue.push(GameEvent::JUMP_BACKWARDS);
+                        break;
                     }
                 }
                 break;
