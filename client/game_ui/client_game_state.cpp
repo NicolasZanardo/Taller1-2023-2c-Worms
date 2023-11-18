@@ -35,6 +35,6 @@ void ClientGameState::update(std::shared_ptr<ClientGameStateDTO> game_state_dto,
 
 
 void ClientGameState::render() {
-    for (auto& beam : this->beams_state) { beam.render(); }
     for (auto& worm : this->worms_state) { worm.second.render(); }
+    for (auto& beam : this->beams_state) { beam.render(); }
 }

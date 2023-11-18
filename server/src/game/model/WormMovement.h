@@ -7,10 +7,9 @@
 class WormMovement {
     enum class State : uint8_t {
         idle = 0x00,
-        walking = 0x01,
-        jumping = 0x02,
-        shooting = 0x03,
-        falling = 0x04
+        moving = 0x01,
+        going_upwards = 0x02,
+        falling = 0x03
     };
     b2Body *body;
 
@@ -20,6 +19,8 @@ class WormMovement {
     const float forwardJumpReach = 5;
     const float backwardsJumpHeight = 18;
     const float backwardsJumpReach = 2;
+
+    const float epsilon_y = 0.1f;
 
     bool is_on_ground;
     bool is_moving;

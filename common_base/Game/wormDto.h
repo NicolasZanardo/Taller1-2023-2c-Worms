@@ -4,10 +4,9 @@
 
 enum class MovementStateDto : uint8_t {
     idle    = 0x00,
-    walking = 0x01,
-    jumping = 0x02,
-    shooting= 0x03,
-    falling = 0x05,
+    moving = 0x01,
+    going_upwards = 0x02,
+    falling = 0x03,
 };
 
 struct WormDto {

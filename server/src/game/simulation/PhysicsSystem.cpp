@@ -35,7 +35,7 @@ b2Body* PhysicsSystem::spawn_worm(WormScenarioData worm, std::shared_ptr<Worm> w
     fixtureDef.shape = &dynamicBox;
 
     fixtureDef.density = 80.0f;
-    //fixtureDef.restitution = 0;
+    fixtureDef.restitution = 0;
     fixtureDef.userData.pointer = reinterpret_cast<uintptr_t>(&wormModel);;
     body->CreateFixture(&fixtureDef);
 
@@ -66,7 +66,6 @@ void PhysicsSystem::spawn_beam(BeamScenarioData beam) {
     b2FixtureDef fixtureDef;
     fixtureDef.shape = &groundBox;
     fixtureDef.density = 1000;
-    fixtureDef.restitution = 0;
 
     // Set the friction based on the angle of the ground
     float groundAngle = groundBody->GetAngle();

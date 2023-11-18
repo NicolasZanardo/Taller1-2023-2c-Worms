@@ -11,22 +11,22 @@ WormState::WormState(SpritesManager &sprites_manager) :
         state(MovementStateDto::idle),
         facingLeft(false),
         animations({
-                           {MovementStateDto::idle,    std::make_shared<Animation>(
+                           {MovementStateDto::idle,          std::make_shared<Animation>(
                                    sprites_manager,
                                    "wwalk",
                                    FrameSelectorMode::BOUNCE,
                                    15, true)},
-                           {MovementStateDto::falling, std::make_shared<Animation>(
+                           {MovementStateDto::falling,       std::make_shared<Animation>(
                                    sprites_manager,
                                    "wfall",
                                    FrameSelectorMode::STAY_LAST,
                                    2, true)},
-                           {MovementStateDto::jumping, std::make_shared<Animation>(
+                           {MovementStateDto::going_upwards, std::make_shared<Animation>(
                                    sprites_manager,
-                                   "wwalk",
-                                   FrameSelectorMode::BOUNCE,
-                                   15, true)},
-                           {MovementStateDto::walking, std::make_shared<Animation>(
+                                   "wjumpu",
+                                   FrameSelectorMode::STAY_LAST,
+                                   10, true)},
+                           {MovementStateDto::moving,        std::make_shared<Animation>(
                                    sprites_manager,
                                    "wwalk",
                                    FrameSelectorMode::BOUNCE,
@@ -60,6 +60,7 @@ WormState &WormState::operator=(WormState &&other) noexcept {
 }
 
 void WormState::update(WormDto &updated_data, float dt) {
+    // Update x
     if (this->x < updated_data.x) {
         this->x = UiUtils::x_meters_pos_to_x_pixel_pos(updated_data.x);
         this->facingLeft = false;
@@ -68,17 +69,44 @@ void WormState::update(WormDto &updated_data, float dt) {
         this->facingLeft = true;
     }
 
+    // Update y
     this->y = UiUtils::y_meters_pos_to_y_pixel_pos(updated_data.y);
 
+    // Switch anim if needed
     if (this->state != updated_data.state) {
-        auto new_anim = this->animations.at(updated_data.state);
+        this->state = updated_data.state;
+        auto new_anim = this->animations.at(this->state);
         if (new_anim) {
+            std::cout << "Found new anim for moving" << std::endl;
             this->current_animation = new_anim;
             this->current_animation->reset();
         }
     }
 
-    this->current_animation->update(dt);
+    // TODO DELETE
+    switch (state) {
+        case MovementStateDto::idle:
+            std::cout << "idle" << std::endl;
+            break;
+        case MovementStateDto::moving:
+            std::cout << "moving" << std::endl;
+            break;
+        case MovementStateDto::going_upwards:
+            std::cout << "going_upwards" << std::endl;
+            break;
+        case MovementStateDto::falling:
+            std::cout << "falling" << std::endl;
+            break;
+        default:
+            std::cout << "unknown" << std::endl;
+            break;
+    }
+
+
+    // Update anim
+    if (this->state != MovementStateDto::idle) {
+        this->current_animation->update(dt);
+    }
 }
 
 void WormState::render() {

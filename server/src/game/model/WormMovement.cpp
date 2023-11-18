@@ -24,44 +24,45 @@ int WormMovement::getFacingDirectionSign() const {
 }
 
 void WormMovement::start_moving_right() {
-    if (state != State::jumping) {
+    if (is_on_ground) {
         is_facing_right = true;
         is_moving = true;
-        state = State::walking;
     }
 }
 
 void WormMovement::start_moving_left() {
-    if (state != State::jumping) {
+    if (is_on_ground) {
         is_facing_right = false;
         is_moving = true;
-        state = State::walking;
     }
 }
 
 void WormMovement::stop_moving() {
-    is_moving = false;
-    b2Vec2 velocity = body->GetLinearVelocity();
-    velocity.x = 0.0f;
-    body->SetLinearVelocity(velocity);
+    if (is_on_ground) {
+        is_moving = false;
+        b2Vec2 velocity = body->GetLinearVelocity();
+        velocity.x = 0.0f;
+        body->SetLinearVelocity(velocity);
+    }
 }
 
 void WormMovement::jump_forward() {
     if (is_on_ground) {
         is_moving = false;
+        body->SetLinearVelocity(b2Vec2(0,0));
         body->ApplyLinearImpulseToCenter(
                 b2Vec2(
                         getFacingDirectionSign() * forwardJumpReach * body->GetMass(),
                         forwardJumpHeight* body->GetMass()
                         ), true);
         is_on_ground = false;
-        state = State::jumping;
     }
 }
 
 void WormMovement::jump_backwards() {
     if (is_on_ground) {
         is_moving = false;
+        body->SetLinearVelocity(b2Vec2(0,0));
         body->ApplyLinearImpulseToCenter(
                 b2Vec2(
                         (-getFacingDirectionSign())  * backwardsJumpReach * body->GetMass(),
@@ -69,25 +70,30 @@ void WormMovement::jump_backwards() {
                         ),
                 true);
         is_on_ground = false;
-        state = State::jumping;
     }
 }
 
 void WormMovement::on_update_physics() {
     // y
     float y_velocity = body->GetLinearVelocity().y;
-    if (y_velocity == 0.0f) {
+
+    if (y_velocity > epsilon_y) {
+        state = State::going_upwards;
+    } else if (y_velocity < -epsilon_y) {
+        state = State::falling;
+    } else {
+        // TODO HAVING Y VELOCITY BETWEEN EPSILON Y DOESNT MEAN ON GROUND, CHECK WITH COLLISION
         is_on_ground = true;
         if (body->GetLinearVelocity().x == 0.0f) {
             state = State::idle;
+        } else {
+            state = State::moving;
         }
-
-    } else if (y_velocity < 0.0f) {
-        state = State::falling;
     }
 
+
     // x
-    if (is_moving) {
+    if (is_moving && is_on_ground) {
         body->SetLinearVelocity((b2Vec2(getFacingDirectionSign() * speed, body->GetLinearVelocity().y)));
     }
 
@@ -105,12 +111,10 @@ MovementStateDto WormMovement::state_to_dto() const {
     switch (state) {
         case State::idle:
             return MovementStateDto::idle;
-        case State::walking:
-            return MovementStateDto::walking;
-        case State::jumping:
-            return MovementStateDto::jumping;
-        case State::shooting:
-            return MovementStateDto::shooting;
+        case State::moving:
+            return MovementStateDto::moving;
+        case State::going_upwards:
+            return MovementStateDto::going_upwards;
         case State::falling:
             return MovementStateDto::falling;
     }

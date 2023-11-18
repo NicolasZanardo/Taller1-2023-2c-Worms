@@ -26,9 +26,7 @@ void GameLoop::execute(EventHandler& event_handler, ClientGameState& game_state)
         running = event_handler.handleEvents();
         double dt = it - it_prev;
         this->update(game_state, dt);
-        std::cout << "init render phase\n";
         this->render(game_state);
-        std::cout << "end renader phase\n";
 
         it_prev = it;
         time_point t2 = steady_clock::now();

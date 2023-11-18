@@ -20,12 +20,10 @@ std::string get_name(MovementStateDto state) {
     switch (state) {
         case MovementStateDto::idle:
             return "idle";
-        case MovementStateDto::walking:
-            return "walking";
-        case MovementStateDto::jumping:
-            return "jumping";
-        case MovementStateDto::shooting:
-            return "shooting";
+        case MovementStateDto::moving:
+            return "moving";
+        case MovementStateDto::going_upwards:
+            return "going_upwards";
         case MovementStateDto::falling:
             return "falling";
         default:
@@ -42,7 +40,7 @@ void GameInstance::update(const int it) {
         // std::cout << "Current worm id is: " << current_worm_id << std::endl;
         auto worm = instancesManager.getWorm(current_worm_id);
         auto wormDto = worm->toWormDto(turnManager.get_current_client_id());
-        // std::cout << "Current worm state is : " << get_name(wormDto.state) << std::endl;
+        std::cout << "Current worm state is : " << get_name(wormDto.state) << std::endl;
         // std::cout << "Current worm position for client id 1 is: x: " << wormDto.x << "y: " << wormDto.y << std::endl;
     } else {
         // std::cout << "No ones turn, inside turns time " << std::endl;
