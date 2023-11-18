@@ -1,9 +1,9 @@
 #ifndef __CLIENT_REQUEST_H__
 #define __CLIENT_REQUEST_H__
 
-#include "client_defs.h"
+#include <string>
 
-class Protocol;
+// #include "protocol.h"
 
 //==============================================================================
 class ClientRequest {
@@ -11,23 +11,54 @@ public:
     ClientRequest() = default;
     virtual ~ClientRequest() = default;
 
-    virtual void send() = 0;
+    // virtual void execute(Protocol& protocol) = 0;
 };
-
 
 //==============================================================================
-class ClientRequestGameEvent : public ClientRequest {
+class ClientRequestCreateGame: public ClientRequest {
 public:
-    ClientRequestGameEvent() = delete;
-    explicit ClientRequestGameEvent(GameEvent game_event);
-    virtual ~ClientRequestGameEvent() =  default;
+    ClientRequestCreateGame() = delete;
+    explicit ClientRequestCreateGame(const std::string& room_name, uint16_t num_worms);
+    virtual ~ClientRequestCreateGame() = default;
 
-    void send() override;
+    // void execute(Protocol& protocol) override;
 
 private:
-    GameEvent game_event;
+    std::string room_name;
+    uint16_t num_worms;
 };
 
+//==============================================================================
+class ClientRequestJoinGame: public ClientRequest {
+public:
+    ClientRequestJoinGame() = delete;
+    explicit ClientRequestJoinGame(const std::string& room_name);
+    virtual ~ClientRequestJoinGame() = default;
 
+    // void execute(Protocol& protocol) override;
 
-#endif  // _CLIENT_REQUEST_H__
+private:
+    std::string room_name;
+};
+
+//==============================================================================
+class ClientRequestLeaveGame : public ClientRequest {
+public:
+    ClientRequestLeaveGame() = default;
+    virtual ~ClientRequestLeaveGame() = default;
+
+    // void execute(Protocol& protocol) override;
+};
+
+//==============================================================================
+class ClientRequestSendGameCommand : public ClientRequest {
+    ClientRequestSendGameCommand() = delete;
+    explicit ClientRequestSendGameCommand(/*command*/);
+
+    // void execute(Protocol& protocol) override;
+
+private:
+    /*command*/
+};
+
+#endif  // __CLIENT_ACTIONS_H__

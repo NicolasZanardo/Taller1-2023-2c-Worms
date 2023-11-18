@@ -44,6 +44,8 @@ class GameInstance {
     ClientsWorms clientsWorms;
     TurnManager turnManager;
 
+    int active_worm_id;
+
     void assign_worms_to_clients(const std::list<Client *> &clients);
 
 public:

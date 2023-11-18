@@ -6,6 +6,7 @@
 #include "box2d/box2d.h"
 #include "../scenario/GameScenarioData.h"
 #include "../model/instances/Worm.h"
+#include "../../../../common_base/constants.h"
 
 class PhysicsSystem {
 public:

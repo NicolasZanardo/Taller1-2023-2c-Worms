@@ -8,12 +8,12 @@ public:
     static GameScenarioData get() {
         GameScenarioData scenario;
         scenario.room_height = 40;
-        scenario.room_width = 80;
+        scenario.room_width = 36;
         // Populate large beams next to each other at y=0
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 6; i++) {
             scenario.beams.emplace_back(
                     i * 6.0f + (3), // x
-                    0.0f, // y
+                    1.0f, // y
                     0.0f, // angle
                     BeamScenarioData::Type::LONG
             );
@@ -30,10 +30,10 @@ public:
         }*/
 
         // Populate worms on each side of the map
-        scenario.worms.emplace_back(1.0f, 2.5f);
-        // scenario.worms.emplace_back(3.0f, 2.5f);
-        // scenario.worms.emplace_back(7.0f, 2.5f);
-        // scenario.worms.emplace_back(9.0f, 2.5f);
+        scenario.worms.emplace_back(2.0f, 8.0f);
+        scenario.worms.emplace_back(6.0f, 8.0f);
+        scenario.worms.emplace_back(10.0f, 8.0f);
+        scenario.worms.emplace_back(14.0f, 8.0f);
         return scenario;
     }
 };

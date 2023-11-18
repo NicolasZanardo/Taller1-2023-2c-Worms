@@ -1,9 +1,10 @@
 #include "TurnManager.h"
+#include "../model/instances/Instance.h"
 #include <iostream>
 
 TurnManager::TurnManager(int rate): rate(rate), clients_ids_to_worms_ids_iterator() {}
 
-void TurnManager::update(const int it) {
+void TurnManager::update(const int it, std::unordered_map<size_t, std::shared_ptr<Worm>>& worms) {
     // Check if the game time has run out
     if (game_time_left <= 0) {
         return;
@@ -13,25 +14,22 @@ void TurnManager::update(const int it) {
     game_time_left -= it * rate;
     if (!waiting_to_start_next_turn) {
         turn_time_left -= it * rate;
-        // std::cout << "Time left on turn: " << turn_time_left << "\n";
+         // std::cout << "Time left on turn: " << turn_time_left << "\n";
         // Check if the turn time has run out
         if (turn_time_left <= 0) {
-            end_actual_turn();
+            end_actual_turn(worms);
         }
     } else {
-        inside_turns_time_left -= it * rate;
-        // std::cout << "Time left inside turns: " << inside_turns_time_left << "\n";
-        // Check if the inside turns time has run out
-        if (inside_turns_time_left <= 0) {
+        // Only advance to the next turn when worms are still // TODO When explosions finished also
+        if (worms_are_still(worms)) {
             advance_to_next_turn();
         }
     }
-
 }
 
-void TurnManager::end_actual_turn() {
+void TurnManager::end_actual_turn(std::unordered_map<size_t, std::shared_ptr<Worm>>& worms) {
+    worms.at(current_worm_id)->movement->stop_movement_from_input();
     waiting_to_start_next_turn = true;
-    inside_turns_time_left = inside_turns_duration;
 }
 
 void TurnManager::advance_to_next_turn() {
@@ -121,9 +119,19 @@ int TurnManager::get_current_worm_id() const {
 }
 
 float TurnManager::get_remaining_game_time() const {
-    return game_time_left; // via network we are sending float TODO test what is client receiving
+    return game_time_left;
 }
 
 float TurnManager::get_remaining_turn_time() const {
     return turn_time_left;
+}
+
+bool TurnManager::worms_are_still(std::unordered_map<size_t, std::shared_ptr<Worm>>& worms) {
+    for (const auto &[_, worm]: worms) {
+        if (worm->movement && worm->movement->is_still_moving()) {
+            return false;
+        }
+    }
+
+    return true;
 }

@@ -1,7 +1,12 @@
 #include "dumb_client.h"
+#include <SDL2pp/SDL2pp.hh>
 #include <iostream>
 #include <memory>
 #include <utility>
+
+#include "../../common_base/queue.h"
+#include "../game_ui/sprites_manager.h"
+#include "../game_managment/event_handler.h"
 using namespace std;
 
 DumbClient::DumbClient(const char* serv, const char* port) :
@@ -14,6 +19,29 @@ DumbClient::~DumbClient() {
 }
 
 void DumbClient::start() {
+    cout << "Soy el cliente correcto!";
+    SDL2pp::SDL sdl(SDL_INIT_VIDEO);
+
+    SDL2pp::Window window("Worms",
+        SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
+        800, 600,
+        SDL_WINDOW_RESIZABLE);
+
+    SDL2pp::Renderer renderer(window, -1, SDL_RENDERER_ACCELERATED);
+    interpreter->renderer = &renderer;
+
+    Queue<GameEvent> event_queue;
+    EventHandler event_handler(window, event_queue);
+
+    sprites_manager = new SpritesManager(renderer);
+    sprites_manager->addSprite("wwalk", "resources/sprites/wwalk.png", 60, 60, 0);
+
+    
+    Animation anim(*sprites_manager,"wwalk", FrameSelectorMode::BOUNCE, 12, true);
+    renderer.Clear();
+    anim.render(SDL2pp::Rect(300, 300, 200, 200),true);
+    renderer.Present();
+
     std::thread receiveThread(&DumbClient::forward, this);
     std::thread sendThread(&DumbClient::send_messages, this);
 
@@ -95,22 +123,38 @@ void DumbInterpreter::run(NetMessage_test* msg) {
 }
 
 void DumbInterpreter::run(NetMessageInitialGameState* msg) {
-    cout << "width: " << msg->room_width << " height: " << msg->room_height << " amount of beams on map: " << msg->beams.size() << "\n";
+    cli.stage = new TheStage(msg->room_width, msg->room_height);
 }
 
 void DumbInterpreter::run(NetMessageGameStateUpdate* msg) {
-    /*cout << "active client id: " << msg->active_client_id << "\n";
-    cout << "active worm id: " << msg->active_entity_id << "\n";
-    cout << "wind strength: " << msg->wind_speed << "\n";
-    cout << "time turn: " << msg->remaining_turn_time << " time game: " << msg->remaining_game_time << "\n";
+    if (!cli.initialized) {
+        for (auto& wrm : msg->worms) {
+            cli.stage->worms.emplace(wrm.entity_id, 
+                new TheWorm(
+                    wrm.client_id,wrm.entity_id,
+                    cli.stage->localize_x(wrm.x),
+                    cli.stage->localize_y(wrm.y),
+                    *cli.sprites_manager
+                )
+            );
+        }
 
+        cli.initialized = true;
+        return;
+    }
+
+    this->renderer->Clear();
     for (auto& wrm : msg->worms) {
-        cout << "Worm "<< wrm.entity_id 
-            << " belongs to " << wrm.client_id 
-            << " and is in ("<< wrm.x << "," << wrm.y << ")"
-            << " has " << wrm.life << "hp and is in state " 
-            << (char)wrm.state << "\n";
-    }*/
+        auto& myworm = cli.stage->worms[wrm.entity_id];
+        
+        myworm->update(
+            cli.stage->localize_x(wrm.x),
+            cli.stage->localize_y(wrm.y)
+        );
+        //myworm->update(i++*100,300);
+        myworm->render();
+    }
+    this->renderer->Present();
 }
 
 void DumbInterpreter::run(NetMessageGameAction* msg) {

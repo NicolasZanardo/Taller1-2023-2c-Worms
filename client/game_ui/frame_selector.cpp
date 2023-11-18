@@ -18,6 +18,10 @@ FrameSelector::FrameSelector(FrameSelectorMode mode, uint16_t num_frames, uint16
     }
 }
 
+void FrameSelector::reset() {
+    this->current_frame = 0;
+}
+
 void FrameSelector::advanceFrame() {
     (this->*(this->advance_frame))();
 }

@@ -8,6 +8,29 @@ Animation::Animation(SpritesManager& sprites_manager, const std::string& id,
     , sprites_manager(&sprites_manager)
     , id(id) {}
 
+Animation::Animation(Animation&& other) noexcept
+    : elapsed(other.elapsed)
+    , frame_selector(other.frame_selector)
+    , sprites_manager(other.sprites_manager)
+    , id(other.id) {}
+
+Animation& Animation::operator=(Animation&& other) noexcept {
+    if (&other == this) {
+		return *this;
+    }
+
+    this->elapsed = other.elapsed;
+    this->frame_selector = other.frame_selector;
+    this->sprites_manager = other.sprites_manager;
+    this->id = other.id;
+
+    return *this;
+}
+
+void Animation::reset() {
+    this->frame_selector.reset();
+}
+
 void Animation::update(float dt) {
     this->elapsed += dt;
     while (this->elapsed > FRAME_RATE) {

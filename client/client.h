@@ -3,13 +3,18 @@
 
 #include <unistd.h>
 
+#include <memory>
+
+#include "queue.h"
+
 #include <SDL2pp/SDL2pp.hh>
 
+#include "networking.h"
 #include "client_receiver.h"
 #include "client_sender.h"
 #include "game_loop.h"
-
-#include "queue.h"
+#include "client_game_state_dto.h"
+#include "game_ui/ui_utils.h"
 
 class Client {
 public:
@@ -26,9 +31,12 @@ public:
     void execute();
 
 private:
-    Queue<GameEvent> event_queue;
-    Queue<GameEvent> state_queue;
     Queue<GameEvent> echo_queue;  // temp.
+
+    Queue<GameEvent> event_queue;
+    Queue<std::shared_ptr<ClientGameStateDTO>> state_queue;
+
+    NetChannel channel;
 
     ClientReceiver receiver;
     ClientSender sender;

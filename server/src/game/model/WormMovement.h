@@ -5,7 +5,7 @@
 #include "../../../../common_base/Game/wormDto.h"
 
 class WormMovement {
-    enum class MovementState : uint8_t {
+    enum class State : uint8_t {
         idle = 0x00,
         walking = 0x01,
         jumping = 0x02,
@@ -28,12 +28,13 @@ class WormMovement {
     int getFacingDirectionSign() const;
 
 public:
+
     WormMovement(b2Body* body);
 
     float x() const;
     float y() const;
 
-    WormDto::MovementState state_to_dto() const;
+    MovementStateDto state_to_dto() const;
 
     void start_moving_right();
 
@@ -46,6 +47,10 @@ public:
     void jump_backwards();
 
     void on_update_physics();
+
+    bool is_still_moving();
+
+    void stop_movement_from_input();
 
 };
 

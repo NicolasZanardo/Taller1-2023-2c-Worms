@@ -15,17 +15,37 @@ GameInstance::GameInstance(
     turnManager.randomly_assign_clients_turn();
 }
 
+// TODO DELETE
+std::string get_name(MovementStateDto state) {
+    switch (state) {
+        case MovementStateDto::idle:
+            return "idle";
+        case MovementStateDto::walking:
+            return "walking";
+        case MovementStateDto::jumping:
+            return "jumping";
+        case MovementStateDto::shooting:
+            return "shooting";
+        case MovementStateDto::falling:
+            return "falling";
+        default:
+            return "unknown"; // Handle unknown enum values
+    }
+}
+
 void GameInstance::update(const int it) {
-    physicsSystem.update(instancesManager.getWorms());
-    turnManager.update(it);
+    auto worms = instancesManager.getWorms();
+    physicsSystem.update(worms);
+    turnManager.update(it, worms);
     int current_worm_id = turnManager.get_current_worm_id();
     if (current_worm_id != -1) {
         // std::cout << "Current worm id is: " << current_worm_id << std::endl;
         auto worm = instancesManager.getWorm(current_worm_id);
         auto wormDto = worm->toWormDto(turnManager.get_current_client_id());
-        std::cout << "Current worm position for client id 1 is: x: " << wormDto.x << "y: " << wormDto.y << std::endl;
+        // std::cout << "Current worm state is : " << get_name(wormDto.state) << std::endl;
+        // std::cout << "Current worm position for client id 1 is: x: " << wormDto.x << "y: " << wormDto.y << std::endl;
     } else {
-        std::cout << "No ones turn, inside turns time " << std::endl;
+        // std::cout << "No ones turn, inside turns time " << std::endl;
     };
 }
 
@@ -101,26 +121,41 @@ void GameInstance::assign_worms_to_clients(const std::list<Client *> &clients) {
 
 // Actions
 void GameInstance::startMovingCurrentWormLeft() {
-    auto worm = instancesManager.getWorm(turnManager.get_current_worm_id());
-    worm->startMovingLeft();
+    auto worm_id = turnManager.get_current_worm_id();
+    if (worm_id != -1) {
+        auto worm = instancesManager.getWorm(worm_id);
+        worm->startMovingLeft();
+    }
 }
 
 void GameInstance::startMovingCurrentWormRight() {
-    auto worm = instancesManager.getWorm(turnManager.get_current_worm_id());
-    worm->startMovingRight();
+    auto worm_id = turnManager.get_current_worm_id();
+    if (worm_id != -1) {
+        auto worm = instancesManager.getWorm(worm_id);
+        worm->startMovingRight();
+    }
 }
 
 void GameInstance::stopMovingCurrentWorm() {
-    auto worm = instancesManager.getWorm(turnManager.get_current_worm_id());
-    worm->stopMoving();
+    auto worm_id = turnManager.get_current_worm_id();
+    if (worm_id != -1) {
+        auto worm = instancesManager.getWorm(worm_id);
+        worm->stopMoving();
+    }
 }
 
 void GameInstance::jumpBackCurrentWorm() {
-    auto worm = instancesManager.getWorm(turnManager.get_current_worm_id());
-    worm->jumpBackwards();
+    auto worm_id = turnManager.get_current_worm_id();
+    if (worm_id != -1) {
+        auto worm = instancesManager.getWorm(worm_id);
+        worm->jumpBackwards();
+    }
 }
 
 void GameInstance::jumpForwardCurrentWorm() {
-    auto worm = instancesManager.getWorm(turnManager.get_current_worm_id());
-    worm->jumpForward();
+    auto worm_id = turnManager.get_current_worm_id();
+    if (worm_id != -1) {
+        auto worm = instancesManager.getWorm(worm_id);
+        worm->jumpForward();
+    }
 }
