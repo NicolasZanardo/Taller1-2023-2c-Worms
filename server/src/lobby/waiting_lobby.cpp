@@ -50,7 +50,7 @@ bool purged_zombie(Client* cli) {
 
 GameEngineInstance* WaitingLobby::start_game() {
     auto game = new GameEngineInstance(
-            0.0f, -10.f, HardcodedScenarioData::get(),  // TODO GameConfig struct
+            0, -40, HardcodedScenarioData::get(),  // TODO GameConfig struct
             clients
             );
     game->start();

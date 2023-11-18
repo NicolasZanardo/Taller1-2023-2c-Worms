@@ -23,8 +23,9 @@ void PhysicsSystem::update(const std::unordered_map<size_t, std::shared_ptr<Worm
 b2Body* PhysicsSystem::spawn_worm(WormScenarioData worm, std::shared_ptr<Worm> wormModel) {
     b2BodyDef bodyDef;
     bodyDef.type = b2_dynamicBody;
-    // bodyDef.fixedRotation = false;
+    bodyDef.fixedRotation = true;
     bodyDef.position.Set(worm.x, worm.y);
+    // bodyDef.linearDamping = 0.0f;
     b2Body* body = world.CreateBody(&bodyDef);
 
     b2PolygonShape dynamicBox;
@@ -33,11 +34,8 @@ b2Body* PhysicsSystem::spawn_worm(WormScenarioData worm, std::shared_ptr<Worm> w
     b2FixtureDef fixtureDef;
     fixtureDef.shape = &dynamicBox;
 
-
-    // Set the box density to be non-zero, so it will be dynamic.
-    fixtureDef.density = 1.0f; // TODO Fine tune
-    // Override the default friction.
-    fixtureDef.friction = 0.2f;
+    fixtureDef.density = 80.0f;
+    //fixtureDef.restitution = 0;
     fixtureDef.userData.pointer = reinterpret_cast<uintptr_t>(&wormModel);;
     body->CreateFixture(&fixtureDef);
 
@@ -67,9 +65,8 @@ void PhysicsSystem::spawn_beam(BeamScenarioData beam) {
 
     b2FixtureDef fixtureDef;
     fixtureDef.shape = &groundBox;
-
-    // Set the box density to be non-zero, so it will be dynamic.
-    fixtureDef.density = 1.0f;
+    fixtureDef.density = 1000;
+    fixtureDef.restitution = 0;
 
     // Set the friction based on the angle of the ground
     float groundAngle = groundBody->GetAngle();
