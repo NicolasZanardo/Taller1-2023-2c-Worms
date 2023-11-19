@@ -45,5 +45,5 @@ void GameSprite::render(SDL2pp::Renderer& renderer, float delta_time) {
     while (anim_progress > info.frame_count) {
         anim_progress -= info.frame_count;
     }
-    renderer.Copy(info.texture,info.image_frame(anim_progress),transform,angle,SDL2pp::NullOpt,flip);
+    renderer.Copy(info.texture, info.image_frame(anim_progress), transform, angle, transform.GetCentroid(), flip);
 }

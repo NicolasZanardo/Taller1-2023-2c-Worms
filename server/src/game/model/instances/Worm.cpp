@@ -11,6 +11,7 @@ WormDto Worm::toWormDto(size_t clientId) {
             id,
             movement->x(),
             movement->y(),
+            0,
             movement->facing_right(),
             health,
             movement->state_to_dto()

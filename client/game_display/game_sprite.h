@@ -21,9 +21,9 @@ class GameSprite : public Displayable {
     explicit GameSprite(GameSpriteInfo& info);
 
     void flip_horizontaly();
-    void set_angle(float angle);
     void set_size(float width, float heigth);
 
+    void set_angle(float angle) override;
     void hidden(bool is_hidden) override;
     void set_pos(float x, float y) override;
     void image_flipped(bool image_is_flipped) override;

@@ -10,14 +10,14 @@ public:
         scenario.room_height = 40;
         scenario.room_width = 36;
         // Populate large beams next to each other at y=0
-        for (int i = 0; i < 6; i++) {
-            scenario.beams.emplace_back(
-                    i * 6.0f + (3), // x
-                    1.0f, // y
-                    0.0f, // angle
-                    BeamScenarioData::Type::LONG
-            );
-        }
+        float i = 0;
+        scenario.beams.emplace_back(i++ * 6.0f + 3.0f, 1.0f, 10.0f, BeamScenarioData::Type::LONG);
+        scenario.beams.emplace_back(i++ * 6.0f + 3.0f, 1.0f, 30.0f, BeamScenarioData::Type::LONG);
+        scenario.beams.emplace_back(i++ * 6.0f + 3.0f, 1.0f, 45.0f, BeamScenarioData::Type::LONG);
+        scenario.beams.emplace_back(i++ * 6.0f + 3.0f, 1.0f, -30.0f, BeamScenarioData::Type::LONG);
+        scenario.beams.emplace_back(i++ * 6.0f + 3.0f, 1.0f, -45.0f, BeamScenarioData::Type::LONG);
+        scenario.beams.emplace_back(i++ * 6.0f + 3.0f, 1.0f, 90.0f, BeamScenarioData::Type::LONG);
+
 
         // Populate large beams at y=1 in the middle of the scenario
         /*for (int i = 0; i < 2; i++) {

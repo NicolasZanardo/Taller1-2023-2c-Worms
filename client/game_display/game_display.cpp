@@ -12,10 +12,10 @@ GameDisplay::GameDisplay(Queue<GameEvent>& event_queue, int fps) :
     texture_manager(renderer),
     event_handler(window, event_queue)
     {
-        texture_manager.add_texture("wwalk"     , "resources/sprites/wwalk.png"     ,  60, 60, 0, 28);
-        texture_manager.add_texture("wfall"     , "resources/sprites/wfall.png"     ,  60, 60, 0, 28);
-        texture_manager.add_texture("wjumpu"    , "resources/sprites/wjumpu.png"    ,  60, 60, 0, 28);
-        texture_manager.add_texture("widle"     , "resources/sprites/wwalk.png"     ,  60, 60, 0, 00);
+        texture_manager.add_texture("wwalk"     , "resources/sprites/wwalk.png"     ,  30, 40, 10, 10, 20, 28);
+        texture_manager.add_texture("wfall"     , "resources/sprites/wfall.png"     ,  30, 40, 10, 10, 20, 28);
+        texture_manager.add_texture("wjumpu"    , "resources/sprites/wjumpu.png"    ,  30, 40, 10, 10, 20, 28);
+        texture_manager.add_texture("widle"     , "resources/sprites/wwalk.png"     ,  30, 40, 10, 10, 20, 00);
         texture_manager.add_texture("beam_large", "resources/sprites/beam_large.png");//, 140, 20, 0);
     }
 GameDisplay::~GameDisplay() {

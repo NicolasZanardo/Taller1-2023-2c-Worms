@@ -3,8 +3,8 @@
 WormEntity::WormEntity(GameDisplay& display, WormDto& values) :
     attributes(
         values.client_id, values.entity_id, 
-        values.x, values.y, values.is_facing_right, 
-        values.life, values.state
+        values.x, values.y, values.angle, 
+        values.is_facing_right, values.life, values.state
     ), animations({
 { MovementStateDto::idle         , display.new_sprite("wwalk" , 1.2f*30, 1.2f*30, 0) },
 { MovementStateDto::falling      , display.new_sprite("wfall" , 1.2f*30, 1.2f*30, 0) },
@@ -36,6 +36,7 @@ void WormEntity::update(WormDto& new_values) {
     attributes.x = new_values.x;
     attributes.y = new_values.y;
     attributes.life = new_values.life;
+    attributes.angle = new_values.angle;
     attributes.is_facing_right = new_values.is_facing_right;
 
 
@@ -49,4 +50,5 @@ void WormEntity::update(WormDto& new_values) {
         UiUtils::y_meters_pos_to_y_pixel_pos(attributes.y)
     );
     active_animation->image_flipped(attributes.is_facing_right);
+    active_animation->set_angle(attributes.angle);
 }
