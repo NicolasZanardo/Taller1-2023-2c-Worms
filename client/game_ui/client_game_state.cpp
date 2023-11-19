@@ -1,40 +1,49 @@
 #include "client_game_state.h"
+#include "ui_utils.h"
+#include "constants.h"
 
-ClientGameState::ClientGameState(SpritesManager& sprites_manager)
-    : sprites_manager(&sprites_manager)
-    , worms_state() {}
+ClientGameState::ClientGameState(GameDisplay& display)
+    : display(display)
+    , worms() {}
 
 void ClientGameState::load(std::shared_ptr<ClientGameStateDTO> game_state_dto) {
     std::cout << "Loading scenario\n";
 
-    this->width = game_state_dto->width;
-    this->height = game_state_dto->height;
+    width = game_state_dto->width;
+    height = game_state_dto->height;
 
-    for (auto& worm_state_dto : game_state_dto->worms) {
-        this->worms_state.emplace(worm_state_dto.entity_id, *(this->sprites_manager));
-        this->worms_state.at(worm_state_dto.entity_id).update(worm_state_dto, 0); // TODO 0 dt on load?
+    for (auto& worm : game_state_dto->worms) {
+        worms.emplace(worm.entity_id, std::make_shared<WormEntity>(display, worm));
     }
 
-    for (auto& beam_state_dto : game_state_dto->beams) {
-        this->beams_state.emplace_back(*(this->sprites_manager), beam_state_dto);
-    }
-
-}
-
-void ClientGameState::update(std::shared_ptr<ClientGameStateDTO> game_state_dto, float dt) {
-    this-> game_remaining_time = game_state_dto->remaining_game_time;
-    this-> turn_remaining_time = game_state_dto->remaining_turn_time;
-    
-    for (auto& worm_state_dto : game_state_dto->worms) {
-        auto it = this->worms_state.find(worm_state_dto.entity_id);
-        if (it != this->worms_state.end()) {
-            it->second.update(worm_state_dto, dt);
+    for (auto& beam : game_state_dto->beams) {
+        float beam_w = 0;
+        switch (beam.type) {
+            case BeamDto::Type::LONG:
+                beam_w = UiUtils::meters_to_pixels(LARGE_BEAM_WIDTH);
+                break;
+            case BeamDto::Type::SHORT:
+                beam_w = UiUtils::meters_to_pixels(SHORT_BEAM_WIDTH);
+                break;
         }
+
+        auto image = display.new_sprite("beam_large", beam_w, 24, beam.angle);
+        image->set_pos(
+            UiUtils::x_meters_pos_to_x_pixel_pos(beam.x),
+            UiUtils::y_meters_pos_to_y_pixel_pos(beam.y)
+        );
+
     }
+
 }
 
-
-void ClientGameState::render() {
-    for (auto& worm : this->worms_state) { worm.second.render(); }
-    for (auto& beam : this->beams_state) { beam.render(); }
+void ClientGameState::update(std::shared_ptr<ClientGameStateDTO> game_state_dto) {
+    game_remaining_time = game_state_dto->remaining_game_time;
+    turn_remaining_time = game_state_dto->remaining_turn_time;
+    
+    for (auto& worm_dto : game_state_dto->worms) {
+        auto& it = worms[worm_dto.entity_id];
+        
+        it->update(worm_dto);
+    }
 }

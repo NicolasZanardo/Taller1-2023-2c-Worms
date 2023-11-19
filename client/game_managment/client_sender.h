@@ -19,7 +19,7 @@ public:
     ClientSender operator=(ClientSender&& other) = delete;
 
     void run() override;
-    std::shared_ptr<NetMessage> game_event_to_net_message(GameEvent& event);
+    std::shared_ptr<NetMessage> game_event_to_net_message(GameEvent event);
 
 private:
     int client_id = 1; // TODO GET FROM SERVER
