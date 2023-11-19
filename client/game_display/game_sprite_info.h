@@ -16,7 +16,8 @@ class GameSpriteInfo {
     uint16_t frame_count;
     GameSpriteInfo(SDL2pp::Renderer& renderer, std::string texture_file_path);
     GameSpriteInfo(SDL2pp::Renderer& renderer, std::string texture_file_path, 
-        uint16_t frame_width, uint16_t frame_height, uint16_t frame_sep
+        uint16_t frame_width, uint16_t frame_height, 
+        uint16_t frame_sep, float frame_speed
     );
 
     SDL2pp::Rect image_frame(const uint16_t frame) const;

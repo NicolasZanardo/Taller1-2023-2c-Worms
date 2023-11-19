@@ -17,12 +17,13 @@ GameSpriteInfo::GameSpriteInfo(
         std::string texture_file_path, 
         uint16_t frame_width, 
         uint16_t frame_height, 
-        uint16_t frame_sep
+        uint16_t frame_sep,
+        float frame_speed
     ) : 
     frame_width(frame_width),
     frame_height(frame_height),
     frame_sep(frame_sep),
-    frame_speed(1),
+    frame_speed(frame_speed),
     texture(renderer,SDL2pp::Surface(texture_file_path.c_str())),
     frame_count(texture.GetHeight() / (frame_height + frame_sep))
     { }

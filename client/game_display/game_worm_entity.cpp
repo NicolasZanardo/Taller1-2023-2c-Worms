@@ -22,21 +22,22 @@ void WormEntity::update(WormDto& new_values) {
     if (attributes.entity_id != new_values.entity_id)
         return;
     
-    attributes.x = new_values.x;
-    attributes.y = new_values.y;
-    attributes.life = new_values.life;
-    attributes.is_facing_right = new_values.is_facing_right;
-
     MovementStateDto oldstate = attributes.state;
     if (attributes.y > new_values.y) {
-        attributes.state = MovementStateDto::going_upwards;
-    } else if (attributes.y < new_values.y) {
         attributes.state = MovementStateDto::falling;
+    } else if (attributes.y < new_values.y) {
+        attributes.state = MovementStateDto::going_upwards;
     } else if (abs(attributes.x - new_values.x) < 0.001f) {
         attributes.state = MovementStateDto::moving;
     } else {
         attributes.state = MovementStateDto::idle;
     }
+
+    attributes.x = new_values.x;
+    attributes.y = new_values.y;
+    attributes.life = new_values.life;
+    attributes.is_facing_right = new_values.is_facing_right;
+
 
     if (attributes.state != oldstate) {
         active_animation->hidden(true);

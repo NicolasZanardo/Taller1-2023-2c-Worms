@@ -18,7 +18,8 @@ class GameSpriteManager {
     void add_texture(const std::string keyname, const std::string file_path);
     void add_texture(
         const std::string keyname, const std::string file_path, 
-        uint16_t image_width, uint16_t image_height, uint16_t image_sep
+        uint16_t image_width, uint16_t image_height, 
+        uint16_t image_sep, float image_speed
     );
     
     GameSpriteInfo* get(const std::string idx);

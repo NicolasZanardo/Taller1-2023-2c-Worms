@@ -7,7 +7,7 @@ GameSprite::GameSprite(GameSpriteInfo& info) :
     angle(0.0f),
     is_active(true),
     flip(SDL_FLIP_NONE),
-    anim_speed(25),
+    anim_speed(0.000001f),
     anim_progress(0)
     { }
 
