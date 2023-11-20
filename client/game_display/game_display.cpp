@@ -34,7 +34,7 @@ void GameDisplay::update(float delta_time) {
     renderer.Present();
 }
 
-Displayable* GameDisplay::new_sprite(const std::string spritekey, float width, float height, float angle) {
+GameSprite* GameDisplay::new_sprite(const std::string spritekey, float width, float height, float angle) {
     GameSprite* sprite = new GameSprite(camera, *texture_manager.get(spritekey));
     sprite->set_size(width, height);
     sprite->set_angle(angle);

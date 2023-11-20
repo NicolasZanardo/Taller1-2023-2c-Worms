@@ -9,8 +9,8 @@
 
 class WormEntity : public CameraTarget{
     WormDto attributes; 
-    std::unordered_map<MovementStateDto, Displayable*> animations;
-    Displayable* active_animation;
+    std::unordered_map<MovementStateDto, GameSprite*> animations;
+    GameSprite* active_animation;
     
     public:
     WormEntity(GameDisplay& display, WormDto& values);

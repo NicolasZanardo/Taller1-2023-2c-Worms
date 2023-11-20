@@ -24,7 +24,7 @@ class GameDisplay {
     ~GameDisplay();
 
     void update(float delta_time);
-    Displayable* new_sprite(const std::string spritekey, float width, float height, float angle = 0);
+    GameSprite* new_sprite(const std::string spritekey, float width, float height, float angle = 0);
 };
 
 #endif
