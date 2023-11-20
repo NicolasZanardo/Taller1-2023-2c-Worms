@@ -18,6 +18,10 @@ public:
     b2Body *spawn_worm(WormScenarioData wormScenarioData, std::shared_ptr<Worm> wormModel);
 
 private:
+    // Define category bits for fixtures
+    const uint16_t WORM_CATEGORY = 0x0001;  // Use any non-colliding bits
+    const uint16_t GROUND_CATEGORY = 0x0002;  // Use any other non-colliding bits
+
     const float timeStep;
     const int32 velocityIterations = 8;
     const int32 positionIterations = 3;
