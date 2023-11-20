@@ -8,7 +8,7 @@
 #include "client_game_state.h"
 
 Client::Client(const char* host_name, const char* service_name)
-    : channel(host_name, service_name), display(event_queue, 25)
+    : channel(host_name, service_name), display(event_queue, CLIENT_FPS)
     , receiver(state_queue, channel)
     , sender(event_queue, channel)
      {}

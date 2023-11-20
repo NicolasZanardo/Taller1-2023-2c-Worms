@@ -48,4 +48,8 @@ void ClientGameState::update(std::shared_ptr<ClientGameStateDTO> game_state_dto)
         auto& it = worms[worm_dto.entity_id];
         it->update(worm_dto);
     }
+
+    if (game_state_dto->active_entity_id > 0) {
+        display.camera.set_target(worms[game_state_dto->active_entity_id].get());
+    }
 }
