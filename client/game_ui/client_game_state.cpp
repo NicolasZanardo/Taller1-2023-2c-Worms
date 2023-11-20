@@ -7,7 +7,11 @@ ClientGameState::ClientGameState(GameDisplay& display)
     , worms() {}
 
 void ClientGameState::load(std::shared_ptr<ClientGameStateDTO> game_state_dto) {
-    std::cout << "Loading scenario\n";
+    std::cout << "Loading scenario size("
+        << game_state_dto->width << ","
+        << game_state_dto->height << ")"
+        << "   Beams: " << game_state_dto->beams.size()
+        << "   Worms: " << game_state_dto->worms.size() << "\n";
 
     width = game_state_dto->width;
     height = game_state_dto->height;

@@ -10,7 +10,7 @@
 class GameSprite : public Displayable {
     GameCamera& cam;
     GameSpriteInfo& info;
-    SDL2pp::Rect body;
+    float x,y,w,h;
     SDL2pp::Rect transform;
     float angle;
     bool is_active;

@@ -66,7 +66,7 @@ void PhysicsSystem::spawn_beam(BeamScenarioData beam) {
         xcenter = LARGE_BEAM_WIDTH / 2;
         ycenter = LARGE_BEAM_HEIGHT / 2;
     }
-    groundBox.SetAsBox(xcenter,xcenter ,b2Vec2(xcenter, ycenter), beam.angle * DEG_TO_RAD);
+    groundBox.SetAsBox(xcenter,ycenter,b2Vec2(xcenter, ycenter), beam.angle * DEG_TO_RAD);
 
     b2FixtureDef fixtureDef;
     fixtureDef.shape = &groundBox;

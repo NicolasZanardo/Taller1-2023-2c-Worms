@@ -11,12 +11,13 @@ public:
         scenario.room_width = 36;
         // Populate large beams next to each other at y=0
         float i = 0;
-        scenario.beams.emplace_back(i++ * 6.0f + 3.0f, 1.0f, 10.0f, BeamScenarioData::Type::LONG);
-        scenario.beams.emplace_back(i++ * 6.0f + 3.0f, 1.0f, 30.0f, BeamScenarioData::Type::LONG);
-        scenario.beams.emplace_back(i++ * 6.0f + 3.0f, 1.0f, 45.0f, BeamScenarioData::Type::LONG);
-        scenario.beams.emplace_back(i++ * 6.0f + 3.0f, 1.0f, -30.0f, BeamScenarioData::Type::LONG);
-        scenario.beams.emplace_back(i++ * 6.0f + 3.0f, 1.0f, -45.0f, BeamScenarioData::Type::LONG);
-        scenario.beams.emplace_back(i++ * 6.0f + 3.0f, 1.0f, 90.0f, BeamScenarioData::Type::LONG);
+        scenario.beams.emplace_back(i++ * 6.0f + 3.0f, 3.0f, 00.0f, BeamScenarioData::Type::LONG);
+        scenario.beams.emplace_back(i++ * 6.0f + 3.0f, 3.0f, 10.0f, BeamScenarioData::Type::LONG);
+        scenario.beams.emplace_back(i++ * 6.0f + 3.0f, 3.0f, 30.0f, BeamScenarioData::Type::LONG);
+        scenario.beams.emplace_back(i++ * 6.0f + 3.0f, 3.0f, 45.0f, BeamScenarioData::Type::LONG);
+        scenario.beams.emplace_back(i++ * 6.0f + 3.0f, 3.0f, -30.0f, BeamScenarioData::Type::LONG);
+        scenario.beams.emplace_back(i++ * 6.0f + 3.0f, 3.0f, -45.0f, BeamScenarioData::Type::LONG);
+        scenario.beams.emplace_back(i++ * 6.0f + 3.0f, 3.0f, 90.0f, BeamScenarioData::Type::LONG);
 
 
         // Populate large beams at y=1 in the middle of the scenario
@@ -30,7 +31,7 @@ public:
         }*/
 
         // Populate worms on each side of the map
-        scenario.worms.emplace_back(2.0f, 8.0f);
+        scenario.worms.emplace_back(4.0f, 8.0f);
         // scenario.worms.emplace_back(6.0f, 8.0f);
         // scenario.worms.emplace_back(10.0f, 8.0f);
         // scenario.worms.emplace_back(14.0f, 8.0f);

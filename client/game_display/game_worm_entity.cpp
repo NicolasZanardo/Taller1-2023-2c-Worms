@@ -1,4 +1,5 @@
 #include "game_worm_entity.h"
+#include "constants.h"
 
 WormEntity::WormEntity(GameDisplay& display, WormDto& values) :
     attributes(
@@ -6,10 +7,10 @@ WormEntity::WormEntity(GameDisplay& display, WormDto& values) :
         values.x, values.y, values.angle, 
         values.is_facing_right, values.life, values.state
     ), animations({
-{ MovementStateDto::idle          , display.new_sprite("wwalk"  , 1.2f, 1.2f, 0) },
-{ MovementStateDto::falling       , display.new_sprite("wfall"  , 1.2f, 1.2f, 0) },
-{ MovementStateDto::going_upwards , display.new_sprite("wjumpu" , 1.2f, 1.2f, 0) },
-{ MovementStateDto::moving        , display.new_sprite("widle"  , 1.2f, 1.2f, 0) }
+{ MovementStateDto::idle          , display.new_sprite("wwalk"  , WORM_SIZE, WORM_SIZE, 0) },
+{ MovementStateDto::falling       , display.new_sprite("wfall"  , WORM_SIZE, WORM_SIZE, 0) },
+{ MovementStateDto::going_upwards , display.new_sprite("wjumpu" , WORM_SIZE, WORM_SIZE, 0) },
+{ MovementStateDto::moving        , display.new_sprite("widle"  , WORM_SIZE, WORM_SIZE, 0) }
     }), active_animation(animations[MovementStateDto::idle])
     {
         animations[MovementStateDto::idle         ]->hidden(false);
@@ -21,13 +22,14 @@ WormEntity::WormEntity(GameDisplay& display, WormDto& values) :
 void WormEntity::update(WormDto& new_values) {
     if (attributes.entity_id != new_values.entity_id)
         return;
-    
+
+    const float tolerance = 0.05f;
     MovementStateDto oldstate = attributes.state;
-    if (attributes.y > new_values.y) {
+    if ((attributes.y - new_values.y) > tolerance) {
         attributes.state = MovementStateDto::falling;
-    } else if (attributes.y < new_values.y) {
+    } else if ((attributes.y - new_values.y) < -tolerance) {
         attributes.state = MovementStateDto::going_upwards;
-    } else if (abs(attributes.x - new_values.x) < 0.001f) {
+    } else if (abs(attributes.x - new_values.x) < tolerance) {
         attributes.state = MovementStateDto::moving;
     } else {
         attributes.state = MovementStateDto::idle;

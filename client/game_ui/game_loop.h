@@ -21,6 +21,7 @@ private:
     Queue<std::shared_ptr<ClientGameStateDTO>> &state_queue;
     bool game_state_was_initialized;
 
+    Displayable* spr; float x;
     void update(ClientGameState &game_state);
 };
 

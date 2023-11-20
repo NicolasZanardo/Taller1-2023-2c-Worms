@@ -5,7 +5,7 @@ GameSprite::~GameSprite() { }
 GameSprite::GameSprite(GameCamera& cam, GameSpriteInfo& info) :
     cam(cam),
     info(info),
-    body(-1,-1,-1,-1),
+    x(0),y(0),w(0),h(0),
     transform(0,0,0,0),
     angle(0.0f),
     is_active(true),
@@ -15,13 +15,13 @@ GameSprite::GameSprite(GameCamera& cam, GameSpriteInfo& info) :
     { }
 
 void GameSprite::set_pos(float x, float y) {
-    body.SetX(x);
-    body.SetY(y);
+    this->x = x;
+    this->y = y;
 }
 
 void GameSprite::set_size(float width, float heigth) {
-    body.SetW(width);
-    body.SetH(heigth);
+    this->w = width;
+    this->h = heigth;
 }
 
 void GameSprite::set_angle(float angle) {
@@ -38,18 +38,23 @@ void GameSprite::hidden(bool is_hidden) {
 
 void GameSprite::render(SDL2pp::Renderer& renderer, float delta_time) {
     if (!is_active) return;
+    
+    cam.body_to_transform(x,y,w,h,transform);
+    SDL2pp::Point center(
+        (transform.GetW()) / 2,
+        (transform.GetH()) / 2
+    );
 
     if (info.frame_count <= 0) {
-        renderer.Copy(info.texture,SDL2pp::NullOpt,transform,-angle,SDL2pp::NullOpt,flip);
+        renderer.Copy(info.texture,SDL2pp::NullOpt,transform,-angle,center,flip);
         return;
     }
 
-    cam.body_to_transform(body, transform);
 
     anim_progress += delta_time * anim_speed * info.frame_speed;
     while (anim_progress > info.frame_count) {
         anim_progress -= info.frame_count;
     }
 
-    renderer.Copy(info.texture, info.image_frame(anim_progress), transform, -angle, transform.GetCentroid(), flip);
+    renderer.Copy(info.texture, info.image_frame(anim_progress), transform, -angle, SDL2pp::NullOpt, flip);
 }

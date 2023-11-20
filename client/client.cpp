@@ -15,9 +15,7 @@ Client::Client(const char* host_name, const char* service_name)
 
 void Client::execute() {
     ClientGameState game_state(display);
-
-    auto spr = display.new_sprite("wwalk",1.2f,1.2f,0);
-    spr->set_pos(1,1);
+    display.camera.set_pos(0,0);
 
     receiver.start();
     sender.start();

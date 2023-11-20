@@ -10,7 +10,7 @@ GameDisplay::GameDisplay(Queue<GameEvent>& event_queue, int fps) :
         SDL_WINDOW_RESIZABLE),
     renderer(window, -1, SDL_RENDERER_ACCELERATED),
     texture_manager(renderer),
-    camera(UiUtils::WINDOW_WIDTH, UiUtils::WINDOW_HEIGHT, 30),
+    camera(UiUtils::WINDOW_WIDTH, UiUtils::WINDOW_HEIGHT, 30.0f),
     event_handler(window, event_queue)
     {
         images.emplace_back(&camera);
