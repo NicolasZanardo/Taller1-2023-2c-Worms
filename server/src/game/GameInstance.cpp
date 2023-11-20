@@ -33,18 +33,13 @@ std::string get_name(MovementStateDto state) {
 
 void GameInstance::update(const int it) {
     auto worms = instancesManager.getWorms();
+    int current_worm_id = turnManager.get_current_worm_id();
+    std::shared_ptr<Worm> active_worm = nullptr;
+    if (current_worm_id != -1) {
+        active_worm = instancesManager.getWorm(current_worm_id);
+    }
     physicsSystem.update(worms);
-    turnManager.update(it, worms);
-    //int current_worm_id = turnManager.get_current_worm_id();
-    //if (current_worm_id != -1) {
-    //    // std::cout << "Current worm id is: " << current_worm_id << std::endl;
-    //    //auto worm = instancesManager.getWorm(current_worm_id);
-    //    //auto wormDto = worm->toWormDto(turnManager.get_current_client_id());
-    //    //std::cout << "Current worm state is : " << get_name(wormDto.state) << std::endl;
-    //    // std::cout << "Current worm position for client id 1 is: x: " << wormDto.x << "y: " << wormDto.y << std::endl;
-    //} else {
-    //    // std::cout << "No ones turn, inside turns time " << std::endl;
-    //};
+    turnManager.update(it, worms, active_worm);
 }
 
 bool GameInstance::isClientsTurn(size_t id) {
