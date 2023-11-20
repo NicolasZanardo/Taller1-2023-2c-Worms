@@ -3,24 +3,16 @@
 
 GameLoop::GameLoop(GameDisplay& display, Queue<std::shared_ptr<ClientGameStateDTO>>& state_queue)
     : display(display), state_queue(state_queue), game_state_was_initialized(false) 
-    {
-        x = 1;
-        spr = display.new_sprite("wwalk",1.2f,1.2f,0);
-        spr->set_pos(1,1);
-    }
+    { }
 
 void GameLoop::execute(EventHandler& event_handler, ClientGameState& game_state) {
     bool running = true;
-    GameClock clock(25);
+    GameClock clock(CLIENT_FPS);
 
     while (running) {     
         running = event_handler.handleEvents();
         update(game_state);
-
-        x = x+0.01f;
-        spr->set_pos(x,1);
         display.update(clock.delta());
-
         clock.sync();
     }
 }
