@@ -7,6 +7,7 @@
 #include "../scenario/GameScenarioData.h"
 #include "../model/instances/Worm.h"
 #include "../../../../common_base/constants.h"
+#include "PhysicsCollisionListener.h"
 
 class PhysicsSystem {
 public:
@@ -21,6 +22,7 @@ private:
     const int32 velocityIterations = 8;
     const int32 positionIterations = 3;
     b2World world;
+    PhysicsCollisionListener contactListener;
 
     void populate_beams(const GameScenarioData &map);
 
