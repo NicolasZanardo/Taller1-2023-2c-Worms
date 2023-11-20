@@ -8,7 +8,7 @@ class GameClock {
 	std::chrono::microseconds frame_rate;
     double iteration;
     double prev_iteration;
-    std::chrono::time_point<std::chrono::_V2::steady_clock, std::chrono::_V2::steady_clock::duration> start;
+    std::chrono::time_point<std::chrono::steady_clock, std::chrono::steady_clock::duration> start;
     
 
     public:
