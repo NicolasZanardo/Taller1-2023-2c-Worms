@@ -29,7 +29,6 @@ int WormMovement::getFacingDirectionSign() const {
 }
 
 void WormMovement::start_moving_right() {
-    std::cout << "Calling start_moving_right\n";
     if (is_on_ground) {
         is_facing_right = true;
         is_moving = true;
@@ -78,16 +77,8 @@ void WormMovement::jump_backwards() {
 }
 
 void WormMovement::on_update_physics() {
-    if (is_on_ground) {
-        std::cout << "On ground\n";
-    } else {
-        std::cout << "On air\n";
-    }
-
-    // y
     float y_velocity = body->GetLinearVelocity().y;
-
-    // x
+    
     if (is_moving && is_on_ground) {
         body->SetLinearVelocity((b2Vec2(getFacingDirectionSign() * speed, body->GetLinearVelocity().y)));
     }

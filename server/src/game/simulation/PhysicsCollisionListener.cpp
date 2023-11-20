@@ -8,18 +8,6 @@ void PhysicsCollisionListener::BeginContact(b2Contact *contact) {
     b2Fixture* fixtureB = contact->GetFixtureB();
 
     on_worm_began_contact_with_ground(fixtureA, fixtureB);
-
-    // Instance* instanceA = reinterpret_cast<Instance*>(fixtureA->GetUserData().pointer);
-    // Instance* instanceB = reinterpret_cast<Instance*>(fixtureB->GetUserData().pointer);
-
-    // Collision between worms doesnt trigger anything
-
-    /* TODO Components?
-    if (instanceA && instanceB && instanceA->HasComponent<DamageComponent>() && instanceB->HasComponent<HealthComponent>()) {
-        DamageComponent& damage = entityA->GetComponent<DamageComponent>();
-        HealthComponent& health = entityB->GetComponent<HealthComponent>();
-        health.TakeDamage(damage.GetDamage());
-    }*/
 }
 
 void PhysicsCollisionListener::EndContact(b2Contact *contact) {
