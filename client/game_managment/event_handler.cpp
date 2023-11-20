@@ -1,6 +1,7 @@
 #include "event_handler.h"
 
 #include "client_game_state.h"
+#include <iostream>
 
 EventHandler::EventHandler(SDL2pp::Window& window_ref, Queue<GameEvent>& event_queue)
     : window(&window_ref)
@@ -43,12 +44,6 @@ bool EventHandler::handleEvents() {
                 }
                 break;
             case SDL_MOUSEMOTION:
-                // std::cout << "Oh! Mouse" << std::endl;
-
-                // SDL_GetMouseState(&x, &y);
-                // std::cout << "x: " << cursor.getPosX() << " - y: " << cursor.getPosY() << '\n';
-                // std::cout << "xn: " << cursor.getNormPosX() << " - yn: " << cursor.getNormPosY() << '\n';
-                // std::cout << "W: " << this->window->GetWidth() << " - H: " << this->window->GetHeight() << '\n';
                 break;
             case SDL_QUIT:
                 std::cout << "Quit :(" << std::endl;

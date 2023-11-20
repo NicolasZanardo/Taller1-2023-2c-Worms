@@ -6,28 +6,39 @@ add_executable (client_app
     client.cpp client.h
     # dumb_simple_client/dumb_client.cpp dumb_simple_client/dumb_client.h
 
+    game_display/game_displayable.h
+    game_display/game_display.h game_display/game_display.cpp
+    game_display/game_camera.h game_display/game_camera.cpp
+    game_display/game_sprite_info.h game_display/game_sprite_info.cpp
+    game_display/game_sprite_manager.h game_display/game_sprite_manager.cpp
+    game_display/game_sprite.h game_display/game_sprite.cpp
+    game_display/game_clock.h game_display/game_clock.cpp
+    game_display/game_worm_entity.h game_display/game_worm_entity.cpp
+    
+
     game_managment/client_receiver.cpp game_managment/client_receiver.h
     game_managment/client_sender.cpp game_managment/client_sender.h
     game_managment/cursor.cpp game_managment/cursor.h
     game_managment/event_handler.cpp game_managment/event_handler.h
-    game_ui/animation.cpp game_ui/animation.h
+    #game_ui/animation.cpp game_ui/animation.h
     game_ui/client_game_state.cpp game_ui/client_game_state.h
-    game_ui/drawable_integer.cpp game_ui/drawable_integer.h
-    game_ui/frame_selector.cpp game_ui/frame_selector.h
+    #game_ui/drawable_integer.cpp game_ui/drawable_integer.h
+    #game_ui/frame_selector.cpp game_ui/frame_selector.h
     game_ui/game_loop.cpp game_ui/game_loop.h
-    game_ui/icon.cpp game_ui/icon.h
-    game_ui/non_animation.cpp game_ui/non_animation.h
-    game_ui/sprite.cpp game_ui/sprite.h
-    game_ui/sprites_manager.cpp game_ui/sprites_manager.h
-    game_ui/worm_state.cpp game_ui/worm_state.h
-    game_ui/beam_state.cpp game_ui/beam_state.h
-        game_ui/ui_utils.h game_ui/ui_utils.cpp
+    #game_ui/icon.cpp game_ui/icon.h
+    #game_ui/non_animation.cpp game_ui/non_animation.h
+    #game_ui/sprite.cpp game_ui/sprite.h
+    #game_ui/sprites_manager.cpp game_ui/sprites_manager.h
+    #game_ui/worm_state.cpp game_ui/worm_state.h
+    #game_ui/beam_state.cpp game_ui/beam_state.h
+    game_ui/ui_utils.h game_ui/ui_utils.cpp
 )
 
 target_include_directories(client_app PUBLIC
     "${CMAKE_CURRENT_SOURCE_DIR}/"
     "${CMAKE_CURRENT_SOURCE_DIR}/game_managment"
     "${CMAKE_CURRENT_SOURCE_DIR}/game_ui"
+    "${CMAKE_CURRENT_SOURCE_DIR}/game_display"
 )
 
 target_link_libraries(client_app common ${SDL2PP_LIBRARIES})

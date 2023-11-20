@@ -16,12 +16,10 @@ size_t WormIdIterator::advance_to_next_worm_id() {
     if (m_worms_ids.empty()) {
         throw out_of_range("No remaining worms in the list");
     }
-    cout << "Current worm id was: " << *current_worm_iterator << endl;
     ++current_worm_iterator;
     if (current_worm_iterator == m_worms_ids.end()) {
         current_worm_iterator = m_worms_ids.begin();
     }
-    cout << "Current worm id is: " << *current_worm_iterator << endl;
     return *current_worm_iterator;
 }
 

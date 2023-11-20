@@ -1,5 +1,6 @@
 #include "PhysicsSystem.h"
 #include <iostream>
+const float DEG_TO_RAD = M_PI/180.0f;
 
 PhysicsSystem::PhysicsSystem(
         int rate,
@@ -83,13 +84,16 @@ void PhysicsSystem::spawn_beam(BeamScenarioData beam) {
     groundBodyDef.position.Set(beam.x, beam.y);
     b2Body *groundBody = world.CreateBody(&groundBodyDef);
 
+    float xcenter,ycenter;
     b2PolygonShape groundBox;
     if (beam.type == BeamScenarioData::Type::SHORT) {
-        groundBox.SetAsBox(SHORT_BEAM_WIDTH / 2, SHORT_BEAM_HEIGHT / 2);
+        xcenter = SHORT_BEAM_WIDTH / 2;
+        ycenter = SHORT_BEAM_HEIGHT / 2;
     } else {
-        std::cout << "Large beam\n";
-        groundBox.SetAsBox(LARGE_BEAM_WIDTH / 2, LARGE_BEAM_HEIGHT / 2);
+        xcenter = LARGE_BEAM_WIDTH / 2;
+        ycenter = LARGE_BEAM_HEIGHT / 2;
     }
+    groundBox.SetAsBox(xcenter,ycenter,b2Vec2(xcenter, ycenter), beam.angle * DEG_TO_RAD);
 
     b2FixtureDef fixtureDef;
     fixtureDef.shape = &groundBox;

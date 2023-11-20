@@ -1,19 +1,16 @@
 #ifndef __CLIENT_H__
 #define __CLIENT_H__
 
+#include <SDL2pp/SDL2pp.hh>
 #include <unistd.h>
-
 #include <memory>
 
 #include "queue.h"
-
-#include <SDL2pp/SDL2pp.hh>
-
 #include "networking.h"
 #include "client_receiver.h"
 #include "client_sender.h"
-#include "game_loop.h"
 #include "client_game_state_dto.h"
+#include "game_display.h"
 #include "game_ui/ui_utils.h"
 
 class Client {
@@ -32,12 +29,11 @@ public:
 
 private:
     Queue<GameEvent> echo_queue;  // temp.
-
     Queue<GameEvent> event_queue;
     Queue<std::shared_ptr<ClientGameStateDTO>> state_queue;
 
     NetChannel channel;
-
+    GameDisplay display;
     ClientReceiver receiver;
     ClientSender sender;
 };

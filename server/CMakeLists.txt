@@ -19,46 +19,45 @@ add_library( server
     src/main/server.h
     src/main/server.cpp
 
-     src/game/InGameClients.h
-        src/game/InGameClients.cpp
+    src/game/InGameClients.h
+    src/game/InGameClients.cpp
 
-        src/game/GameEngineInstance.h
-        src/game/GameEngineInstance.cpp
-        src/game/GameInstance.h
-        src/game/GameInstance.cpp
+    src/game/GameEngineInstance.h
+    src/game/GameEngineInstance.cpp
+    src/game/GameInstance.h
+    src/game/GameInstance.cpp
+
+    src/game/simulation/PhysicsSystem.h
+    src/game/simulation/PhysicsSystem.cpp
+
+    src/game/simulation/PhysicsCollisionListener.h
+    src/game/simulation/PhysicsCollisionListener.cpp
+    src/game/simulation/PhysicsSystem.h
+    src/game/simulation/PhysicsSystem.cpp
+
+    src/game/model/WormMovement.h
+    src/game/model/WormMovement.cpp
+    src/game/model/instances/Instance.h
+    src/game/model/instances/Worm.h
+    src/game/model/instances/Worm.cpp
+    src/game/model/instances/InstancesManager.h
+    src/game/model/instances/InstancesManager.cpp
 
 
-        src/game/simulation/PhysicsSystem.h
-        src/game/simulation/PhysicsSystem.cpp
+    src/game/GameNetMessageBehaviour.h
+    src/game/GameNetMessageBehaviour.cpp
 
-        src/game/simulation/PhysicsCollisionListener.h
-        src/game/simulation/PhysicsCollisionListener.cpp
-        src/game/simulation/PhysicsSystem.h
-        src/game/simulation/PhysicsSystem.cpp
+    src/game/scenario/BeamScenarioData.h
+    src/game/scenario/WormScenarioData.h
+    src/game/scenario/GameScenarioData.h
+    src/game/scenario/HardcodedScenarioData.h
+    src/game/scenario/ScenarioReader.h
+    src/game/scenario/ScenarioReader.cpp
 
-        src/game/model/WormMovement.h
-        src/game/model/WormMovement.cpp
-        src/game/model/instances/Instance.h
-        src/game/model/instances/Worm.h
-        src/game/model/instances/Worm.cpp
-        src/game/model/instances/InstancesManager.h
-        src/game/model/instances/InstancesManager.cpp
-
-
-        src/game/GameNetMessageBehaviour.h
-        src/game/GameNetMessageBehaviour.cpp
-
-        src/game/scenario/BeamScenarioData.h
-        src/game/scenario/WormScenarioData.h
-        src/game/scenario/GameScenarioData.h
-        src/game/scenario/HardcodedScenarioData.h
-        src/game/scenario/ScenarioReader.h
-        src/game/scenario/ScenarioReader.cpp
-
-        src/game/turns/TurnManager.h
-        src/game/turns/TurnManager.cpp
-        src/game/turns/WormIdIterator.h
-        src/game/turns/WormIdIterator.cpp
+    src/game/turns/TurnManager.h
+    src/game/turns/TurnManager.cpp
+    src/game/turns/WormIdIterator.h
+    src/game/turns/WormIdIterator.cpp
 )
 
 add_executable(

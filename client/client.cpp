@@ -4,51 +4,31 @@
 #include <chrono>
 #include <thread>
 
-#include "client_game_state.h"
-#include "event_handler.h"
 #include "game_loop.h"
-#include "sprite.h"
-#include "sprites_manager.h"
+#include "client_game_state.h"
 
 Client::Client(const char* host_name, const char* service_name)
-    : channel(host_name, service_name)
+    : channel(host_name, service_name), display(event_queue, CLIENT_FPS)
     , receiver(state_queue, channel)
-    , sender(event_queue, channel) {}
+    , sender(event_queue, channel)
+     {}
 
 void Client::execute() {
-    SDL2pp::SDL sdl(SDL_INIT_VIDEO);
+    ClientGameState game_state(display);
+    display.camera.set_pos(0,0);
+    receiver.switch_game(game_state);
+    sender.switch_game(game_state);
 
-    SDL2pp::Window window("Worms",
-        SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
-        UiUtils::WINDOW_WIDTH, UiUtils::WINDOW_HEIGHT,
-        SDL_WINDOW_RESIZABLE);
+    receiver.start();
+    sender.start();
 
-    SDL2pp::Renderer renderer(window, -1, SDL_RENDERER_ACCELERATED);
+    GameLoop game_loop(display, state_queue);
+    game_loop.execute(display.event_handler, game_state);
 
-    EventHandler event_handler(window, event_queue);
+    event_queue.close();
+    echo_queue.close();
+    state_queue.close();
 
-    SpritesManager sprites_manager(renderer);
-    // worm
-    sprites_manager.addSprite("wwalk", "resources/sprites/wwalk.png", 60, 60, 0, true, 0);
-    sprites_manager.addSprite("wfall", "resources/sprites/wfall.png", 60, 60, 0, true, 0);
-    sprites_manager.addSprite("wjumpu", "resources/sprites/wjumpu.png", 60, 60, 0, true, 0);
-    // beam
-    sprites_manager.addSprite("beam_large", "resources/sprites/beam_large.png", 140, 20, 0);
-    // TODO Move this to the SpriteManager constructor
-
-
-    ClientGameState game_state(sprites_manager);
-
-    this->receiver.start();
-    this->sender.start();
-
-    GameLoop game_loop(renderer, this->state_queue);
-    game_loop.execute(event_handler, game_state);
-
-    this->event_queue.close();
-    this->echo_queue.close();
-    this->state_queue.close();
-
-    this->receiver.join();
-    // this->sender.join();
+    receiver.join();
+    sender.join();
 }
