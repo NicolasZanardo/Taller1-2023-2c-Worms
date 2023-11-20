@@ -78,12 +78,11 @@ void WormMovement::jump_backwards() {
 
 void WormMovement::on_update_physics() {
     float y_velocity = body->GetLinearVelocity().y;
-    
+
     if (is_moving && is_on_ground) {
         body->SetLinearVelocity((b2Vec2(getFacingDirectionSign() * speed, body->GetLinearVelocity().y)));
     }
 
-    // Update state according to the actual physics
     if (y_velocity > epsilon_y) {
         state = State::going_upwards;
     } else if (y_velocity < -epsilon_y) {
