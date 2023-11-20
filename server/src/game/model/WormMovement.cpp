@@ -4,9 +4,9 @@
 WormMovement::WormMovement(b2Body *body) :
         body(body),
         state(State::idle),
-        is_on_ground(false),
         is_moving(false),
-        is_facing_right(true) {};
+        is_facing_right(true),
+        is_on_ground(false) {};
 
 float WormMovement::x() const {
     return body->GetPosition().x;
@@ -29,6 +29,7 @@ int WormMovement::getFacingDirectionSign() const {
 }
 
 void WormMovement::start_moving_right() {
+    std::cout << "Calling start_moving_right\n";
     if (is_on_ground) {
         is_facing_right = true;
         is_moving = true;
@@ -42,7 +43,7 @@ void WormMovement::start_moving_left() {
     }
 }
 
-void WormMovement::stop_moving() {
+void WormMovement::stop_moving() { //left right
     if (is_on_ground) {
         is_moving = false;
         b2Vec2 velocity = body->GetLinearVelocity();
@@ -60,7 +61,6 @@ void WormMovement::jump_forward() {
                         getFacingDirectionSign() * forwardJumpReach * body->GetMass(),
                         forwardJumpHeight* body->GetMass()
                         ), true);
-        is_on_ground = false;
     }
 }
 
@@ -74,34 +74,36 @@ void WormMovement::jump_backwards() {
                         backwardsJumpHeight * body->GetMass()
                         ),
                 true);
-        is_on_ground = false;
     }
 }
 
 void WormMovement::on_update_physics() {
-    // y
-    float y_velocity = body->GetLinearVelocity().y;
-
-    if (y_velocity > epsilon_y) {
-        state = State::going_upwards;
-    } else if (y_velocity < -epsilon_y) {
-        state = State::falling;
+    if (is_on_ground) {
+        std::cout << "On ground\n";
     } else {
-        // TODO HAVING Y VELOCITY BETWEEN EPSILON Y DOESNT MEAN ON GROUND, CHECK WITH COLLISION
-        is_on_ground = true;
-        if (body->GetLinearVelocity().x == 0.0f) {
-            state = State::idle;
-        } else {
-            state = State::moving;
-        }
+        std::cout << "On air\n";
     }
 
+    // y
+    float y_velocity = body->GetLinearVelocity().y;
 
     // x
     if (is_moving && is_on_ground) {
         body->SetLinearVelocity((b2Vec2(getFacingDirectionSign() * speed, body->GetLinearVelocity().y)));
     }
 
+    // Update state according to the actual physics
+    if (y_velocity > epsilon_y) {
+        state = State::going_upwards;
+    } else if (y_velocity < -epsilon_y) {
+        state = State::falling;
+    } else {
+        if (body->GetLinearVelocity().x == 0.0f) {
+            state = State::idle;
+        } else {
+            state = State::moving;
+        }
+    }
 }
 
 bool WormMovement::is_still_moving() {

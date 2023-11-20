@@ -18,8 +18,6 @@ public:
         scenario.beams.emplace_back(i++ * 6.0f + 23.0f, 13.0f, -35.0f, BeamScenarioData::Type::LONG);
         scenario.beams.emplace_back(i++ * 6.0f + 23.0f, 13.0f, 45.0f, BeamScenarioData::Type::LONG);
         scenario.beams.emplace_back(i++ * 6.0f + 23.0f, 13.0f, 90.0f, BeamScenarioData::Type::LONG);
-
-
         // Populate large beams at y=1 in the middle of the scenario
         /*for (int i = 0; i < 2; i++) {
             scenario.beams.emplace_back(
