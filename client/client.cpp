@@ -16,6 +16,8 @@ Client::Client(const char* host_name, const char* service_name)
 void Client::execute() {
     ClientGameState game_state(display);
     display.camera.set_pos(0,0);
+    receiver.switch_game(game_state);
+    sender.switch_game(game_state);
 
     receiver.start();
     sender.start();

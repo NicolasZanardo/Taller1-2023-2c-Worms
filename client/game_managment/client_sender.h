@@ -6,6 +6,7 @@
 #include "networking.h"
 
 #include "client_defs.h"
+class ClientGameState;
 
 class ClientSender : public Thread {
 public:
@@ -18,13 +19,15 @@ public:
     ClientSender(ClientSender&& other) = delete;
     ClientSender operator=(ClientSender&& other) = delete;
 
+    void switch_game(ClientGameState& state);
+
     void run() override;
     std::shared_ptr<NetMessage> game_event_to_net_message(GameEvent event);
 
 private:
-    int client_id = 1; // TODO GET FROM SERVER
     Queue<GameEvent>& event_queue;
     NetChannel* net_channel;
+    ClientGameState* state;
 };
 
 #endif  // __CLIENT_SENDER_H__

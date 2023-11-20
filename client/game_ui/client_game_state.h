@@ -20,8 +20,9 @@ class ClientGameState {
     std::map<int, std::shared_ptr<WormEntity>> worms;
 
     public:
-    ClientGameState() = delete;
+    int my_client_id;
     explicit ClientGameState(GameDisplay& display);
+    ClientGameState() = delete;
     ~ClientGameState() = default;
 
     void load(std::shared_ptr<ClientGameStateDTO> game_state_dto);

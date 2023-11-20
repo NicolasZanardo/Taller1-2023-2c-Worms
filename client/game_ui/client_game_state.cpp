@@ -4,7 +4,9 @@
 
 ClientGameState::ClientGameState(GameDisplay& display)
     : display(display)
-    , worms() {}
+    , worms()
+    , my_client_id(-1) 
+    {}
 
 void ClientGameState::load(std::shared_ptr<ClientGameStateDTO> game_state_dto) {
     std::cout << "Loading scenario size("
@@ -37,7 +39,6 @@ void ClientGameState::load(std::shared_ptr<ClientGameStateDTO> game_state_dto) {
         worms.emplace(worm.entity_id, std::make_shared<WormEntity>(display, worm));
         display.camera.set_target(worms[worm.entity_id].get());
     }
-
 }
 
 void ClientGameState::update(std::shared_ptr<ClientGameStateDTO> game_state_dto) {
