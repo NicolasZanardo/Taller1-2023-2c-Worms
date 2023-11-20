@@ -1,50 +1,75 @@
 #include "PhysicsSystem.h"
+#include <iostream>
 
 PhysicsSystem::PhysicsSystem(
         int rate,
         float xGravity,
         float yGravity,
-        const GameScenarioData& scenario
-        ):
+        const GameScenarioData &scenario
+) :
         timeStep(1.0f / rate),
-        world(b2Vec2(xGravity, yGravity)) {
+        world(b2Vec2(xGravity, yGravity)),
+        contactListener() {
     populate_beams(scenario);
+    world.SetContactListener(&contactListener);
 }
 
-void PhysicsSystem::update(const std::unordered_map<size_t, std::shared_ptr<Worm>>& worms) {
+void PhysicsSystem::update(const std::unordered_map<size_t, std::shared_ptr<Worm>> &worms) {
     world.Step(timeStep, velocityIterations, positionIterations);
-    for (const auto& [_, worm] : worms) {
+    for (const auto &[_, worm]: worms) {
         if (worm->movement) {
             worm->movement->on_update_physics();
         }
     }
 }
 
-b2Body* PhysicsSystem::spawn_worm(WormScenarioData worm, std::shared_ptr<Worm> wormModel) {
+b2Body *PhysicsSystem::spawn_worm(WormScenarioData worm, std::shared_ptr<Worm> wormModel) {
+    // Body def
     b2BodyDef bodyDef;
     bodyDef.type = b2_dynamicBody;
     bodyDef.fixedRotation = true;
     bodyDef.position.Set(worm.x, worm.y);
     // bodyDef.linearDamping = 0.0f;
-    b2Body* body = world.CreateBody(&bodyDef);
+    b2Body *body = world.CreateBody(&bodyDef);
 
+    // Shape for hitbox
     b2PolygonShape dynamicBox;
     dynamicBox.SetAsBox(WORM_SIZE / 2, WORM_SIZE / 2);
 
+    // Fixture for hitbox
     b2FixtureDef fixtureDef;
     fixtureDef.shape = &dynamicBox;
 
     fixtureDef.density = 80.0f;
     fixtureDef.restitution = 0;
-    fixtureDef.userData.pointer = reinterpret_cast<uintptr_t>(&wormModel);;
+    fixtureDef.userData.pointer = reinterpret_cast<uintptr_t>(wormModel.get());
     body->CreateFixture(&fixtureDef);
+
+    // Shape for foot sensor
+    b2PolygonShape footSensorBox;
+    float sensorHeight = WORM_SIZE / 4;
+    footSensorBox.SetAsBox(
+            WORM_SIZE / 2,
+            sensorHeight,
+            b2Vec2(0.0f, -(WORM_SIZE / 2) - (sensorHeight / 2)),
+            0
+    );
+
+    // Fixture for foot sensor
+    b2FixtureDef footSensorFixtureDef;
+    footSensorFixtureDef.shape = &footSensorBox;
+    footSensorFixtureDef.isSensor = true; // Set as sensor to detect collisions without generating a response
+    footSensorFixtureDef.userData.pointer = reinterpret_cast<uintptr_t>(wormModel.get()); // same user data
+    // fixtureDef.filter.categoryBits = WORM_CATEGORY; // Set to a category specific to your worm
+    // fixtureDef.filter.maskBits = GROUND_CATEGORY; // Set to the category of the ground
+    body->CreateFixture(&footSensorFixtureDef);
 
     return body;
 }
 
 /* PRIVATE */
 
-void PhysicsSystem::populate_beams(const GameScenarioData& scenario) {
+void PhysicsSystem::populate_beams(const GameScenarioData &scenario) {
     for (auto beam: scenario.beams) {
         spawn_beam(beam);
     }
@@ -54,12 +79,13 @@ void PhysicsSystem::spawn_beam(BeamScenarioData beam) {
     b2BodyDef groundBodyDef;
     groundBodyDef.type = b2_staticBody;
     groundBodyDef.position.Set(beam.x, beam.y);
-    b2Body* groundBody = world.CreateBody(&groundBodyDef);
+    b2Body *groundBody = world.CreateBody(&groundBodyDef);
 
     b2PolygonShape groundBox;
     if (beam.type == BeamScenarioData::Type::SHORT) {
         groundBox.SetAsBox(SHORT_BEAM_WIDTH / 2, SHORT_BEAM_HEIGHT / 2);
     } else {
+        std::cout << "Large beam\n";
         groundBox.SetAsBox(LARGE_BEAM_WIDTH / 2, LARGE_BEAM_HEIGHT / 2);
     }
 

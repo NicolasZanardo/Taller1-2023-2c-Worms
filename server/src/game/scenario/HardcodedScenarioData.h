@@ -12,7 +12,7 @@ public:
         // Populate large beams next to each other at y=0
         for (int i = 0; i < 6; i++) {
             scenario.beams.emplace_back(
-                    i * 6.0f + (3), // x
+                    i * 6 + (3), // x
                     1.0f, // y
                     0.0f, // angle
                     BeamScenarioData::Type::LONG
