@@ -1,15 +1,20 @@
 #include "client_receiver.h"
-
+#include "client_game_state.h"
 #include "client_game_state_dto.h"
+#include <iostream>
 
-// ClientReceiver::ClientReceiver(Queue<GameEvent>& state_queue, Queue<GameEvent>& echo_queue)
-//     : state_queue(state_queue), echo_queue(echo_queue) {}
+ClientReceiver::ClientReceiver(
+        Queue<std::shared_ptr<ClientGameStateDTO>>& state_queue, 
+        NetChannel& net_channel
+    ) : 
+    state_queue(state_queue), 
+    net_channel(&net_channel),
+    state(nullptr)
+    {}
 
-// explicit ClientReceiver(Queue<GameEvent>& state_queue, NetChannel& net_channel)
-//     : state_queue(state_queue), net_channel(&net_channel) {}
-
-ClientReceiver::ClientReceiver(Queue<std::shared_ptr<ClientGameStateDTO>>& state_queue, NetChannel& net_channel)
-    : state_queue(state_queue), net_channel(&net_channel) {}
+void ClientReceiver::switch_game(ClientGameState& state) {
+    this->state = &state;
+}
 
 void ClientReceiver::run() {
     while (Thread::keep_running_) {
@@ -68,7 +73,8 @@ void ClientReceiver::run(NetMessageLeave* msg) {
 }
 
 void ClientReceiver::run(NetMessageInformID* msg) {
-    // cout << "I AM CLIENT "<< msg->client_id << "\n";
+    state->my_client_id = msg->client_id;
+    std::cout << "I AM CLIENT "<< msg->client_id << "\n";
 }
 
 void ClientReceiver::run(NetMessage_test* msg) {

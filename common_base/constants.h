@@ -3,6 +3,7 @@
 
 // DIMENS
 const float WORM_SIZE = 1.2f;
+const float CLIENT_FPS = 25.0f;
 
 const float BEAMS_HEIGHT = 0.8f;
 const float LARGE_BEAM_WIDTH = 6.0f;

@@ -37,12 +37,9 @@ void GameInstance::update(const int it) {
     std::shared_ptr<Worm> active_worm = nullptr;
     if (current_worm_id != -1) {
         active_worm = instancesManager.getWorm(current_worm_id);
-        auto wormDto = active_worm->toWormDto(turnManager.get_current_client_id());
-        std::cout << "Current worm position is: x: " << wormDto.x << "y: " << wormDto.y << std::endl;
     }
     physicsSystem.update(worms);
     turnManager.update(it, worms, active_worm);
-
 }
 
 bool GameInstance::isClientsTurn(size_t id) {
