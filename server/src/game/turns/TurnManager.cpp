@@ -2,9 +2,13 @@
 #include "../model/instances/Instance.h"
 #include <iostream>
 
-TurnManager::TurnManager(int rate): rate(rate), clients_ids_to_worms_ids_iterator() {}
+TurnManager::TurnManager(int rate) : rate(rate), clients_ids_to_worms_ids_iterator() {}
 
-void TurnManager::update(const int it, std::unordered_map<size_t, std::shared_ptr<Worm>>& worms) {
+void TurnManager::update(
+        const int it,
+        std::unordered_map<size_t,std::shared_ptr<Worm>> &worms,
+        const std::shared_ptr<Worm>& active_worm
+) {
     // Check if the game time has run out
     if (game_time_left <= 0) {
         return;
@@ -14,21 +18,22 @@ void TurnManager::update(const int it, std::unordered_map<size_t, std::shared_pt
     game_time_left -= it * rate;
     if (!waiting_to_start_next_turn) {
         turn_time_left -= it * rate;
-         // std::cout << "Time left on turn: " << turn_time_left << "\n";
+        // std::cout << "Time left on turn: " << turn_time_left << "\n";
         // Check if the turn time has run out
         if (turn_time_left <= 0) {
-            end_actual_turn(worms);
+            end_actual_turn(active_worm);
         }
     } else {
         // Only advance to the next turn when worms are still // TODO When explosions finished also
+        // std::cout << "Waiting for worms to stop moving before starting next turn.\n";
         if (worms_are_still(worms)) {
             advance_to_next_turn();
         }
     }
 }
 
-void TurnManager::end_actual_turn(std::unordered_map<size_t, std::shared_ptr<Worm>>& worms) {
-    worms.at(current_worm_id)->movement->stop_movement_from_input();
+void TurnManager::end_actual_turn(const std::shared_ptr<Worm>& active_worm) {
+    active_worm->movement->stop_movement_from_input();
     waiting_to_start_next_turn = true;
 }
 
@@ -40,7 +45,8 @@ void TurnManager::advance_to_next_turn() {
     auto currentClientIterator = clients_ids_to_worms_ids_iterator.find(current_client_id);
 
     // If the current client was not found or it was the last client, reset to the first client
-    if (currentClientIterator == clients_ids_to_worms_ids_iterator.end() || std::next(currentClientIterator) == clients_ids_to_worms_ids_iterator.end()) {
+    if (currentClientIterator == clients_ids_to_worms_ids_iterator.end() ||
+        std::next(currentClientIterator) == clients_ids_to_worms_ids_iterator.end()) {
         currentClientIterator = clients_ids_to_worms_ids_iterator.begin();
     } else {
         // Otherwise, move to the next client
@@ -54,7 +60,7 @@ void TurnManager::advance_to_next_turn() {
     current_worm_id = currentClientIterator->second.advance_to_next_worm_id();
 }
 
-void TurnManager::add_player(size_t client_id, const std::list<size_t>& worm_ids_from_client) {
+void TurnManager::add_player(size_t client_id, const std::list<size_t> &worm_ids_from_client) {
     if (worm_ids_from_client.empty()) {
         throw std::runtime_error("Worm id list could not be empty");
     }
@@ -62,7 +68,7 @@ void TurnManager::add_player(size_t client_id, const std::list<size_t>& worm_ids
     std::cout << "Added client id: " << client_id << " to the turn system with worms: ";
 
     // Iterate through the list of worm IDs and print each one
-    for (const auto& worm_id : worm_ids_from_client) {
+    for (const auto &worm_id: worm_ids_from_client) {
         std::cout << worm_id << " ";
     }
 
@@ -75,7 +81,7 @@ void TurnManager::add_player(size_t client_id, const std::list<size_t>& worm_ids
 }
 
 void TurnManager::remove_worm(size_t worm_id) {
-    for (auto& entry : clients_ids_to_worms_ids_iterator) {
+    for (auto &entry: clients_ids_to_worms_ids_iterator) {
         // Iterate every wormIdIterator until one has that worm_id and its removed from its list
         if (entry.second.remove_worm_id(worm_id)) {
             return;
@@ -126,7 +132,7 @@ float TurnManager::get_remaining_turn_time() const {
     return turn_time_left;
 }
 
-bool TurnManager::worms_are_still(std::unordered_map<size_t, std::shared_ptr<Worm>>& worms) {
+bool TurnManager::worms_are_still(std::unordered_map<size_t, std::shared_ptr<Worm>> &worms) {
     for (const auto &[_, worm]: worms) {
         if (worm->movement && worm->movement->is_still_moving()) {
             return false;

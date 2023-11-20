@@ -41,8 +41,12 @@ public:
     bool is_clients_turn(size_t client_id) const;
 
 
-    void update(const int it, std::unordered_map<size_t, std::shared_ptr<Worm>>& worms);
-    void end_actual_turn(std::unordered_map<size_t, std::shared_ptr<Worm>>& worms);
+    void update(
+            const int it,
+            std::unordered_map<size_t, std::shared_ptr<Worm>>& worms,
+            const std::shared_ptr<Worm>& active_worm
+            );
+    void end_actual_turn(const std::shared_ptr<Worm>& active_worm);
     void advance_to_next_turn();
 
 
