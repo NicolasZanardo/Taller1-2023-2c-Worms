@@ -22,7 +22,6 @@ class WormMovement {
 
     const float epsilon_y = 0.1f;
 
-    bool is_on_ground;
     bool is_moving;
     bool is_facing_right;
 
@@ -31,6 +30,10 @@ class WormMovement {
 public:
 
     WormMovement(b2Body* body);
+
+    bool is_on_ground;
+    int ground_contact_count = 0;
+    b2Body* getBody() { return body; }
 
     float x() const;
     float y() const;
