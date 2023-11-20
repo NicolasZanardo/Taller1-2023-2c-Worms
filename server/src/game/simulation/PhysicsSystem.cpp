@@ -43,6 +43,8 @@ b2Body *PhysicsSystem::spawn_worm(WormScenarioData worm, std::shared_ptr<Worm> w
     fixtureDef.density = 80.0f;
     fixtureDef.restitution = 0;
     fixtureDef.userData.pointer = reinterpret_cast<uintptr_t>(wormModel.get());
+    fixtureDef.filter.categoryBits = WORM_CATEGORY;
+    fixtureDef.filter.maskBits = GROUND_CATEGORY;
     body->CreateFixture(&fixtureDef);
 
     // Shape for foot sensor
@@ -60,8 +62,8 @@ b2Body *PhysicsSystem::spawn_worm(WormScenarioData worm, std::shared_ptr<Worm> w
     footSensorFixtureDef.shape = &footSensorBox;
     footSensorFixtureDef.isSensor = true; // Set as sensor to detect collisions without generating a response
     footSensorFixtureDef.userData.pointer = reinterpret_cast<uintptr_t>(wormModel.get()); // same user data
-    // fixtureDef.filter.categoryBits = WORM_CATEGORY; // Set to a category specific to your worm
-    // fixtureDef.filter.maskBits = GROUND_CATEGORY; // Set to the category of the ground
+    fixtureDef.filter.categoryBits = WORM_CATEGORY;
+    fixtureDef.filter.maskBits = GROUND_CATEGORY | WORM_CATEGORY;
     body->CreateFixture(&footSensorFixtureDef);
 
     return body;
@@ -92,7 +94,7 @@ void PhysicsSystem::spawn_beam(BeamScenarioData beam) {
     b2FixtureDef fixtureDef;
     fixtureDef.shape = &groundBox;
     fixtureDef.density = 1000;
-
+    fixtureDef.filter.categoryBits = GROUND_CATEGORY;
     // Set the friction based on the angle of the ground
     float groundAngle = groundBody->GetAngle();
     float maxWalkableAngle = MAX_BEAM_WALKABLE_ANGLE;
