@@ -10,8 +10,11 @@ GameDisplay::GameDisplay(Queue<GameEvent>& event_queue, int fps) :
         SDL_WINDOW_RESIZABLE),
     renderer(window, -1, SDL_RENDERER_ACCELERATED),
     texture_manager(renderer),
+    camera(UiUtils::WINDOW_WIDTH, UiUtils::WINDOW_HEIGHT, 30),
     event_handler(window, event_queue)
     {
+        images.emplace_back(&camera);
+
         texture_manager.add_texture("wwalk"     , "resources/sprites/wwalk.png"     ,  30, 40, 10, 10, 20, 28);
         texture_manager.add_texture("wfall"     , "resources/sprites/wfall.png"     ,  30, 40, 10, 10, 20, 28);
         texture_manager.add_texture("wjumpu"    , "resources/sprites/wjumpu.png"    ,  30, 40, 10, 10, 20, 28);
@@ -32,7 +35,7 @@ void GameDisplay::update(float delta_time) {
 }
 
 Displayable* GameDisplay::new_sprite(const std::string spritekey, float width, float height, float angle) {
-    GameSprite* sprite = new GameSprite(*texture_manager.get(spritekey));
+    GameSprite* sprite = new GameSprite(camera, *texture_manager.get(spritekey));
     sprite->set_size(width, height);
     sprite->set_angle(angle);
 

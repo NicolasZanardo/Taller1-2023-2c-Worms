@@ -5,8 +5,9 @@
 #include "networking.h"
 #include "game_display.h"
 #include "game_displayable.h"
+#include "game_camera.h"
 
-class WormEntity {
+class WormEntity : public CameraTarget{
     WormDto attributes; 
     std::unordered_map<MovementStateDto, Displayable*> animations;
     Displayable* active_animation;
@@ -14,5 +15,8 @@ class WormEntity {
     public:
     WormEntity(GameDisplay& display, WormDto& values);
     void update(WormDto& new_values);
+
+    float get_x() override;
+    float get_y() override;
 };
 #endif

@@ -5,8 +5,8 @@
 #include <string>
 #include <SDL2pp/SDL2pp.hh>
 #include "queue.h"
+#include "game_camera.h"
 #include "event_handler.h"
-#include "sprites_manager.h"
 #include "game_sprite_manager.h"
 #include "game_displayable.h"
 
@@ -18,6 +18,7 @@ class GameDisplay {
     GameSpriteManager texture_manager;
     std::list<Displayable*> images;
     public:
+    GameCamera camera;
     EventHandler event_handler;
     GameDisplay(Queue<GameEvent>& event_queue, int fps);
     ~GameDisplay();

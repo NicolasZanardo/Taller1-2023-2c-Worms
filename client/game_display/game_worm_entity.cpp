@@ -6,10 +6,10 @@ WormEntity::WormEntity(GameDisplay& display, WormDto& values) :
         values.x, values.y, values.angle, 
         values.is_facing_right, values.life, values.state
     ), animations({
-{ MovementStateDto::idle         , display.new_sprite("wwalk" , 1.2f*30, 1.2f*30, 0) },
-{ MovementStateDto::falling      , display.new_sprite("wfall" , 1.2f*30, 1.2f*30, 0) },
-{ MovementStateDto::going_upwards, display.new_sprite("wjumpu", 1.2f*30, 1.2f*30, 0) },
-{ MovementStateDto::moving       , display.new_sprite("widle" , 1.2f*30, 1.2f*30, 0) }
+{ MovementStateDto::idle          , display.new_sprite("wwalk"  , 1.2f, 1.2f, 0) },
+{ MovementStateDto::falling       , display.new_sprite("wfall"  , 1.2f, 1.2f, 0) },
+{ MovementStateDto::going_upwards , display.new_sprite("wjumpu" , 1.2f, 1.2f, 0) },
+{ MovementStateDto::moving        , display.new_sprite("widle"  , 1.2f, 1.2f, 0) }
     }), active_animation(animations[MovementStateDto::idle])
     {
         animations[MovementStateDto::idle         ]->hidden(false);
@@ -45,10 +45,15 @@ void WormEntity::update(WormDto& new_values) {
         active_animation = animations[attributes.state];
         active_animation->hidden(false);
     }
-    active_animation->set_pos(
-        UiUtils::x_meters_pos_to_x_pixel_pos(attributes.x),
-        UiUtils::y_meters_pos_to_y_pixel_pos(attributes.y)
-    );
+    active_animation->set_pos(attributes.x,attributes.y);
     active_animation->image_flipped(attributes.is_facing_right);
     active_animation->set_angle(attributes.angle);
+}
+
+float WormEntity::get_x() {
+    return attributes.x;
+}
+
+float WormEntity::get_y() {
+    return attributes.y;
 }

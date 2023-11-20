@@ -3,11 +3,14 @@
 
 #include <string>
 #include <SDL2pp/SDL2pp.hh>
+#include "game_camera.h"
 #include "game_displayable.h"
 #include "game_sprite_info.h"
 
 class GameSprite : public Displayable {
+    GameCamera& cam;
     GameSpriteInfo& info;
+    SDL2pp::Rect body;
     SDL2pp::Rect transform;
     float angle;
     bool is_active;
@@ -18,7 +21,7 @@ class GameSprite : public Displayable {
 
     public:
     ~GameSprite() override;
-    explicit GameSprite(GameSpriteInfo& info);
+    explicit GameSprite(GameCamera& cam, GameSpriteInfo& info);
 
     void flip_horizontaly();
     void set_size(float width, float heigth);
