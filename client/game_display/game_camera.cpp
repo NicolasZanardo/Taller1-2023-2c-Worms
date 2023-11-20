@@ -10,12 +10,10 @@ GameCamera::GameCamera(float width, float height, float scale) :
     target(nullptr) 
     { }
 
-
 void GameCamera::set_target(CameraTarget* target) {
     this->target = target;
 }
 
-    
 inline float GameCamera::transform_x(float x) {
     return (x-xoffset) * scale;
 }
@@ -36,15 +34,10 @@ void GameCamera::body_to_transform(float x, float y, float w, float h, SDL2pp::R
     transform.SetH(transform_h(h));
 }
 
-void GameCamera::hidden(bool is_hidden) { }
-void GameCamera::set_angle(float angle) { }
-void GameCamera::image_flipped(bool image_is_flipped) { }
-
 void GameCamera::set_pos(float x, float y) {
     xoffset = x - hlf_width / scale;
     yoffset = y + hlf_height / scale;
 }
-
 
 void GameCamera::render(SDL2pp::Renderer& renderer, float delta_time) {
     if (target == nullptr)

@@ -9,6 +9,7 @@
 #include "event_handler.h"
 #include "game_sprite_manager.h"
 #include "game_displayable.h"
+#include "game_sprite.h"
 
 class GameDisplay {
     int fps;

@@ -26,10 +26,10 @@ class GameSprite : public Displayable {
     void flip_horizontaly();
     void set_size(float width, float heigth);
 
-    void set_angle(float angle) override;
-    void hidden(bool is_hidden) override;
-    void set_pos(float x, float y) override;
-    void image_flipped(bool image_is_flipped) override;
+    void set_angle(float angle);
+    void hidden(bool is_hidden);
+    void set_pos(float x, float y);
+    void image_flipped(bool image_is_flipped);
     void render(SDL2pp::Renderer& renderer, float delta_time) override;
 };
 
