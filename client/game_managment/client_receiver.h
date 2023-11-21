@@ -32,6 +32,7 @@ public:
     void run(NetMessageInitialGameState* msg) override;
     void run(NetMessageGameStateUpdate* msg) override;
     void run(NetMessageGameAction* msg) override;
+    void run(NetMessagePlayerShot* msg) override;
 
 private:
     Queue<std::shared_ptr<ClientGameStateDTO>>& state_queue;

@@ -18,6 +18,7 @@
 #include "Networking/Messages/net_message_initial_game_state.h"
 #include "Networking/Messages/net_message_game_state_update.h"
 #include "Networking/Messages/net_message_game_action.h"
+#include "Networking/Messages/net_message_player_shot.h"
 
 #include "Networking/Messages/net_message_factory.h" 
 #include "Networking/Messages/net_message_behaviour.h"

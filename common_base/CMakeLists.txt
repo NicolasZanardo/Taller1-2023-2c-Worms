@@ -11,6 +11,7 @@ add_library(common
         Game/bulletDto.h
         Game/eventDto.h
         Game/wormDto.h
+        Game/WeaponDto.h
 
     liberror.cpp liberror.h
     network_channel.cpp network_channel.h
@@ -39,6 +40,8 @@ add_library(common
     Networking/Messages/net_message_inform_id.h
         Networking/Messages/net_message_game_action.h
         Networking/Messages/net_message_game_action.cpp
+        Networking/Messages/net_message_player_shot.h
+        Networking/Messages/net_message_player_shot.cpp
 
     Networking/Messages/net_message_behaviour.h
     Networking/Messages/net_message_initial_game_state.cpp

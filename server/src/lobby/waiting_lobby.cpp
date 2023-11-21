@@ -116,3 +116,7 @@ void WaitingLobby::run(NetMessageGameStateUpdate* msg) {
 void WaitingLobby::run(NetMessageGameAction* msg) {
     cerr << "Error: received action in lobby..";
 }
+
+void WaitingLobby::run(NetMessagePlayerShot* msg) {
+    cerr << "Error: received action in lobby..";
+}

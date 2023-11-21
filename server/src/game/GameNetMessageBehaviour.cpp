@@ -62,3 +62,13 @@ void GameNetMessageBehaviour::run(NetMessageGameAction *msg) {
         }
     }
 }
+
+void GameNetMessageBehaviour::run(NetMessagePlayerShot *msg) {
+
+    if (!game.isClientsTurn(msg->client_id)) {
+        return;
+    }
+    switch (msg->weapon) {
+
+    }
+}

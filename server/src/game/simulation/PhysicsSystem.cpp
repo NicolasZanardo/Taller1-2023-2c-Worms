@@ -34,12 +34,12 @@ b2Body *PhysicsSystem::spawn_worm(WormScenarioData worm, std::shared_ptr<Worm> w
     b2Body *body = world.CreateBody(&bodyDef);
 
     // Shape for hitbox
-    b2PolygonShape dynamicBox;
-    dynamicBox.SetAsBox(WORM_SIZE / 2, WORM_SIZE / 2);
+    b2CircleShape dynamicCircle;
+    dynamicCircle.m_radius = WORM_SIZE / 2;
 
     // Fixture for hitbox
     b2FixtureDef fixtureDef;
-    fixtureDef.shape = &dynamicBox;
+    fixtureDef.shape = &dynamicCircle;
 
     fixtureDef.density = 80.0f;
     fixtureDef.restitution = 0;
@@ -97,16 +97,15 @@ void PhysicsSystem::spawn_beam(BeamScenarioData beam) {
 
     b2FixtureDef fixtureDef;
     fixtureDef.shape = &groundBox;
-    fixtureDef.density = 1000;
+    fixtureDef.density = 100;
     fixtureDef.filter.categoryBits = GROUND_CATEGORY;
     // Set the friction based on the angle of the ground
     float groundAngle = groundBody->GetAngle();
-    float maxWalkableAngle = MAX_BEAM_WALKABLE_ANGLE;
 
-    if (std::abs(groundAngle) <= maxWalkableAngle) {
+    if (std::abs(groundAngle) <= MAX_BEAM_WALKABLE_ANGLE) {
         fixtureDef.friction = 0.8f;  // Friction for walking
     } else {
-        fixtureDef.friction = 0.01f; // Lower friction for sliding
+        fixtureDef.friction = 0.005f; // Lower friction for sliding
     }
 
     groundBody->CreateFixture(&fixtureDef);

@@ -15,21 +15,6 @@ GameInstance::GameInstance(
     turnManager.randomly_assign_clients_turn();
 }
 
-// TODO DELETE
-std::string get_name(MovementStateDto state) {
-    switch (state) {
-        case MovementStateDto::idle:
-            return "idle";
-        case MovementStateDto::moving:
-            return "moving";
-        case MovementStateDto::going_upwards:
-            return "going_upwards";
-        case MovementStateDto::falling:
-            return "falling";
-        default:
-            return "unknown"; // Handle unknown enum values
-    }
-}
 
 void GameInstance::update(const int it) {
     auto worms = instancesManager.getWorms();
