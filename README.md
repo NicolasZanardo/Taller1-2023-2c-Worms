@@ -13,6 +13,8 @@ build command line:
 
 - make
 
+- cd bin
+
 Para correr los ejecutables del server y del cliente 
 
 Servidor:
