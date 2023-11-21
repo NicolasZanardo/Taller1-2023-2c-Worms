@@ -22,6 +22,14 @@ class GameSpriteManager {
         uint16_t image_xoffset, uint16_t image_yoffset, 
         uint16_t image_sep, float image_speed
     );
+
+    void add_texture(
+            const std::string keyname, const std::string file_path,
+            uint16_t image_width, uint16_t image_height,
+            uint16_t image_xoffset, uint16_t image_yoffset,
+            uint16_t image_sep, float image_speed, bool flag, Uint32 key
+    );
+
     
     GameSpriteInfo* get(const std::string idx);
 };
