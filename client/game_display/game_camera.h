@@ -24,10 +24,10 @@ class GameCamera : public Displayable {
     ~GameCamera() {}
     void set_target(CameraTarget* target);
 
-    inline float transform_x(float x);
-    inline float transform_y(float y);
-    inline float transform_w(float w);
-    inline float transform_h(float h);
+    float transform_x(float x);
+    float transform_y(float y);
+    float transform_w(float w);
+    float transform_h(float h);
 
     void body_to_transform(float x, float y, float w, float h, SDL2pp::Rect& transform);
 

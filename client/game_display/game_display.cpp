@@ -3,7 +3,7 @@
 #include "game_sprite.h"
 
 GameDisplay::GameDisplay(Queue<GameEvent> &event_queue, int fps) :
-        fps(fps), sdl(SDL_INIT_VIDEO),
+        fps(fps), sdl(SDL_INIT_VIDEO), ttf(),
         window("Worms",
                SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
                UiUtils::WINDOW_WIDTH, UiUtils::WINDOW_HEIGHT,
@@ -35,7 +35,7 @@ void GameDisplay::update(float delta_time) {
     renderer.Present();
 }
 
-GameSprite *GameDisplay::new_sprite(const std::string spritekey, float width, float height, float angle) {
+GameSprite* GameDisplay::new_sprite(const std::string& spritekey, float width, float height, float angle) {
     GameSprite *sprite = new GameSprite(camera, *texture_manager.get(spritekey));
     sprite->set_size(width, height);
     sprite->set_angle(angle);
@@ -43,4 +43,10 @@ GameSprite *GameDisplay::new_sprite(const std::string spritekey, float width, fl
     images.emplace_back(sprite);
 
     return sprite;
+}
+
+GameUiText* GameDisplay::new_ui_text(const std::string& text, float x, float y, int fnt_size, TextAlign align) {
+    GameUiText *display = new GameUiText(camera, x, y, true, fnt_size, align, text);
+    images.emplace_back(display);
+    return display;
 }
