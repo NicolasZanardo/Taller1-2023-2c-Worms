@@ -11,6 +11,8 @@ void TurnManager::update(
 ) {
     // Check if the game time has run out
     if (game_time_left <= 0) {
+        current_client_id = -1;
+        current_worm_id = -1;
         return;
     }
 
@@ -18,14 +20,11 @@ void TurnManager::update(
     game_time_left -= it * rate;
     if (!waiting_to_start_next_turn) {
         turn_time_left -= it * rate;
-        // std::cout << "Time left on turn: " << turn_time_left << "\n";
-        // Check if the turn time has run out
         if (turn_time_left <= 0) {
             end_actual_turn(active_worm);
         }
     } else {
         // Only advance to the next turn when worms are still // TODO When explosions finished also
-        // std::cout << "Waiting for worms to stop moving before starting next turn.\n";
         if (worms_are_still(worms)) {
             advance_to_next_turn();
         }
