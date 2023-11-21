@@ -32,7 +32,7 @@ void ClientGameState::load(std::shared_ptr<ClientGameStateDTO> game_state_dto) {
         }
 
         auto image = display.new_sprite("beam_large", beam_w, beam_h, beam.angle);
-        image->set_pos(beam.x+0.6f, beam.y+0.1f);
+        image->set_pos(beam.x+0.6f, beam.y+0.2f);
     }
 
     for (auto& worm : game_state_dto->worms) {

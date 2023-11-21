@@ -11,61 +11,15 @@ GameDisplay::GameDisplay(Queue<GameEvent> &event_queue, int fps) :
         renderer(window, -1, SDL_RENDERER_ACCELERATED),
         texture_manager(renderer),
         camera(UiUtils::WINDOW_WIDTH, UiUtils::WINDOW_HEIGHT, 30.0f),
-        event_handler(window, event_queue) {
+        event_handler(window, event_queue) 
+{
     images.emplace_back(&camera);
 
-    texture_manager.add_texture(
-            "wwalk",
-            "resources/sprites/wwalk.png",
-            30,
-            40,
-            10,
-            10,
-            20,
-            28,
-            true,
-            0
-    );
-    texture_manager.add_texture(
-            "wfall",
-            "resources/sprites/wfall.png",
-            30,
-            40,
-            10,
-            10,
-            20,
-            28,
-            true,
-            0
-    );
-    texture_manager.add_texture(
-            "wjumpu",
-            "resources/sprites/wjumpu.png",
-            30,
-            40,
-            10,
-            10,
-            20,
-            28,
-            true,
-            0
-    );
-    texture_manager.add_texture(
-            "widle",
-            "resources/sprites/wwalk.png",
-            30,
-            40,
-            10,
-            10,
-            20,
-            00,
-            true,
-            0
-    );
-    texture_manager.add_texture(
-            "beam_large",
-            "resources/sprites/beam_large.png"
-    );//, 140, 20, 0);
+    texture_manager.add_texture("wwalk" , "resources/sprites/wwalk.png" , 30, 40, 10, 10, 20, 28);
+    texture_manager.add_texture("wfall" , "resources/sprites/wfall.png" , 30, 40, 10, 10, 20, 28);
+    texture_manager.add_texture("wjumpu", "resources/sprites/wjumpu.png", 30, 40, 10, 10, 20, 28);
+    texture_manager.add_texture("widle" , "resources/sprites/wwalk.png" , 30, 40, 10, 10, 20, 00);
+    texture_manager.add_texture("beam_large", "resources/sprites/beam_large.png");
 }
 
 GameDisplay::~GameDisplay() {
