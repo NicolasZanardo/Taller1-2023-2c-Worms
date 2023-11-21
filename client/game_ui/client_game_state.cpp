@@ -4,9 +4,12 @@
 
 ClientGameState::ClientGameState(GameDisplay& display)
     : display(display)
+    , turnDisplay(display.new_ui_text("Es mi turno!",400,0, 30, TextAlign::center))
     , worms()
     , my_client_id(-1) 
-    {}
+    {
+        turnDisplay->hidden(true);
+    }
 
 void ClientGameState::load(std::shared_ptr<ClientGameStateDTO> game_state_dto) {
     std::cout << "Loading scenario size("
@@ -49,6 +52,8 @@ void ClientGameState::update(std::shared_ptr<ClientGameStateDTO> game_state_dto)
         auto& it = worms[worm_dto.entity_id];
         it->update(worm_dto);
     }
+
+    turnDisplay->hidden(my_client_id != game_state_dto->active_client_id);
 
     if (game_state_dto->active_entity_id > 0) {
         display.camera.set_target(worms[game_state_dto->active_entity_id].get());

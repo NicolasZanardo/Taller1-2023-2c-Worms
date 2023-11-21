@@ -14,16 +14,16 @@ void GameCamera::set_target(CameraTarget* target) {
     this->target = target;
 }
 
-inline float GameCamera::transform_x(float x) {
+float GameCamera::transform_x(float x) {
     return (x-xoffset) * scale;
 }
-inline float GameCamera::transform_y(float y) {
+float GameCamera::transform_y(float y) {
     return (yoffset-y) * scale;
 }
-inline float GameCamera::transform_w(float w) {
+float GameCamera::transform_w(float w) {
     return w * scale;
 }
-inline float GameCamera::transform_h(float h) {
+float GameCamera::transform_h(float h) {
     return h * scale;
 }
 
