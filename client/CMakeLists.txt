@@ -10,6 +10,7 @@ add_executable (client_app
     game_display/game_display.h game_display/game_display.cpp
     game_display/game_camera.h game_display/game_camera.cpp
     game_display/game_sprite_info.h game_display/game_sprite_info.cpp
+    game_display/game_ui_text.h game_display/game_ui_text.cpp
     game_display/game_sprite_manager.h game_display/game_sprite_manager.cpp
     game_display/game_sprite.h game_display/game_sprite.cpp
     game_display/game_clock.h game_display/game_clock.cpp

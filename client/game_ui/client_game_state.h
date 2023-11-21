@@ -6,6 +6,7 @@
 #include <memory>
 
 #include "game_display.h"
+#include "game_ui_text.h"
 #include "game_worm_entity.h"
 #include "client_game_state_dto.h"
 
@@ -15,6 +16,8 @@ class ClientGameState {
     int turn_remaining_time;
     float width;
     float height;
+    GameUiText* turnDisplay;
+
 
     // std::unique_ptr<ClientGameStateDTO> game_state_dto;
     std::map<int, std::shared_ptr<WormEntity>> worms;

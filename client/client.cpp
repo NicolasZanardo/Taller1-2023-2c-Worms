@@ -19,6 +19,7 @@ void Client::execute() {
     receiver.switch_game(game_state);
     sender.switch_game(game_state);
 
+
     receiver.start();
     sender.start();
 
