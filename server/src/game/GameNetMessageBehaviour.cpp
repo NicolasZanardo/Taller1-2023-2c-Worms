@@ -4,7 +4,6 @@ GameNetMessageBehaviour::GameNetMessageBehaviour(InGameClients &gameClients, Gam
         gameClients(gameClients),
         game(game) {}
 
-
 void GameNetMessageBehaviour::run(NetMessageChat *msg) {
     std::shared_ptr<NetMessage> message(new NetMessageChat(
         msg->client_id, msg->chat
@@ -58,6 +57,22 @@ void GameNetMessageBehaviour::run(NetMessageGameAction *msg) {
         }
         case ActionTypeDto::jump_forward: {
             game.jumpForwardCurrentWorm();
+            break;
+        }
+        case ActionTypeDto::aim_up_init: {
+            game.start_aiming_up_current_worm();
+            break;
+        }
+        case ActionTypeDto::aim_down_init: {
+            game.start_aiming_down_current_worm();
+            break;
+        }
+        case ActionTypeDto::aim_up_stopped: {
+            game.stop_aiming_up_current_worm();
+            break;
+        }
+        case ActionTypeDto::aim_down_stopped: {
+            game.stop_aiming_down_current_worm();
             break;
         }
     }

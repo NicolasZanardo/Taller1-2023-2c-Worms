@@ -4,9 +4,9 @@
 #include <memory>
 #include <unordered_map>
 #include "box2d/box2d.h"
-#include "../scenario/GameScenarioData.h"
-#include "../model/instances/Worm.h"
-#include "../../../../common_base/constants.h"
+#include "../../scenario/GameScenarioData.h"
+#include "../../model/worm/Worm.h"
+#include "../../../../../common_base/constants.h"
 #include "PhysicsCollisionListener.h"
 
 class PhysicsSystem {

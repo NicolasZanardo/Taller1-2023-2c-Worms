@@ -76,7 +76,7 @@ void WormMovement::jump_backwards() {
     }
 }
 
-void WormMovement::on_update_physics() {
+void WormMovement::on_update() {
     float y_velocity = body->GetLinearVelocity().y;
 
     if (is_moving && is_on_ground) {
@@ -94,6 +94,10 @@ void WormMovement::on_update_physics() {
             state = State::moving;
         }
     }
+}
+
+void WormMovement::on_reset() {
+
 }
 
 bool WormMovement::is_still_moving() {

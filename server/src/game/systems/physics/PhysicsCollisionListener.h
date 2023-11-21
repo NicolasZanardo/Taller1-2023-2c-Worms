@@ -2,7 +2,7 @@
 #define TP_WORMS_PHYSICSCOLLISIONLISTENER_H
 
 #include "box2d/box2d.h"
-#include "../model/instances/Worm.h"
+#include "../../model/worm/Worm.h"
 
 class PhysicsCollisionListener : public b2ContactListener {
     void BeginContact(b2Contact* contact) override;

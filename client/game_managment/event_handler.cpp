@@ -25,8 +25,17 @@ bool EventHandler::handleEvents() {
                     case SDLK_RETURN:
                         this->event_queue.push(GameEvent::JUMP_FORWARD);
                         break;
-                    case SDLK_SPACE:
+                    case SDLK_DELETE:
                         this->event_queue.push(GameEvent::JUMP_BACKWARDS);
+                        break;
+                    case SDLK_UP:
+                        this->event_queue.push(GameEvent::AIM_UP_INIT);
+                        break;
+                    case SDLK_DOWN:
+                        this->event_queue.push(GameEvent::AIM_DOWN_INIT);
+                        break;
+                    case SDLK_SPACE:
+                        this->event_queue.push(GameEvent::SHOOT);
                         break;
                     }
                 }
@@ -39,6 +48,12 @@ bool EventHandler::handleEvents() {
                         break;
                     case SDLK_RIGHT:
                         this->event_queue.push(GameEvent::MOVE_RIGHT_END);
+                        break;
+                    case SDLK_UP:
+                        this->event_queue.push(GameEvent::AIM_UP_STOPPED);
+                        break;
+                    case SDLK_DOWN:
+                        this->event_queue.push(GameEvent::AIM_DOWN_STOPPED);
                         break;
                     } 
                 }
