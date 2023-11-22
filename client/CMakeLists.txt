@@ -6,16 +6,16 @@ add_executable (client_app
     client.cpp client.h
     # dumb_simple_client/dumb_client.cpp dumb_simple_client/dumb_client.h
 
-    game_display/game_displayable.h
-    game_display/game_display.h game_display/game_display.cpp
-    game_display/game_camera.h game_display/game_camera.cpp
-    game_display/game_sprite_info.h game_display/game_sprite_info.cpp
-    game_display/game_ui_text.h game_display/game_ui_text.cpp
     game_display/game_sprite_manager.h game_display/game_sprite_manager.cpp
-    game_display/game_sprite.h game_display/game_sprite.cpp
     game_display/game_clock.h game_display/game_clock.cpp
     game_display/game_worm_entity.h game_display/game_worm_entity.cpp
+    game_display/game_display.h game_display/game_display.cpp
     
+    game_display/ui_elements/game_displayable.h
+    game_display/ui_elements/game_camera.h      game_display/ui_elements/game_camera.cpp
+    game_display/ui_elements/game_ui_text.h     game_display/ui_elements/game_ui_text.cpp
+    game_display/ui_elements/game_sprite_info.h game_display/ui_elements/game_sprite_info.cpp
+    game_display/ui_elements/game_sprite.h      game_display/ui_elements/game_sprite.cpp
 
     game_managment/client_receiver.cpp game_managment/client_receiver.h
     game_managment/client_sender.cpp game_managment/client_sender.h
@@ -40,6 +40,7 @@ target_include_directories(client_app PUBLIC
     "${CMAKE_CURRENT_SOURCE_DIR}/game_managment"
     "${CMAKE_CURRENT_SOURCE_DIR}/game_ui"
     "${CMAKE_CURRENT_SOURCE_DIR}/game_display"
+    "${CMAKE_CURRENT_SOURCE_DIR}/game_display/ui_elements"
 )
 
 target_link_libraries(client_app common ${SDL2PP_LIBRARIES})
