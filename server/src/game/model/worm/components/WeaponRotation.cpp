@@ -36,7 +36,7 @@ void WeaponRotation::on_update() {
     }
 }
 
-void WeaponRotation::on_reset() {
+void WeaponRotation::on_turn_ended() {
     is_aim_angle_rotating = false;
     is_aim_angle_rotating_upwards = false;
 }

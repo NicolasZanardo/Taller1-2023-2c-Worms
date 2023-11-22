@@ -46,7 +46,7 @@ public:
     void stop_aiming_down();
 
     void update();
-    void reset_components();
+    void on_turn_ended();
 
 };
 

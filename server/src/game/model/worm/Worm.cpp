@@ -34,8 +34,7 @@ void Worm::update() {
     }
 }
 
-// Called when worm turn ends
-void Worm::reset_components() {
+void Worm::on_turn_ended() {
     movement->on_reset();
     if (actual_weapon) {
         actual_weapon->on_reset();

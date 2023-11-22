@@ -56,7 +56,7 @@ public:
     void stop_movement_from_input();
 
     void on_update();
-    void on_reset();
+    void on_turn_ended();
 
 };
 

@@ -31,7 +31,7 @@ void TurnManager::update(
 }
 
 void TurnManager::end_actual_turn(const std::shared_ptr<Worm>& active_worm) {
-    active_worm->reset_components();
+    active_worm->on_turn_ended();
     waiting_to_start_next_turn = true;
 }
 

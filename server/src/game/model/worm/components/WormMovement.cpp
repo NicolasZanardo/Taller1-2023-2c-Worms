@@ -96,7 +96,7 @@ void WormMovement::on_update() {
     }
 }
 
-void WormMovement::on_reset() {
+void WormMovement::on_turn_ended() {
     is_moving = false;
 }
 
