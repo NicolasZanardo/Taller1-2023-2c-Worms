@@ -25,7 +25,7 @@ bool EventHandler::handleEvents() {
                     case SDLK_RETURN:
                         this->event_queue.push(GameEvent::JUMP_FORWARD);
                         break;
-                    case SDLK_DELETE:
+                    case SDLK_SPACE:
                         this->event_queue.push(GameEvent::JUMP_BACKWARDS);
                         break;
                     case SDLK_UP:
@@ -34,7 +34,7 @@ bool EventHandler::handleEvents() {
                     case SDLK_DOWN:
                         this->event_queue.push(GameEvent::AIM_DOWN_INIT);
                         break;
-                    case SDLK_SPACE:
+                    case SDLK_DELETE: // todo change then
                         this->event_queue.push(GameEvent::SHOOT);
                         break;
                     }

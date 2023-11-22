@@ -97,16 +97,13 @@ void WormMovement::on_update() {
 }
 
 void WormMovement::on_reset() {
-
+    is_moving = false;
 }
 
 bool WormMovement::is_still_moving() {
     return body->GetLinearVelocity().x != 0 && body->GetLinearVelocity().y != 0;
 }
 
-void WormMovement::stop_movement_from_input() {
-    is_moving = false;
-}
 
 MovementStateDto WormMovement::state_to_dto() const {
     switch (state) {
