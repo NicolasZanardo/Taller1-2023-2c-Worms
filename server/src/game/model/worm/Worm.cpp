@@ -35,9 +35,9 @@ void Worm::update() {
 }
 
 void Worm::on_turn_ended() {
-    movement->on_reset();
+    movement->on_turn_ended();
     if (actual_weapon) {
-        actual_weapon->on_reset();
+        actual_weapon->on_turn_ended();
     }
     // TODO change actual_weapon to nullptr
 }

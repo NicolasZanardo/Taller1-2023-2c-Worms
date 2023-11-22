@@ -18,7 +18,7 @@ public:
     void stop_aiming_down();
     void shoot();
     void on_update();
-    void on_reset();
+    void on_turn_ended();
 };
 
 

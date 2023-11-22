@@ -23,8 +23,8 @@ void Weapon::on_update() {
     weapon_rotation.on_update();
 }
 
-void Weapon::on_reset() {
-    weapon_rotation.on_reset();
+void Weapon::on_turn_ended() {
+    weapon_rotation.on_turn_ended();
 }
 
 void Weapon::shoot() {
