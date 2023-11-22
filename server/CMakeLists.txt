@@ -27,21 +27,22 @@ add_library( server
     src/game/GameInstance.h
     src/game/GameInstance.cpp
 
-    src/game/simulation/PhysicsSystem.h
-    src/game/simulation/PhysicsSystem.cpp
+    src/game/systems/physics/PhysicsCollisionListener.h
+    src/game/systems/physics/PhysicsCollisionListener.cpp
+    src/game/systems/physics/PhysicsSystem.h
+    src/game/systems/physics/PhysicsSystem.cpp
 
-    src/game/simulation/PhysicsCollisionListener.h
-    src/game/simulation/PhysicsCollisionListener.cpp
-    src/game/simulation/PhysicsSystem.h
-    src/game/simulation/PhysicsSystem.cpp
-
-    src/game/model/WormMovement.h
-    src/game/model/WormMovement.cpp
-    src/game/model/instances/Instance.h
-    src/game/model/instances/Worm.h
-    src/game/model/instances/Worm.cpp
-    src/game/model/instances/InstancesManager.h
-    src/game/model/instances/InstancesManager.cpp
+    src/game/model/core/InstancesManager.h
+    src/game/model/core/InstancesManager.cpp
+    src/game/model/core/Instance.h
+        src/game/model/worm/components/WormMovement.h
+        src/game/model/worm/components/WormMovement.cpp
+    src/game/model/worm/Worm.h
+    src/game/model/worm/Worm.cpp
+        src/game/model/worm/components/Weapon.h
+        src/game/model/worm/components/Weapon.cpp
+        src/game/model/worm/components/WeaponRotation.h
+        src/game/model/worm/components/WeaponRotation.cpp
 
 
     src/game/GameNetMessageBehaviour.h
@@ -54,10 +55,12 @@ add_library( server
     src/game/scenario/ScenarioReader.h
     src/game/scenario/ScenarioReader.cpp
 
-    src/game/turns/TurnManager.h
-    src/game/turns/TurnManager.cpp
-    src/game/turns/WormIdIterator.h
-    src/game/turns/WormIdIterator.cpp
+        src/game/systems/turns/TurnManager.h
+        src/game/systems/turns/TurnManager.cpp
+        src/game/systems/turns/WormIdIterator.h
+        src/game/systems/turns/WormIdIterator.cpp
+        src/game/systems/instances/InstancesSystem.h
+        src/game/systems/instances/InstancesSystem.cpp
 )
 
 add_executable(

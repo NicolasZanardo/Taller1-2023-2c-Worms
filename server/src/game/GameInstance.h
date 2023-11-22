@@ -9,10 +9,12 @@
 #include <cstdlib>   // Include for std::srand and std::rand
 #include <random>
 #include <ctime>     // Include for std::time
-#include "model/instances/Worm.h"
-#include "model/instances/InstancesManager.h"
+#include "model/worm/Worm.h"
+#include "model/core/InstancesManager.h"
 #include "../client/client.h"
-#include "turns/TurnManager.h"
+#include "systems/physics/PhysicsSystem.h"
+#include "systems/turns/TurnManager.h"
+#include "systems/instances/InstancesSystem.h"
 
 
 typedef std::unordered_map<size_t, std::vector<std::shared_ptr<Worm>>> ClientsWorms;
@@ -43,6 +45,7 @@ class GameInstance {
     InstancesManager instancesManager;
     ClientsWorms clientsWorms;
     TurnManager turnManager;
+    InstancesSystem instances_system;
 
     int active_worm_id;
 
@@ -64,11 +67,20 @@ public:
     bool isClientsTurn(size_t id);
 
     // Actions
+    // Movement
     void startMovingCurrentWormLeft();
     void startMovingCurrentWormRight();
     void stopMovingCurrentWorm();
     void jumpBackCurrentWorm();
     void jumpForwardCurrentWorm();
+
+    // Weapon
+    void start_aiming_up_current_worm();
+    void start_aiming_down_current_worm();
+    void stop_aiming_up_current_worm();
+    void stop_aiming_down_current_worm();
+
+
 
 
 };

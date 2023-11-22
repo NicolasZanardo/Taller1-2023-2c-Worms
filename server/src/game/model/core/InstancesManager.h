@@ -4,8 +4,8 @@
 #include <memory>
 #include <vector>
 #include <unordered_map>
-#include "Worm.h"
-#include "../../simulation/PhysicsSystem.h"
+#include "../worm/Worm.h"
+#include "../../systems/physics/PhysicsSystem.h"
 
 class InstancesManager {
 private:
@@ -17,6 +17,8 @@ private:
     std::shared_ptr<Worm> createWorm(const WormScenarioData &wormScenarioData);
 public:
     InstancesManager(PhysicsSystem& physicsSystem, const GameScenarioData& map);
+
+    explicit InstancesManager(PhysicsSystem &physicsSystem);
 
     // Worms
     void createWorms(const GameScenarioData& map);

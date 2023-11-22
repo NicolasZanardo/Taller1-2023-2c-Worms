@@ -1,5 +1,4 @@
 #include "TurnManager.h"
-#include "../model/instances/Instance.h"
 #include <iostream>
 
 TurnManager::TurnManager(int rate) : rate(rate), clients_ids_to_worms_ids_iterator() {}
@@ -32,7 +31,7 @@ void TurnManager::update(
 }
 
 void TurnManager::end_actual_turn(const std::shared_ptr<Worm>& active_worm) {
-    active_worm->movement->stop_movement_from_input();
+    active_worm->reset_components();
     waiting_to_start_next_turn = true;
 }
 

@@ -76,7 +76,7 @@ void WormMovement::jump_backwards() {
     }
 }
 
-void WormMovement::on_update_physics() {
+void WormMovement::on_update() {
     float y_velocity = body->GetLinearVelocity().y;
 
     if (is_moving && is_on_ground) {
@@ -96,13 +96,14 @@ void WormMovement::on_update_physics() {
     }
 }
 
+void WormMovement::on_reset() {
+    is_moving = false;
+}
+
 bool WormMovement::is_still_moving() {
     return body->GetLinearVelocity().x != 0 && body->GetLinearVelocity().y != 0;
 }
 
-void WormMovement::stop_movement_from_input() {
-    is_moving = false;
-}
 
 MovementStateDto WormMovement::state_to_dto() const {
     switch (state) {
