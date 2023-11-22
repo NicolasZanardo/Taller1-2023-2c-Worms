@@ -6,8 +6,7 @@
 #include <cstdio>
 #include <unordered_map>
 #include "WormIdIterator.h"
-#include "../model/instances/Instance.h"
-#include "../model/instances/Worm.h"
+#include "../../model/worm/Worm.h"
 
 typedef std::unordered_map<size_t, WormIdIterator> ClientsIdsToWormsIdsIterator;
 

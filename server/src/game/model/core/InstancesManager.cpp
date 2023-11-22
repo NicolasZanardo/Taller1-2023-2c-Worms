@@ -31,3 +31,5 @@ std::unordered_map<size_t, std::shared_ptr<Worm>> InstancesManager::getWorms() {
 std::shared_ptr<Worm> InstancesManager::getWorm(size_t id) {
     return worms[id];
 }
+
+InstancesManager::InstancesManager(PhysicsSystem &physicsSystem) : physicsSystem(physicsSystem) {}

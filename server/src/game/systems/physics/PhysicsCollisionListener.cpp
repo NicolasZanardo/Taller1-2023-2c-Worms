@@ -1,6 +1,4 @@
 #include "PhysicsCollisionListener.h"
-#include "../model/instances/Instance.h"
-#include "../model/instances/Worm.h"
 #include <iostream>
 
 void PhysicsCollisionListener::BeginContact(b2Contact *contact) {

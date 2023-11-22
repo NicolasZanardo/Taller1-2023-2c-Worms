@@ -28,6 +28,15 @@ bool EventHandler::handleEvents() {
                     case SDLK_SPACE:
                         this->event_queue.push(GameEvent::JUMP_BACKWARDS);
                         break;
+                    case SDLK_UP:
+                        this->event_queue.push(GameEvent::AIM_UP_INIT);
+                        break;
+                    case SDLK_DOWN:
+                        this->event_queue.push(GameEvent::AIM_DOWN_INIT);
+                        break;
+                    case SDLK_DELETE: // todo change then
+                        this->event_queue.push(GameEvent::SHOOT);
+                        break;
                     }
                 }
                 break;
@@ -39,6 +48,12 @@ bool EventHandler::handleEvents() {
                         break;
                     case SDLK_RIGHT:
                         this->event_queue.push(GameEvent::MOVE_RIGHT_END);
+                        break;
+                    case SDLK_UP:
+                        this->event_queue.push(GameEvent::AIM_UP_STOPPED);
+                        break;
+                    case SDLK_DOWN:
+                        this->event_queue.push(GameEvent::AIM_DOWN_STOPPED);
                         break;
                     } 
                 }

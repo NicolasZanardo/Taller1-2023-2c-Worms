@@ -29,7 +29,7 @@ void ClientSender::run() {
 
 // TODO Do elsewhere
 std::shared_ptr<NetMessage> ClientSender::game_event_to_net_message(GameEvent event) {
-    switch (event) {
+    switch (event) { // TODO Directly should have GameEvents in common_base instead of mapping every one 1 to 1 exactly the same
         case GameEvent::MOVE_LEFT_INIT:
             return std::make_shared<NetMessageGameAction>(
                 state->my_client_id, ActionTypeDto::moving_left_init
@@ -51,8 +51,25 @@ std::shared_ptr<NetMessage> ClientSender::game_event_to_net_message(GameEvent ev
                 state->my_client_id, ActionTypeDto::jump_forward
             );
         case GameEvent::JUMP_BACKWARDS:
+            std::cout << "Llega aca\n";
             return std::make_shared<NetMessageGameAction>(
                 state->my_client_id, ActionTypeDto::jump_back
+            );
+        case GameEvent::AIM_UP_INIT:
+            return std::make_shared<NetMessageGameAction>(
+                    state->my_client_id, ActionTypeDto::aim_up_init
+            );
+        case GameEvent::AIM_DOWN_INIT:
+            return std::make_shared<NetMessageGameAction>(
+                    state->my_client_id, ActionTypeDto::aim_down_init
+            );
+        case GameEvent::AIM_UP_STOPPED:
+            return std::make_shared<NetMessageGameAction>(
+                    state->my_client_id, ActionTypeDto::aim_up_stopped
+            );
+        case GameEvent::AIM_DOWN_STOPPED:
+            return std::make_shared<NetMessageGameAction>(
+                    state->my_client_id, ActionTypeDto::aim_down_stopped
             );
     }
     return std::make_shared<NetMessageGameAction>(

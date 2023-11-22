@@ -10,7 +10,8 @@ GameInstance::GameInstance(
         physicsSystem(rate, xGravity, yGravity, scenarioData),
         instancesManager(physicsSystem, scenarioData),
         clientsWorms(),
-        turnManager(rate) {
+        turnManager(rate),
+        instances_system() {
     assign_worms_to_clients(clients);
     turnManager.randomly_assign_clients_turn();
 }
@@ -23,6 +24,7 @@ void GameInstance::update(const int it) {
     if (current_worm_id != -1) {
         active_worm = instancesManager.getWorm(current_worm_id);
     }
+    instances_system.update(worms, active_worm);
     physicsSystem.update(worms);
     turnManager.update(it, worms, active_worm);
 }
@@ -102,7 +104,7 @@ void GameInstance::startMovingCurrentWormLeft() {
     auto worm_id = turnManager.get_current_worm_id();
     if (worm_id != -1) {
         auto worm = instancesManager.getWorm(worm_id);
-        worm->startMovingLeft();
+        worm->start_moving_left();
     }
 }
 
@@ -110,7 +112,7 @@ void GameInstance::startMovingCurrentWormRight() {
     auto worm_id = turnManager.get_current_worm_id();
     if (worm_id != -1) {
         auto worm = instancesManager.getWorm(worm_id);
-        worm->startMovingRight();
+        worm->start_moving_right();
     }
 }
 
@@ -118,7 +120,7 @@ void GameInstance::stopMovingCurrentWorm() {
     auto worm_id = turnManager.get_current_worm_id();
     if (worm_id != -1) {
         auto worm = instancesManager.getWorm(worm_id);
-        worm->stopMoving();
+        worm->stop_moving();
     }
 }
 
@@ -126,7 +128,7 @@ void GameInstance::jumpBackCurrentWorm() {
     auto worm_id = turnManager.get_current_worm_id();
     if (worm_id != -1) {
         auto worm = instancesManager.getWorm(worm_id);
-        worm->jumpBackwards();
+        worm->jump_backwards();
     }
 }
 
@@ -134,6 +136,38 @@ void GameInstance::jumpForwardCurrentWorm() {
     auto worm_id = turnManager.get_current_worm_id();
     if (worm_id != -1) {
         auto worm = instancesManager.getWorm(worm_id);
-        worm->jumpForward();
+        worm->jump_forward();
+    }
+}
+
+void GameInstance::start_aiming_down_current_worm() {
+    auto worm_id = turnManager.get_current_worm_id();
+    if (worm_id != -1) {
+        auto worm = instancesManager.getWorm(worm_id);
+        worm->start_aiming_down();
+    }
+}
+
+void GameInstance::start_aiming_up_current_worm() {
+    auto worm_id = turnManager.get_current_worm_id();
+    if (worm_id != -1) {
+        auto worm = instancesManager.getWorm(worm_id);
+        worm->start_aiming_up();
+    }
+}
+
+void GameInstance::stop_aiming_up_current_worm() {
+    auto worm_id = turnManager.get_current_worm_id();
+    if (worm_id != -1) {
+        auto worm = instancesManager.getWorm(worm_id);
+        worm->stop_aiming_up();
+    }
+}
+
+void GameInstance::stop_aiming_down_current_worm() {
+    auto worm_id = turnManager.get_current_worm_id();
+    if (worm_id != -1) {
+        auto worm = instancesManager.getWorm(worm_id);
+        worm->stop_aiming_down();
     }
 }

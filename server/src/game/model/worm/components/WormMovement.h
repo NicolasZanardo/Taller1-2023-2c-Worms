@@ -1,8 +1,8 @@
 #ifndef SERVER_WORM_MOVEMENT_H
 #define SERVER_WORM_MOVEMENT_H
 
-#include <box2d/box2d.h>
-#include "../../../../common_base/Game/wormDto.h"
+#include "box2d/box2d.h"
+#include "../../../../../../common_base/Game/wormDto.h"
 
 class WormMovement {
     enum class State : uint8_t {
@@ -51,11 +51,12 @@ public:
 
     void jump_backwards();
 
-    void on_update_physics();
-
     bool is_still_moving();
 
     void stop_movement_from_input();
+
+    void on_update();
+    void on_reset();
 
 };
 
