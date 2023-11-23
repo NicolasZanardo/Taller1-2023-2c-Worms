@@ -1,36 +1,19 @@
-//
-// Created by Juan Martin Duzac on 22/11/2023.
-//
-
 #ifndef TP_WORMS_COMMAND_H
 #define TP_WORMS_COMMAND_H
 
+#include <memory>
+#include "Networking/Messages/net_message.h"
 
 class Command {
 public:
-    /* Constructor */
-    Command() {}
+    Command() = default;
 
-    /* Deshabilitamos el constructor por copia. */
     Command(const Command&) = delete;
-
-    /* Deshabilitamos el operador= para copia.*/
     Command& operator=(const Command&) = delete;
-
-    /* Deshabilitamos el constructor por movimiento. */
     Command(Command&& other) = delete;
-
-    /* Deshabilitamos el operador= para movimiento. */
     Command& operator=(Command&& other) = delete;
 
-    //-------------------------------------------------------------------------
-
-    /* Envío polimórfico del comando. Devuelve si se pudo enviar o no. */
-    virtual bool send(const SocketWrapper& socket) = 0;
-
-    //-------------------------------------------------------------------------
-
-    /* Destructor */
+    virtual std::shared_ptr<NetMessage> create_net_message(int clientId) const = 0;
     virtual ~Command() {}
 };
 
