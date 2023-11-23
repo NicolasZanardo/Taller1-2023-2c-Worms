@@ -2,7 +2,7 @@
 #include "game_ui/ui_utils.h"
 #include "game_sprite.h"
 
-GameDisplay::GameDisplay(Queue<GameEvent> &event_queue, int fps) :
+GameDisplay::GameDisplay(Queue<std::shared_ptr<Command>> &command_queue, int fps) :
         fps(fps), sdl(SDL_INIT_VIDEO), ttf(),
         window("Worms",
                SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
@@ -11,7 +11,7 @@ GameDisplay::GameDisplay(Queue<GameEvent> &event_queue, int fps) :
         renderer(window, -1, SDL_RENDERER_ACCELERATED),
         texture_manager(renderer),
         camera(UiUtils::WINDOW_WIDTH, UiUtils::WINDOW_HEIGHT, 30.0f),
-        event_handler(window, event_queue) 
+        event_handler(window, command_queue)
 {
     images.emplace_back(&camera);
 

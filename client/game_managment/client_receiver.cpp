@@ -19,12 +19,8 @@ void ClientReceiver::switch_game(ClientGameState& state) {
 void ClientReceiver::run() {
     while (Thread::keep_running_) {
         try {
-            // GameEvent game_event = this->echo_queue.pop();
             std::shared_ptr<NetMessage> msg(this->net_channel->read_message());
-
             msg->execute(*this);
-
-            // this->state_queue.push(game_event);
         } catch (const ClosedQueue& e) {
             Thread::stop();
         }
@@ -57,7 +53,7 @@ void ClientReceiver::run(NetMessageGameStateUpdate* msg) {
     game_state_dto->remaining_turn_time = msg->remaining_turn_time;
     
     game_state_dto->worms = std::move(msg->worms);
-    game_state_dto->bullets = std::move(msg->bullets);
+    game_state_dto->bullets = std::move(msg->projectiles);
     game_state_dto->events = std::move(msg->events);
 
     this->state_queue.push(game_state_dto);
@@ -87,7 +83,7 @@ void ClientReceiver::run(NetMessageGameAction* msg) {
     // cout << "action for worm id: " << msg->client_id << "\n"; //<< " height: " << msg->room_height << " amount of beams on map: " << msg->beams.size() << "\n";
 }
 
-void ClientReceiver::run(NetMessagePlayerShot* msg) {
+void ClientReceiver::run(NetMessagePlayerChangedWeapon* msg) {
     // Client shouldnt receive
     // cout << "action for worm id: " << msg->client_id << "\n"; //<< " height: " << msg->room_height << " amount of beams on map: " << msg->beams.size() << "\n";
 }
