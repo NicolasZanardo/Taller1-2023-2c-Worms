@@ -20,8 +20,8 @@ void NetMessageGameStateUpdate::add(const WormDto &worm) {
     worms.push_back(worm);
 }
 
-void NetMessageGameStateUpdate::add(const BulletDto &bullet) {
-    bullets.push_back(bullet);
+void NetMessageGameStateUpdate::add(const ProjectileDto &bullet) {
+    projectiles.push_back(bullet);
 }
 
 void NetMessageGameStateUpdate::add(const WorldEventDto &event) {
@@ -52,13 +52,12 @@ void NetMessageGameStateUpdate::push_data_into(NetBuffer &container) {
         container.push_byte(static_cast<uint8_t>(worms[i].state));
     }
 
-    container.push_short(bullets.size());
-    for (size_t i = 0; i < bullets.size(); i++) {
-        container.push_uint(bullets[i].entity_id);
-        container.push_float(bullets[i].x);
-        container.push_float(bullets[i].y);
-        container.push_float(bullets[i].angle);
-        container.push_byte(static_cast<uint8_t>(bullets[i].type));
+    container.push_short(projectiles.size());
+    for (size_t i = 0; i < projectiles.size(); i++) {
+        container.push_uint(projectiles[i].entity_id);
+        container.push_byte(static_cast<uint8_t>(projectiles[i].from_weapon));
+        container.push_float(projectiles[i].x);
+        container.push_float(projectiles[i].y);
     }
 
     container.push_short(events.size());
@@ -94,12 +93,12 @@ void NetMessageGameStateUpdate::pull_data_from(NetProtocolInterpreter &channel) 
     short bullets_size = channel.read_short();
     for(int i = 0; i < bullets_size; i++) {
         auto entity_id = channel.read_uint();
+        auto type      = static_cast<WeaponTypeDto>(channel.read_byte());
         auto x         = channel.read_float();
         auto y         = channel.read_float();
-        auto angle     = channel.read_float();
-        auto type      = static_cast<BulletDto::Type>(channel.read_byte());
+
         
-        bullets.emplace_back(entity_id, x, y, angle, type);
+        projectiles.emplace_back(entity_id,  type, x, y);
     }
 
     short events_size = channel.read_short();
