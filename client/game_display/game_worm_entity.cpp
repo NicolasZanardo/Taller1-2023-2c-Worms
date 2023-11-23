@@ -5,12 +5,16 @@ WormEntity::WormEntity(GameDisplay& display, WormDto& values) :
     attributes(
         values.client_id, values.entity_id, 
         values.x, values.y, values.angle, 
-        values.is_facing_right, values.life, values.state
+        values.is_facing_right, values.life, values.state,
+        values.weapon_hold, values.aiming_angle
     ), animations({
 { MovementStateDto::idle          , display.new_sprite("widle"  , WORM_SIZE, WORM_SIZE, 0) },
 { MovementStateDto::falling       , display.new_sprite("wfall"  , WORM_SIZE, WORM_SIZE, 0) },
 { MovementStateDto::going_upwards , display.new_sprite("wjumpu" , WORM_SIZE, WORM_SIZE, 0) },
-{ MovementStateDto::moving        , display.new_sprite("wwalk"  , WORM_SIZE, WORM_SIZE, 0) }
+{ MovementStateDto::moving        , display.new_sprite("wwalk"  , WORM_SIZE, WORM_SIZE, 0) },
+{ MovementStateDto::moving        , display.new_sprite("w_bazooka"  , WORM_SIZE, WORM_SIZE, 0) },
+{ MovementStateDto::moving        , display.new_sprite("w_green_grenade"  , WORM_SIZE, WORM_SIZE, 0) },
+{ MovementStateDto::moving        , display.new_sprite("w_mortar"  , WORM_SIZE, WORM_SIZE, 0) }
     }), active_animation(animations[MovementStateDto::idle])
     {
         animations[MovementStateDto::idle         ]->hidden(false);
@@ -37,9 +41,11 @@ void WormEntity::update(WormDto& new_values) {
 
     attributes.x = new_values.x;
     attributes.y = new_values.y;
+
     attributes.life = new_values.life;
-    attributes.angle = new_values.angle;
     attributes.is_facing_right = new_values.is_facing_right;
+    attributes.aiming_angle = new_values.aiming_angle;
+    attributes.weapon_hold = new_values.weapon_hold;
 
     if (attributes.state != new_values.state) {
         active_animation->hidden(true);
@@ -48,7 +54,7 @@ void WormEntity::update(WormDto& new_values) {
     }
     active_animation->set_pos(attributes.x,attributes.y);
     active_animation->image_flipped(attributes.is_facing_right);
-    active_animation->set_angle(attributes.angle);
+    active_animation->set_angle(attributes.aiming_angle);
 
     attributes.state = new_values.state;
 }

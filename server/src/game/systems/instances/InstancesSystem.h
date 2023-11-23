@@ -3,10 +3,12 @@
 
 #include <unordered_map>
 #include "../../model/worm/Worm.h"
+#include "../../core/InstancesManager.h"
 
 class InstancesSystem {
 public:
-    void update(const std::unordered_map<size_t, std::shared_ptr<Worm>> &worms, std::shared_ptr<Worm> &current_worm);
+    InstancesSystem() = default;
+    void update(const std::unordered_map<size_t, std::shared_ptr<Worm>> &worms);
 };
 
 

@@ -10,8 +10,8 @@ add_executable (client_app
     game_display/game_clock.h game_display/game_clock.cpp
     game_display/game_worm_entity.h game_display/game_worm_entity.cpp
     game_display/game_display.h game_display/game_display.cpp
-    
-    game_display/ui_elements/game_displayable.h
+
+        game_display/ui_elements/game_displayable.h
     game_display/ui_elements/game_camera.h      game_display/ui_elements/game_camera.cpp
     game_display/ui_elements/game_ui_text.h     game_display/ui_elements/game_ui_text.cpp
     game_display/ui_elements/game_sprite_info.h game_display/ui_elements/game_sprite_info.cpp
@@ -21,6 +21,9 @@ add_executable (client_app
     game_managment/client_sender.cpp game_managment/client_sender.h
     game_managment/cursor.cpp game_managment/cursor.h
     game_managment/event_handler.cpp game_managment/event_handler.h
+    game_managment/commands/Command.h
+        game_managment/commands/ChangeWeaponCommand.h game_managment/commands/ChangeWeaponCommand.cpp
+        game_managment/commands/GameActionCommand.h game_managment/commands/GameActionCommand.cpp
     #game_ui/animation.cpp game_ui/animation.h
     game_ui/client_game_state.cpp game_ui/client_game_state.h
     #game_ui/drawable_integer.cpp game_ui/drawable_integer.h

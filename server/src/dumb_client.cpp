@@ -44,19 +44,19 @@ void DumbClient::send_messages() {
         }
 
         if (user_input == "Move right") {
-            NetMessageGameAction msg(1, ActionTypeDto::moving_right_init);
+            NetMessageGameAction msg(1, GameAction::MOVE_RIGHT_INIT);
             channel.send_message(msg);
         } else if (user_input == "Move left") {
-            NetMessageGameAction msg(1, ActionTypeDto::moving_left_init);
+            NetMessageGameAction msg(1, GameAction::MOVE_LEFT_INIT);
             channel.send_message(msg);
         } else if (user_input == "Stop move") {
-            NetMessageGameAction msg(1, ActionTypeDto::stop_moving);
+            NetMessageGameAction msg(1, GameAction::MOVE_LEFT_END);
             channel.send_message(msg);
         } else if (user_input == "Jump f") {
-            NetMessageGameAction msg(1, ActionTypeDto::jump_forward);
+            NetMessageGameAction msg(1, GameAction::JUMP_FORWARD);
             channel.send_message(msg);
         } else if (user_input == "Jump b") {
-            NetMessageGameAction msg(1, ActionTypeDto::jump_back);
+            NetMessageGameAction msg(1, GameAction::JUMP_BACKWARDS);
             channel.send_message(msg);
         }
 
@@ -118,7 +118,6 @@ void DumbInterpreter::run(NetMessageGameAction* msg) {
     cout << "action for worm id: " << msg->client_id << "\n"; //<< " height: " << msg->room_height << " amount of beams on map: " << msg->beams.size() << "\n";
 }
 
-void DumbInterpreter::run(NetMessagePlayerShot* msg) {
+void DumbInterpreter::run(NetMessagePlayerChangedWeapon* msg) {
     // Client shouldnt receive
-
 }

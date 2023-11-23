@@ -11,6 +11,7 @@
 #include "game_displayable.h"
 #include "game_sprite.h"
 #include "game_ui_text.h"
+#include "Game/GameAction.h"
 
 class GameDisplay {
     int fps;
@@ -23,7 +24,7 @@ class GameDisplay {
     public:
     GameCamera camera;
     EventHandler event_handler;
-    GameDisplay(Queue<GameEvent>& event_queue, int fps);
+    GameDisplay(Queue<std::shared_ptr<Command>> &command_queue, int fps);
     ~GameDisplay();
 
     void update(float delta_time);

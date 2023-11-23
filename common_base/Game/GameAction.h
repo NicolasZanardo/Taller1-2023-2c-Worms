@@ -1,0 +1,22 @@
+#ifndef TP_WORMS_GAMEACTION_H
+#define TP_WORMS_GAMEACTION_H
+
+#include <cstdint>
+
+enum class GameAction : uint8_t {
+    RESERVED = 0x00,
+    MOVE_LEFT_INIT = 0x01,
+    MOVE_LEFT_END = 0x02,
+    MOVE_RIGHT_INIT = 0x03,
+    MOVE_RIGHT_END = 0x04,
+    JUMP_FORWARD = 0x05,
+    JUMP_BACKWARDS = 0x06,
+    AIM_UP_INIT = 0x07,
+    AIM_DOWN_INIT = 0x08,
+    AIM_UP_STOPPED = 0x09,
+    AIM_DOWN_STOPPED = 0x010,
+    SHOOT_STARTED = 0x011,
+    SHOOT_ENDED = 0x012
+};
+
+#endif //TP_WORMS_GAMEACTION_H

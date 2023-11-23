@@ -2,7 +2,7 @@
 #include "game_ui/ui_utils.h"
 #include "game_sprite.h"
 
-GameDisplay::GameDisplay(Queue<GameEvent> &event_queue, int fps) :
+GameDisplay::GameDisplay(Queue<std::shared_ptr<Command>> &command_queue, int fps) :
         fps(fps), sdl(SDL_INIT_VIDEO), ttf(),
         window("Worms",
                SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
@@ -11,15 +11,26 @@ GameDisplay::GameDisplay(Queue<GameEvent> &event_queue, int fps) :
         renderer(window, -1, SDL_RENDERER_ACCELERATED),
         texture_manager(renderer),
         camera(UiUtils::WINDOW_WIDTH, UiUtils::WINDOW_HEIGHT, 30.0f),
-        event_handler(window, event_queue) 
+        event_handler(window, command_queue)
 {
     images.emplace_back(&camera);
 
-    texture_manager.add_texture("wwalk" , "resources/sprites/wwalk.png" , 30, 40, 10, 10, 20, 28);
-    texture_manager.add_texture("wfall" , "resources/sprites/wfall.png" , 30, 40, 10, 10, 20, 28);
-    texture_manager.add_texture("wjumpu", "resources/sprites/wjumpu.png", 30, 40, 10, 10, 20, 28);
-    texture_manager.add_texture("widle" , "resources/sprites/wwalk.png" , 30, 40, 10, 10, 20, 00);
-    texture_manager.add_texture("beam_large", "resources/sprites/beam_large.png");
+    // Worms
+    texture_manager.add_texture("wwalk" , "resources/sprites/worm/wwalk.png" , 30, 40, 10, 10, 20, 28);
+    texture_manager.add_texture("wfall" , "resources/sprites/worm/wfall.png" , 30, 40, 10, 10, 20, 28);
+    texture_manager.add_texture("wjumpu", "resources/sprites/worm/wjumpu.png", 30, 40, 10, 10, 20, 28);
+    texture_manager.add_texture("widle" , "resources/sprites/worm/wwalk.png" , 30, 40, 10, 10, 20, 00);
+    texture_manager.add_texture("w_bazooka" , "resources/sprites/worm/w_bazooka.png" , 30, 40, 10, 10, 20, 00);
+    texture_manager.add_texture("w_green_grenade" , "resources/sprites/worm/w_green_grenade.png" , 30, 40, 10, 10, 20, 00);
+    texture_manager.add_texture("w_mortar" , "resources/sprites/worm/w_mortar.png" , 30, 40, 10, 10, 20, 00);
+
+    // Scenario
+    texture_manager.add_texture("beam_large", "resources/sprites/scenario/beam_large.png");
+
+    // Projectiles
+    texture_manager.add_texture("p_bazooka", "resources/sprites/projectiles/bazooka.png");
+    texture_manager.add_texture("p_mortar", "resources/sprites/projectiles/mortar.png");
+    texture_manager.add_texture("p_green_grenade", "resources/sprites/projectiles/green_grenade.png");
 }
 
 GameDisplay::~GameDisplay() {

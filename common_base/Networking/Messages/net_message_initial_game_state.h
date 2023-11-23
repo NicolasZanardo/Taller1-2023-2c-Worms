@@ -20,8 +20,8 @@ public:
     void add(const BeamDto& beam);
     void add(const WormDto& worm);
 
-    virtual void push_data_into(NetBuffer& container) override;
-    virtual void pull_data_from(NetProtocolInterpreter& channel) override;
-    virtual void execute(NetMessageBehaviour& interpreter) override;
+    void push_data_into(NetBuffer& container) override;
+    void pull_data_from(NetProtocolInterpreter& channel) override;
+    void execute(NetMessageBehaviour& interpreter) override;
 };
 #endif

@@ -35,6 +35,8 @@ void NetMessageInitialGameState::push_data_into(NetBuffer& container) {
         container.push_bool(it.is_facing_right);
         container.push_uint(it.life);
         container.push_byte(static_cast<uint8_t>(it.state));
+        container.push_byte(static_cast<uint8_t>(it.weapon_hold));
+        container.push_float(it.aiming_angle);
     }
 }
 
@@ -62,8 +64,10 @@ void NetMessageInitialGameState::pull_data_from(NetProtocolInterpreter& channel)
         auto is_facing_right = channel.read_bool();
         auto life      = channel.read_uint();
         auto state     = static_cast<MovementStateDto>(channel.read_byte());
+        auto weapon_hold     = static_cast<WeaponTypeDto>(channel.read_byte());
+        auto aiming_angle     = channel.read_float();
 
-        worms.emplace_back(client_id, entity_id, x, y, angle, is_facing_right,life, state);
+        worms.emplace_back(client_id, entity_id, x, y, angle, is_facing_right,life, state, weapon_hold, aiming_angle);
     }
 }
 

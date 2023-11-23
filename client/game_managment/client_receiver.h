@@ -7,7 +7,6 @@
 #include "networking.h"
 
 #include "client_game_state_dto.h"
-#include "client_defs.h"
 class ClientGameState;
 
 class ClientReceiver : public Thread, public NetMessageBehaviour {
@@ -32,7 +31,7 @@ public:
     void run(NetMessageInitialGameState* msg) override;
     void run(NetMessageGameStateUpdate* msg) override;
     void run(NetMessageGameAction* msg) override;
-    void run(NetMessagePlayerShot* msg) override;
+    void run(NetMessagePlayerChangedWeapon* msg) override;
 
 private:
     Queue<std::shared_ptr<ClientGameStateDTO>>& state_queue;
