@@ -4,14 +4,14 @@
 #include "queue.h"
 #include "thread.h"
 #include "networking.h"
+#include "commands/Command.h"
 
-#include "client_defs.h"
 class ClientGameState;
 
 class ClientSender : public Thread {
 public:
     ClientSender() = delete;
-    explicit ClientSender(Queue<GameEvent>& event_queue, NetChannel& net_channel);
+    explicit ClientSender(Queue<std::shared_ptr<Command>> &command_queue, NetChannel& net_channel);
     ~ClientSender() = default;
 
     ClientSender(const ClientSender& other) = delete;
@@ -22,10 +22,10 @@ public:
     void switch_game(ClientGameState& state);
 
     void run() override;
-    std::shared_ptr<NetMessage> game_event_to_net_message(GameEvent event);
+    std::shared_ptr<NetMessage> game_event_to_net_message(GameAction event);
 
 private:
-    Queue<GameEvent>& event_queue;
+    Queue<std::shared_ptr<Command>> &command_queue;
     NetChannel* net_channel;
     ClientGameState* state;
 };

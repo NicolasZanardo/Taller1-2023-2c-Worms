@@ -4,7 +4,7 @@ NetMessageGameAction::NetMessageGameAction()
         : NetMessage(NET_MESSAGE_TYPE_GAME_ACTION)
 {}
 
-NetMessageGameAction::NetMessageGameAction(size_t client_id, ActionTypeDto action)
+NetMessageGameAction::NetMessageGameAction(size_t client_id, GameAction action)
         : NetMessage(NET_MESSAGE_TYPE_GAME_ACTION),
           client_id(client_id), action(action)
 {}
@@ -17,7 +17,7 @@ void NetMessageGameAction::push_data_into(NetBuffer& container) {
 
 void NetMessageGameAction::pull_data_from(NetProtocolInterpreter& channel) {
     client_id = channel.read_uint();
-    action = static_cast<ActionTypeDto>(channel.read_byte());
+    action = static_cast<GameAction>(channel.read_byte());
 }
 
 void NetMessageGameAction::execute(NetMessageBehaviour& interpreter) {

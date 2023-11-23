@@ -21,6 +21,9 @@ add_executable (client_app
     game_managment/client_sender.cpp game_managment/client_sender.h
     game_managment/cursor.cpp game_managment/cursor.h
     game_managment/event_handler.cpp game_managment/event_handler.h
+    game_managment/commands/Command.h
+        game_managment/commands/ChangeWeaponCommand.h game_managment/commands/ChangeWeaponCommand.cpp
+        game_managment/commands/GameActionCommand.h game_managment/commands/GameActionCommand.cpp
     #game_ui/animation.cpp game_ui/animation.h
     game_ui/client_game_state.cpp game_ui/client_game_state.h
     #game_ui/drawable_integer.cpp game_ui/drawable_integer.h

@@ -6,6 +6,7 @@
 #include "../../Game/wormDto.h"
 #include "../../Game/eventDto.h"
 #include "net_message_dependencies.h"
+#include "../../Game/ProjectileDto.h"
 
 class NetMessageGameStateUpdate : public NetMessage {
 public:
@@ -15,7 +16,7 @@ public:
     float remaining_game_time;
     float remaining_turn_time;
     std::vector<WormDto> worms;
-    std::vector<BulletDto> bullets;
+    std::vector<ProjectileDto> projectiles;
     std::vector<WorldEventDto> events;
     
     NetMessageGameStateUpdate();
@@ -28,7 +29,7 @@ public:
     );
 
     void add(const WormDto& worm);
-    void add(const BulletDto& bullet);
+    void add(const ProjectileDto& projectile);
     void add(const WorldEventDto& event);
 
     virtual void push_data_into(NetBuffer& container) override;

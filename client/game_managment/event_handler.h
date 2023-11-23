@@ -3,17 +3,19 @@
 
 #include <SDL2pp/SDL2pp.hh>
 
-#include "client_defs.h"
 #include "cursor.h"
 
 #include "queue.h"
+#include "Game/GameAction.h"
+#include "commands/Command.h"
 
 class Player;
+typedef Queue<std::shared_ptr<Command>>& CommandQueue;
 
 class EventHandler {
 public:
     EventHandler() = delete;
-    explicit EventHandler(SDL2pp::Window& window_ref, Queue<GameEvent>& event_queue);
+    explicit EventHandler(SDL2pp::Window& window_ref, CommandQueue command_queue);
     ~EventHandler() = default;
 
     bool handleEvents();
@@ -21,7 +23,7 @@ public:
 private:
     SDL2pp::Window* window;
     Cursor cursor;
-    Queue<GameEvent>& event_queue;
+    CommandQueue command_queue;
 };
 
 

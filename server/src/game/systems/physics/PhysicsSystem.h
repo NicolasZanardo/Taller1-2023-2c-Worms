@@ -16,11 +16,13 @@ public:
     void update(const std::unordered_map<size_t, std::shared_ptr<Worm>> &worms);
 
     b2Body *spawn_worm(WormScenarioData wormScenarioData, std::shared_ptr<Worm> wormModel);
+    b2Body* spawn_projectile(const std::shared_ptr<ProjectileInfo>& projectile, float shot_angle);
 
 private:
     // Define category bits for fixtures
-    const uint16_t WORM_CATEGORY = 0x0001;  // Use any non-colliding bits
-    const uint16_t GROUND_CATEGORY = 0x0002;  // Use any other non-colliding bits
+    const uint16_t WORM_CATEGORY = 0x0001;
+    const uint16_t GROUND_CATEGORY = 0x0002;
+    const uint16_t PROJECTILE_CATEGORY = 0x0003;
 
     const float timeStep;
     const int32 velocityIterations = 8;
@@ -31,6 +33,7 @@ private:
     void populate_beams(const GameScenarioData &map);
 
     void spawn_beam(BeamScenarioData beam);
+    std::pair<float, float> angle_to_normalized_vector(float angleDegrees);
 
 };
 
