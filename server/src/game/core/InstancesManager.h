@@ -14,16 +14,20 @@ private:
 
     // Worm id to worm map
     std::unordered_map<size_t, std::shared_ptr<Worm>> worms;
-    std::shared_ptr<Worm> createWorm(const WormScenarioData &wormScenarioData);
+    std::vector<Projectile> projectiles;
+
+    std::shared_ptr<Worm> instantiate_worm(const WormScenarioData &wormScenarioData);
+
 public:
     InstancesManager(PhysicsSystem& physicsSystem, const GameScenarioData& map);
-
-    explicit InstancesManager(PhysicsSystem &physicsSystem);
 
     // Worms
     void createWorms(const GameScenarioData& map);
     std::unordered_map<size_t, std::shared_ptr<Worm>> getWorms();
     std::shared_ptr<Worm> getWorm(size_t wormId);
+
+    // Projectiles
+    std::shared_ptr<Projectile> instantiate_projectile(std::unique_ptr<Shot> shot);
 };
 
 
