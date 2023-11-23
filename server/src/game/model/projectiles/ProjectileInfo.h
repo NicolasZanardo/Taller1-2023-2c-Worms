@@ -1,21 +1,23 @@
 
-#ifndef TP_WORMS_PROJECTILE_H
-#define TP_WORMS_PROJECTILE_H
+#ifndef TP_WORMS_PROJECTILEINFO_H
+#define TP_WORMS_PROJECTILEINFO_H
 
 
 #include "../core/Updatable.h"
 #include "../weapons/Damage.h"
+#include "../../../../../common_base/Game/WeaponTypeDto.h"
 
-class Projectile: public Updatable {
+class ProjectileInfo {
 public:
     Damage &damage;
     float power;
     float origin_x;
     float origin_y;
+    float radius = 0.5f; // TODO CONSTANT FOR ALL PROJECTILES NOW
+    WeaponTypeDto from_weapon;
 
-    Projectile(Damage &damage, float power, float origin_x, float origin_y);
-    void update() override;
+    ProjectileInfo(Damage &damage, float power, float origin_x, float origin_y, WeaponTypeDto from_weapon);
 };
 
 
-#endif //TP_WORMS_PROJECTILE_H
+#endif
