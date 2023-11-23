@@ -19,34 +19,52 @@ add_library( server
     src/main/server.h
     src/main/server.cpp
 
-    src/game/InGameClients.h
-    src/game/InGameClients.cpp
+        src/game/control/InGameClients.h
+        src/game/control/InGameClients.cpp
 
-    src/game/GameEngineInstance.h
-    src/game/GameEngineInstance.cpp
-    src/game/GameInstance.h
-    src/game/GameInstance.cpp
+        src/game/control/GameEngineInstance.h
+        src/game/control/GameEngineInstance.cpp
+        src/game/control/GameInstance.h
+        src/game/control/GameInstance.cpp
 
     src/game/systems/physics/PhysicsCollisionListener.h
     src/game/systems/physics/PhysicsCollisionListener.cpp
     src/game/systems/physics/PhysicsSystem.h
     src/game/systems/physics/PhysicsSystem.cpp
 
-    src/game/model/core/InstancesManager.h
-    src/game/model/core/InstancesManager.cpp
+        src/game/core/InstancesManager.h
+        src/game/core/InstancesManager.cpp
     src/game/model/core/Instance.h
-        src/game/model/worm/components/WormMovement.h
-        src/game/model/worm/components/WormMovement.cpp
+    src/game/model/core/Updatable.h
+        src/game/model/core/OnTurnEndedListener.h
+        src/game/model/worm/WormMovement.h
+        src/game/model/worm/WormMovement.cpp
     src/game/model/worm/Worm.h
     src/game/model/worm/Worm.cpp
-        src/game/model/worm/components/Weapon.h
-        src/game/model/worm/components/Weapon.cpp
-        src/game/model/worm/components/WeaponRotation.h
-        src/game/model/worm/components/WeaponRotation.cpp
+        src/game/model/weapons/Weapon.h
+        src/game/model/weapons/Weapon.cpp
+        src/game/model/weapons/Damage.h
+        src/game/model/weapons/Damage.cpp
+        src/game/model/weapons/Bazooka.h
+        src/game/model/weapons/Bazooka.cpp
+        src/game/model/weapons/Morter.h
+        src/game/model/weapons/Morter.cpp
+        src/game/model/weapons/GreenGrenade.h
+        src/game/model/weapons/GreenGrenade.cpp
 
+        src/game/model/weapons/WeaponRotation.h
+        src/game/model/weapons/WeaponRotation.cpp
+        src/game/model/projectiles/ProjectileInfo.h
+        src/game/model/projectiles/ProjectileInfo.cpp
+        src/game/model/projectiles/Shot.h
+        src/game/model/projectiles/Shot.cpp
+        src/game/model/projectiles/Projectile.h
+        src/game/model/projectiles/Projectile.cpp
+        src/game/model/projectiles/ProjectileMovement.h
+        src/game/model/projectiles/ProjectileMovement.cpp
 
-    src/game/GameNetMessageBehaviour.h
-    src/game/GameNetMessageBehaviour.cpp
+        src/game/control/GameNetMessageBehaviour.h
+        src/game/control/GameNetMessageBehaviour.cpp
 
     src/game/scenario/BeamScenarioData.h
     src/game/scenario/WormScenarioData.h
@@ -61,6 +79,10 @@ add_library( server
         src/game/systems/turns/WormIdIterator.cpp
         src/game/systems/instances/InstancesSystem.h
         src/game/systems/instances/InstancesSystem.cpp
+        src/game/systems/projectiles/ProyectilesSystem.h
+        src/game/systems/projectiles/ProyectilesSystem.cpp
+        src/game/systems/shot/ShotSystem.h
+        src/game/systems/shot/ShotSystem.cpp
 )
 
 add_executable(

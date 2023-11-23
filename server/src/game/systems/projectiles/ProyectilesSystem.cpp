@@ -1,5 +1,7 @@
-//
-// Created by Juan Martin Duzac on 22/11/2023.
-//
+#include "ProyectilesSystem.h"
 
-#include "ProyectileSystem.h"
+void ProyectilesSystem::update(std::vector<ProjectileInfo>& projectiles) {
+    for (auto projectile: projectiles) {
+       // projectile.update(); TODO Delete system?
+    }
+}
