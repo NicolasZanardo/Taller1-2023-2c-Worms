@@ -79,8 +79,6 @@ add_library( server
         src/game/systems/turns/WormIdIterator.cpp
         src/game/systems/instances/InstancesSystem.h
         src/game/systems/instances/InstancesSystem.cpp
-        src/game/systems/projectiles/ProyectilesSystem.h
-        src/game/systems/projectiles/ProyectilesSystem.cpp
         src/game/systems/shot/ShotSystem.h
         src/game/systems/shot/ShotSystem.cpp
 )
