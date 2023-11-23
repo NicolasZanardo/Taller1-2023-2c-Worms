@@ -11,7 +11,8 @@ GameInstance::GameInstance(
         instancesManager(physicsSystem, scenarioData),
         clientsWorms(),
         turnManager(rate),
-        instances_system() {
+        instances_system(),
+        shot_system(instancesManager) {
     assign_worms_to_clients(clients);
     turnManager.randomly_assign_clients_turn();
 }
@@ -24,9 +25,10 @@ void GameInstance::update(const int it) {
     if (current_worm_id != -1) {
         active_worm = instancesManager.getWorm(current_worm_id);
     }
-    instances_system.update(worms, active_worm);
+    instances_system.update(worms);
     physicsSystem.update(worms);
     turnManager.update(it, worms, active_worm);
+    shot_system.update(active_worm);
 }
 
 bool GameInstance::isClientsTurn(size_t id) {
@@ -36,15 +38,19 @@ bool GameInstance::isClientsTurn(size_t id) {
 GameState GameInstance::getCurrentState() {
     return GameState(
             turnManager.get_current_client_id(),
-            turnManager.get_current_worm_id(), // turnManager
+            turnManager.get_current_worm_id(),
             1.0f, // wind physicsSystem
-            turnManager.get_remaining_game_time(), // turnManager
-            turnManager.get_remaining_turn_time()// turnManager
+            turnManager.get_remaining_game_time(),
+            turnManager.get_remaining_turn_time()
     );
 }
 
 ClientsWorms GameInstance::getClientsWorms() {
     return clientsWorms;
+}
+
+std::vector<std::shared_ptr<Projectile>>& GameInstance::get_projectiles() {
+    return instancesManager.get_projectiles();
 }
 
 void GameInstance::assign_worms_to_clients(const std::list<Client *> &clients) {
@@ -99,7 +105,8 @@ void GameInstance::assign_worms_to_clients(const std::list<Client *> &clients) {
 }
 
 
-// Actions
+// Movement
+
 void GameInstance::startMovingCurrentWormLeft() {
     auto worm_id = turnManager.get_current_worm_id();
     if (worm_id != -1) {
@@ -140,6 +147,8 @@ void GameInstance::jumpForwardCurrentWorm() {
     }
 }
 
+// Weapon
+
 void GameInstance::start_aiming_down_current_worm() {
     auto worm_id = turnManager.get_current_worm_id();
     if (worm_id != -1) {
@@ -169,5 +178,33 @@ void GameInstance::stop_aiming_down_current_worm() {
     if (worm_id != -1) {
         auto worm = instancesManager.getWorm(worm_id);
         worm->stop_aiming_down();
+    }
+}
+
+void GameInstance::change_weapon_for_current_worm(WeaponTypeDto weapon) {
+    std::cout << "Game received the change weapon call\n";
+    auto worm_id = turnManager.get_current_worm_id();
+    if (worm_id != -1) {
+        auto worm = instancesManager.getWorm(worm_id);
+        worm->change_weapon(weapon);
+    }
+}
+
+
+// Shot
+
+void GameInstance::start_shot_for_current_worm() {
+    auto worm_id = turnManager.get_current_worm_id();
+    if (worm_id != -1) {
+        auto worm = instancesManager.getWorm(worm_id);
+        worm->start_shooting();
+    }
+}
+
+void GameInstance::end_shot_for_current_worm() {
+    auto worm_id = turnManager.get_current_worm_id();
+    if (worm_id != -1) {
+        auto worm = instancesManager.getWorm(worm_id);
+        worm->end_shooting();
     }
 }
