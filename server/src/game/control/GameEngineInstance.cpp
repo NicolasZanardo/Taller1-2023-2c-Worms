@@ -1,10 +1,10 @@
 #include "GameEngineInstance.h"
 
 GameEngineInstance::GameEngineInstance(
-        float xGravity,
-        float yGravity,
-        const GameScenarioData &scenario, // TODO Game config struct
-        const std::list<Client *> &clients
+    float xGravity,
+    float yGravity,
+    const GameScenarioData &scenario, // TODO Game config struct
+    const std::list<Client *> &clients
 ) : rate(60),
     gameClients(clients),
     game(xGravity, yGravity, scenario, clients, rate),
@@ -80,16 +80,16 @@ void GameEngineInstance::_broadcast_initial_game_state(const GameScenarioData &s
         scenario.room_height
     );
 
-    for (auto item : scenario.beams) {
-        std::cout << "Beam x: " << item.x  << " y: " << item.y << std::endl;
+    for (auto item: scenario.beams) {
+        std::cout << "Beam x: " << item.x << " y: " << item.y << std::endl;
         message->add(item.toBeamDto());
-        std::cout << "BeamDto x: " << item.toBeamDto().x  << " y: " << item.toBeamDto().y << std::endl;
+        std::cout << "BeamDto x: " << item.toBeamDto().x << " y: " << item.toBeamDto().y << std::endl;
     }
 
     for (const auto &[clientId, worms]: game.getClientsWorms()) {
-        for (const auto& wrm: worms) {
+        for (const auto &wrm: worms) {
             std::cout << "Init Worm id: " << wrm->toWormDto(clientId).entity_id
-            << " with client id: " << wrm->toWormDto(clientId).client_id << std::endl;
+                      << " with client id: " << wrm->toWormDto(clientId).client_id << std::endl;
             message->add(wrm->toWormDto(clientId));
         }
     }
@@ -97,7 +97,7 @@ void GameEngineInstance::_broadcast_initial_game_state(const GameScenarioData &s
     gameClients.sendAll(message->share());
 }
 
-void GameEngineInstance::switch_clients_game_queue(std::list<Client*> clients) {
+void GameEngineInstance::switch_clients_game_queue(std::list<Client *> clients) {
     for (auto client: clients) {
         client->switch_lobby(&gameQueue);
     }
@@ -108,20 +108,23 @@ void GameEngineInstance::switch_clients_game_queue(std::list<Client*> clients) {
 void GameEngineInstance::_broadcast_game_state_update() {
     auto gameState = game.getCurrentState();
     auto gameStateUpdateMessage = new NetMessageGameStateUpdate(
-            gameState.current_client_id,
-            gameState.current_worm_id,
-            gameState.windSpeed,
-            gameState.remainingGameTime,
-            gameState.remainingTurnTime
+        gameState.current_client_id,
+        gameState.current_worm_id,
+        gameState.windSpeed,
+        gameState.remainingGameTime,
+        gameState.remainingTurnTime
     );
 
     for (const auto &[clientId, worms]: game.getClientsWorms()) {
-        for (auto worm: worms) {
+        for (const auto& worm: worms) { // TODO verify
             gameStateUpdateMessage->add(worm->toWormDto(clientId));
         }
     }
 
-    // TODO ALSO ADD(&BulletDtos)
+    for (const auto &projectile : game.get_projectiles()) {
+        gameStateUpdateMessage->add(projectile->to_dto());
+    }
+
     // TODO ALSO ADD(&EventDtos)
 
     gameClients.sendAll(gameStateUpdateMessage->share());

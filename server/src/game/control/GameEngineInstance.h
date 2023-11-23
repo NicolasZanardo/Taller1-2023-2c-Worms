@@ -9,11 +9,11 @@
 #include <cmath>
 #include <thread>
 #include "GameInstance.h"
-#include "../../../common_base/Networking/Messages/net_queue.h"
-#include "../../../common_base/networking.h"
-#include "../../../common_base/thread.h"
-#include "scenario/GameScenarioData.h"
-#include "../client/client.h"
+#include "../../../../common_base/Networking/Messages/net_queue.h"
+#include "../../../../common_base/networking.h"
+#include "../../../../common_base/thread.h"
+#include "../scenario/GameScenarioData.h"
+#include "../../client/client.h"
 #include "GameNetMessageBehaviour.h"
 #include "InGameClients.h"
 
