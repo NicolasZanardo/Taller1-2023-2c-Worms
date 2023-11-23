@@ -2,7 +2,7 @@
 #define SERVER_WORM_MOVEMENT_H
 
 #include "box2d/box2d.h"
-#include "../../../../../../common_base/Game/wormDto.h"
+#include "../../../../../common_base/Game/wormDto.h"
 
 class WormMovement {
     enum class State : uint8_t {

@@ -26,8 +26,8 @@ void WeaponRotation::stop_aiming_down() {
 }
 
 void WeaponRotation::on_update() {
-    std::cout << "Rotation angle is: " << aimed_angle << std::endl;
     if (is_aim_angle_rotating) {
+        std::cout << "Rotation angle is: " << aimed_angle << std::endl;
         if (is_aim_angle_rotating_upwards) {
             aimed_angle += 1;
         } else {
