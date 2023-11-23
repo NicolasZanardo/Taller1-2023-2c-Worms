@@ -1,4 +1,5 @@
 #include "InstancesManager.h"
+#include "../model/projectiles/Projectile.h"
 #include <iostream>
 
 InstancesManager::InstancesManager(
@@ -9,11 +10,9 @@ InstancesManager::InstancesManager(
 }
 
 std::shared_ptr<Worm> InstancesManager::instantiate_worm(const WormScenarioData &wormScenarioData) {
-    auto worm = std::shared_ptr<Worm>(new Worm(++total_entities_created)); // TODO SHARED PTR
+    auto worm = std::shared_ptr<Worm>(new Worm(++total_entities_created));
     b2Body *body = physicsSystem.spawn_worm(wormScenarioData, worm);
     worm->movement = std::make_shared<WormMovement>(body);
-    std::cout << "Worm with id: " << total_entities_created << "was created at" <<
-    "x: " << worm->movement->x() << " y: " << worm->movement->y() << std::endl;
     return worm;
 }
 
@@ -32,11 +31,17 @@ std::shared_ptr<Worm> InstancesManager::getWorm(size_t id) {
     return worms[id];
 }
 
-// Projectiles
+std::vector<std::shared_ptr<Projectile>>& InstancesManager::get_projectiles() {
+    return projectiles;;
+}
 
-std::shared_ptr<Projectile> instantiate_projectile(std::unique_ptr<Shot> shot) {
-    for (auto projectile: shot->projectiles) {
-        projectile
+// Projectiles
+void InstancesManager::instantiate_projectiles(std::unique_ptr<Shot> shot) {
+    for (const auto& projectile_info: shot->Projectiles()) {
+        auto projectile = std::shared_ptr<Projectile>(new Projectile(++total_entities_created, projectile_info->from_weapon));
+        b2Body *body = physicsSystem.spawn_projectile(projectile_info, shot->ShotAngle());
+        projectile->movement = std::make_unique<ProjectileMovement>(body);
+        projectiles.push_back(projectile);
     }
 
 }

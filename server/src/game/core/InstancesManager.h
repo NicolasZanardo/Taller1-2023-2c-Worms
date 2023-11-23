@@ -4,8 +4,9 @@
 #include <memory>
 #include <vector>
 #include <unordered_map>
-#include "../worm/Worm.h"
-#include "../../systems/physics/PhysicsSystem.h"
+#include "../model/worm/Worm.h"
+#include "../systems/physics/PhysicsSystem.h"
+#include "../model/projectiles/Projectile.h"
 
 class InstancesManager {
 private:
@@ -14,7 +15,7 @@ private:
 
     // Worm id to worm map
     std::unordered_map<size_t, std::shared_ptr<Worm>> worms;
-    std::vector<Projectile> projectiles;
+    std::vector<std::shared_ptr<Projectile>> projectiles;
 
     std::shared_ptr<Worm> instantiate_worm(const WormScenarioData &wormScenarioData);
 
@@ -25,9 +26,10 @@ public:
     void createWorms(const GameScenarioData& map);
     std::unordered_map<size_t, std::shared_ptr<Worm>> getWorms();
     std::shared_ptr<Worm> getWorm(size_t wormId);
+    std::vector<std::shared_ptr<Projectile>>& get_projectiles();
 
     // Projectiles
-    std::shared_ptr<Projectile> instantiate_projectile(std::unique_ptr<Shot> shot);
+    void instantiate_projectiles(std::unique_ptr<Shot> shot);
 };
 
 
