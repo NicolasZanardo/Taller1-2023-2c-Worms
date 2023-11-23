@@ -8,7 +8,7 @@
 #define NET_MESSAGE_TYPE_INITIAL_STATE 4
 #define NET_MESSAGE_TYPE_UPDATE_STATE 5
 #define NET_MESSAGE_TYPE_GAME_ACTION 6
-#define NET_MESSAGE_TYPE_PLAYER_SHOT 7
+#define NET_MESSAGE_TYPE_PLAYER_CHANGED_WEAPON 7
 
 class NetMessageChat;
 class NetMessageLeave;
@@ -17,7 +17,7 @@ class NetMessageInformID;
 class NetMessageInitialGameState;
 class NetMessageGameStateUpdate;
 class NetMessageGameAction;
-class NetMessagePlayerShot;
+class NetMessagePlayerChangedWeapon;
 
 class NetMessageBehaviour {
     public:
@@ -28,7 +28,7 @@ class NetMessageBehaviour {
     virtual void run(NetMessageInitialGameState* msg) = 0;
     virtual void run(NetMessageGameStateUpdate* msg) = 0;
     virtual void run(NetMessageGameAction* msg) = 0;
-    virtual void run(NetMessagePlayerShot* msg) = 0;
+    virtual void run(NetMessagePlayerChangedWeapon* msg) = 0;
 
     virtual ~NetMessageBehaviour() {};
 };

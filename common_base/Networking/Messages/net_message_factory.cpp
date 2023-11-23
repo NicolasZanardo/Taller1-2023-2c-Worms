@@ -7,6 +7,7 @@
 #include "net_message_initial_game_state.h"
 #include "net_message_game_state_update.h"
 #include "net_message_game_action.h"
+#include "net_message_player_changed_weapon.h"
 
 NetMessage* NetMessageFactory::recieve(Socket& channel) {
     NetProtocolInterpreter interpreter(channel);
@@ -34,6 +35,9 @@ NetMessage* NetMessageFactory::recieve(Socket& channel) {
             break;
         case NET_MESSAGE_TYPE_GAME_ACTION:
             inst = new NetMessageGameAction();
+            break;
+        case NET_MESSAGE_TYPE_PLAYER_CHANGED_WEAPON:
+            inst = new NetMessagePlayerChangedWeapon();
             break;
         default:
             break;

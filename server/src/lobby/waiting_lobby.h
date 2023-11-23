@@ -4,7 +4,7 @@
 #include <list>
 #include <mutex>
 #include <string>
-#include "../game/GameEngineInstance.h"
+#include "../game/control/GameEngineInstance.h"
 #include "../client/client.h"
 #include "../../../common_base/thread.h"
 #include "../../../common_base/networking.h"
@@ -36,7 +36,7 @@ class WaitingLobby : public Thread, public NetMessageBehaviour {
     void run(NetMessageInitialGameState* msg) override;
     void run(NetMessageGameStateUpdate* msg) override;
     void run(NetMessageGameAction* msg) override;
-    void run(NetMessagePlayerShot* msg) override;
+    void run(NetMessagePlayerChangedWeapon* msg) override;
 };
 #endif
 

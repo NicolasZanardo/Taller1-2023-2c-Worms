@@ -39,51 +39,62 @@ void GameNetMessageBehaviour::run(NetMessageGameAction *msg) {
     }
     switch (msg->action) {
 
-        case ActionTypeDto::moving_right_init: {
+        case GameAction::MOVE_RIGHT_INIT: {
             game.startMovingCurrentWormRight();
             break;
         }
-        case ActionTypeDto::moving_left_init: {
+        case GameAction::MOVE_LEFT_INIT: {
             game.startMovingCurrentWormLeft();
             break;
         }
-        case ActionTypeDto::stop_moving: {
-            game.stopMovingCurrentWorm();
+        case GameAction::MOVE_RIGHT_END: {
+            game.stopMovingCurrentWorm(); // TODO
             break;
         }
-        case ActionTypeDto::jump_back: {
+        case GameAction::MOVE_LEFT_END: {
+            game.stopMovingCurrentWorm(); // TODO better mechanics
+            break;
+        }
+        case GameAction::JUMP_BACKWARDS: {
             game.jumpBackCurrentWorm();
             break;
         }
-        case ActionTypeDto::jump_forward: {
+        case GameAction::JUMP_FORWARD: {
             game.jumpForwardCurrentWorm();
             break;
         }
-        case ActionTypeDto::aim_up_init: {
+        case GameAction::AIM_UP_INIT: {
             game.start_aiming_up_current_worm();
             break;
         }
-        case ActionTypeDto::aim_down_init: {
+        case GameAction::AIM_DOWN_INIT: {
             game.start_aiming_down_current_worm();
             break;
         }
-        case ActionTypeDto::aim_up_stopped: {
+        case GameAction::AIM_UP_STOPPED: {
             game.stop_aiming_up_current_worm();
             break;
         }
-        case ActionTypeDto::aim_down_stopped: {
+        case GameAction::AIM_DOWN_STOPPED: {
             game.stop_aiming_down_current_worm();
+            break;
+        }
+        case GameAction::SHOOT_STARTED: {
+            game.start_shot_for_current_worm();
+            break;
+        }
+        case GameAction::SHOOT_ENDED: {
+            game.end_shot_for_current_worm();
             break;
         }
     }
 }
 
-void GameNetMessageBehaviour::run(NetMessagePlayerShot *msg) {
 
+void GameNetMessageBehaviour::run(NetMessagePlayerChangedWeapon *msg) {
+    std::cout << "NetMessageBehaviour received the change weapon call\n";
     if (!game.isClientsTurn(msg->client_id)) {
         return;
     }
-    switch (msg->weapon) {
-
-    }
+    game.change_weapon_for_current_worm(msg->chosen_weapon);
 }

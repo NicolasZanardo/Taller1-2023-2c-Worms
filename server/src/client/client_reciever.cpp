@@ -1,5 +1,4 @@
 #include "client_reciever.h"
-#include <iostream>
 
 Reciever::Reciever(const int client_id, NetChannel* channel) : 
     Thread(), 
@@ -11,9 +10,8 @@ void Reciever::run() {
     while (keep_running_) {
         try {
             std::shared_ptr<NetMessage> msg(channel->read_message());
-            if (game_queue != nullptr) {
+            if (game_queue != nullptr)
                 game_queue->push(msg);
-            }
         } catch (const std::exception& ex) {
             keep_running_ = false;
         }
