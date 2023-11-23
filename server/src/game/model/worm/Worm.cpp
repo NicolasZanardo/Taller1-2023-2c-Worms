@@ -20,7 +20,9 @@ WormDto Worm::toWormDto(size_t client_id) {
         0,
         movement->facing_right(),
         health,
-        movement->state_to_dto()
+        movement->state_to_dto(),
+        actual_weapon->WeaponType(),
+        actual_weapon->AimedAngle()
     );
 }
 

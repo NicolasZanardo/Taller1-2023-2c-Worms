@@ -10,8 +10,8 @@ add_executable (client_app
     game_display/game_clock.h game_display/game_clock.cpp
     game_display/game_worm_entity.h game_display/game_worm_entity.cpp
     game_display/game_display.h game_display/game_display.cpp
-    
-    game_display/ui_elements/game_displayable.h
+
+        game_display/ui_elements/game_displayable.h
     game_display/ui_elements/game_camera.h      game_display/ui_elements/game_camera.cpp
     game_display/ui_elements/game_ui_text.h     game_display/ui_elements/game_ui_text.cpp
     game_display/ui_elements/game_sprite_info.h game_display/ui_elements/game_sprite_info.cpp

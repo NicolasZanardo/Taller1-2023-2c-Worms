@@ -34,3 +34,11 @@ void Weapon::on_turn_ended() {
 std::unique_ptr<Shot> Weapon::shot_component() {
     return std::move(c_shot);
 }
+
+WeaponTypeDto Weapon::WeaponType() {
+    return type;
+}
+
+float Weapon::AimedAngle() const {
+    return rotation.aimed_angle;
+}

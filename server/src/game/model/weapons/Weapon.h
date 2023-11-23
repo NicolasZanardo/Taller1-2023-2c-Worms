@@ -23,16 +23,22 @@ protected:
 
 public:
     Weapon(int ammo_left, Damage damage, float shoot_power, WeaponTypeDto type);
+
+    WeaponTypeDto WeaponType();
+    float AimedAngle() const;
+
+    void on_update();
+    void on_turn_ended();
+
+    virtual void start_shooting(float from_x, float from_y) = 0;
+    virtual void end_shooting(float from_x, float from_y) = 0;
+
     void start_aiming_up();
     void start_aiming_down();
     void stop_aiming_up();
     void stop_aiming_down();
-    virtual void start_shooting(float from_x, float from_y) = 0;
-    virtual void end_shooting(float from_x, float from_y) = 0;
-    void on_update();
-    void on_turn_ended();
-    std::unique_ptr<Shot> shot_component();
 
+    std::unique_ptr<Shot> shot_component();
     virtual ~Weapon() {}
 };
 
