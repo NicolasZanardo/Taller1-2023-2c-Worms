@@ -7,7 +7,7 @@ bool EWormWithGround::try_resolve(b2Fixture *fixtureA, b2Fixture *fixtureB) {
     bool isFootSensorB = fixtureB->IsSensor();
 
     if (isFootSensorA || isFootSensorB) {
-        Worm* worm = query.get_object_from_fixture<Worm>(fixtureA, fixtureB);
+        Worm* worm = user_data_query.get_object_from_fixture<Worm>(fixtureA, fixtureB);
         if (worm && worm->body) {
             worm->body->ground_contact_count--;
             worm->body->is_on_ground = (worm->body->ground_contact_count > 0);

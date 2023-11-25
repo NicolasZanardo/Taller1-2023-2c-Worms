@@ -33,9 +33,9 @@ WeaponMap Worm::create_default_weapons() {
 
     // Damages inside weapons could later be only created one for each weapon kind and just have a reference
     // In order to not have multiple same damage object
-    default_weapons[WeaponTypeDto::BAZOOKA] = std::make_unique<Bazooka>(id, 10, 50, 1);
-    default_weapons[WeaponTypeDto::MORTAR] = std::make_unique<Mortar>(id, 10, 50, 1);
-    default_weapons[WeaponTypeDto::GREEN_GRENADE] = std::make_unique<GreenGrenade>(id, 10, 30, 1);
+    default_weapons[WeaponTypeDto::BAZOOKA] = std::make_unique<Bazooka>(id, 10, 50, 2);
+    default_weapons[WeaponTypeDto::MORTAR] = std::make_unique<Mortar>(id, 10, 50, 2);
+    default_weapons[WeaponTypeDto::GREEN_GRENADE] = std::make_unique<GreenGrenade>(id, 10, 70, 4);
 
     return default_weapons;
 }
@@ -152,8 +152,8 @@ void Worm::heal(float amount) {
     health.heal(amount);
 }
 
-void Worm::receive_damage(Damage& damage) {
-    std::cout << "Worm id: " << id << " received: " << damage.Amount() << " damage\n";
+void Worm::receive_damage(float damage) {
+    std::cout << "Worm id: " << id << " received: " << damage << " damage\n";
     health.receive_damage(damage);
 }
 

@@ -47,8 +47,6 @@ add_library( server
 
         src/game/model/weapons/Weapon.h
         src/game/model/weapons/Weapon.cpp
-        src/game/model/weapons/Damage.h
-        src/game/model/weapons/Damage.cpp
         src/game/model/weapons/Bazooka.h
         src/game/model/weapons/Bazooka.cpp
         src/game/model/weapons/Mortar.h
@@ -96,13 +94,13 @@ add_library( server
         src/game/systems/physics/begin_contact_events/BProjectileWithAny.cpp
         src/game/systems/physics/end_contact_events/EWormWithGround.h
         src/game/systems/physics/end_contact_events/EWormWithGround.cpp
-        src/game/systems/physics/raycast_callbacks/OnProjectileExplosionQuery.cpp
-        src/game/systems/physics/raycast_callbacks/OnProjectileExplosionQuery.cpp
+        src/game/systems/physics/raycast_callbacks/ProjectileExplosionQueryCallback.cpp
+        src/game/systems/physics/raycast_callbacks/ProjectileExplosionQueryCallback.cpp
         src/game/systems/physics/PhysicsCollisionListener.h
         src/game/systems/physics/PhysicsCollisionListener.cpp
         src/game/systems/physics/PhysicsSystem.h
         src/game/systems/physics/PhysicsSystem.cpp
-        src/game/systems/physics/fixture_queries/FixtureQueries.h
+        src/game/systems/physics/UserDataQuery.h
 
 )
 

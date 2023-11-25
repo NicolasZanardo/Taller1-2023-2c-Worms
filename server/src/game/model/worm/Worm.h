@@ -61,7 +61,7 @@ public:
 
     // health
     void heal(float amount);
-    void receive_damage(Damage& damage);
+    void receive_damage(float damage);
 };
 
 #endif

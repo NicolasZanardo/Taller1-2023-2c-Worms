@@ -1,7 +1,7 @@
 #ifndef TP_WORMS_USERDATAQUERY_H
 #define TP_WORMS_USERDATAQUERY_H
 
-#include <box2d/box2d.h>
+#include "../../../../../cmake-build-debug/_deps/box2d-src/include/box2d/box2d.h"
 #include <iostream>
 
 class UserDataQuery {

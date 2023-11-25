@@ -4,30 +4,37 @@
 #include <iostream>
 
 bool BProjectileWithAny::try_resolve(b2Fixture *fixtureA, b2Fixture *fixtureB) {
-    auto *projectile = query.get_object_from_fixture<Projectile>(fixtureA, fixtureB);
+    auto *projectile = user_data_query.get_object_from_fixture<Projectile>(fixtureA, fixtureB);
     if (projectile != nullptr && !projectile->has_exploded()) {
-        b2Vec2 center = projectile->B2Body()->GetPosition();
-        Logger::log_position("Projectile collided", center.x, center.y);
+        b2Vec2 explosion_point = projectile->B2Body()->GetPosition();
+        Logger::log_position("Projectile collided", explosion_point.x, explosion_point.y);
+        float explosion_radius = projectile->ExplosionRadius();
+        float max_damage = projectile->damage.Amount();
 
-        for (int i = 0; i < num_rays; i++) {
-            // Convert degrees to radians
-            // float angle = (i / (float)num_rays) * 360 * M_PI / 180.0f;
-            float angle = (i * 2 * M_PI) / num_rays;
-            b2Vec2 rayDir(sinf(angle), cosf(angle));
-            // Logger::log_position("Ray dir", rayDir.x, rayDir.y);
-            b2Vec2 rayEnd = center + projectile->ExplosionRadius() * rayDir;
-            // Logger::log_position("Ray end", rayEnd.x, rayEnd.y);
-            world.RayCast(&onExplosionRayCast, center, rayEnd);
-            for (auto worm_hit: onExplosionRayCast.worms_hit) {
-                apply_blast_impulse(worm_hit.worm->B2Body(), center, worm_hit.hit_point,
-                                    (blastPower / (float) num_rays));
-                if (unique_worms.find(worm_hit.worm) == unique_worms.end()) {
-                    worm_hit.worm->receive_damage(projectile->damage);
-                    unique_worms.insert(worm_hit.worm);
-                }
-            }
+        ProjectileExplosionQueryCallback query_callback(user_data_query);
+        b2AABB aabb;
+        aabb.lowerBound = explosion_point - b2Vec2(explosion_radius, explosion_radius );
+        aabb.upperBound = explosion_point + b2Vec2(explosion_radius, explosion_radius );
+        world.QueryAABB(&query_callback, aabb);
+
+        //check which of these worms have their center of mass within the blast radius
+        for (auto [_, worm]: query_callback.found_worms_map) {
+            b2Body* body = worm->B2Body();
+            b2Vec2 body_center_mass = body->GetWorldCenter();
+
+            //ignore worms outside the explosion radius
+            b2Vec2 blast_dir = body_center_mass - explosion_point;
+            float distance = blast_dir.Length();
+            std::cout << "Distance: " << distance << std::endl;
+            if (distance >= explosion_radius)
+                continue;
+
+            float damage = max_damage * (1.0f - distance / explosion_radius);
+            worm->receive_damage(damage);
+
+            apply_blast_impulse(body, explosion_point, body_center_mass, distance );
         }
-        unique_worms.clear();
+
         projectile->on_collision();
         return true;
     }
@@ -35,19 +42,14 @@ bool BProjectileWithAny::try_resolve(b2Fixture *fixtureA, b2Fixture *fixtureB) {
     return false;
 }
 
-BProjectileWithAny::BProjectileWithAny(b2World &world) : CollisionEvent(world), onExplosionRayCast(query) {}
+BProjectileWithAny::BProjectileWithAny(b2World &world) : CollisionEvent(world) {}
 
-void BProjectileWithAny::apply_blast_impulse(b2Body *body, b2Vec2 blast_center, b2Vec2 apply_point, float blast_power) {
-    b2Vec2 blast_dir = apply_point - blast_center;
-    float distance = blast_dir.Normalize();
+void BProjectileWithAny::apply_blast_impulse(b2Body *body, b2Vec2 blast_dir, b2Vec2 apply_point, float distance) {
     //ignore bodies exactly at the blast point - blast direction is undefined
     if (distance == 0)
         return;
-    float inv_distance = 1 / distance;
-    float impulse_mag = blast_power * inv_distance * inv_distance;
-    if (impulse_mag > 80) {
-        impulse_mag = 80;
-    }
+
+    float impulse_mag = explosion_power * (1 / distance);
     body->ApplyLinearImpulse(impulse_mag * blast_dir, apply_point, true);
 }
 

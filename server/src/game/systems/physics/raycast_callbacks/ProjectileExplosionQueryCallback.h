@@ -1,29 +1,20 @@
-#ifndef TP_WORMS_ONPROJECTILEEXPLOSIONQUERY_H
-#define TP_WORMS_ONPROJECTILEEXPLOSIONQUERY_H
+#ifndef TP_WORMS_PROJECTILEEXPLOSIONQUERYCALLBACK_H
+#define TP_WORMS_PROJECTILEEXPLOSIONQUERYCALLBACK_H
 
 #include <box2d/box2d.h>
 #include <algorithm>
-#include "../fixture_queries/FixtureQueries.h"
+#include "../UserDataQuery.h"
 #include "../../../model/worm/Worm.h"
-#include <list>
+#include <map>
 
-class WormHitInfo {
-public:
-    Worm* worm;
-    b2Vec2 hit_point;
-    float fraction;
-
-    WormHitInfo(Worm* worm, const b2Vec2& hit_point, const float fraction) : worm(worm), hit_point(hit_point), fraction(fraction) {}
-};
-
-class OnProjectileExplosionQuery: public b2QueryCallback {
-    FixtureQueries &query;
+class ProjectileExplosionQueryCallback: public b2QueryCallback {
+    UserDataQuery &query;
     bool ReportFixture(b2Fixture* fixture) override;
 public:
-    std::vector< WormHitInfo> worms_hit;
-    OnProjectileExplosionQuery(FixtureQueries& query);
-    void reset();
+    std::map<size_t , Worm*> found_worms_map;
+
+    explicit ProjectileExplosionQueryCallback(UserDataQuery& query);
 };
 
 
-#endif //TP_WORMS_ONPROJECTILEEXPLOSIONQUERY_H
+#endif

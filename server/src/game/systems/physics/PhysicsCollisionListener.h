@@ -4,7 +4,7 @@
 #include "box2d/box2d.h"
 #include "../../model/worm/Worm.h"
 #include "../../model/projectiles/Projectile.h"
-#include "fixture_queries/FixtureQueries.h"
+#include "UserDataQuery.h"
 #include "CollisionEvent.h"
 
 class PhysicsCollisionListener : public b2ContactListener {
