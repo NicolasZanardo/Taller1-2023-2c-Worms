@@ -19,7 +19,7 @@ enum class TurnState {
 
 class TurnSystem {
     const int TURN_DURATION = 10000; // 60000;
-    const int MATCH_DURATION = 60000; // 60000;
+    const int MATCH_DURATION = 120000; // 60000;
     const int TIME_AFTER_ENDING_TURN_ACTION = 3000;
 
     TurnState state;

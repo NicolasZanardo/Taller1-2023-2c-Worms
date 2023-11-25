@@ -1,12 +1,16 @@
 #include "TurnSystem.h"
 #include <iostream>
 
-TurnSystem::TurnSystem(int rate) : rate(rate), clients_ids_to_worms_ids_iterator(), current_client_id(0), current_worm_id(0)  {}
+TurnSystem::TurnSystem(int rate) :
+    rate(rate),
+    clients_ids_to_worms_ids_iterator(),
+    current_client_id(0),
+    current_worm_id(0) {}
 
 void TurnSystem::update(
-        const int it,
-        std::unordered_map<size_t,std::shared_ptr<Worm>> &worms,
-        const std::shared_ptr<Worm>& active_worm
+    const int it,
+    std::unordered_map<size_t, std::shared_ptr<Worm>> &worms,
+    const std::shared_ptr<Worm> &active_worm
 ) {
     // Check if the game time has run out
     if (game_time_left <= 0) {
@@ -19,7 +23,7 @@ void TurnSystem::update(
 
     // Update times
     game_time_left -= it * rate;
-    switch(state) {
+    switch (state) {
         case TurnState::WAITING_TO_START_NEXT_TURN: {
             // Only advance to the next turn when worms are still
             // TODO When explosions finished also which means projectiles vector comes empty
@@ -43,7 +47,7 @@ void TurnSystem::update(
 }
 
 // Returns true if the step ended the actual turn, false otherwise
-bool TurnSystem::step_turn_time(const int it, const std::shared_ptr<Worm>& active_worm) {
+bool TurnSystem::step_turn_time(const int it, const std::shared_ptr<Worm> &active_worm) {
     turn_time_left -= it * rate;
     // std::cout << "Turn time left: " << turn_time_left << std::endl;
     if (turn_time_left <= 0) {
@@ -53,7 +57,7 @@ bool TurnSystem::step_turn_time(const int it, const std::shared_ptr<Worm>& activ
     return false;
 }
 
-void TurnSystem::check_ending_turn_action(const std::shared_ptr<Worm>& active_worm) {
+void TurnSystem::check_ending_turn_action(const std::shared_ptr<Worm> &active_worm) {
     if (active_worm && active_worm->has_done_an_ending_turn_action) {
         turn_time_left = TIME_AFTER_ENDING_TURN_ACTION;
         state = TurnState::ADDITIONAL_TURN_TIME;
@@ -61,7 +65,7 @@ void TurnSystem::check_ending_turn_action(const std::shared_ptr<Worm>& active_wo
 }
 
 
-void TurnSystem::end_actual_turn(const std::shared_ptr<Worm>& active_worm) {
+void TurnSystem::end_actual_turn(const std::shared_ptr<Worm> &active_worm) {
     if (active_worm) {
         active_worm->on_turn_ended();
     }
