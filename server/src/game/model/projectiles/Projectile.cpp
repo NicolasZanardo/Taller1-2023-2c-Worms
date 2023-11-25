@@ -5,6 +5,7 @@ Projectile::Projectile(size_t id, const std::unique_ptr<ProjectileInfo> &info) :
     weapon_type(info->from_weapon),
     exploded(false),
     damage(info->damage),
+    explosion_radius(info->explosion_radius),
     body(nullptr) {}
 
 ProjectileDto Projectile::to_dto() const {

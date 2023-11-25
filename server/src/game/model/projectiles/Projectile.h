@@ -13,16 +13,15 @@ class InstancesManager;
 
 class Projectile: public Instance, Updatable {
     friend class InstancesManager;
-    size_t shooter_id;
     WeaponTypeDto weapon_type;
 
     bool exploded;
     explicit Projectile(size_t id, const std::unique_ptr<ProjectileInfo> &info);
 public:
-    Damage& damage;
+    float damage;
+    float explosion_radius;
     std::unique_ptr<ProjectileBody> body;
     b2Body* B2Body();
-    float ExplosionRadius();
 
     void update(int it) override;
     ProjectileDto to_dto() const;

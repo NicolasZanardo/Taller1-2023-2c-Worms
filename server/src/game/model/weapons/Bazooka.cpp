@@ -16,7 +16,7 @@ Bazooka::Bazooka(
 ) {}
 
 void Bazooka::start_shooting(float from_x, float from_y, char facing_sign) {
-    if (!has_shot_this_turn) {
+    if (!has_shot_this_turn && ammo_left > 0) {
         has_shot_this_turn = true;
         --ammo_left;
         // std::cout << "Bazooka has " << ammo_left << " ammo left\n";
@@ -26,6 +26,7 @@ void Bazooka::start_shooting(float from_x, float from_y, char facing_sign) {
                 rotation.aimed_angle,
                 facing_sign,
                 damage,
+                explosion_radius,
                 max_power,
                 from_x,
                 from_y,

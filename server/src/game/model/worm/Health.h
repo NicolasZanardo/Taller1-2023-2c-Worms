@@ -2,7 +2,6 @@
 #define TP_WORMS_HEALTH_H
 
 #include <memory>
-#include "../weapons/Damage.h"
 
 class Health {
     float actual_health;
@@ -12,10 +11,10 @@ class Health {
 public:
     explicit Health(float initial_health);
     void on_update();
-    bool IsAlive();
-    bool Amount();
+    bool IsAlive() const;
+    float Amount() const;
 
-    void receive_damage(Damage& damage);
+    void receive_damage(float damage);
     bool heal(float amount);
 
 };

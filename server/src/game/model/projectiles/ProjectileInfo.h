@@ -3,7 +3,6 @@
 
 #include <memory>
 #include "../core/Updatable.h"
-#include "../weapons/Damage.h"
 #include "../../../../../common_base/Game/WeaponTypeDto.h"
 #include "../../../../../common_base/constants.h"
 
@@ -12,7 +11,8 @@ public:
     size_t shooter_id;
     float shot_angle;
     char facing_sign;
-    Damage &damage;
+    float damage;
+    float explosion_radius;
     float power;
     float origin_x;
     float origin_y;
@@ -23,7 +23,8 @@ public:
         size_t shooter_id,
         float shot_angle,
         char facing_sign,
-        Damage &damage,
+        float damage,
+        float explosion_radius,
         float power,
         float origin_x,
         float origin_y,

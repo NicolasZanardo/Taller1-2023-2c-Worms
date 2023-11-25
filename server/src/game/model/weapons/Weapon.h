@@ -5,7 +5,6 @@
 #include <memory>
 #include "../core/Instance.h"
 #include "WeaponRotation.h"
-#include "Damage.h"
 #include "../../../../../common_base/Game/WeaponTypeDto.h"
 #include "../projectiles/CShot.h"
 
@@ -15,7 +14,8 @@ protected:
     size_t owner_id;
     WeaponTypeDto type;
     int ammo_left;
-    Damage damage;
+    float damage;
+    float explosion_radius;
     float charged_power;
     const float max_power;
     bool has_shot_this_turn;

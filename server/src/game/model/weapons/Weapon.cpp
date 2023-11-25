@@ -8,7 +8,7 @@ Weapon::Weapon(
     float explosion_radius,
     WeaponTypeDto type
 ) :
-    owner_id(owner_id), type(type), ammo_left(ammo_left), damage(damage, explosion_radius), charged_power(0), max_power(max_power),
+    owner_id(owner_id), type(type), ammo_left(ammo_left), damage(damage), explosion_radius(explosion_radius), charged_power(0), max_power(max_power),
     has_shot_this_turn(false), rotation(),
     c_shot(nullptr) {
 }

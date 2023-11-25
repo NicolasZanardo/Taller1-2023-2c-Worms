@@ -17,7 +17,7 @@ Mortar::Mortar(
 ) {}
 
 void Mortar::start_shooting(float from_x, float from_y, char facing_direction) {
-    if (!has_shot_this_turn) {
+    if (!has_shot_this_turn && ammo_left > 0) {
         has_shot_this_turn = true;
         --ammo_left;
         std::cout << "Mortar has " << ammo_left << " ammo left\n";
@@ -27,6 +27,7 @@ void Mortar::start_shooting(float from_x, float from_y, char facing_direction) {
                 rotation.aimed_angle,
                 facing_direction,
                 damage,
+                explosion_radius,
                 max_power,
                 from_x,
                 from_y,

@@ -1,10 +1,10 @@
-#ifndef TP_WORMS_FIXTUREQUERIES_H
-#define TP_WORMS_FIXTUREQUERIES_H
+#ifndef TP_WORMS_USERDATAQUERY_H
+#define TP_WORMS_USERDATAQUERY_H
 
 #include <box2d/box2d.h>
 #include <iostream>
 
-class FixtureQueries {
+class UserDataQuery {
 public:
 public:
     template <typename T>
@@ -15,7 +15,7 @@ public:
 };
 
 template <typename T>
-T* FixtureQueries::get_user_data_as_type(b2Fixture* fixture) {
+T* UserDataQuery::get_user_data_as_type(b2Fixture* fixture) {
     b2FixtureUserData userData = fixture->GetUserData();
     if (userData.pointer == 0) {
         return nullptr;
@@ -29,7 +29,7 @@ T* FixtureQueries::get_user_data_as_type(b2Fixture* fixture) {
 }
 
 template <typename T>
-T* FixtureQueries::get_object_from_fixture(b2Fixture* fixtureA, b2Fixture* fixtureB) {
+T* UserDataQuery::get_object_from_fixture(b2Fixture* fixtureA, b2Fixture* fixtureB) {
     T* objectA = get_user_data_as_type<T>(fixtureA);
     T* objectB = get_user_data_as_type<T>(fixtureB);
 
@@ -37,4 +37,4 @@ T* FixtureQueries::get_object_from_fixture(b2Fixture* fixtureA, b2Fixture* fixtu
     return (objectA != nullptr) ? objectA : objectB;
 }
 
-#endif //TP_WORMS_FIXTUREQUERIES_H
+#endif //TP_WORMS_USERDATAQUERY_H
