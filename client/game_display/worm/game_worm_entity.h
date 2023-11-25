@@ -7,12 +7,15 @@
 #include "game_displayable.h"
 #include "game_camera.h"
 #include "worm_anim_key.h"
+#include "game_sprite.h"
+#include "game_text_display.h"
 
 class WormEntity : public CameraTarget{
     WormDto attributes; 
     std::unordered_map<WormAnimKey, GameSprite*> animations;
     GameSprite* active_animation;
     bool is_active;
+    GameTextDisplay* name;
     
     public:
     WormEntity(GameDisplay& display, WormDto& values);

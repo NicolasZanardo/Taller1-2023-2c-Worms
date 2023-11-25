@@ -1,17 +1,17 @@
-#include "game_ui_text.h"
+#include "game_text_display.h"
 #include <SDL_ttf.h>
 using namespace SDL2pp;
 using namespace std;
 
-GameUiText::GameUiText(
+GameTextDisplay::GameTextDisplay(
         GameCamera& cam, 
-        float x, float y, bool absolute,
-        int fnt_size, TextAlign align,
+        float x, float y,
+        int fnt_size, TextAlign align, TextLayer layer,
         const std::string& text
     ) : cam(cam)
     , transform(x,y,0,0)
     , x(x), y(y)
-    , absolute(absolute)
+    , absolute(layer == TextLayer::UI)
     , is_hidden(false)
     , align(align)
     {
@@ -19,16 +19,16 @@ GameUiText::GameUiText(
         surfaceMessage = make_unique<Surface>(std::move(font.RenderText_Solid(text, SDL_Color{255,255,255,255})));
     }
 
-void GameUiText::hidden(bool is_hidden) {
+void GameTextDisplay::hidden(bool is_hidden) {
     this->is_hidden = is_hidden;
 }
 
-void GameUiText::set_pos(float x, float y) {
+void GameTextDisplay::set_pos(float x, float y) {
     this->x = x;
     this->y = y;
 }
 
-void GameUiText::render(Renderer& renderer, float delta_time) {
+void GameTextDisplay::render(Renderer& renderer, float delta_time) {
     if (is_hidden)
         return;
 
@@ -51,4 +51,4 @@ void GameUiText::render(Renderer& renderer, float delta_time) {
     renderer.Copy(*texture, SDL2pp::NullOpt, transform, 0, SDL2pp::NullOpt, 0);
 }
 
-GameUiText::~GameUiText() {}
+GameTextDisplay::~GameTextDisplay() {}

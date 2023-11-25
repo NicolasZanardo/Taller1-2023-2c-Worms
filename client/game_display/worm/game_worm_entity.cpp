@@ -24,6 +24,11 @@ WormEntity::WormEntity(GameDisplay& display, WormDto& values) :
 { WormAnimKey::JUMPING_GREEN_GRENADE , display.new_sprite("wjumpu" , WORM_SIZE, WORM_SIZE, 0) },
     }), active_animation(animations[WormAnimKey::IDLE]),
     is_active(true)
+    , name(display.new_text(
+        std::to_string(values.entity_id), 
+        values.x, values.y + 1, 12,
+        TextAlign::center, TextLayer::ingame
+    ))
     {
         animations[WormAnimKey::IDLE         ]->hidden(false);
         animations[WormAnimKey::IDLE_BAZOOKA         ]->hidden(true);
@@ -68,6 +73,7 @@ void WormEntity::update(WormDto& new_values) {
         active_animation = animations[WormAnimKeyMapper::get_anim_key(new_values.movement_state, new_values.weapon_hold)];
         active_animation->hidden(false);
     }
+    name->set_pos(attributes.x, attributes.y+1);
     active_animation->set_pos(attributes.x,attributes.y);
     active_animation->image_flipped(attributes.is_facing_right);
     active_animation->set_angle(attributes.angle);
