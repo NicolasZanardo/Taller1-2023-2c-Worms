@@ -4,6 +4,7 @@
 class WeaponRotation {
     bool is_aim_angle_rotating;
     bool is_aim_angle_rotating_upwards;
+    float speed;
 public:
     WeaponRotation();
     float aimed_angle = 0;
