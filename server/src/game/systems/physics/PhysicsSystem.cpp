@@ -56,6 +56,7 @@ std::unique_ptr<WormBody> PhysicsSystem::spawn_worm(WormScenarioData worm, std::
 
     // Fixture for foot sensor
     b2FixtureDef footSensorFixtureDef;
+    footSensorFixtureDef.density = 0;
     footSensorFixtureDef.shape = &footSensorBox;
     footSensorFixtureDef.isSensor = true; // Set as sensor to detect collisions without generating a response
     footSensorFixtureDef.userData.pointer = reinterpret_cast<uintptr_t>(wormModel.get()); // same user data
