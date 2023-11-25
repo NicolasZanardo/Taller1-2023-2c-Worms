@@ -6,7 +6,7 @@
 
 class GreenGrenade : public Weapon {
 public:
-    explicit GreenGrenade(int ammo_left, Damage damage);
+    explicit GreenGrenade(int ammo_left, float damage, float explosion_radius);
 
     void start_shooting(float from_x, float from_y) override;
 

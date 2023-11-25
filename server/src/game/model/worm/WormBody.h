@@ -3,15 +3,15 @@
 
 #include "box2d/box2d.h"
 #include "../../../../../common_base/Game/wormDto.h"
+#include "../core/Body.h"
 
-class WormMovement {
+class WormBody: public Body {
     enum class State : uint8_t {
         idle = 0x00,
         moving = 0x01,
         going_upwards = 0x02,
         falling = 0x03
     };
-    b2Body *body;
 
     State state;
     const float speed = 5.0f;
@@ -29,14 +29,11 @@ class WormMovement {
 
 public:
 
-    WormMovement(b2Body* body);
+    WormBody(b2World&  world, b2Body* body);
 
     bool is_on_ground;
     int ground_contact_count = 0;
-    b2Body* getBody() { return body; }
 
-    float x() const;
-    float y() const;
     bool facing_right() const;
 
     MovementStateDto state_to_dto() const;

@@ -1,26 +1,18 @@
-#include "WormMovement.h"
+#include "WormBody.h"
 #include <iostream>
 
-WormMovement::WormMovement(b2Body *body) :
-        body(body),
+WormBody::WormBody(b2World&  world, b2Body* body) :
+        Body(world, body),
         state(State::idle),
         is_moving(false),
         is_facing_right(true),
         is_on_ground(false) {};
 
-float WormMovement::x() const {
-    return body->GetPosition().x;
-}
-
-float WormMovement::y() const {
-    return body->GetPosition().y;
-}
-
-bool WormMovement::facing_right() const {
+bool WormBody::facing_right() const {
     return is_facing_right;
 }
 
-int WormMovement::getFacingDirectionSign() const {
+int WormBody::getFacingDirectionSign() const {
     if (is_facing_right) {
         return 1;
     } else {
@@ -28,21 +20,21 @@ int WormMovement::getFacingDirectionSign() const {
     }
 }
 
-void WormMovement::start_moving_right() {
+void WormBody::start_moving_right() {
     if (is_on_ground) {
         is_facing_right = true;
         is_moving = true;
     }
 }
 
-void WormMovement::start_moving_left() {
+void WormBody::start_moving_left() {
     if (is_on_ground) {
         is_facing_right = false;
         is_moving = true;
     }
 }
 
-void WormMovement::stop_moving() { //left right
+void WormBody::stop_moving() { //left right
     if (is_on_ground) {
         is_moving = false;
         b2Vec2 velocity = body->GetLinearVelocity();
@@ -51,7 +43,7 @@ void WormMovement::stop_moving() { //left right
     }
 }
 
-void WormMovement::jump_forward() {
+void WormBody::jump_forward() {
     if (is_on_ground) {
         is_moving = false;
         body->SetLinearVelocity(b2Vec2(0,0));
@@ -63,7 +55,7 @@ void WormMovement::jump_forward() {
     }
 }
 
-void WormMovement::jump_backwards() {
+void WormBody::jump_backwards() {
     if (is_on_ground) {
         is_moving = false;
         body->SetLinearVelocity(b2Vec2(0,0));
@@ -76,7 +68,7 @@ void WormMovement::jump_backwards() {
     }
 }
 
-void WormMovement::on_update() {
+void WormBody::on_update() {
     float y_velocity = body->GetLinearVelocity().y;
 
     if (is_moving && is_on_ground) {
@@ -96,16 +88,16 @@ void WormMovement::on_update() {
     }
 }
 
-void WormMovement::on_turn_ended() {
+void WormBody::on_turn_ended() {
     is_moving = false;
 }
 
-bool WormMovement::is_still_moving() {
+bool WormBody::is_still_moving() {
     return body->GetLinearVelocity().x != 0 && body->GetLinearVelocity().y != 0;
 }
 
 
-MovementStateDto WormMovement::state_to_dto() const {
+MovementStateDto WormBody::state_to_dto() const {
     switch (state) {
         case State::idle:
             return MovementStateDto::idle;

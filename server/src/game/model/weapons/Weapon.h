@@ -7,7 +7,7 @@
 #include "WeaponRotation.h"
 #include "Damage.h"
 #include "../../../../../common_base/Game/WeaponTypeDto.h"
-#include "../projectiles/Shot.h"
+#include "../projectiles/CShot.h"
 
 
 class Weapon {
@@ -19,10 +19,10 @@ protected:
     bool has_shot_this_turn;
     WeaponRotation rotation;
 
-    std::unique_ptr<Shot> c_shot;
+    std::unique_ptr<CShot> c_shot;
 
 public:
-    Weapon(int ammo_left, Damage damage, float shoot_power, WeaponTypeDto type);
+    Weapon(int ammo_left, float damage, float explosion_radius, float shoot_power, WeaponTypeDto type);
 
     WeaponTypeDto WeaponType();
     float AimedAngle() const;
@@ -38,7 +38,7 @@ public:
     void stop_aiming_up();
     void stop_aiming_down();
 
-    std::unique_ptr<Shot> shot_component();
+    std::unique_ptr<CShot> shot_component();
     virtual ~Weapon() {}
 };
 

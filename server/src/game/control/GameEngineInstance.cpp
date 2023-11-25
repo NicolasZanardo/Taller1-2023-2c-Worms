@@ -106,7 +106,7 @@ void GameEngineInstance::switch_clients_game_queue(std::list<Client *> clients) 
 // Loop methods
 
 void GameEngineInstance::_broadcast_game_state_update() {
-    auto gameState = game.getCurrentState();
+    auto gameState = game.get_current_state();
     auto gameStateUpdateMessage = new NetMessageGameStateUpdate(
         gameState.current_client_id,
         gameState.current_worm_id,

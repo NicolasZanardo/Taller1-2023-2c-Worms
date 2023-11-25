@@ -44,7 +44,7 @@ void WormEntity::update(WormDto& new_values) {
 
     attributes.life = new_values.life;
     attributes.is_facing_right = new_values.is_facing_right;
-    attributes.aiming_angle = new_values.aiming_angle;
+    attributes.angle = new_values.angle;
     attributes.weapon_hold = new_values.weapon_hold;
 
     if (attributes.state != new_values.state) {
@@ -54,7 +54,7 @@ void WormEntity::update(WormDto& new_values) {
     }
     active_animation->set_pos(attributes.x,attributes.y);
     active_animation->image_flipped(attributes.is_facing_right);
-    active_animation->set_angle(attributes.aiming_angle);
+    active_animation->set_angle(attributes.angle);
 
     attributes.state = new_values.state;
 }

@@ -1,23 +1,24 @@
-#include "Bazooka.h"
+#include "Mortar.h"
 #include <iostream>
 
-Bazooka::Bazooka(
+// TODO For now same logic as bazooka
+Mortar::Mortar(
     int ammo_left,
     float damage,
     float explosion_radius
-    ) : Weapon(
-        ammo_left,
-        damage,
-        explosion_radius,
-        100,
-        WeaponTypeDto::BAZOOKA
-        ) {}
+) : Weapon(
+    ammo_left,
+    damage,
+    explosion_radius,
+    100,
+    WeaponTypeDto::MORTER
+) {}
 
-void Bazooka::start_shooting(float from_x, float from_y) {
+void Mortar::start_shooting(float from_x, float from_y) {
     if (!has_shot_this_turn) {
         has_shot_this_turn = true;
         --ammo_left;
-        std::cout << "Bazooka has " << ammo_left << " ammo left\n";
+        std::cout << "Mortar has " << ammo_left << " ammo left\n";
         c_shot = std::make_unique<CShot>(
             std::make_unique<ProjectileInfo>(
                 damage,
@@ -29,8 +30,8 @@ void Bazooka::start_shooting(float from_x, float from_y) {
             rotation.aimed_angle
         );
     } else {
-        std::cout << "Cant shoot again this turn\n";
+        std::cout << "Cant shot Morter again\n";
     }
 }
 
-void Bazooka::end_shooting(float from_x, float from_y) {}
+void Mortar::end_shooting(float from_x, float from_y) {}

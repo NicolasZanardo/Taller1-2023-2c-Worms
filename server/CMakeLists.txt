@@ -27,28 +27,28 @@ add_library( server
         src/game/control/GameInstance.h
         src/game/control/GameInstance.cpp
 
-    src/game/systems/physics/PhysicsCollisionListener.h
-    src/game/systems/physics/PhysicsCollisionListener.cpp
-    src/game/systems/physics/PhysicsSystem.h
-    src/game/systems/physics/PhysicsSystem.cpp
-
         src/game/core/InstancesManager.h
         src/game/core/InstancesManager.cpp
     src/game/model/core/Instance.h
     src/game/model/core/Updatable.h
         src/game/model/core/OnTurnEndedListener.h
-        src/game/model/worm/WormMovement.h
-        src/game/model/worm/WormMovement.cpp
+        src/game/model/core/Body.h
+        src/game/model/core/Body.cpp
+        src/game/model/worm/WormBody.h
+        src/game/model/worm/WormBody.cpp
     src/game/model/worm/Worm.h
     src/game/model/worm/Worm.cpp
+    src/game/model/worm/Health.h
+    src/game/model/worm/Health.cpp
+
         src/game/model/weapons/Weapon.h
         src/game/model/weapons/Weapon.cpp
         src/game/model/weapons/Damage.h
         src/game/model/weapons/Damage.cpp
         src/game/model/weapons/Bazooka.h
         src/game/model/weapons/Bazooka.cpp
-        src/game/model/weapons/Morter.h
-        src/game/model/weapons/Morter.cpp
+        src/game/model/weapons/Mortar.h
+        src/game/model/weapons/Mortar.cpp
         src/game/model/weapons/GreenGrenade.h
         src/game/model/weapons/GreenGrenade.cpp
 
@@ -56,12 +56,15 @@ add_library( server
         src/game/model/weapons/WeaponRotation.cpp
         src/game/model/projectiles/ProjectileInfo.h
         src/game/model/projectiles/ProjectileInfo.cpp
-        src/game/model/projectiles/Shot.h
-        src/game/model/projectiles/Shot.cpp
+        src/game/model/projectiles/CShot.h
+        src/game/model/projectiles/CShot.cpp
         src/game/model/projectiles/Projectile.h
         src/game/model/projectiles/Projectile.cpp
-        src/game/model/projectiles/ProjectileMovement.h
-        src/game/model/projectiles/ProjectileMovement.cpp
+        src/game/model/projectiles/ProjectileBody.h
+        src/game/model/projectiles/ProjectileBody.cpp
+
+        src/game/model/game_events/GameEvent.h
+        src/game/model/game_events/GameEvent.cpp
 
         src/game/control/GameNetMessageBehaviour.h
         src/game/control/GameNetMessageBehaviour.cpp
@@ -73,14 +76,30 @@ add_library( server
     src/game/scenario/ScenarioReader.h
     src/game/scenario/ScenarioReader.cpp
 
-        src/game/systems/turns/TurnManager.h
-        src/game/systems/turns/TurnManager.cpp
+        src/game/systems/turns/TurnSystem.h
+        src/game/systems/turns/TurnSystem.cpp
         src/game/systems/turns/WormIdIterator.h
         src/game/systems/turns/WormIdIterator.cpp
         src/game/systems/instances/InstancesSystem.h
         src/game/systems/instances/InstancesSystem.cpp
         src/game/systems/shot/ShotSystem.h
         src/game/systems/shot/ShotSystem.cpp
+
+        src/game/systems/physics/CollisionEvent.h
+        src/game/systems/physics/begin_contact_events/BWormWithGround.h
+        src/game/systems/physics/begin_contact_events/BWormWithGround.cpp
+        src/game/systems/physics/begin_contact_events/BProjectileWithAny.h
+        src/game/systems/physics/begin_contact_events/BProjectileWithAny.cpp
+        src/game/systems/physics/end_contact_events/EWormWithGround.h
+        src/game/systems/physics/end_contact_events/EWormWithGround.cpp
+        src/game/systems/physics/raycast_callbacks/OnProjectileExplosionRayCast.h
+        src/game/systems/physics/raycast_callbacks/OnProjectileExplosionRayCast.cpp
+        src/game/systems/physics/PhysicsCollisionListener.h
+        src/game/systems/physics/PhysicsCollisionListener.cpp
+        src/game/systems/physics/PhysicsSystem.h
+        src/game/systems/physics/PhysicsSystem.cpp
+        src/game/systems/physics/fixture_queries/FixtureQueries.h
+
 )
 
 add_executable(
