@@ -2,12 +2,17 @@
 #include <iostream>
 #include <math.h>
 
+inline float normalize_angle(float angle) {
+    return 360 * (angle < 0) + std::fmod(angle,360);
+}
+
 GameSprite::~GameSprite() { }
 GameSprite::GameSprite(GameCamera& cam, GameSpriteInfo& info, float width, float height, float angle) :
     cam(cam),
     info(info),
     x(0),y(0),w(width),h(height),
     transform(0,0,0,0),
+    offset(width/2, height/2),
     angle(angle),
     is_active(true),
     flip(SDL_FLIP_NONE),
@@ -26,7 +31,7 @@ void GameSprite::set_size(float width, float heigth) {
 }
 
 void GameSprite::set_angle(float angle) {
-    this->angle = 360 * (angle < 0) + std::fmod(angle,360);
+    this->angle = normalize_angle(angle);
 }
 
 void GameSprite::image_flipped(bool image_is_flipped) {
@@ -41,20 +46,19 @@ void GameSprite::render(SDL2pp::Renderer& renderer, float delta_time) {
     if (!is_active) return;
     
     cam.body_to_transform(x,y,w,h,transform);
-    SDL2pp::Point center(
-        (transform.GetW()) / 2,
-        (transform.GetH()) / 2
-    );
+    offset.SetX(cam.transform_w(w)/2);
+    offset.SetY(cam.transform_h(h)/2);
 
     if (info.frame_count <= 0) {
-        renderer.Copy(info.texture,SDL2pp::NullOpt,transform,-angle,center,flip);
+        renderer.Copy(info.texture,SDL2pp::NullOpt,transform,normalize_angle(-angle),offset,flip);
+        
         return;
     }
 
     update_animation(delta_time);
     if (info.animation == BY_ANGLE)
-        renderer.Copy(info.texture, info.image_frame(anim_progress), transform, 0.0, SDL2pp::NullOpt, flip);
-    else renderer.Copy(info.texture, info.image_frame(anim_progress), transform, -angle, SDL2pp::NullOpt, flip);
+        renderer.Copy(info.texture, info.image_frame(anim_progress), transform, 0.0, offset, flip);
+    else renderer.Copy(info.texture, info.image_frame(anim_progress), transform, angle, offset, flip);
 
     renderer.SetDrawColor(SDL2pp::Color{255,255,255,255});
     renderer.DrawRect(transform);
