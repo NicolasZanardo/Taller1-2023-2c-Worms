@@ -26,7 +26,7 @@ WormAnimationSet::WormAnimationSet(
     }),
     weapon_state_sprite({
 { WeaponTypeDto::BAZOOKA       , bazooka },
-{ WeaponTypeDto::MORTER        , mortar },
+{ WeaponTypeDto::MORTAR        , mortar },
 { WeaponTypeDto::GREEN_GRENADE , green_granade }
     }),
     active_body(falling), state(MovementStateDto::FALLING),
