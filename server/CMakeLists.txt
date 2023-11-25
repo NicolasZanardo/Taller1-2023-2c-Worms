@@ -66,8 +66,6 @@ add_library( server
         src/game/model/projectiles/Projectile.cpp
         src/game/model/projectiles/ProjectileBody.h
         src/game/model/projectiles/ProjectileBody.cpp
-        src/game/model/projectiles/Explosion.h
-        src/game/model/projectiles/Explosion.cpp
 
         src/game/model/game_events/GameWorldEvent.h
         src/game/model/game_events/GameWorldEvent.cpp
