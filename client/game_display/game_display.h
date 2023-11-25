@@ -10,8 +10,8 @@
 #include "game_sprite_manager.h"
 #include "game_displayable.h"
 #include "game_sprite.h"
-#include "game_ui_text.h"
 #include "Game/GameAction.h"
+#include "game_text_display.h"
 
 class GameDisplay {
     int fps;
@@ -28,7 +28,9 @@ class GameDisplay {
     ~GameDisplay();
 
     void update(float delta_time);
-    GameUiText* new_ui_text(const std::string& text, float x, float y, int fnt_size, TextAlign align);
+    //void remove(Displayable* item);
+    //WormAnimationSet* new_worm_animation(float width, float height, float angle);
+    GameTextDisplay* new_text(const std::string& text, float x, float y, int fnt_size, TextAlign align, TextLayer layer);
     GameSprite* new_sprite(const std::string& spritekey, float width, float height, float angle = 0);
 };
 

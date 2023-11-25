@@ -9,13 +9,10 @@
 #include "game_sprite_info.h"
 
 
-enum class TextAlign : uint8_t {
-    left = 0x00,
-    center = 0x01,
-    right = 0x02
-};
+enum TextAlign { left, center, right };
+enum TextLayer { UI, ingame };
 
-class GameUiText : public Displayable {
+class GameTextDisplay : public Displayable {
     GameCamera& cam;
     SDL2pp::Rect transform;
     float x,y;
@@ -26,8 +23,8 @@ class GameUiText : public Displayable {
     TextAlign align;
 
     public:
-    ~GameUiText() override;
-    explicit GameUiText(GameCamera& cam, float x, float y, bool absolute, int fnt_size, TextAlign align, const std::string& text);
+    ~GameTextDisplay() override;
+    explicit GameTextDisplay(GameCamera& cam, float x, float y, int fnt_size, TextAlign align, TextLayer layer, const std::string& text);
 
     void hidden(bool is_hidden);
     void set_pos(float x, float y);

@@ -12,12 +12,12 @@ add_executable (client_app
         game_display/worm/worm_anim_key_mapper.h game_display/worm/worm_anim_key_mapper.cpp
         game_display/worm/worm_anim_key.h
     game_display/game_display.h game_display/game_display.cpp
-
-        game_display/ui_elements/game_displayable.h
-    game_display/ui_elements/game_camera.h      game_display/ui_elements/game_camera.cpp
-    game_display/ui_elements/game_ui_text.h     game_display/ui_elements/game_ui_text.cpp
-    game_display/ui_elements/game_sprite_info.h game_display/ui_elements/game_sprite_info.cpp
-    game_display/ui_elements/game_sprite.h      game_display/ui_elements/game_sprite.cpp
+    
+    game_display/ui_elements/game_displayable.h
+    game_display/ui_elements/game_camera.h       game_display/ui_elements/game_camera.cpp
+    game_display/ui_elements/game_text_display.h game_display/ui_elements/game_text_display.cpp
+    game_display/ui_elements/game_sprite_info.h  game_display/ui_elements/game_sprite_info.cpp
+    game_display/ui_elements/game_sprite.h       game_display/ui_elements/game_sprite.cpp
 
     game_managment/client_receiver.cpp game_managment/client_receiver.h
     game_managment/client_sender.cpp game_managment/client_sender.h
@@ -28,15 +28,7 @@ add_executable (client_app
         game_managment/commands/GameActionCommand.h game_managment/commands/GameActionCommand.cpp
     #game_ui/animation.cpp game_ui/animation.h
     game_ui/client_game_state.cpp game_ui/client_game_state.h
-    #game_ui/drawable_integer.cpp game_ui/drawable_integer.h
-    #game_ui/frame_selector.cpp game_ui/frame_selector.h
     game_ui/game_loop.cpp game_ui/game_loop.h
-    #game_ui/icon.cpp game_ui/icon.h
-    #game_ui/non_animation.cpp game_ui/non_animation.h
-    #game_ui/sprite.cpp game_ui/sprite.h
-    #game_ui/sprites_manager.cpp game_ui/sprites_manager.h
-    #game_ui/worm_state.cpp game_ui/worm_state.h
-    #game_ui/beam_state.cpp game_ui/beam_state.h
     game_ui/ui_utils.h game_ui/ui_utils.cpp
 )
 

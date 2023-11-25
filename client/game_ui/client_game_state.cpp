@@ -4,7 +4,7 @@
 
 ClientGameState::ClientGameState(GameDisplay& display)
     : display(display)
-    , turnDisplay(display.new_ui_text("Es mi turno!",400,0, 30, TextAlign::center))
+    , turnDisplay(display.new_text("Es mi turno!",400, 0, 30, TextAlign::center, TextLayer::UI))
     , worms()
     , my_client_id(-1) 
     {
