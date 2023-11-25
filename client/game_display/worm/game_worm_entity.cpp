@@ -15,7 +15,8 @@ WormEntity::WormEntity(GameDisplay& display, WormDto& values) :
 { MovementStateDto::moving        , display.new_sprite("w_bazooka"  , WORM_SIZE, WORM_SIZE, 0) },
 { MovementStateDto::moving        , display.new_sprite("w_green_grenade"  , WORM_SIZE, WORM_SIZE, 0) },
 { MovementStateDto::moving        , display.new_sprite("w_mortar"  , WORM_SIZE, WORM_SIZE, 0) }
-    }), active_animation(animations[MovementStateDto::idle])
+    }), active_animation(animations[MovementStateDto::idle]),
+    is_active(true)
     {
         animations[MovementStateDto::idle         ]->hidden(false);
         animations[MovementStateDto::falling      ]->hidden(true);
@@ -59,10 +60,18 @@ void WormEntity::update(WormDto& new_values) {
     attributes.state = new_values.state;
 }
 
+void WormEntity::destroy() {
+    is_active = false;
+}
+
 float WormEntity::get_x() {
     return attributes.x;
 }
 
 float WormEntity::get_y() {
     return attributes.y;
+}
+
+void WormEntity::kill() {
+    active_animation = animations[]
 }

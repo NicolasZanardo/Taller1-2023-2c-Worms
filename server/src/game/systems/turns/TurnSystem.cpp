@@ -21,7 +21,8 @@ void TurnSystem::update(
     game_time_left -= it * rate;
     switch(state) {
         case TurnState::WAITING_TO_START_NEXT_TURN: {
-            // Only advance to the next turn when worms are still // TODO When explosions finished also
+            // Only advance to the next turn when worms are still
+            // TODO When explosions finished also which means projectiles vector comes empty
             if (worms_are_still(worms)) {
                 advance_to_next_turn();
             }
@@ -94,20 +95,7 @@ void TurnSystem::add_player(size_t client_id, const std::list<size_t> &worm_ids_
     if (worm_ids_from_client.empty()) {
         throw std::runtime_error("Worm id list could not be empty");
     }
-
-    std::cout << "Added client id: " << client_id << " to the turn system with worms: ";
-
-    // Iterate through the list of worm IDs and print each one
-    for (const auto &worm_id: worm_ids_from_client) {
-        std::cout << worm_id << " ";
-    }
-
-    std::cout << std::endl;
-
     clients_ids_to_worms_ids_iterator.emplace(client_id, worm_ids_from_client);
-
-    //     WormIdIterator worms_id_iterator(worm_ids_from_client);
-    // clients_ids_to_worms_ids_iterator[client_id] = worms_id_iterator;
 }
 
 void TurnSystem::remove_worm(size_t worm_id) {

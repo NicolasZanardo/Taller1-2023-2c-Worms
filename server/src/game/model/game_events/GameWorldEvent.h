@@ -6,7 +6,9 @@
 
 class GameEvent: public Instance {
 
+    
     GameEventType type;
+    int associated_entity_id;
     float x;
     float y;
 public:

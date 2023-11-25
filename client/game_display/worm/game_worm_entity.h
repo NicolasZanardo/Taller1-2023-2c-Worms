@@ -11,10 +11,12 @@ class WormEntity : public CameraTarget{
     WormDto attributes; 
     std::unordered_map<MovementStateDto, GameSprite*> animations;
     GameSprite* active_animation;
+    bool is_active;
     
     public:
     WormEntity(GameDisplay& display, WormDto& values);
     void update(WormDto& new_values);
+    void destroy();
 
     float get_x() override;
     float get_y() override;
