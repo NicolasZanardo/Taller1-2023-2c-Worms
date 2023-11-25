@@ -96,8 +96,8 @@ add_library( server
         src/game/systems/physics/begin_contact_events/BProjectileWithAny.cpp
         src/game/systems/physics/end_contact_events/EWormWithGround.h
         src/game/systems/physics/end_contact_events/EWormWithGround.cpp
-        src/game/systems/physics/raycast_callbacks/OnProjectileExplosionRayCast.h
-        src/game/systems/physics/raycast_callbacks/OnProjectileExplosionRayCast.cpp
+        src/game/systems/physics/raycast_callbacks/OnProjectileExplosionQuery.cpp
+        src/game/systems/physics/raycast_callbacks/OnProjectileExplosionQuery.cpp
         src/game/systems/physics/PhysicsCollisionListener.h
         src/game/systems/physics/PhysicsCollisionListener.cpp
         src/game/systems/physics/PhysicsSystem.h
