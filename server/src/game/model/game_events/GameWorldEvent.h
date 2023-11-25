@@ -1,19 +1,19 @@
-#ifndef TP_WORMS_GAMEEVENT_H
-#define TP_WORMS_GAMEEVENT_H
+#ifndef TP_WORMS_GAMEWORLDEVENT_H
+#define TP_WORMS_GAMEWORLDEVENT_H
 
 #include "../core/Instance.h"
-#include "../../../../../common_base/Game/GameEventType.h"
+#include "../../../../../common_base/Game/GameWorldEventType.h"
 
-class GameEvent: public Instance {
+class GameWorldEvent: public Instance {
 
-    
-    GameEventType type;
+
+    GameWorldEventType type;
     int associated_entity_id;
     float x;
     float y;
 public:
-    GameEvent(size_t id, GameEventType type, float x, float y);
+    GameWorldEvent(size_t id, GameWorldEventType type, float x, float y);
 };
 
 
-#endif //TP_WORMS_GAMEEVENT_H
+#endif //TP_WORMS_GAMEWORLDEVENT_H

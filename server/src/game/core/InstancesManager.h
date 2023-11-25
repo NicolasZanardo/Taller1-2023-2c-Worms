@@ -12,7 +12,7 @@
 class InstancesManager {
 private:
     size_t total_entities_created = 0;
-    PhysicsSystem& physicsSystem;
+    PhysicsSystem& physics_system;
 
     // Worm id to worm map
     std::unordered_map<size_t, std::shared_ptr<Worm>> worms;

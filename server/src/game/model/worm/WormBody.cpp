@@ -100,12 +100,12 @@ bool WormBody::is_still_moving() {
 MovementStateDto WormBody::state_to_dto() const {
     switch (state) {
         case State::idle:
-            return MovementStateDto::idle;
+            return MovementStateDto::IDLE;
         case State::moving:
-            return MovementStateDto::moving;
+            return MovementStateDto::MOVING;
         case State::going_upwards:
-            return MovementStateDto::going_upwards;
+            return MovementStateDto::GOING_UPWARDS;
         case State::falling:
-            return MovementStateDto::falling;
+            return MovementStateDto::FALLING;
     }
 }

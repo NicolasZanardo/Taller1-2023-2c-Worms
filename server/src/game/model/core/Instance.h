@@ -4,10 +4,14 @@
 #include <cstddef>
 
 class Instance {
-public:
+protected:
     size_t id;
     bool is_active;
-    explicit Instance(size_t id) : id(id), is_active(true) {}
+public:
+    explicit Instance(size_t id);
+    size_t Id() const;
+    void Destroy();
+    bool IsActive();
 
 };
 

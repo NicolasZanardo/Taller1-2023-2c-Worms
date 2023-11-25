@@ -18,7 +18,6 @@ class InstancesManager;
 class Worm: public Instance, Updatable, OnTurnEndedListener {
 private:
     friend class InstancesManager;
-
     WeaponMap weapons;
     std::shared_ptr<Weapon> & actual_weapon;
     Health health;
@@ -30,7 +29,7 @@ public:
     std::shared_ptr<WormBody> body;
     bool has_done_an_ending_turn_action;
 
-    WormDto toWormDto(size_t clientId);
+    WormDto toWormDto(size_t client_id);
 
     float X() const;
     float Y() const;

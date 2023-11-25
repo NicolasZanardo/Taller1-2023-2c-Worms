@@ -2,7 +2,7 @@
 
 GameWorldEvent::GameWorldEvent(
     size_t id,
-    GameWorldvEventType type,
+    GameWorldEventType type,
     float x,
     float y
 ) : Instance(id), type(type), x(x), y(y) {}
