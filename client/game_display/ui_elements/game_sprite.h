@@ -12,6 +12,7 @@ class GameSprite : public Displayable {
     GameSpriteInfo& info;
     float x,y,w,h;
     SDL2pp::Rect transform;
+    SDL2pp::Point offset;
     float angle;
     bool is_active;
     SDL_RendererFlip flip;
