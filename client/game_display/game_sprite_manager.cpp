@@ -12,20 +12,20 @@ GameSpriteManager::~GameSpriteManager() {
 }
 
 void GameSpriteManager::add_texture(const string keyname, const string file_path) {
-    add_texture(keyname, file_path, -1, -1, 0, 0, 0, 0.0f);
+    textures.emplace(keyname, new GameSpriteInfo(renderer, file_path));
 }
 
 void GameSpriteManager::add_texture(const string keyname, const string file_path,
                                     uint16_t image_width, uint16_t image_height,
                                     uint16_t image_xoffset, uint16_t image_yoffset,
-                                    uint16_t image_sep, float image_speed) {
+                                    uint16_t image_sep, SpriteAnimationType animation, float image_speed) {
     textures.emplace(
             keyname,
             new GameSpriteInfo(
                     renderer, file_path,
                     image_width, image_height,
                     image_xoffset, image_yoffset,
-                    image_sep, image_speed
+                    image_sep, animation, image_speed
             )
     );
 }
@@ -33,14 +33,14 @@ void GameSpriteManager::add_texture(const string keyname, const string file_path
 void GameSpriteManager::add_texture(const string keyname, const string file_path,
                                     uint16_t image_width, uint16_t image_height,
                                     uint16_t image_xoffset, uint16_t image_yoffset,
-                                    uint16_t image_sep, float image_speed, bool flag, Uint32 key) {
+                                    uint16_t image_sep, SpriteAnimationType animation, float image_speed, bool flag, Uint32 key) {
     textures.emplace(
             keyname,
             new GameSpriteInfo(
                     renderer, file_path,
                     image_width, image_height,
                     image_xoffset, image_yoffset,
-                    image_sep, image_speed, flag, key
+                    image_sep, animation, image_speed, flag, key
             )
     );
 }

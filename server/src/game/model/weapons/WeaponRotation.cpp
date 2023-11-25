@@ -2,8 +2,11 @@
 #include <iostream>
 
 WeaponRotation::WeaponRotation() :
-        aimed_angle(0), is_aim_angle_rotating(false), is_aim_angle_rotating_upwards(false) {
-}
+    is_aim_angle_rotating(false), 
+    is_aim_angle_rotating_upwards(false),
+    speed(3.0f),
+    aimed_angle(0) 
+    { }
 
 void WeaponRotation::start_aiming_up() {
     is_aim_angle_rotating = true;
@@ -29,9 +32,9 @@ void WeaponRotation::on_update() {
     if (is_aim_angle_rotating) {
         std::cout << "Rotation angle is: " << aimed_angle << std::endl;
         if (is_aim_angle_rotating_upwards) {
-            aimed_angle += 1;
+            aimed_angle += speed;
         } else {
-            aimed_angle -= 1;
+            aimed_angle -= speed;
         }
     }
 }
