@@ -34,33 +34,33 @@ void GameNetMessageBehaviour::run(NetMessageGameStateUpdate *msg) {
 
 void GameNetMessageBehaviour::run(NetMessageGameAction *msg) {
 
-    if (!game.isClientsTurn(msg->client_id)) {
+    if (!game.is_client_turn(msg->client_id)) {
         return;
     }
     switch (msg->action) {
 
         case GameAction::MOVE_RIGHT_INIT: {
-            game.startMovingCurrentWormRight();
+            game.start_moving_current_worm_right();
             break;
         }
         case GameAction::MOVE_LEFT_INIT: {
-            game.startMovingCurrentWormLeft();
+            game.start_moving_current_worm_left();
             break;
         }
         case GameAction::MOVE_RIGHT_END: {
-            game.stopMovingCurrentWorm(); // TODO
+            game.stop_moving_current_worm(); // TODO
             break;
         }
         case GameAction::MOVE_LEFT_END: {
-            game.stopMovingCurrentWorm(); // TODO better mechanics
+            game.stop_moving_current_worm(); // TODO better mechanics
             break;
         }
         case GameAction::JUMP_BACKWARDS: {
-            game.jumpBackCurrentWorm();
+            game.jump_back_current_worm();
             break;
         }
         case GameAction::JUMP_FORWARD: {
-            game.jumpForwardCurrentWorm();
+            game.jump_forward_current_worm();
             break;
         }
         case GameAction::AIM_UP_INIT: {
@@ -93,7 +93,7 @@ void GameNetMessageBehaviour::run(NetMessageGameAction *msg) {
 
 void GameNetMessageBehaviour::run(NetMessagePlayerChangedWeapon *msg) {
     std::cout << "NetMessageBehaviour received the change weapon call\n";
-    if (!game.isClientsTurn(msg->client_id)) {
+    if (!game.is_client_turn(msg->client_id)) {
         return;
     }
     game.change_weapon_for_current_worm(msg->chosen_weapon);

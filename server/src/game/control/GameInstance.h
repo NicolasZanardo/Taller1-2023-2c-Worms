@@ -1,6 +1,7 @@
 #ifndef SERVER_GAMEINSTANCE_H
 #define SERVER_GAMEINSTANCE_H
 
+#include <functional>
 #include <memory>
 #include <unordered_map>
 #include <list>
@@ -13,7 +14,7 @@
 #include "../core/InstancesManager.h"
 #include "../../client/client.h"
 #include "../systems/physics/PhysicsSystem.h"
-#include "../systems/turns/TurnManager.h"
+#include "../systems/turns/TurnSystem.h"
 #include "../systems/instances/InstancesSystem.h"
 #include "../systems/shot/ShotSystem.h"
 
@@ -42,14 +43,12 @@ struct GameState {
 
 class GameInstance {
 
-    PhysicsSystem physicsSystem;
-    InstancesManager instancesManager;
+    PhysicsSystem physics_system;
+    InstancesManager instances_manager;
     ClientsWorms clientsWorms;
-    TurnManager turnManager;
+    TurnSystem turn_system;
     InstancesSystem instances_system;
     ShotSystem shot_system;
-
-    int active_worm_id;
 
     void assign_worms_to_clients(const std::list<Client *> &clients);
 
@@ -64,18 +63,22 @@ public:
 
     ClientsWorms getClientsWorms();
     std::vector<std::shared_ptr<Projectile>>& get_projectiles();
-    GameState getCurrentState();
+    GameState get_current_state();
 
     void update(const int it);
-    bool isClientsTurn(size_t id);
+    bool is_client_turn(size_t id);
 
     // Actions
+    void perform_action_on_current_worm(const std::function<void(std::shared_ptr<Worm>)>& action);
+    template <typename T>
+    void perform_action_on_current_worm(const std::function<void(std::shared_ptr<Worm>, T)>& action, T parameter);
+
     // Movement
-    void startMovingCurrentWormLeft();
-    void startMovingCurrentWormRight();
-    void stopMovingCurrentWorm();
-    void jumpBackCurrentWorm();
-    void jumpForwardCurrentWorm();
+    void start_moving_current_worm_left();
+    void start_moving_current_worm_right();
+    void stop_moving_current_worm();
+    void jump_back_current_worm();
+    void jump_forward_current_worm();
 
     // Weapon
     void start_aiming_up_current_worm();
@@ -87,11 +90,6 @@ public:
     // Shot
     void start_shot_for_current_worm();
     void end_shot_for_current_worm();
-
-
-
-
-
 
 };
 
