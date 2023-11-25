@@ -3,17 +3,26 @@ Repositorio para entrega del ultimo trabajo practico de la materia Taller I.
 
 Para compilar el proyecto:
 
+## Instalación de SDL
+
+Ejecutar en la consola:
+```shell
+sudo apt-get install libsdl2-2.0-0  libsdl2-dev
+libsdl2-image-2.0-0 libsdl2-image-dev
+libsdl2-mixer-2.0-0 libsdl2-mixer-dev
+libsdl2-ttf-2.0-0 libsdl2-ttf-dev
+```
+
+## Compilar
 build command line: 
 
-- mkdir build
-
-- cd build
-
-- cmake ..
-
-- make
-
-- cd bin
+```
+mkdir build
+cd build
+cmake ..
+make
+cd bin
+```
 
 Para correr los ejecutables del server y del cliente 
 
@@ -22,8 +31,9 @@ Servidor:
 - ./server_app [port]
   
 Ejemplo:
-
-- ./server_app 1111
+```
+./server_app 1111
+```
 
 Cliente:
 
@@ -31,12 +41,14 @@ Cliente:
 
 Ejemplo:
 
-- ./client_app localhost 1111
+```
+./client_app localhost 1111
+```
 
 Una vez que los clientes se hayan conectado, en el server correr en linea de comandos:
 - start
 
-Instrucciones del juego:
+## Instrucciones del juego:
 
 - Flechas iquierda/derecha: Desplazarse
 - Enter: Salto hacia adelante
