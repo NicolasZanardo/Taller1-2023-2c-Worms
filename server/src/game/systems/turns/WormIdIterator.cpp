@@ -8,7 +8,7 @@ WormIdIterator::WormIdIterator(const list<size_t>& worms_ids) :
     current_worm_iterator(m_worms_ids.begin()) {}
 
 
-size_t WormIdIterator::getCurrentWorm() const {
+size_t WormIdIterator::get_current_worm() const {
     return *current_worm_iterator;
 }
 
@@ -37,4 +37,8 @@ bool WormIdIterator::remove_worm_id(size_t worm_id) {
     }
 
     return false;  // Worm not found
+}
+
+bool WormIdIterator::is_empty() const {
+    return m_worms_ids.empty();
 }
