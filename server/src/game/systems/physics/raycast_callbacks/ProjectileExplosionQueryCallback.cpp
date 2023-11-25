@@ -1,7 +1,6 @@
-#include "OnProjectileExplosionRayCast.h"
+#include "OnProjectileExplosionQuery.h"
 
-float OnProjectileExplosionRayCast::ReportFixture(b2Fixture *fixture, const b2Vec2 &point, const b2Vec2 &normal,
-                                                  float fraction) {
+bool OnProjectileExplosionQuery::ReportFixture(b2Fixture* fixture) {
     auto hit_worm = query.get_user_data_as_type<Worm>(fixture);
     if (hit_worm) {
         worms_hit.emplace_back(hit_worm, point, fraction);
@@ -16,8 +15,8 @@ float OnProjectileExplosionRayCast::ReportFixture(b2Fixture *fixture, const b2Ve
     return fraction; // clip ray to the ground
 }
 
-OnProjectileExplosionRayCast::OnProjectileExplosionRayCast(FixtureQueries &query): query(query), worms_hit(){}
+OnProjectileExplosionQuery::OnProjectileExplosionQuery(FixtureQueries &query): query(query), worms_hit(){}
 
-void OnProjectileExplosionRayCast::reset() {
+void OnProjectileExplosionQuery::reset() {
     void reset();
 }

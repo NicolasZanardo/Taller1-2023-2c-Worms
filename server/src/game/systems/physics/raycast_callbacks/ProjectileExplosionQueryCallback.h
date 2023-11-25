@@ -1,5 +1,5 @@
-#ifndef TP_WORMS_ONPROJECTILEEXPLOSIONRAYCAST_H
-#define TP_WORMS_ONPROJECTILEEXPLOSIONRAYCAST_H
+#ifndef TP_WORMS_ONPROJECTILEEXPLOSIONQUERY_H
+#define TP_WORMS_ONPROJECTILEEXPLOSIONQUERY_H
 
 #include <box2d/box2d.h>
 #include <algorithm>
@@ -16,14 +16,14 @@ public:
     WormHitInfo(Worm* worm, const b2Vec2& hit_point, const float fraction) : worm(worm), hit_point(hit_point), fraction(fraction) {}
 };
 
-class OnProjectileExplosionRayCast: public b2RayCastCallback {
+class OnProjectileExplosionQuery: public b2QueryCallback {
     FixtureQueries &query;
-    float ReportFixture(b2Fixture* fixture, const b2Vec2& point, const b2Vec2& normal, float fraction) override;
+    bool ReportFixture(b2Fixture* fixture) override;
 public:
     std::vector< WormHitInfo> worms_hit;
-    OnProjectileExplosionRayCast(FixtureQueries& query);
+    OnProjectileExplosionQuery(FixtureQueries& query);
     void reset();
 };
 
 
-#endif //TP_WORMS_ONPROJECTILEEXPLOSIONRAYCAST_H
+#endif //TP_WORMS_ONPROJECTILEEXPLOSIONQUERY_H
