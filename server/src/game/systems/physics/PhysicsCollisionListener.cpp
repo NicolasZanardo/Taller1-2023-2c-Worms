@@ -1,57 +1,56 @@
 #include "PhysicsCollisionListener.h"
+#include "begin_contact_events/BWormWithGround.h"
+#include "begin_contact_events/BProjectileWithAny.h"
+#include "end_contact_events/EWormWithGround.h"
 #include <iostream>
 
-void PhysicsCollisionListener::BeginContact(b2Contact *contact) {
-    b2Fixture* fixtureA = contact->GetFixtureA();
-    b2Fixture* fixtureB = contact->GetFixtureB();
 
-    on_worm_began_contact_with_ground(fixtureA, fixtureB);
+// TODO Should maybe have a map with a pair of tags pointing to a CollisionEventResolution function
+// Instead of quering by trying to cast and returning true if resolved
+/*
+ *  A successful resolution breaks the BeginContact method
+ *  For now, the events  represent a (1 to 1 contact) or (1 to Any),
+ *  so if a (1 to 1) or (1 to any) contact is resolved
+ *  it means there is no other possible combination left to analyze.
+ *  (1 to Any) should handle all cases for Any in order for the rest of events to be excluded
+ */
+void PhysicsCollisionListener::BeginContact(b2Contact *contact) {
+    b2Fixture *fixtureA = contact->GetFixtureA();
+    b2Fixture *fixtureB = contact->GetFixtureB();
+
+    for (auto &event: beginning_collisions) {
+         if (event->try_resolve(fixtureA, fixtureB))
+             return;
+    }
+
 }
 
 void PhysicsCollisionListener::EndContact(b2Contact *contact) {
-    b2Fixture* fixtureA = contact->GetFixtureA();
-    b2Fixture* fixtureB = contact->GetFixtureB();
+    b2Fixture *fixtureA = contact->GetFixtureA();
+    b2Fixture *fixtureB = contact->GetFixtureB();
 
-    on_worm_ended_contact_with_ground(fixtureA, fixtureB);
-
-}
-
-void PhysicsCollisionListener::on_worm_began_contact_with_ground(b2Fixture* fixtureA, b2Fixture* fixtureB) {
-    bool isFootSensorA = fixtureA->IsSensor();
-    bool isFootSensorB = fixtureB->IsSensor();
-
-    if (isFootSensorA || isFootSensorB) {
-        Worm* worm = get_worm_from_fixture(fixtureA, fixtureB);
-        if (worm && worm->movement) {
-            worm->movement->ground_contact_count++;
-            worm->movement->is_on_ground = (worm->movement->ground_contact_count > 0);
-        }
+    for (auto &event: ending_collisions) {
+        if (event->try_resolve(fixtureA, fixtureB))
+            return;
     }
 }
 
-void PhysicsCollisionListener::on_worm_ended_contact_with_ground(b2Fixture* fixtureA, b2Fixture* fixtureB) {
-    bool isFootSensorA = fixtureA->IsSensor();
-    bool isFootSensorB = fixtureB->IsSensor();
+/*
+ * Set the events with priority in mind
+ */
+PhysicsCollisionListener::PhysicsCollisionListener(b2World &world) : world(world), beginning_collisions(), ending_collisions(){
+    _init_beginning_collision_events();
+    _init_ending_collision_events();
+}
 
-    if (isFootSensorA || isFootSensorB) {
-        Worm* worm = get_worm_from_fixture(fixtureA, fixtureB);
-        if (worm && worm->movement) {
-            worm->movement->ground_contact_count--;
-            worm->movement->is_on_ground = (worm->movement->ground_contact_count > 0);
-        }
-    }
+void PhysicsCollisionListener::_init_beginning_collision_events() {
+    beginning_collisions.emplace_back(std::make_unique<BWormWithGround>(world));
+    beginning_collisions.emplace_back(std::make_unique<BProjectileWithAny>(world));
+}
+
+void PhysicsCollisionListener::_init_ending_collision_events() {
+    ending_collisions.emplace_back(std::make_unique<EWormWithGround>(world));
 }
 
 
-Worm* PhysicsCollisionListener::get_worm_from_fixture(b2Fixture* fixtureA, b2Fixture* fixtureB) {
-    bool isFootSensorA = fixtureA->IsSensor();
-    bool isFootSensorB = fixtureB->IsSensor();
-
-    if (isFootSensorA || isFootSensorB) {
-        uintptr_t wormPtr = isFootSensorA ? fixtureA->GetUserData().pointer : fixtureB->GetUserData().pointer;
-        return reinterpret_cast<Worm*>(wormPtr);
-    }
-
-    return nullptr;
-}
 
