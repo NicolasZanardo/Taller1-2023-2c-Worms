@@ -20,7 +20,6 @@ public:
 
     std::unique_ptr<ProjectileBody> spawn_projectile(
         const std::unique_ptr<ProjectileInfo> &projectile_info,
-        float shot_angle,
         const std::shared_ptr<Projectile> &projectile
     );
 
@@ -29,7 +28,6 @@ private:
     const uint16_t WORM_CATEGORY = 0x0001;
     const uint16_t GROUND_CATEGORY = 0x0002;
     const uint16_t PROJECTILE_CATEGORY = 0x0003;
-    const uint16_t EXPLOSION_SENSOR_CATEGORY = 0x0004;
 
     const float timeStep;
     const int32 velocityIterations = 8;

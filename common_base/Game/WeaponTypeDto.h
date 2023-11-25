@@ -6,7 +6,7 @@
 enum class WeaponTypeDto: uint8_t {
     NONE = 0x00,
     BAZOOKA = 0x01,
-    MORTER = 0x02,
+    MORTAR = 0x02,
     GREEN_GRENADE = 0x03,
     SAINT_GRENADE = 0x04,
     BASEBALL_BAT = 0x05,

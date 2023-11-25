@@ -5,14 +5,14 @@
 #include "ProjectileInfo.h"
 
 class CShot {
-    float shot_angle;
     std::vector<std::unique_ptr<ProjectileInfo>> projectiles;
 public:
-    CShot(std::unique_ptr<ProjectileInfo> projectile_info, float aimed_angle);
-    CShot(std::vector<std::unique_ptr<ProjectileInfo>> projectiles, float aimed_angle);
+    CShot(std::unique_ptr<ProjectileInfo> projectile_info);
+    CShot(std::vector<std::unique_ptr<ProjectileInfo>> projectiles);
 
     const std::vector<std::unique_ptr<ProjectileInfo>>& Projectiles() const;
     float ShotAngle() const;
+    char FacingSign() const;
 };
 
 

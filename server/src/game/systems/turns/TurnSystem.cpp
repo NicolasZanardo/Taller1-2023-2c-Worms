@@ -15,7 +15,7 @@ void TurnSystem::update(
         current_worm_id = -1;
         return;
     }
-    std::cout << "Actual turn is for worm id: " << current_worm_id << std::endl;
+    // std::cout << "Actual turn is for worm id: " << current_worm_id << std::endl;
 
     // Update times
     game_time_left -= it * rate;

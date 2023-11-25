@@ -53,7 +53,7 @@ void ClientReceiver::run(NetMessageGameStateUpdate* msg) {
     game_state_dto->remaining_turn_time = msg->remaining_turn_time;
     
     game_state_dto->worms = std::move(msg->worms);
-    game_state_dto->bullets = std::move(msg->projectiles);
+    game_state_dto->projectiles = std::move(msg->projectiles);
     game_state_dto->events = std::move(msg->events);
 
     this->state_queue.push(game_state_dto);

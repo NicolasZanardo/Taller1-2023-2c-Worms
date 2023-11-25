@@ -13,7 +13,7 @@ WormAnimKey WormAnimKeyMapper::get_anim_key(MovementStateDto movement_state, Wea
                     return WormAnimKey::IDLE;
                 case WeaponTypeDto::BAZOOKA:
                     return WormAnimKey::IDLE_BAZOOKA;
-                case WeaponTypeDto::MORTER:
+                case WeaponTypeDto::MORTAR:
                     return WormAnimKey::IDLE_MORTAR;
                 case WeaponTypeDto::GREEN_GRENADE:
                     return WormAnimKey::IDLE_GREEN_GRENADE;
@@ -28,7 +28,7 @@ WormAnimKey WormAnimKeyMapper::get_anim_key(MovementStateDto movement_state, Wea
                     return WormAnimKey::JUMPING;
                 case WeaponTypeDto::BAZOOKA:
                     return WormAnimKey::JUMPING_BAZOOKA;
-                case WeaponTypeDto::MORTER:
+                case WeaponTypeDto::MORTAR:
                     return WormAnimKey::JUMPING_MORTAR;
                 case WeaponTypeDto::GREEN_GRENADE:
                     return WormAnimKey::JUMPING_GREEN_GRENADE;
@@ -43,7 +43,7 @@ WormAnimKey WormAnimKeyMapper::get_anim_key(MovementStateDto movement_state, Wea
                     return WormAnimKey::FALLING;
                 case WeaponTypeDto::BAZOOKA:
                     return WormAnimKey::FALLING_BAZOOKA;
-                case WeaponTypeDto::MORTER:
+                case WeaponTypeDto::MORTAR:
                     return WormAnimKey::FALLING_MORTAR;
                 case WeaponTypeDto::GREEN_GRENADE:
                     return WormAnimKey::FALLING_GREEN_GRENADE;

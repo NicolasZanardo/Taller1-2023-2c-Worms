@@ -1,9 +1,16 @@
 #include "Weapon.h"
 
-Weapon::Weapon(int ammo_left,float damage, float explosion_radius, float shoot_power, WeaponTypeDto type) :
-    type(type), ammo_left(ammo_left), damage(damage, explosion_radius), shoot_power(shoot_power), has_shot_this_turn(false), rotation(),
+Weapon::Weapon(
+    size_t owner_id,
+    int ammo_left,
+    float damage,
+    float max_power,
+    float explosion_radius,
+    WeaponTypeDto type
+) :
+    owner_id(owner_id), type(type), ammo_left(ammo_left), damage(damage, explosion_radius), charged_power(0), max_power(max_power),
+    has_shot_this_turn(false), rotation(),
     c_shot(nullptr) {
-    // TODO assert shoot power between 0 and 100
 }
 
 void Weapon::start_aiming_up() {

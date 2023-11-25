@@ -14,7 +14,6 @@ void update() {
 
 void InstancesManager::update() {
     for (const auto& projectile: projectiles_to_add) {
-        std::cout << "Adding the spawned projectile to the vector\n";
         projectiles.push_back(projectile);
     }
     projectiles_to_add.clear();
@@ -71,7 +70,7 @@ void InstancesManager::instantiate_projectiles(std::unique_ptr<CShot> shot) {
         auto projectile = std::shared_ptr<Projectile>(
             new Projectile(++total_entities_created, projectile_info)
             );
-        projectile->body = physics_system.spawn_projectile(projectile_info, shot->ShotAngle(), projectile);
+        projectile->body = physics_system.spawn_projectile(projectile_info,projectile);
         projectiles_to_add.push_back(projectile);
     }
 }

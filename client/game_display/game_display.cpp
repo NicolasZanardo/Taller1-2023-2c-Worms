@@ -14,7 +14,7 @@ GameDisplay::GameDisplay(Queue<std::shared_ptr<Command>> &command_queue, int fps
         event_handler(window, command_queue)
 {
     images.emplace_back(&camera);
-    
+
     // Scenario
     texture_manager.add_texture("beam_large", "resources/sprites/scenario/beam_large.png");
 
@@ -57,6 +57,14 @@ GameSprite* GameDisplay::new_sprite(const std::string& spritekey, float width, f
     images.emplace_back(sprite);
 
     return sprite;
+}
+
+void GameDisplay::remove_sprite(GameSprite *sprite) {
+    images.remove_if([sprite](Displayable* displayable) {
+        return dynamic_cast<GameSprite*>(displayable) == sprite;
+    });
+
+    delete sprite;
 }
 
 GameTextDisplay* GameDisplay::new_text(const std::string& text, float x, float y, int fnt_size, TextAlign align, TextLayer layer) {

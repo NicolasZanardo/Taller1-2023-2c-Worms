@@ -6,11 +6,11 @@
 
 class GreenGrenade : public Weapon {
 public:
-    explicit GreenGrenade(int ammo_left, float damage, float explosion_radius);
+    explicit GreenGrenade(size_t owner_id, int ammo_left, float damage, float explosion_radius);
 
-    void start_shooting(float from_x, float from_y) override;
+    void start_shooting(float from_x, float from_y, char facing_direction) override;
 
-    void end_shooting(float from_x, float from_y) override;
+    void end_shooting(float from_x, float from_y, char facing_direction) override;
 };
 
 

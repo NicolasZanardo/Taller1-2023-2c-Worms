@@ -39,7 +39,7 @@ void GameInstance::update(const int it) {
     if (current_worm_id != -1) {
         active_worm = instances_manager.get_worm(current_worm_id);
     }
-    instances_system.update(worms);
+    instances_system.update(it, worms, get_projectiles());
     physics_system.update(worms);
     turn_system.update(it, worms, active_worm);
     shot_system.update(active_worm);
