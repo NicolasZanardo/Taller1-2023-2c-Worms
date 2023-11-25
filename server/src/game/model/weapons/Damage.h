@@ -6,6 +6,10 @@ class Damage {
     const float radius;
 public:
     Damage(float damage, float radius);
+    Damage(Damage &&other) noexcept = default;
+
+    float Radius() const;
+    float Amount() const;
 
 };
 

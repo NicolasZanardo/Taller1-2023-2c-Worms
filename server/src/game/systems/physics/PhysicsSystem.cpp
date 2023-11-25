@@ -11,7 +11,7 @@ PhysicsSystem::PhysicsSystem(
 ) :
     timeStep(1.0f / rate),
     world(b2Vec2(xGravity, yGravity)),
-    contactListener() {
+    contactListener(world) {
     populate_beams(scenario);
     world.SetContactListener(&contactListener);
 }
@@ -20,7 +20,7 @@ void PhysicsSystem::update(const std::unordered_map<size_t, std::shared_ptr<Worm
     world.Step(timeStep, velocityIterations, positionIterations);
 }
 
-b2Body *PhysicsSystem::spawn_worm(WormScenarioData worm, std::shared_ptr<Worm> wormModel) {
+std::unique_ptr<WormBody> PhysicsSystem::spawn_worm(WormScenarioData worm, std::shared_ptr<Worm> wormModel) {
     // Body def
     b2BodyDef bodyDef;
     bodyDef.type = b2_dynamicBody;
@@ -63,7 +63,7 @@ b2Body *PhysicsSystem::spawn_worm(WormScenarioData worm, std::shared_ptr<Worm> w
     fixtureDef.filter.maskBits = GROUND_CATEGORY | WORM_CATEGORY;
     body->CreateFixture(&footSensorFixtureDef);
 
-    return body;
+    return std::make_unique<WormBody>(world, body);
 }
 
 /* PRIVATE */
@@ -107,23 +107,26 @@ void PhysicsSystem::spawn_beam(BeamScenarioData beam) {
     groundBody->CreateFixture(&fixtureDef);
 }
 
-b2Body *PhysicsSystem::spawn_projectile(const std::shared_ptr<ProjectileInfo> &projectile, float shot_angle) {
+std::unique_ptr<ProjectileBody> PhysicsSystem::spawn_projectile(
+    const std::unique_ptr<ProjectileInfo> &projectile_info,
+    float shot_angle,
+    const std::shared_ptr<Projectile> &projectile
+) {
     // Body def
     b2BodyDef bodyDef;
     bodyDef.type = b2_dynamicBody;
     bodyDef.fixedRotation = true;
-    bodyDef.position.Set(projectile->origin_x, projectile->origin_y);
+    bodyDef.position.Set(projectile_info->origin_x, projectile_info->origin_y);
     // bodyDef.linearDamping = 0.0f;
     b2Body *body = world.CreateBody(&bodyDef);
 
     // Shape for hitbox
     b2CircleShape dynamicCircle;
-    dynamicCircle.m_radius = projectile->radius;
+    dynamicCircle.m_radius = projectile_info->radius;
 
     // Fixture for hitbox
     b2FixtureDef fixtureDef;
     fixtureDef.shape = &dynamicCircle;
-
     fixtureDef.density = PROJECTILE_DENSITY;
     fixtureDef.restitution = 0;
     fixtureDef.userData.pointer = reinterpret_cast<uintptr_t>(projectile.get());
@@ -131,15 +134,29 @@ b2Body *PhysicsSystem::spawn_projectile(const std::shared_ptr<ProjectileInfo> &p
     fixtureDef.filter.maskBits = GROUND_CATEGORY | WORM_CATEGORY;
     body->CreateFixture(&fixtureDef);
 
+    // Fixture for explosion radius sensor
+    b2CircleShape explosionShape;
+    explosionShape.m_radius = projectile_info->damage_radius();
+
+    b2FixtureDef explosionSensorDef;
+    explosionSensorDef.shape = &explosionShape;
+    explosionSensorDef.isSensor = true;
+    explosionSensorDef.filter.categoryBits = EXPLOSION_SENSOR_CATEGORY;
+    explosionSensorDef.filter.maskBits = WORM_CATEGORY;
+    explosionSensorDef.userData.pointer = reinterpret_cast<uintptr_t>(projectile.get());
+
+    // Attach the fixture to the body
+    body->CreateFixture(&explosionSensorDef);
+
     // Apply initial force (adjust values as needed)
     auto aim_vector = angle_to_normalized_vector(shot_angle);
     b2Vec2 initialForce(
-        aim_vector.first * projectile->power * SHOOT_POTENCY,
-        aim_vector.second * projectile->power * SHOOT_POTENCY
+        aim_vector.first * projectile_info->power * SHOOT_POTENCY,
+        aim_vector.second * projectile_info->power * SHOOT_POTENCY
     );
     body->ApplyLinearImpulse(initialForce, body->GetWorldCenter(), true);
 
-    return body;
+    return std::make_unique<ProjectileBody>(world, body);
 }
 
 std::pair<float, float> PhysicsSystem::angle_to_normalized_vector(float angle_degrees) {

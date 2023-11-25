@@ -1,9 +1,9 @@
-#include "TurnManager.h"
+#include "TurnSystem.h"
 #include <iostream>
 
-TurnManager::TurnManager(int rate) : rate(rate), clients_ids_to_worms_ids_iterator() {}
+TurnSystem::TurnSystem(int rate) : rate(rate), clients_ids_to_worms_ids_iterator() {}
 
-void TurnManager::update(
+void TurnSystem::update(
         const int it,
         std::unordered_map<size_t,std::shared_ptr<Worm>> &worms,
         const std::shared_ptr<Worm>& active_worm
@@ -15,6 +15,7 @@ void TurnManager::update(
         current_worm_id = -1;
         return;
     }
+    std::cout << "Actual turn is for worm id: " << current_worm_id << std::endl;
 
     // Update times
     game_time_left -= it * rate;
@@ -41,9 +42,9 @@ void TurnManager::update(
 }
 
 // Returns true if the step ended the actual turn, false otherwise
-bool TurnManager::step_turn_time(const int it, const std::shared_ptr<Worm>& active_worm) {
+bool TurnSystem::step_turn_time(const int it, const std::shared_ptr<Worm>& active_worm) {
     turn_time_left -= it * rate;
-    std::cout << "Turn time left: " << turn_time_left << std::endl;
+    // std::cout << "Turn time left: " << turn_time_left << std::endl;
     if (turn_time_left <= 0) {
         end_actual_turn(active_worm);
         return true;
@@ -51,7 +52,7 @@ bool TurnManager::step_turn_time(const int it, const std::shared_ptr<Worm>& acti
     return false;
 }
 
-void TurnManager::check_ending_turn_action(const std::shared_ptr<Worm>& active_worm) {
+void TurnSystem::check_ending_turn_action(const std::shared_ptr<Worm>& active_worm) {
     if (active_worm && active_worm->has_done_an_ending_turn_action) {
         turn_time_left = TIME_AFTER_ENDING_TURN_ACTION;
         state = TurnState::ADDITIONAL_TURN_TIME;
@@ -59,14 +60,14 @@ void TurnManager::check_ending_turn_action(const std::shared_ptr<Worm>& active_w
 }
 
 
-void TurnManager::end_actual_turn(const std::shared_ptr<Worm>& active_worm) {
+void TurnSystem::end_actual_turn(const std::shared_ptr<Worm>& active_worm) {
     if (active_worm) {
         active_worm->on_turn_ended();
     }
     state = TurnState::WAITING_TO_START_NEXT_TURN;
 }
 
-void TurnManager::advance_to_next_turn() {
+void TurnSystem::advance_to_next_turn() {
     state = TurnState::TURN_TIME;
     turn_time_left = TURN_DURATION;
 
@@ -89,7 +90,7 @@ void TurnManager::advance_to_next_turn() {
     current_worm_id = currentClientIterator->second.advance_to_next_worm_id();
 }
 
-void TurnManager::add_player(size_t client_id, const std::list<size_t> &worm_ids_from_client) {
+void TurnSystem::add_player(size_t client_id, const std::list<size_t> &worm_ids_from_client) {
     if (worm_ids_from_client.empty()) {
         throw std::runtime_error("Worm id list could not be empty");
     }
@@ -109,16 +110,23 @@ void TurnManager::add_player(size_t client_id, const std::list<size_t> &worm_ids
     // clients_ids_to_worms_ids_iterator[client_id] = worms_id_iterator;
 }
 
-void TurnManager::remove_worm(size_t worm_id) {
-    for (auto &entry: clients_ids_to_worms_ids_iterator) {
+void TurnSystem::remove_worm(size_t worm_id) {
+    for (auto &[client_id, worm_iterator]: clients_ids_to_worms_ids_iterator) {
         // Iterate every wormIdIterator until one has that worm_id and its removed from its list
-        if (entry.second.remove_worm_id(worm_id)) {
+        if (worm_id == current_worm_id) {
+            advance_to_next_turn();
+        }
+        if (worm_iterator.remove_worm_id(worm_id)) {
+            if (worm_iterator.is_empty()) {
+                clients_ids_to_worms_ids_iterator.erase(client_id);
+            }
+
             return;
         }
     }
 }
 
-void TurnManager::randomly_assign_clients_turn() {
+void TurnSystem::randomly_assign_clients_turn() {
     if (clients_ids_to_worms_ids_iterator.empty()) {
         // Handle the case when there are no clients
         return;
@@ -130,14 +138,14 @@ void TurnManager::randomly_assign_clients_turn() {
 
     // Retrieve the corresponding client ID
     current_client_id = random_iterator->first;
-    this->current_worm_id = random_iterator->second.getCurrentWorm();
+    this->current_worm_id = random_iterator->second.get_current_worm();
 }
 
-bool TurnManager::is_clients_turn(size_t client_id) const {
+bool TurnSystem::is_clients_turn(size_t client_id) const {
     return client_id == current_client_id;
 }
 
-int TurnManager::get_current_client_id() const {
+int TurnSystem::get_current_client_id() const {
     if (state == TurnState::WAITING_TO_START_NEXT_TURN) {
         return -1;
     } else {
@@ -145,7 +153,7 @@ int TurnManager::get_current_client_id() const {
     }
 }
 
-int TurnManager::get_current_worm_id() const {
+int TurnSystem::get_current_worm_id() const {
     if (state == TurnState::WAITING_TO_START_NEXT_TURN) {
         return -1;
     } else {
@@ -153,17 +161,17 @@ int TurnManager::get_current_worm_id() const {
     }
 }
 
-float TurnManager::get_remaining_game_time() const {
+float TurnSystem::get_remaining_game_time() const {
     return game_time_left;
 }
 
-float TurnManager::get_remaining_turn_time() const {
+float TurnSystem::get_remaining_turn_time() const {
     return turn_time_left;
 }
 
-bool TurnManager::worms_are_still(std::unordered_map<size_t, std::shared_ptr<Worm>> &worms) {
+bool TurnSystem::worms_are_still(std::unordered_map<size_t, std::shared_ptr<Worm>> &worms) {
     for (const auto &[_, worm]: worms) {
-        if (worm->movement && worm->movement->is_still_moving()) {
+        if (worm->body && worm->body->is_still_moving()) {
             return false;
         }
     }

@@ -1,6 +1,7 @@
 #ifndef SERVER_ENTITYMANAGER_H
 #define SERVER_ENTITYMANAGER_H
 
+#include <functional>
 #include <memory>
 #include <vector>
 #include <unordered_map>
@@ -15,21 +16,39 @@ private:
 
     // Worm id to worm map
     std::unordered_map<size_t, std::shared_ptr<Worm>> worms;
-    std::vector<std::shared_ptr<Projectile>> projectiles;
-
     std::shared_ptr<Worm> instantiate_worm(const WormScenarioData &wormScenarioData);
+
+
+    std::vector<std::shared_ptr<Projectile>> projectiles;
+    std::vector<std::shared_ptr<Projectile>> projectiles_to_add;
+
+    // Supply crate
+    // std::vector<std::shared_ptr<SupplyCrate>> supply_crates;
+    // std::vector<std::shared_ptr<SupplyCrate>> supply_crates_to_add;
+
+    template<typename T>
+    void remove_dead_instances(std::vector<std::shared_ptr<T>>& instances_vec);
+
+    // Specialization for Worm type
+    void remove_dead_instances(std::unordered_map<size_t, std::shared_ptr<Worm>>& worms);
+
+    std::function<void(size_t)> worm_death_callback;
 
 public:
     InstancesManager(PhysicsSystem& physicsSystem, const GameScenarioData& map);
+    void update();
+
 
     // Worms
-    void createWorms(const GameScenarioData& map);
-    std::unordered_map<size_t, std::shared_ptr<Worm>> getWorms();
-    std::shared_ptr<Worm> getWorm(size_t wormId);
-    std::vector<std::shared_ptr<Projectile>>& get_projectiles();
+    void instantiate_worms(const GameScenarioData& gameScenarioData);
+    std::unordered_map<size_t, std::shared_ptr<Worm>> get_worms();
+    std::shared_ptr<Worm> get_worm(size_t id);
+
+    void register_worm_death_callback(std::function<void(size_t)> callback);
 
     // Projectiles
-    void instantiate_projectiles(std::unique_ptr<Shot> shot);
+    void instantiate_projectiles(std::unique_ptr<CShot> shot);
+    std::vector<std::shared_ptr<Projectile>>& get_projectiles();
 };
 
 

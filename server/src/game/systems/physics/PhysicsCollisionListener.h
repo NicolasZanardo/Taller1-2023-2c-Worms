@@ -3,20 +3,22 @@
 
 #include "box2d/box2d.h"
 #include "../../model/worm/Worm.h"
+#include "../../model/projectiles/Projectile.h"
+#include "fixture_queries/FixtureQueries.h"
+#include "CollisionEvent.h"
 
 class PhysicsCollisionListener : public b2ContactListener {
+    b2World& world;
     void BeginContact(b2Contact* contact) override;
     void EndContact(b2Contact* contact) override;
 
-private:
-    // Queries
-    Worm* get_worm_from_fixture(b2Fixture* fixtureA, b2Fixture* fixtureB);
+    std::vector<std::unique_ptr<CollisionEvent>>  beginning_collisions;
+    std::vector<std::unique_ptr<CollisionEvent>>  ending_collisions;
 
-    // Begin conctact events
-    void on_worm_began_contact_with_ground(b2Fixture* fixtureA, b2Fixture* fixtureB);
-
-    // End contact events
-    void on_worm_ended_contact_with_ground(b2Fixture* fixtureA, b2Fixture* fixtureB);
+    void _init_beginning_collision_events();
+    void _init_ending_collision_events();
+public:
+    explicit PhysicsCollisionListener(b2World& world);
 };
 
 #endif

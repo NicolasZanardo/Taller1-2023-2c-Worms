@@ -17,7 +17,7 @@ enum class TurnState {
 };
 
 
-class TurnManager {
+class TurnSystem {
     const int TURN_DURATION = 10000; // 60000;
     const int MATCH_DURATION = 60000; // 60000;
     const int TIME_AFTER_ENDING_TURN_ACTION = 3000;
@@ -34,7 +34,7 @@ class TurnManager {
     bool worms_are_still(std::unordered_map<size_t, std::shared_ptr<Worm>>& worms);
 
 public:
-    TurnManager(const int rate);
+    TurnSystem(const int rate);
 
     int get_current_client_id() const;
     int get_current_worm_id() const;

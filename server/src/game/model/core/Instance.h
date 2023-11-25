@@ -6,7 +6,9 @@
 class Instance {
 public:
     size_t id;
-    Instance(size_t id) : id(id) {}
+    bool is_active;
+    explicit Instance(size_t id) : id(id), is_active(true) {}
+
 };
 
 #endif
