@@ -12,12 +12,15 @@ add_executable (client_app
         game_display/worm/worm_anim_key_mapper.h game_display/worm/worm_anim_key_mapper.cpp
         game_display/worm/worm_anim_key.h
     game_display/game_display.h game_display/game_display.cpp
-    
+        game_display/projectiles/game_projectile_entity.h game_display/projectiles/game_projectile_entity.cpp
+        game_display/projectiles/projectile_sprite_key_mapper.h game_display/projectiles/projectile_sprite_key_mapper.cpp
+
     game_display/ui_elements/game_displayable.h
     game_display/ui_elements/game_camera.h       game_display/ui_elements/game_camera.cpp
     game_display/ui_elements/game_text_display.h game_display/ui_elements/game_text_display.cpp
     game_display/ui_elements/game_sprite_info.h  game_display/ui_elements/game_sprite_info.cpp
     game_display/ui_elements/game_sprite.h       game_display/ui_elements/game_sprite.cpp
+    game_display/sprite_keys.h
 
     game_managment/client_receiver.cpp game_managment/client_receiver.h
     game_managment/client_sender.cpp game_managment/client_sender.h

@@ -56,8 +56,19 @@ GameSprite* GameDisplay::new_sprite(const std::string& spritekey, float width, f
     return sprite;
 }
 
+void GameDisplay::remove_sprite(GameSprite *sprite) {
+    images.remove_if([sprite](Displayable* displayable) {
+        return dynamic_cast<GameSprite*>(displayable) == sprite;
+    });
+
+    delete sprite;
+}
+
 GameTextDisplay* GameDisplay::new_text(const std::string& text, float x, float y, int fnt_size, TextAlign align, TextLayer layer) {
     GameTextDisplay *display = new GameTextDisplay(camera, x, y, fnt_size, align, layer, text);
     images.emplace_back(display);
     return display;
 }
+
+
+

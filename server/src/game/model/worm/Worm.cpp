@@ -2,6 +2,7 @@
 #include "../weapons/Bazooka.h"
 #include "../weapons/Mortar.h"
 #include "../weapons/GreenGrenade.h"
+#include "../../core/Logger.h"
 #include <iostream>
 
 Worm::Worm(size_t id) :
@@ -32,9 +33,9 @@ WeaponMap Worm::create_default_weapons() {
 
     // Damages inside weapons could later be only created one for each weapon kind and just have a reference
     // In order to not have multiple same damage object
-    default_weapons[WeaponTypeDto::BAZOOKA] = std::make_unique<Bazooka>(10, 50, 2);
-    default_weapons[WeaponTypeDto::MORTER] = std::make_unique<Mortar>(10, 50, 2);
-    default_weapons[WeaponTypeDto::GREEN_GRENADE] = std::make_unique<GreenGrenade>(10, 30, 2);
+    default_weapons[WeaponTypeDto::BAZOOKA] = std::make_unique<Bazooka>(id, 10, 50, 1);
+    default_weapons[WeaponTypeDto::MORTAR] = std::make_unique<Mortar>(id, 10, 50, 1);
+    default_weapons[WeaponTypeDto::GREEN_GRENADE] = std::make_unique<GreenGrenade>(id, 10, 30, 1);
 
     return default_weapons;
 }
@@ -51,7 +52,7 @@ b2Body* Worm::B2Body() const {
     return body->B2Body();
 }
 
-void Worm::update() {
+void Worm::update(const int it) {
     health.on_update();
     if (!health.IsAlive()) {
         std::cout << "Worm id: " << id << "died\n";
@@ -122,13 +123,14 @@ void Worm::stop_aiming_down() {
 
 void Worm::start_shooting() {
     if (actual_weapon) {
-        actual_weapon->start_shooting(X(), Y());
+        Logger::log_position("Worm shot", X(), Y());
+        actual_weapon->start_shooting(X(),Y(),body->facing_direction_sign());
     }
 }
 
 void Worm::end_shooting() {
     if (actual_weapon) {
-        actual_weapon->end_shooting(X(), Y());
+        actual_weapon->end_shooting(X(),Y(),body->facing_direction_sign());
     }
 }
 
@@ -154,6 +156,4 @@ void Worm::receive_damage(Damage& damage) {
     std::cout << "Worm id: " << id << " received: " << damage.Amount() << " damage\n";
     health.receive_damage(damage);
 }
-
-
 

@@ -25,8 +25,6 @@ class WormBody: public Body {
     bool is_moving;
     bool is_facing_right;
 
-    int getFacingDirectionSign() const;
-
 public:
 
     WormBody(b2World&  world, b2Body* body);
@@ -35,6 +33,7 @@ public:
     int ground_contact_count = 0;
 
     bool facing_right() const;
+    char facing_direction_sign() const;
 
     MovementStateDto state_to_dto() const;
 

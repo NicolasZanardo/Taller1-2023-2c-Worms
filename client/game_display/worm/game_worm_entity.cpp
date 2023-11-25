@@ -23,8 +23,7 @@ WormEntity::WormEntity(GameDisplay& display, WormDto& values) :
 { WormAnimKey::JUMPING_MORTAR , display.new_sprite("wjumpu" , WORM_SIZE, WORM_SIZE, 0) },
 { WormAnimKey::JUMPING_GREEN_GRENADE , display.new_sprite("wjumpu" , WORM_SIZE, WORM_SIZE, 0) },
     }), active_animation(animations[WormAnimKey::IDLE]),
-    is_active(true)
-    , name(display.new_text(
+    name(display.new_text(
         std::to_string(values.entity_id), 
         values.x, values.y + 1, 12,
         TextAlign::center, TextLayer::ingame
@@ -78,10 +77,6 @@ void WormEntity::update(WormDto& new_values) {
     active_animation->image_flipped(attributes.is_facing_right);
     active_animation->set_angle(attributes.angle);
     attributes.movement_state = new_values.movement_state;
-}
-
-void WormEntity::destroy() {
-    is_active = false;
 }
 
 float WormEntity::get_x() {

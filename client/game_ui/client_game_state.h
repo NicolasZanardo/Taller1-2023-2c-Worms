@@ -9,6 +9,7 @@
 #include "game_display/worm/game_worm_entity.h"
 #include "game_text_display.h"
 #include "client_game_state_dto.h"
+#include "projectiles/game_projectile_entity.h"
 
 class ClientGameState {
     GameDisplay& display;
@@ -23,7 +24,10 @@ class ClientGameState {
     std::map<int, std::shared_ptr<WormEntity>> worms;
     std::map<int, std::shared_ptr<WormEntity>> death_worms;
 
+    std::map<int, std::shared_ptr<ProjectileEntity>> projectiles;
+
     void transfer_death_worms(std::vector<WormDto> updated_worms);
+    void destroy_old_projectiles(std::vector<ProjectileDto> updated_projectiles);
 
     public:
     int my_client_id;

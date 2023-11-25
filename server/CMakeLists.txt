@@ -29,9 +29,12 @@ add_library( server
 
         src/game/core/InstancesManager.h
         src/game/core/InstancesManager.cpp
+        src/game/core/ServerConstants.h
     src/game/model/core/Instance.h
     src/game/model/core/Instance.cpp
     src/game/model/core/Updatable.h
+        src/game/core/Logger.h
+        src/game/core/Logger.cpp
         src/game/model/core/OnTurnEndedListener.h
         src/game/model/core/Body.h
         src/game/model/core/Body.cpp
@@ -63,6 +66,8 @@ add_library( server
         src/game/model/projectiles/Projectile.cpp
         src/game/model/projectiles/ProjectileBody.h
         src/game/model/projectiles/ProjectileBody.cpp
+        src/game/model/projectiles/Explosion.h
+        src/game/model/projectiles/Explosion.cpp
 
         src/game/model/game_events/GameWorldEvent.h
         src/game/model/game_events/GameWorldEvent.cpp

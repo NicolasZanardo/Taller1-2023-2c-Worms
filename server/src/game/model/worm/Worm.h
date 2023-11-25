@@ -23,7 +23,7 @@ private:
     Health health;
 
     explicit Worm(size_t id);
-    static WeaponMap create_default_weapons();
+    WeaponMap create_default_weapons();
 
 public:
     std::shared_ptr<WormBody> body;
@@ -35,7 +35,7 @@ public:
     float Y() const;
     b2Body* B2Body() const;
 
-    void update() override;
+    void update(int it) override;
     void on_turn_ended() override;
 
     // Movement

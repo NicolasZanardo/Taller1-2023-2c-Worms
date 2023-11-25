@@ -24,7 +24,7 @@ public:
     
     std::vector<WormDto> worms;
     std::vector<BeamDto> beams;
-    std::vector<ProjectileDto> bullets;
+    std::vector<ProjectileDto> projectiles;
     std::vector<WorldEventDto> events;
 
     // const float scale;
