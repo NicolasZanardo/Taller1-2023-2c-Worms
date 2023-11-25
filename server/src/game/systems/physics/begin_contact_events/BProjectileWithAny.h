@@ -8,7 +8,7 @@
 class BProjectileWithAny: public CollisionEvent {
     OnProjectileExplosionRayCast onExplosionRayCast;
     const int num_rays = 32;
-    const float blastPower = 60;
+    const float blastPower = 20;
     std::unordered_set<Worm*> unique_worms;
 
     void apply_blast_impulse(b2Body* body, b2Vec2 blast_center, b2Vec2 apply_point, float blast_power);

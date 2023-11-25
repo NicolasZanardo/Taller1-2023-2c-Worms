@@ -45,7 +45,10 @@ void BProjectileWithAny::apply_blast_impulse(b2Body *body, b2Vec2 blast_center, 
         return;
     float inv_distance = 1 / distance;
     float impulse_mag = blast_power * inv_distance * inv_distance;
+    if (impulse_mag > 80) {
+        impulse_mag = 80;
+    }
     body->ApplyLinearImpulse(impulse_mag * blast_dir, apply_point, true);
-} // TODO Have a max limit for the impulse?
+}
 
 
