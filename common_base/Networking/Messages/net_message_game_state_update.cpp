@@ -49,7 +49,7 @@ void NetMessageGameStateUpdate::push_data_into(NetBuffer &container) {
         container.push_float(worms[i].angle);
         container.push_bool(worms[i].is_facing_right);
         container.push_uint(worms[i].life);
-        container.push_byte(static_cast<uint8_t>(worms[i].state));
+        container.push_byte(static_cast<uint8_t>(worms[i].movement_state));
         container.push_byte(static_cast<uint8_t>(worms[i].weapon_hold));
         container.push_float(worms[i].aiming_angle);
     }

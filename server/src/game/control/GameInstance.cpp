@@ -19,6 +19,7 @@ GameInstance::GameInstance(
 
     auto on_worm_death = [this](size_t worm_id) {
         turn_system.remove_worm(worm_id);
+        remove_from_clients_worms_map(worm_id);
     };
     instances_manager.register_worm_death_callback(on_worm_death);
 }
@@ -59,7 +60,7 @@ GameState GameInstance::get_current_state() {
     );
 }
 
-ClientsWorms GameInstance::getClientsWorms() {
+ClientsWorms GameInstance::get_clients_worms() {
     return clientsWorms;
 }
 
@@ -109,7 +110,7 @@ void GameInstance::assign_worms_to_clients(const std::list<Client *> &clients) {
         // add client with its worms ids to the TurnManager
         std::list<size_t> wormIds;
         for (const auto &worm : assignedSubset) {
-            wormIds.push_back(worm->id);
+            wormIds.push_back(worm->Id());
         }
         turn_system.add_player(clientId, wormIds);
 
@@ -117,6 +118,19 @@ void GameInstance::assign_worms_to_clients(const std::list<Client *> &clients) {
         clientsWorms[clientId] = std::move(assignedSubset);
     }
 }
+
+void GameInstance::remove_from_clients_worms_map(size_t worm_id) {
+    for (auto& [client_id, worms] : clientsWorms) {
+
+        auto it = std::remove_if(worms.begin(), worms.end(),
+                                 [worm_id](const auto& worm) {
+                                     return worm->Id() == worm_id;
+                                 }
+        );
+        worms.erase(it, worms.end());
+    }
+}
+
 
 // Actions
 void GameInstance::perform_action_on_current_worm(const std::function<void(std::shared_ptr<Worm>)>& action) {

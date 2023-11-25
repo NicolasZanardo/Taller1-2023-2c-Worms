@@ -34,7 +34,7 @@ void NetMessageInitialGameState::push_data_into(NetBuffer& container) {
         container.push_float(it.angle);
         container.push_bool(it.is_facing_right);
         container.push_uint(it.life);
-        container.push_byte(static_cast<uint8_t>(it.state));
+        container.push_byte(static_cast<uint8_t>(it.movement_state));
         container.push_byte(static_cast<uint8_t>(it.weapon_hold));
         container.push_float(it.aiming_angle);
     }

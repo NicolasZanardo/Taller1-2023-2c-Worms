@@ -4,10 +4,10 @@
 #include "WeaponTypeDto.h"
 
 enum class MovementStateDto : uint8_t {
-    idle    = 0x00,
-    moving = 0x01,
-    going_upwards = 0x02,
-    falling = 0x03,
+    IDLE    = 0x00,
+    MOVING = 0x01,
+    GOING_UPWARDS = 0x02,
+    FALLING = 0x03,
 };
 
 struct WormDto {
@@ -19,7 +19,7 @@ struct WormDto {
     float angle;
     bool is_facing_right;
     int life;
-    MovementStateDto state;
+    MovementStateDto movement_state;
     WeaponTypeDto weapon_hold;
     float aiming_angle;
 
@@ -34,15 +34,15 @@ struct WormDto {
             MovementStateDto state,
             WeaponTypeDto weapon_hold,
             float aiming_angle //  TODO maybe weapon_charged_amount later
-    ) : 
-    client_id(client_id),
-    entity_id(entity_id),
-    x(x), y(y), angle(angle),
-    is_facing_right(is_facing_right),
-    life(life),
-    state(state) ,
-    weapon_hold(weapon_hold),
-    aiming_angle(aiming_angle)
+    ) :
+        client_id(client_id),
+        entity_id(entity_id),
+        x(x), y(y), angle(angle),
+        is_facing_right(is_facing_right),
+        life(life),
+        movement_state(state) ,
+        weapon_hold(weapon_hold),
+        aiming_angle(aiming_angle)
     {}
 
 };

@@ -86,7 +86,7 @@ void GameEngineInstance::_broadcast_initial_game_state(const GameScenarioData &s
         std::cout << "BeamDto x: " << item.toBeamDto().x << " y: " << item.toBeamDto().y << std::endl;
     }
 
-    for (const auto &[clientId, worms]: game.getClientsWorms()) {
+    for (const auto &[clientId, worms]: game.get_clients_worms()) {
         for (const auto &wrm: worms) {
             std::cout << "Init Worm id: " << wrm->toWormDto(clientId).entity_id
                       << " with client id: " << wrm->toWormDto(clientId).client_id << std::endl;
@@ -115,8 +115,9 @@ void GameEngineInstance::_broadcast_game_state_update() {
         gameState.remainingTurnTime
     );
 
-    for (const auto &[clientId, worms]: game.getClientsWorms()) {
-        for (const auto& worm: worms) { // TODO verify
+
+    for (const auto &[clientId, worms]: game.get_clients_worms()) {
+        for (const auto& worm: worms) {
             gameStateUpdateMessage->add(worm->toWormDto(clientId));
         }
     }
