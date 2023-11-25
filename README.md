@@ -42,4 +42,8 @@ Instrucciones del juego:
 - Enter: Salto hacia adelante
 - Delete: Salto hacia atras
 - Flechas arriba/abajo: Apuntar hacia arriba/abajo
+- Q: Bazooka
+- W: Mortar
+- E: Green grenade
+- Espacio: disparar
 
