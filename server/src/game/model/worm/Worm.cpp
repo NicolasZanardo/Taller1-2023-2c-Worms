@@ -123,7 +123,7 @@ void Worm::stop_aiming_down() {
 
 void Worm::start_shooting() {
     if (actual_weapon) {
-        Logger::log_position("Worm shot", X(), Y());
+        // Logger::log_position("Worm shot", X(), Y());
         actual_weapon->start_shooting(X(),Y(),body->facing_direction_sign());
     }
 }

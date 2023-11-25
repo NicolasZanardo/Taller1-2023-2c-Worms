@@ -7,9 +7,9 @@ bool BProjectileWithAny::try_resolve(b2Fixture *fixtureA, b2Fixture *fixtureB) {
     auto *projectile = user_data_query.get_object_from_fixture<Projectile>(fixtureA, fixtureB);
     if (projectile != nullptr && !projectile->has_exploded()) {
         b2Vec2 explosion_point = projectile->B2Body()->GetPosition();
-        Logger::log_position("Projectile collided", explosion_point.x, explosion_point.y);
-        float explosion_radius = projectile->ExplosionRadius();
-        float max_damage = projectile->damage.Amount();
+        // Logger::log_position("Projectile collided", explosion_point.x, explosion_point.y);
+        float explosion_radius = projectile->explosion_radius;
+        float max_damage = projectile->damage;
 
         ProjectileExplosionQueryCallback query_callback(user_data_query);
         b2AABB aabb;
@@ -25,7 +25,6 @@ bool BProjectileWithAny::try_resolve(b2Fixture *fixtureA, b2Fixture *fixtureB) {
             //ignore worms outside the explosion radius
             b2Vec2 blast_dir = body_center_mass - explosion_point;
             float distance = blast_dir.Length();
-            std::cout << "Distance: " << distance << std::endl;
             if (distance >= explosion_radius)
                 continue;
 

@@ -39,6 +39,3 @@ b2Body* Projectile::B2Body() {
     return body->B2Body();
 }
 
-float Projectile::ExplosionRadius() {
-    return damage.Radius();
-}
