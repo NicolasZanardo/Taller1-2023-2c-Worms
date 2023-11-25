@@ -13,7 +13,7 @@ add_library(common
         Game/WeaponTypeDto.h
         Game/ProjectileDto.h
         Game/GameAction.h
-        Game/GameEventType.h
+        Game/GameWorldEventType.h
 
     liberror.cpp liberror.h
     network_channel.cpp network_channel.h
