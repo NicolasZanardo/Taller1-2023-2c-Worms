@@ -7,7 +7,7 @@
 
 #include "game_display.h"
 #include "game_ui_text.h"
-#include "game_worm_entity.h"
+#include "game_display/worm/game_worm_entity.h"
 #include "client_game_state_dto.h"
 
 class ClientGameState {
@@ -21,6 +21,9 @@ class ClientGameState {
 
     // std::unique_ptr<ClientGameStateDTO> game_state_dto;
     std::map<int, std::shared_ptr<WormEntity>> worms;
+    std::map<int, std::shared_ptr<WormEntity>> death_worms;
+
+    void transfer_death_worms(std::vector<WormDto> updated_worms);
 
     public:
     int my_client_id;
@@ -28,8 +31,8 @@ class ClientGameState {
     ClientGameState() = delete;
     ~ClientGameState() = default;
 
-    void load(std::shared_ptr<ClientGameStateDTO> game_state_dto);
-    void update(std::shared_ptr<ClientGameStateDTO> game_state_dto);
+    void load(const std::shared_ptr<ClientGameStateDTO>& game_state_dto);
+    void update(const std::shared_ptr<ClientGameStateDTO>& game_state_dto);
     
 };
 

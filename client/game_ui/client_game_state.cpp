@@ -11,7 +11,7 @@ ClientGameState::ClientGameState(GameDisplay& display)
         turnDisplay->hidden(true);
     }
 
-void ClientGameState::load(std::shared_ptr<ClientGameStateDTO> game_state_dto) {
+void ClientGameState::load(const std::shared_ptr<ClientGameStateDTO>& game_state_dto) {
     std::cout << "Loading scenario size("
         << game_state_dto->width << ","
         << game_state_dto->height << ")"
@@ -44,10 +44,20 @@ void ClientGameState::load(std::shared_ptr<ClientGameStateDTO> game_state_dto) {
     }
 }
 
-void ClientGameState::update(std::shared_ptr<ClientGameStateDTO> game_state_dto) {
+void ClientGameState::update(const std::shared_ptr<ClientGameStateDTO>& game_state_dto) {
     game_remaining_time = game_state_dto->remaining_game_time;
     turn_remaining_time = game_state_dto->remaining_turn_time;
-    
+
+    std::cout << "Dtos Size of worms: " << game_state_dto->worms.size() << std::endl;
+    std::cout << "Saved Size of worms: " << worms.size() << std::endl;
+
+    if (game_state_dto->worms.size() < worms.size()) {
+        std::cout << "Entered here\n";
+        transfer_death_worms(game_state_dto->worms);
+    }
+
+
+    // Animate live worms
     for (auto& worm_dto : game_state_dto->worms) {
         auto& it = worms[worm_dto.entity_id];
         it->update(worm_dto);
@@ -57,5 +67,26 @@ void ClientGameState::update(std::shared_ptr<ClientGameStateDTO> game_state_dto)
 
     if (game_state_dto->active_entity_id > 0) {
         display.camera.set_target(worms[game_state_dto->active_entity_id].get());
+    }
+}
+
+void ClientGameState::transfer_death_worms(std::vector<WormDto> updated_worms) {
+    auto it = worms.begin();
+    while (it != worms.end()) {
+        auto wormId = it->first;
+        auto found = std::find_if(
+            updated_worms.begin(),
+            updated_worms.end(),
+            [wormId](const auto& worm_dto) {
+                return worm_dto.entity_id == wormId;
+            }
+        );
+
+        if (found == updated_worms.end()) {
+            death_worms[wormId] = it->second;
+            it = worms.erase(it);
+        } else {
+            ++it;
+        }
     }
 }

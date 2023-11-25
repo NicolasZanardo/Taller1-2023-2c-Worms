@@ -6,10 +6,11 @@
 #include "game_display.h"
 #include "game_displayable.h"
 #include "game_camera.h"
+#include "worm_anim_key.h"
 
 class WormEntity : public CameraTarget{
     WormDto attributes; 
-    std::unordered_map<MovementStateDto, GameSprite*> animations;
+    std::unordered_map<WormAnimKey, GameSprite*> animations;
     GameSprite* active_animation;
     bool is_active;
     

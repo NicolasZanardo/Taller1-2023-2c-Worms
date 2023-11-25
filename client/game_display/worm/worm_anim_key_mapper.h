@@ -2,8 +2,13 @@
 #define TP_WORMS_WORM_ANIM_KEY_MAPPER_H
 
 
-class worm_anim_key_mapper {
+#include "Game/WeaponTypeDto.h"
+#include "Game/wormDto.h"
+#include "worm_anim_key.h"
 
+class WormAnimKeyMapper {
+public:
+    static WormAnimKey get_anim_key(MovementStateDto movement_state, WeaponTypeDto weapon_hold);
 };
 
 

@@ -1,8 +1,21 @@
-//
-// Created by Juan Martin Duzac on 25/11/2023.
-//
-
 #ifndef TP_WORMS_WORM_ANIM_KEY_H
 #define TP_WORMS_WORM_ANIM_KEY_H
+
+enum class WormAnimKey {
+    IDLE,
+    JUMPING,
+    FALLING,
+    MOVING,
+    IDLE_BAZOOKA,
+    JUMPING_BAZOOKA,
+    FALLING_BAZOOKA,
+    IDLE_MORTAR,
+    JUMPING_MORTAR,
+    FALLING_MORTAR,
+    IDLE_GREEN_GRENADE,
+    JUMPING_GREEN_GRENADE,
+    FALLING_GREEN_GRENADE,
+};
+
 
 #endif //TP_WORMS_WORM_ANIM_KEY_H
