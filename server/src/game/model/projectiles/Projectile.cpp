@@ -16,7 +16,9 @@ ProjectileDto Projectile::to_dto() const {
     );
 }
 
-void Projectile::update() {}
+void Projectile::update(const int it) {
+
+}
 
 void Projectile::explode() {
     exploded = true;

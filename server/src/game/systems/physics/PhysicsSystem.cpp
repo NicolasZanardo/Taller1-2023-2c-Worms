@@ -1,5 +1,5 @@
 #include "PhysicsSystem.h"
-#include <iostream>
+#include "../../core/Logger.h"
 
 const float DEG_TO_RAD = M_PI / 180.0f;
 
@@ -109,14 +109,19 @@ void PhysicsSystem::spawn_beam(BeamScenarioData beam) {
 
 std::unique_ptr<ProjectileBody> PhysicsSystem::spawn_projectile(
     const std::unique_ptr<ProjectileInfo> &projectile_info,
-    float shot_angle,
     const std::shared_ptr<Projectile> &projectile
 ) {
+    auto aim_vector = angle_to_normalized_vector(projectile_info->shot_angle);
+    if (projectile_info->facing_sign == -1) {
+        aim_vector.first *= -1.0f;  // Reverse the x-component for left-facing shot
+    }
     // Body def
     b2BodyDef bodyDef;
     bodyDef.type = b2_dynamicBody;
     bodyDef.fixedRotation = true;
-    bodyDef.position.Set(projectile_info->origin_x, projectile_info->origin_y);
+    b2Vec2 offset_from_worm(aim_vector.first * SHOT_OFFSET_FROM_WORM, aim_vector.second * SHOT_OFFSET_FROM_WORM);
+    // Logger::log_position("A projectile spawned", projectile_info->origin_x + offset_from_worm.x,projectile_info->origin_y + offset_from_worm.y);
+    bodyDef.position.Set(projectile_info->origin_x + offset_from_worm.x, projectile_info->origin_y + offset_from_worm.y);
     // bodyDef.linearDamping = 0.0f;
     b2Body *body = world.CreateBody(&bodyDef);
 
@@ -134,22 +139,6 @@ std::unique_ptr<ProjectileBody> PhysicsSystem::spawn_projectile(
     fixtureDef.filter.maskBits = GROUND_CATEGORY | WORM_CATEGORY;
     body->CreateFixture(&fixtureDef);
 
-    // Fixture for explosion radius sensor
-    b2CircleShape explosionShape;
-    explosionShape.m_radius = projectile_info->damage_radius();
-
-    b2FixtureDef explosionSensorDef;
-    explosionSensorDef.shape = &explosionShape;
-    explosionSensorDef.isSensor = true;
-    explosionSensorDef.filter.categoryBits = EXPLOSION_SENSOR_CATEGORY;
-    explosionSensorDef.filter.maskBits = WORM_CATEGORY;
-    explosionSensorDef.userData.pointer = reinterpret_cast<uintptr_t>(projectile.get());
-
-    // Attach the fixture to the body
-    body->CreateFixture(&explosionSensorDef);
-
-    // Apply initial force (adjust values as needed)
-    auto aim_vector = angle_to_normalized_vector(shot_angle);
     b2Vec2 initialForce(
         aim_vector.first * projectile_info->power * SHOOT_POTENCY,
         aim_vector.second * projectile_info->power * SHOOT_POTENCY

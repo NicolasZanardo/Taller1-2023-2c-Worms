@@ -12,7 +12,7 @@ bool WormBody::facing_right() const {
     return is_facing_right;
 }
 
-int WormBody::getFacingDirectionSign() const {
+char WormBody::facing_direction_sign() const {
     if (is_facing_right) {
         return 1;
     } else {
@@ -49,7 +49,7 @@ void WormBody::jump_forward() {
         body->SetLinearVelocity(b2Vec2(0,0));
         body->ApplyLinearImpulseToCenter(
                 b2Vec2(
-                        getFacingDirectionSign() * forwardJumpReach * body->GetMass(),
+                    facing_direction_sign() * forwardJumpReach * body->GetMass(),
                         forwardJumpHeight* body->GetMass()
                         ), true);
     }
@@ -61,7 +61,7 @@ void WormBody::jump_backwards() {
         body->SetLinearVelocity(b2Vec2(0,0));
         body->ApplyLinearImpulseToCenter(
                 b2Vec2(
-                        (-getFacingDirectionSign())  * backwardsJumpReach * body->GetMass(),
+                    (-facing_direction_sign()) * backwardsJumpReach * body->GetMass(),
                         backwardsJumpHeight * body->GetMass()
                         ),
                 true);
@@ -72,7 +72,7 @@ void WormBody::on_update() {
     float y_velocity = body->GetLinearVelocity().y;
 
     if (is_moving && is_on_ground) {
-        body->SetLinearVelocity((b2Vec2(getFacingDirectionSign() * speed, body->GetLinearVelocity().y)));
+        body->SetLinearVelocity((b2Vec2(facing_direction_sign() * speed, body->GetLinearVelocity().y)));
     }
 
     if (y_velocity > epsilon_y) {

@@ -41,7 +41,7 @@ bool EventHandler::handleEvents() {
                         this->command_queue.push(std::make_shared<ChangeWeaponCommand>(WeaponTypeDto::BAZOOKA));
                         break;
                     case SDLK_w:
-                        this->command_queue.push(std::make_shared<ChangeWeaponCommand>(WeaponTypeDto::MORTER));
+                        this->command_queue.push(std::make_shared<ChangeWeaponCommand>(WeaponTypeDto::MORTAR));
                         break;
                     case SDLK_e:
                         this->command_queue.push(std::make_shared<ChangeWeaponCommand>(WeaponTypeDto::GREEN_GRENADE));

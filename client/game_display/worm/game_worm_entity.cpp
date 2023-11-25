@@ -41,10 +41,6 @@ void WormEntity::update(WormDto& new_values) {
     sprite->set_weapon_angle(new_values.aiming_angle);
 }
 
-void WormEntity::destroy() {
-    is_active = false;
-}
-
 float WormEntity::get_x() {
     return attributes.x;
 }

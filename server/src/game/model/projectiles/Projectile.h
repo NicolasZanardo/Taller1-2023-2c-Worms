@@ -13,7 +13,9 @@ class InstancesManager;
 
 class Projectile: public Instance, Updatable {
     friend class InstancesManager;
+    size_t shooter_id;
     WeaponTypeDto weapon_type;
+
     bool exploded;
     explicit Projectile(size_t id, const std::unique_ptr<ProjectileInfo> &info);
 public:
@@ -22,7 +24,7 @@ public:
     b2Body* B2Body();
     float ExplosionRadius();
 
-    void update() override;
+    void update(int it) override;
     ProjectileDto to_dto() const;
     void explode();
     bool has_exploded();

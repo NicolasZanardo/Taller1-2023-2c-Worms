@@ -8,7 +8,11 @@
 class InstancesSystem {
 public:
     InstancesSystem() = default;
-    void update(const std::unordered_map<size_t, std::shared_ptr<Worm>> &worms);
+    void update(
+        int it,
+        const std::unordered_map<size_t, std::shared_ptr<Worm>> &worms,
+        const std::vector<std::shared_ptr<Projectile>> &projectiles
+        );
 };
 
 
