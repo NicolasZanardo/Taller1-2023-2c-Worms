@@ -4,22 +4,29 @@
 #include <memory>
 #include "../core/Updatable.h"
 #include "../core/Instance.h"
-#include "ProjectileMovement.h"
+#include "ProjectileBody.h"
 #include "../../../../../common_base/Game/WeaponTypeDto.h"
 #include "../../../../../common_base/Game/ProjectileDto.h"
+#include "ProjectileInfo.h"
 
 class InstancesManager;
 
 class Projectile: public Instance, Updatable {
     friend class InstancesManager;
     WeaponTypeDto weapon_type;
-    explicit Projectile(size_t id, WeaponTypeDto weapon_type);
+    bool exploded;
+    explicit Projectile(size_t id, const std::unique_ptr<ProjectileInfo> &info);
 public:
-
-    std::unique_ptr<ProjectileMovement> movement;
+    Damage& damage;
+    std::unique_ptr<ProjectileBody> body;
+    b2Body* B2Body();
+    float ExplosionRadius();
 
     void update() override;
     ProjectileDto to_dto() const;
+    void explode();
+    bool has_exploded();
+    void on_collision();
 };
 
 
