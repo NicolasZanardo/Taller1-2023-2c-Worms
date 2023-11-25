@@ -21,9 +21,8 @@ class GameSprite : public Displayable {
 
     public:
     ~GameSprite() override;
-    explicit GameSprite(GameCamera& cam, GameSpriteInfo& info);
+    explicit GameSprite(GameCamera& cam, GameSpriteInfo& info, float width, float height, float angle);
 
-    void flip_horizontaly();
     void set_size(float width, float heigth);
 
     void set_angle(float angle);
@@ -31,6 +30,9 @@ class GameSprite : public Displayable {
     void set_pos(float x, float y);
     void image_flipped(bool image_is_flipped);
     void render(SDL2pp::Renderer& renderer, float delta_time) override;
+
+    void update_animation(float delta_time);
+    friend class WormAnimationSet;
 };
 
 #endif

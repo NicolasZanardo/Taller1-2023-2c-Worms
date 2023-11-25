@@ -8,10 +8,11 @@ add_executable (client_app
 
     game_display/game_sprite_manager.h game_display/game_sprite_manager.cpp
     game_display/game_clock.h game_display/game_clock.cpp
+    game_display/game_display.h game_display/game_display.cpp
         game_display/worm/game_worm_entity.h game_display/worm/game_worm_entity.cpp
         game_display/worm/worm_anim_key_mapper.h game_display/worm/worm_anim_key_mapper.cpp
         game_display/worm/worm_anim_key.h
-    game_display/game_display.h game_display/game_display.cpp
+
         game_display/projectiles/game_projectile_entity.h game_display/projectiles/game_projectile_entity.cpp
         game_display/projectiles/projectile_sprite_key_mapper.h game_display/projectiles/projectile_sprite_key_mapper.cpp
 
@@ -20,6 +21,7 @@ add_executable (client_app
     game_display/ui_elements/game_text_display.h game_display/ui_elements/game_text_display.cpp
     game_display/ui_elements/game_sprite_info.h  game_display/ui_elements/game_sprite_info.cpp
     game_display/ui_elements/game_sprite.h       game_display/ui_elements/game_sprite.cpp
+    game_display/ui_elements/game_worm_animation_set.h game_display/ui_elements/game_worm_animation_set.cpp
     game_display/sprite_keys.h
 
     game_managment/client_receiver.cpp game_managment/client_receiver.h

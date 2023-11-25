@@ -5,6 +5,7 @@ class WeaponRotation {
     bool is_aim_angle_rotating;
     bool is_aim_angle_rotating_upwards;
     const float max_weapon_rotation = 90;
+    float speed;
 public:
     WeaponRotation();
     float aimed_angle = 0;

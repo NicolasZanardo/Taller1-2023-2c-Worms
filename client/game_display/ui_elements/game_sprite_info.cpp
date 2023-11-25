@@ -7,6 +7,7 @@ GameSpriteInfo::GameSpriteInfo(
     frame_width(0),
     frame_height(0),
     frame_sep(0),
+    animation(SpriteAnimationType::NONE),
     frame_speed(0),
     texture(renderer, SDL2pp::Surface(texture_file_path.c_str())),
     frame_count(0)
@@ -20,6 +21,7 @@ GameSpriteInfo::GameSpriteInfo(
         uint16_t frame_xoffset,
         uint16_t frame_yoffset,
         uint16_t frame_sep,
+        SpriteAnimationType animation,
         float frame_speed
 ) :
         frame_width(frame_width),
@@ -27,6 +29,7 @@ GameSpriteInfo::GameSpriteInfo(
         frame_xoffset(frame_xoffset),
         frame_yoffset(frame_yoffset),
         frame_sep(frame_sep),
+        animation(animation),
         frame_speed(frame_speed),
         texture(renderer,SDL2pp::Surface(texture_file_path.c_str())),
         frame_count(texture.GetHeight() / (frame_height + frame_sep))
@@ -40,6 +43,7 @@ GameSpriteInfo::GameSpriteInfo(
         uint16_t frame_xoffset,
         uint16_t frame_yoffset,
         uint16_t frame_sep,
+        SpriteAnimationType animation,
         float frame_speed,
         bool flag,
         Uint32 key
@@ -49,6 +53,7 @@ GameSpriteInfo::GameSpriteInfo(
     frame_xoffset(frame_xoffset),
     frame_yoffset(frame_yoffset),
     frame_sep(frame_sep),
+    animation(animation),
     frame_speed(frame_speed),
     texture(renderer,SDL2pp::Surface(texture_file_path.c_str()).SetColorKey(flag, key)),
     frame_count(texture.GetHeight() / (frame_height + frame_sep))

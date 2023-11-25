@@ -15,22 +15,27 @@ GameDisplay::GameDisplay(Queue<std::shared_ptr<Command>> &command_queue, int fps
 {
     images.emplace_back(&camera);
 
-    // Worms
-    texture_manager.add_texture("wwalk" , "resources/sprites/worm/wwalk.png" , 30, 40, 10, 10, 20, 28);
-    texture_manager.add_texture("wfall" , "resources/sprites/worm/wfall.png" , 30, 40, 10, 10, 20, 28);
-    texture_manager.add_texture("wjumpu", "resources/sprites/worm/wjumpu.png", 30, 40, 10, 10, 20, 28);
-    texture_manager.add_texture("widle" , "resources/sprites/worm/wwalk.png" , 30, 40, 10, 10, 20, 00);
-    texture_manager.add_texture("w_bazooka" , "resources/sprites/worm/w_bazooka.png" , 30, 40, 10, 10, 20, 00);
-    texture_manager.add_texture("w_green_grenade" , "resources/sprites/worm/w_green_grenade.png" , 30, 40, 10, 10, 20, 00);
-    texture_manager.add_texture("w_mortar" , "resources/sprites/worm/w_mortar.png" , 30, 40, 10, 10, 20, 00);
-
     // Scenario
     texture_manager.add_texture("beam_large", "resources/sprites/scenario/beam_large.png");
 
+    int w = 36;
+    int h = 36;
+    int xoff = 15;
+    int yoff = 12;
+    int sep = 60-h;
+
+    // Worms
+    texture_manager.add_texture("wwalk"           , "resources/sprites/worm/wwalk.png"          ,w,h,xoff,yoff,sep, SpriteAnimationType::LOOP   , 28);
+    texture_manager.add_texture("wfall"           , "resources/sprites/worm/wfall.png"          ,w,h,xoff,yoff,sep, SpriteAnimationType::FREEZE , 28);
+    texture_manager.add_texture("wjumpu"          , "resources/sprites/worm/wjumpu.png"         ,w,h,xoff,yoff,sep, SpriteAnimationType::REVERSE, 28);
+    texture_manager.add_texture("widle"           , "resources/sprites/worm/wwalk.png"          ,w,h,xoff,yoff,sep, SpriteAnimationType::NONE   , 00);
+    texture_manager.add_texture("w_bazooka"       , "resources/sprites/worm/w_bazooka.png"      ,w,h,xoff,yoff,sep, SpriteAnimationType::NONE   , 00);
+    texture_manager.add_texture("w_green_grenade" , "resources/sprites/worm/w_green_grenade.png",w,h,xoff,yoff,sep, SpriteAnimationType::NONE   , 00);
+    texture_manager.add_texture("w_mortar"        , "resources/sprites/worm/w_mortar.png"       ,w,h,xoff,yoff,sep, SpriteAnimationType::NONE   , 00);
     // Projectiles
-    texture_manager.add_texture("p_bazooka", "resources/sprites/projectiles/bazooka.png");
-    texture_manager.add_texture("p_mortar", "resources/sprites/projectiles/mortar.png");
-    texture_manager.add_texture("p_green_grenade", "resources/sprites/projectiles/green_grenade.png");
+    texture_manager.add_texture("p_bazooka"       , "resources/sprites/projectiles/bazooka.png"      ,w,h,xoff,yoff,sep, SpriteAnimationType::BY_ANGLE, 0);
+    texture_manager.add_texture("p_mortar"        , "resources/sprites/projectiles/mortar.png"       ,w,h,xoff,yoff,sep, SpriteAnimationType::BY_ANGLE, 0);
+    texture_manager.add_texture("p_green_grenade" , "resources/sprites/projectiles/green_grenade.png",w,h,xoff,yoff,sep, SpriteAnimationType::BY_ANGLE, 0);
 }
 
 GameDisplay::~GameDisplay() {
@@ -47,9 +52,7 @@ void GameDisplay::update(float delta_time) {
 }
 
 GameSprite* GameDisplay::new_sprite(const std::string& spritekey, float width, float height, float angle) {
-    GameSprite *sprite = new GameSprite(camera, *texture_manager.get(spritekey));
-    sprite->set_size(width, height);
-    sprite->set_angle(angle);
+    GameSprite *sprite = new GameSprite(camera, *texture_manager.get(spritekey), width, height, angle);
 
     images.emplace_back(sprite);
 
@@ -70,5 +73,18 @@ GameTextDisplay* GameDisplay::new_text(const std::string& text, float x, float y
     return display;
 }
 
+WormAnimationSet* GameDisplay::new_worm_animation(float size_scale, float angle) {
+    WormAnimationSet* animset = new WormAnimationSet(
+        new GameSprite(camera, *texture_manager.get("widle") , WORM_SIZE*size_scale, WORM_SIZE*size_scale, angle),
+        new GameSprite(camera, *texture_manager.get("wwalk") , WORM_SIZE*size_scale, WORM_SIZE*size_scale, angle),
+        new GameSprite(camera, *texture_manager.get("wfall") , WORM_SIZE*size_scale, WORM_SIZE*size_scale, angle),
+        new GameSprite(camera, *texture_manager.get("wjumpu"), WORM_SIZE*size_scale, WORM_SIZE*size_scale, angle),
 
+        new GameSprite(camera, *texture_manager.get("p_bazooka")      , WORM_SIZE*size_scale, WORM_SIZE*size_scale, angle),
+        new GameSprite(camera, *texture_manager.get("p_mortar")       , WORM_SIZE*size_scale, WORM_SIZE*size_scale, angle),
+        new GameSprite(camera, *texture_manager.get("p_green_grenade"), WORM_SIZE*size_scale, WORM_SIZE*size_scale, angle)
+    );
 
+    images.emplace_back(animset);
+    return animset;
+}

@@ -9,11 +9,12 @@
 #include "worm_anim_key.h"
 #include "game_sprite.h"
 #include "game_text_display.h"
+#include "game_worm_animation_set.h"
 
 class WormEntity : public CameraTarget{
     WormDto attributes; 
-    std::unordered_map<WormAnimKey, GameSprite*> animations;
-    GameSprite* active_animation;
+    WormAnimationSet* sprite;
+    bool is_active;
     GameTextDisplay* name;
     
     public:
