@@ -58,7 +58,8 @@ void GameSprite::render(SDL2pp::Renderer& renderer, float delta_time) {
     update_animation(delta_time);
     if (info.animation == BY_ANGLE)
         renderer.Copy(info.texture, info.image_frame(anim_progress), transform, 0.0, offset, flip);
-    else renderer.Copy(info.texture, info.image_frame(anim_progress), transform, angle, offset, flip);
+    else renderer.Copy(info.texture, info.image_frame(anim_progress), transform, normalize_angle(-angle), offset, flip);
+
 
     renderer.SetDrawColor(SDL2pp::Color{255,255,255,255});
     renderer.DrawRect(transform);
@@ -76,7 +77,7 @@ void GameSprite::update_animation(float delta_time) {
     }
 
     float true_delta = delta_time * anim_speed * info.frame_speed;
-    if (true_delta != 0)
+    if (true_delta == 0)
         return;
 
     anim_progress += true_delta;
@@ -90,7 +91,7 @@ void GameSprite::update_animation(float delta_time) {
         case SpriteAnimationType::LOOP:
             // Se reinicia la animacion manteniando el progreso del servidor.
             // de esta manera todos los clientes van a tener el mismo progreso de animacion, incluso despues de un lag.
-            while (anim_progress > info.frame_count) {
+            while (anim_progress >= info.frame_count) {
                 anim_progress -= info.frame_count;
             }
             break;
