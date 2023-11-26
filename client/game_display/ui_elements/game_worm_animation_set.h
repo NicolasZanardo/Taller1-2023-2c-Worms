@@ -8,11 +8,12 @@
 
 class WormAnimationSet : public Displayable {
     std::unordered_map<MovementStateDto, GameSprite*> worm_state_sprite;
-    std::unordered_map<WeaponTypeDto, GameSprite*> weapon_state_sprite;
+    std::unordered_map<WeaponTypeDto, GameSprite*> aiming_idle_sprite;
     GameSprite* active_body;
+    GameSprite* aiming_body;
     MovementStateDto state;
-    GameSprite* active_weapon;
     WeaponTypeDto weapon;
+    bool is_aiming;
 
     public:
     ~WormAnimationSet() override;
@@ -21,14 +22,16 @@ class WormAnimationSet : public Displayable {
         GameSprite* moving,
         GameSprite* going_upwards,
         GameSprite* falling,
-        GameSprite* bazooka,
-        GameSprite* mortar,
-        GameSprite* green_granade
+
+        GameSprite* aiming_bazooka,
+        GameSprite* aiming_mortar,
+        GameSprite* aiming_green_granade
     );
 
     void update_state(MovementStateDto newstate);
     void update_weapon(WeaponTypeDto newweapon);
 
+    void aiming(bool is_aiming);
     void set_pos(float x, float y);
     void set_weapon_angle(float angle);
     void image_flipped(bool image_is_flipped);

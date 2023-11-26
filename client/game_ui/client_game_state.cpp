@@ -52,7 +52,7 @@ void ClientGameState::update(const std::shared_ptr<ClientGameStateDTO> &game_sta
 
     for (auto &worm_dto: game_state_dto->worms) {
         auto &it = worms[worm_dto.entity_id];
-        it->update(worm_dto);
+        it->update(worm_dto, worm_dto.entity_id == game_state_dto->active_entity_id);
     }
 
     if (game_state_dto->projectiles.size() < projectiles.size()) {
