@@ -34,21 +34,21 @@ void NetMessageGameStateUpdate::execute(NetMessageBehaviour &interpreter) {
 
 void NetMessageGameStateUpdate::push_data_into(NetBuffer &container) {
     NetMessage::push_data_into(container);
-    container.push_uint(active_client_id);
-    container.push_uint(active_entity_id);
+    container.push_int(active_client_id);
+    container.push_int(active_entity_id);
     container.push_float(wind_speed);
     container.push_float(remaining_game_time);
     container.push_float(remaining_turn_time);
 
     container.push_short(worms.size());
     for (size_t i = 0; i < worms.size(); i++) {
-        container.push_uint(worms[i].client_id);
-        container.push_uint(worms[i].entity_id);
+        container.push_int(worms[i].client_id);
+        container.push_int(worms[i].entity_id);
         container.push_float(worms[i].x);
         container.push_float(worms[i].y);
         container.push_float(worms[i].angle);
         container.push_bool(worms[i].is_facing_right);
-        container.push_uint(worms[i].life);
+        container.push_int(worms[i].life);
         container.push_byte(static_cast<uint8_t>(worms[i].movement_state));
         container.push_byte(static_cast<uint8_t>(worms[i].weapon_hold));
         container.push_float(worms[i].aiming_angle);
@@ -56,7 +56,7 @@ void NetMessageGameStateUpdate::push_data_into(NetBuffer &container) {
 
     container.push_short(projectiles.size());
     for (size_t i = 0; i < projectiles.size(); i++) {
-        container.push_uint(projectiles[i].entity_id);
+        container.push_int(projectiles[i].entity_id);
         container.push_byte(static_cast<uint8_t>(projectiles[i].from_weapon));
         container.push_float(projectiles[i].x);
         container.push_float(projectiles[i].y);
@@ -64,7 +64,7 @@ void NetMessageGameStateUpdate::push_data_into(NetBuffer &container) {
 
     container.push_short(events.size());
     for (size_t i = 0; i < events.size(); i++) {
-        container.push_uint(events[i].entity_id);
+        container.push_int(events[i].entity_id);
         container.push_float(events[i].x);
         container.push_float(events[i].y);
         container.push_byte(static_cast<uint8_t>(events[i].type));
@@ -72,21 +72,21 @@ void NetMessageGameStateUpdate::push_data_into(NetBuffer &container) {
 }
 
 void NetMessageGameStateUpdate::pull_data_from(NetProtocolInterpreter &channel) {
-    active_client_id = channel.read_uint();
-    active_entity_id = channel.read_uint();
+    active_client_id = channel.read_int();
+    active_entity_id = channel.read_int();
     wind_speed = channel.read_float();
     remaining_game_time = channel.read_float();
     remaining_turn_time = channel.read_float();
 
     short worms_size = channel.read_short();
     for(int i = 0; i < worms_size; i++) {
-        auto client_id = channel.read_uint();
-        auto entity_id = channel.read_uint();
+        auto client_id = channel.read_int();
+        auto entity_id = channel.read_int();
         auto x         = channel.read_float();
         auto y         = channel.read_float();
         auto angle     = channel.read_float();
         auto is_facing_right = channel.read_bool();
-        auto life      = channel.read_uint();
+        auto life      = channel.read_int();
         auto state     = static_cast<MovementStateDto>(channel.read_byte());
         auto weapon_hold     = static_cast<WeaponTypeDto>(channel.read_byte());
         auto aiming_angle     = channel.read_float();
@@ -96,7 +96,7 @@ void NetMessageGameStateUpdate::pull_data_from(NetProtocolInterpreter &channel) 
 
     short bullets_size = channel.read_short();
     for(int i = 0; i < bullets_size; i++) {
-        auto entity_id = channel.read_uint();
+        auto entity_id = channel.read_int();
         auto type      = static_cast<WeaponTypeDto>(channel.read_byte());
         auto x         = channel.read_float();
         auto y         = channel.read_float();
@@ -107,7 +107,7 @@ void NetMessageGameStateUpdate::pull_data_from(NetProtocolInterpreter &channel) 
 
     short events_size = channel.read_short();
     for(int i = 0; i < events_size; i++) {
-        auto entity_id = channel.read_uint();
+        auto entity_id = channel.read_int();
         auto x         = channel.read_float();
         auto y         = channel.read_float();
         auto type      = static_cast<WorldEventDto::Type>(channel.read_byte());

@@ -11,12 +11,12 @@ NetMessagePlayerChangedWeapon::NetMessagePlayerChangedWeapon(size_t client_id, W
 
 void NetMessagePlayerChangedWeapon::push_data_into(NetBuffer& container) {
     NetMessage::push_data_into(container);
-    container.push_uint(client_id);
+    container.push_int(client_id);
     container.push_byte(static_cast<uint8_t>(chosen_weapon));
 }
 
 void NetMessagePlayerChangedWeapon::pull_data_from(NetProtocolInterpreter& channel) {
-    client_id = channel.read_uint();
+    client_id = channel.read_int();
     chosen_weapon = static_cast<WeaponTypeDto>(channel.read_byte());
 }
 

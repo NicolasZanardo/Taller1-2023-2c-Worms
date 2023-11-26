@@ -26,14 +26,14 @@ void NetMessageInitialGameState::push_data_into(NetBuffer &container) {
     }
 
     container.push_short(worms.size());
-    for (auto &it: worms) {
-        container.push_uint(it.client_id);
-        container.push_uint(it.entity_id);
+    for(auto& it : worms) {
+        container.push_int(it.client_id);
+        container.push_int(it.entity_id);
         container.push_float(it.x);
         container.push_float(it.y);
         container.push_float(it.angle);
         container.push_bool(it.is_facing_right);
-        container.push_uint(it.life);
+        container.push_int(it.life);
         container.push_byte(static_cast<uint8_t>(it.movement_state));
         container.push_byte(static_cast<uint8_t>(it.weapon_hold));
         container.push_float(it.aiming_angle);
@@ -56,17 +56,17 @@ void NetMessageInitialGameState::pull_data_from(NetProtocolInterpreter &channel)
     }
 
     short worms_size = channel.read_short();
-    for (int i = 0; i < worms_size; i++) {
-        auto client_id = channel.read_uint();
-        auto entity_id = channel.read_uint();
-        auto x = channel.read_float();
-        auto y = channel.read_float();
-        auto angle = channel.read_float();
+    for(int i = 0; i < worms_size; i++) {
+        auto client_id = channel.read_int();
+        auto entity_id = channel.read_int();
+        auto x         = channel.read_float();
+        auto y         = channel.read_float();
+        auto angle     = channel.read_float();
         auto is_facing_right = channel.read_bool();
-        auto life = channel.read_uint();
-        auto state = static_cast<MovementStateDto>(channel.read_byte());
-        auto weapon_hold = static_cast<WeaponTypeDto>(channel.read_byte());
-        auto aiming_angle = channel.read_float();
+        auto life      = channel.read_int();
+        auto state     = static_cast<MovementStateDto>(channel.read_byte());
+        auto weapon_hold     = static_cast<WeaponTypeDto>(channel.read_byte());
+        auto aiming_angle     = channel.read_float();
 
         worms.emplace_back(client_id, entity_id, x, y, angle, is_facing_right, life, state, weapon_hold, aiming_angle);
     }
