@@ -20,7 +20,7 @@ ProjectileDto Projectile::to_dto() const {
     );
 }
 
-void Projectile::update(const int it) {
+void Projectile::update(const int it, const int rate) {
     body->on_update();
 }
 

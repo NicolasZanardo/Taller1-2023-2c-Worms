@@ -6,8 +6,9 @@
 #include "../../core/InstancesManager.h"
 
 class UpdatablesSystem {
+    int rate;
 public:
-    UpdatablesSystem() = default;
+    UpdatablesSystem(int rate);
     void update(
         int it,
         const std::unordered_map<size_t, std::shared_ptr<Worm>> &worms,

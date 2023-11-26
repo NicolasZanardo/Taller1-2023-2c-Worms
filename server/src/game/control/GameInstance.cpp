@@ -12,7 +12,7 @@ GameInstance::GameInstance(
     instances_manager(physics_system, scenarioData),
     clientsWorms(),
     turn_system(rate),
-    updatables_system(),
+    updatables_system(rate),
     shot_system(instances_manager) {
 
     assign_worms_to_clients(clients);

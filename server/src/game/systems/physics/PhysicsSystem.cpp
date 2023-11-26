@@ -15,7 +15,7 @@ PhysicsSystem::PhysicsSystem(
     water(),
     contactListener() {
     populate_beams(scenario);
-    // spawn_water(scenario);
+    spawn_water(scenario);
     world.SetContactListener(&contactListener);
 }
 
@@ -187,8 +187,8 @@ void PhysicsSystem::spawn_water(const GameScenarioData &scenario_data) {
     fixture_def.shape = &water_box;
     fixture_def.filter.categoryBits = WATER_CATEGORY_BIT;
     fixture_def.filter.maskBits = WORM_CATEGORY_BIT | PROJECTILE_CATEGORY_BIT;
-
+    fixture_def.userData.pointer = reinterpret_cast<uintptr_t>(&water);
     fixture_def.isSensor = true;
-    water_body->CreateFixture(&fixture_def);
+    auto fixture = water_body->CreateFixture(&fixture_def);
 }
 

@@ -24,7 +24,7 @@ public:
     std::unique_ptr<ProjectileBody> body;
     b2Body* B2Body();
 
-    void update(int it) override;
+    void update(int it, int rate) override;
     ProjectileDto to_dto() const;
     void explode();
     bool has_exploded() const;

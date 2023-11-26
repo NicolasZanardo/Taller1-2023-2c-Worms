@@ -13,6 +13,8 @@ Worm::Worm(size_t id) :
     actual_weapon(weapons[WeaponTypeDto::BAZOOKA]),
     health(100),
     foot_sensor(this),
+    is_on_water(false),
+    water_death_timer(2000),
     body(nullptr),
     has_done_an_ending_turn_action(false)
     {}
@@ -61,10 +63,20 @@ WormFootSensor* Worm::get_foot_sensor() {
 }
 
 
-void Worm::update(const int it) {
+void Worm::update(const int it, const int rate) {
+    if (is_on_water) {
+        water_death_timer -= it * rate;
+        if (water_death_timer <= 0) {
+            // std::cout << "Worm id: " << id << "died\n";
+            health.die();
+            is_active = false;
+            return;
+        }
+    }
+
     health.on_update();
     if (!health.IsAlive()) {
-        std::cout << "Worm id: " << id << "died\n";
+        // std::cout << "Worm id: " << id << "died\n";
         is_active = false;
         return;
     }
@@ -113,7 +125,8 @@ void Worm::jump_backwards() const {
     body->jump_backwards();
 }
 
-void Worm::sink() const {
+void Worm::sink() {
+    is_on_water = true;
     body->sink();
 }
 
@@ -143,14 +156,14 @@ void Worm::stop_aiming_down() {
 }
 
 void Worm::start_shooting() {
-    if (actual_weapon) {
+    if (actual_weapon && !has_done_an_ending_turn_action) {
         // Logger::log_position("Worm shot", X(), Y());
         actual_weapon->start_shooting(X(),Y(),body->facing_direction_sign());
     }
 }
 
 void Worm::end_shooting() {
-    if (actual_weapon) {
+    if (actual_weapon && !has_done_an_ending_turn_action) {
         actual_weapon->end_shooting(X(),Y(),body->facing_direction_sign());
     }
 }
