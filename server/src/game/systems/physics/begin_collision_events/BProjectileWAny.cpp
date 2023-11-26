@@ -17,7 +17,6 @@ void BProjectileWAny::resolve(Collidable *projectile_collideable, Collidable *an
 
     if (projectile != nullptr && !projectile->has_exploded()) {
         b2Vec2 explosion_point = projectile->B2Body()->GetPosition();
-        std::cout << "Correctly casting projectile\n";
         // Logger::log_position("Projectile collided", explosion_point.x, explosion_point.y);
         float explosion_radius = projectile->explosion_radius;
         float max_damage = projectile->damage;
