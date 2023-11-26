@@ -189,6 +189,6 @@ void PhysicsSystem::spawn_water(const GameScenarioData &scenario_data) {
     fixture_def.filter.maskBits = WORM_CATEGORY_BIT | PROJECTILE_CATEGORY_BIT;
     fixture_def.userData.pointer = reinterpret_cast<uintptr_t>(&water);
     fixture_def.isSensor = true;
-    auto fixture = water_body->CreateFixture(&fixture_def);
+    water_body->CreateFixture(&fixture_def);
 }
 
