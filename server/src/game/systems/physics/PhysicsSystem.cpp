@@ -82,7 +82,6 @@ void PhysicsSystem::spawn_beam(BeamScenarioData beam) {
     b2Body *groundBody = world.CreateBody(&groundBodyDef);
 
     float xcenter, ycenter;
-    b2PolygonShape groundBox;
     if (beam.type == BeamScenarioData::Type::SHORT) {
         xcenter = SHORT_BEAM_WIDTH / 2;
         ycenter = SHORT_BEAM_HEIGHT / 2;
@@ -90,6 +89,8 @@ void PhysicsSystem::spawn_beam(BeamScenarioData beam) {
         xcenter = LARGE_BEAM_WIDTH / 2;
         ycenter = LARGE_BEAM_HEIGHT / 2;
     }
+    
+    b2PolygonShape groundBox;
     groundBox.SetAsBox(xcenter, ycenter, b2Vec2(xcenter, ycenter), beam.angle * DEG_TO_RAD);
 
     b2FixtureDef fixtureDef;

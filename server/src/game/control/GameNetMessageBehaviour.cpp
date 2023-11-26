@@ -87,6 +87,9 @@ void GameNetMessageBehaviour::run(NetMessageGameAction *msg) {
             game.end_shot_for_current_worm();
             break;
         }
+        case GameAction::RESERVED: {
+            break;
+        }
     }
 }
 

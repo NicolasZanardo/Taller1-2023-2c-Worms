@@ -24,12 +24,7 @@ void WormEntity::update(WormDto& new_values) {
 
     attributes.x = new_values.x;
     attributes.y = new_values.y;
-
     attributes.life = new_values.life;
-    attributes.is_facing_right = new_values.is_facing_right;
-    attributes.angle = new_values.angle;
-    attributes.weapon_hold = new_values.weapon_hold;
-    attributes.movement_state = new_values.movement_state;
 
     name->set_pos(attributes.x, attributes.y+1);
 
