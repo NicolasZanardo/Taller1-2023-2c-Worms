@@ -13,7 +13,7 @@ class GameSprite : public Displayable {
     float x,y,w,h;
     SDL2pp::Rect transform;
     SDL2pp::Point offset;
-    float angle;
+    float angle, angle_min, angle_max;
     bool is_active;
     SDL_RendererFlip flip;
     
@@ -27,6 +27,8 @@ class GameSprite : public Displayable {
     void set_size(float width, float heigth);
 
     void set_angle(float angle);
+    void set_angle_range(float angle_min, float angle_max);
+
     void hidden(bool is_hidden);
     void set_pos(float x, float y);
     void image_flipped(bool image_is_flipped);

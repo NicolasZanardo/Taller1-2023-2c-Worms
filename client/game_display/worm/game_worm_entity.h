@@ -19,7 +19,7 @@ class WormEntity : public CameraTarget{
     
     public:
     WormEntity(GameDisplay& display, WormDto& values);
-    void update(WormDto& new_values);
+    void update(WormDto& new_values, bool active);
 
     float get_x() override;
     float get_y() override;
