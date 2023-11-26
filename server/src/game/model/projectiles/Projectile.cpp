@@ -1,12 +1,15 @@
 #include "Projectile.h"
+#include "../../core/CollideableTags.h"
 
 Projectile::Projectile(size_t id, const std::unique_ptr<ProjectileInfo> &info) :
+    Collidable(PROJECTILE_TAG),
     Instance(id),
     weapon_type(info->from_weapon),
     exploded(false),
     damage(info->damage),
     explosion_radius(info->explosion_radius),
-    body(nullptr) {}
+    body(nullptr)
+    {}
 
 ProjectileDto Projectile::to_dto() const {
     return ProjectileDto(
@@ -18,16 +21,15 @@ ProjectileDto Projectile::to_dto() const {
 }
 
 void Projectile::update(const int it) {
-
+    body->on_update();
 }
 
 void Projectile::explode() {
     exploded = true;
-    // TODO Check what happens when
     is_active = false;
 }
 
-bool Projectile::has_exploded() {
+bool Projectile::has_exploded() const {
     return exploded;
 }
 
@@ -37,5 +39,9 @@ void Projectile::on_collision() {
 
 b2Body* Projectile::B2Body() {
     return body->B2Body();
+}
+
+void Projectile::sink() {
+    body->sink();
 }
 

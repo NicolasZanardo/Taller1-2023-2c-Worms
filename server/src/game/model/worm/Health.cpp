@@ -12,7 +12,7 @@ float Health::Amount() const {
     return actual_health;
 }
 
-bool Health::heal(float amount) {
+void Health::heal(float amount) {
     actual_health += amount;
 }
 

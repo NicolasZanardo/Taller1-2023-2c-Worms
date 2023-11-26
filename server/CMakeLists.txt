@@ -29,8 +29,8 @@ add_library( server
 
         src/game/core/InstancesManager.h
         src/game/core/InstancesManager.cpp
-        src/game/core/ServerConstants.h
-    src/game/model/core/Instance.h
+        src/game/core/CollideableTags.h
+        src/game/model/core/Instance.h
     src/game/model/core/Instance.cpp
     src/game/model/core/Updatable.h
         src/game/core/Logger.h
@@ -38,6 +38,7 @@ add_library( server
         src/game/model/core/OnTurnEndedListener.h
         src/game/model/core/Body.h
         src/game/model/core/Body.cpp
+        src/game/model/core/Collidable.h
         src/game/model/worm/WormBody.h
         src/game/model/worm/WormBody.cpp
     src/game/model/worm/Worm.h
@@ -64,6 +65,16 @@ add_library( server
         src/game/model/projectiles/Projectile.cpp
         src/game/model/projectiles/ProjectileBody.h
         src/game/model/projectiles/ProjectileBody.cpp
+        src/game/model/forces/Force.h
+        src/game/model/forces/BuoyancyForce.h
+        src/game/model/forces/BuoyancyForce.cpp
+
+        src/game/model/worm/WormFootSensor.h
+        src/game/model/worm/WormFootSensor.cpp
+        src/game/model/collidables/ScenarioWater.h
+        src/game/model/collidables/ScenarioWater.cpp
+        src/game/model/collidables/ScenarioBeams.h
+        src/game/model/collidables/ScenarioBeams.cpp
 
         src/game/model/game_events/GameWorldEvent.h
         src/game/model/game_events/GameWorldEvent.cpp
@@ -82,25 +93,29 @@ add_library( server
         src/game/systems/turns/TurnSystem.cpp
         src/game/systems/turns/WormIdIterator.h
         src/game/systems/turns/WormIdIterator.cpp
-        src/game/systems/instances/InstancesSystem.h
-        src/game/systems/instances/InstancesSystem.cpp
+        src/game/systems/updatables/UpdatablesSystem.h
+        src/game/systems/updatables/UpdatablesSystem.cpp
         src/game/systems/shot/ShotSystem.h
         src/game/systems/shot/ShotSystem.cpp
 
-        src/game/systems/physics/CollisionEvent.h
-        src/game/systems/physics/begin_contact_events/BWormWithGround.h
-        src/game/systems/physics/begin_contact_events/BWormWithGround.cpp
-        src/game/systems/physics/begin_contact_events/BProjectileWithAny.h
-        src/game/systems/physics/begin_contact_events/BProjectileWithAny.cpp
-        src/game/systems/physics/end_contact_events/EWormWithGround.h
-        src/game/systems/physics/end_contact_events/EWormWithGround.cpp
-        src/game/systems/physics/raycast_callbacks/ProjectileExplosionQueryCallback.cpp
-        src/game/systems/physics/raycast_callbacks/ProjectileExplosionQueryCallback.cpp
+        src/game/systems/physics/begin_collision_events/BWormFootSensorWGround.h
+        src/game/systems/physics/begin_collision_events/BWormFootSensorWGround.cpp
+        src/game/systems/physics/begin_collision_events/BProjectileWAny.h
+        src/game/systems/physics/begin_collision_events/BProjectileWAny.cpp
+        src/game/systems/physics/begin_collision_events/BWaterWWorm.h
+        src/game/systems/physics/begin_collision_events/BWaterWWorm.cpp
+        src/game/systems/physics/begin_collision_events/BWaterWProjectile.h
+        src/game/systems/physics/begin_collision_events/BWaterWProjectile.cpp
+        src/game/systems/physics/end_collision_events/EWormFootSensorWGround.h
+        src/game/systems/physics/end_collision_events/EWormFootSensorWGround.cpp
+        src/game/systems/physics/query_callbacks/ProjectileExplosionQueryCallback.cpp
+        src/game/systems/physics/query_callbacks/ProjectileExplosionQueryCallback.cpp
         src/game/systems/physics/PhysicsCollisionListener.h
         src/game/systems/physics/PhysicsCollisionListener.cpp
         src/game/systems/physics/PhysicsSystem.h
         src/game/systems/physics/PhysicsSystem.cpp
-        src/game/systems/physics/UserDataQuery.h
+        src/game/systems/physics/user_data_queries/UserDataQuery.h
+
 
 )
 

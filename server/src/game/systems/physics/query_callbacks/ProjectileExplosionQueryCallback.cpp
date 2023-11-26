@@ -1,7 +1,7 @@
 #include "ProjectileExplosionQueryCallback.h"
 
 bool ProjectileExplosionQueryCallback::ReportFixture(b2Fixture* fixture) {
-    auto hit_worm = query.get_user_data_as_type<Worm>(fixture);
+    auto hit_worm = UserDataQuery::get_user_data_as_type<Worm>(fixture);
     if (hit_worm) {
         // If worm has multiple fixtures we just need that worm one time
         found_worms_map[hit_worm->Id()] = hit_worm;
@@ -10,5 +10,5 @@ bool ProjectileExplosionQueryCallback::ReportFixture(b2Fixture* fixture) {
     return true;
 }
 
-ProjectileExplosionQueryCallback::ProjectileExplosionQueryCallback(UserDataQuery &query): query(query), found_worms_map() {}
+ProjectileExplosionQueryCallback::ProjectileExplosionQueryCallback(): found_worms_map() {}
 

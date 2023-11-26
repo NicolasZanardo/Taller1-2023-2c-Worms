@@ -1,56 +1,103 @@
 #include "PhysicsCollisionListener.h"
-#include "begin_contact_events/BWormWithGround.h"
-#include "begin_contact_events/BProjectileWithAny.h"
-#include "end_contact_events/EWormWithGround.h"
+#include "begin_collision_events/BWaterWProjectile.h"
+#include "end_collision_events/EWormFootSensorWGround.h"
+#include "../../core/CollideableTags.h"
+#include "begin_collision_events/BWaterWWorm.h"
+#include "begin_collision_events/BWormFootSensorWGround.h"
+#include "begin_collision_events/BProjectileWAny.h"
 #include <iostream>
 
-
-// TODO Should maybe have a map with a pair of tags pointing to a CollisionEventResolution function
-// Instead of quering by trying to cast and returning true if resolved
-/*
- *  A successful resolution breaks the BeginContact method
- *  For now, the events  represent a (1 to 1 contact) or (1 to Any),
- *  so if a (1 to 1) or (1 to any) contact is resolved
- *  it means there is no other possible combination left to analyze.
- *  (1 to Any) should handle all cases for Any in order for the rest of events to be excluded
- */
 void PhysicsCollisionListener::BeginContact(b2Contact *contact) {
-    b2Fixture *fixtureA = contact->GetFixtureA();
-    b2Fixture *fixtureB = contact->GetFixtureB();
 
-    for (auto &event: beginning_collisions) {
-         if (event->try_resolve(fixtureA, fixtureB))
-             return;
+    auto collideable_a = reinterpret_cast<Collidable *>(contact->GetFixtureA()->GetUserData().pointer);
+    auto collideable_b = reinterpret_cast<Collidable *>(contact->GetFixtureB()->GetUserData().pointer);
+
+    if (!collideable_a || !collideable_b)
+        return;
+
+    auto tree = beginning_hit_map.find(std::make_pair(collideable_a->tag, collideable_b->tag));
+    if (tree != beginning_hit_map.end()) {
+        auto resolver = tree->second;
+        if (resolver)
+            resolver(collideable_a, collideable_b);
     }
-
 }
 
 void PhysicsCollisionListener::EndContact(b2Contact *contact) {
-    b2Fixture *fixtureA = contact->GetFixtureA();
-    b2Fixture *fixtureB = contact->GetFixtureB();
+    auto collideable_a = reinterpret_cast<Collidable *>(contact->GetFixtureA()->GetUserData().pointer);
+    auto collideable_b = reinterpret_cast<Collidable *>(contact->GetFixtureB()->GetUserData().pointer);
 
-    for (auto &event: ending_collisions) {
-        if (event->try_resolve(fixtureA, fixtureB))
-            return;
+    if (!collideable_a || !collideable_b)
+        return;
+
+    auto tree = ending_hit_map.find(std::make_pair(collideable_a->tag, collideable_b->tag));
+    if (tree != ending_hit_map.end()) {
+        auto resolver = tree->second;
+        if (resolver)
+            resolver(collideable_a, collideable_b);
     }
+
 }
 
-/*
- * Set the events with priority in mind
- */
-PhysicsCollisionListener::PhysicsCollisionListener(b2World &world) : world(world), beginning_collisions(), ending_collisions(){
-    _init_beginning_collision_events();
-    _init_ending_collision_events();
+PhysicsCollisionListener::PhysicsCollisionListener() : beginning_hit_map(), ending_hit_map() {
+    _init_beginning_collisions_hit_map();
+    _init_ending_collisions_hit_map();
 }
 
-void PhysicsCollisionListener::_init_beginning_collision_events() {
-    beginning_collisions.emplace_back(std::make_unique<BWormWithGround>(world));
-    beginning_collisions.emplace_back(std::make_unique<BProjectileWithAny>(world));
+void PhysicsCollisionListener::_init_beginning_collisions_hit_map() {
+
+    // Worm foot sensor
+
+    beginning_hit_map.insert(
+        std::make_pair(std::make_pair(WORM_FOOT_SENSOR_TAG, GROUND_TAG), &BWormFootSensorWGround::resolve)
+    );
+    beginning_hit_map.insert(
+        std::make_pair(std::make_pair(GROUND_TAG, WORM_FOOT_SENSOR_TAG), &BWormFootSensorWGround::resolve_inverse)
+    );
+
+    // Projectile
+
+    beginning_hit_map.insert(
+        std::make_pair(std::make_pair(PROJECTILE_TAG, GROUND_TAG), &BProjectileWAny::resolve)
+    );
+    beginning_hit_map.insert(
+        std::make_pair(std::make_pair(GROUND_TAG, PROJECTILE_TAG), &BProjectileWAny::resolve_inverse)
+    );
+
+    beginning_hit_map.insert(
+        std::make_pair(std::make_pair(PROJECTILE_TAG, WORM_TAG), &BProjectileWAny::resolve)
+    );
+    beginning_hit_map.insert(
+        std::make_pair(std::make_pair(WORM_TAG, PROJECTILE_TAG), &BProjectileWAny::resolve_inverse)
+    );
+
+
+    // Water
+
+    beginning_hit_map.insert(
+        std::make_pair(std::make_pair(WATER_TAG, PROJECTILE_TAG), &BWaterWProjectile::resolve)
+    );
+    beginning_hit_map.insert(
+        std::make_pair(std::make_pair(PROJECTILE_TAG, WATER_TAG), &BWaterWProjectile::resolve_inverse)
+    );
+
+    beginning_hit_map.insert(
+        std::make_pair(std::make_pair(WATER_TAG, WORM_TAG), &BWaterWWorm::resolve)
+    );
+    beginning_hit_map.insert(
+        std::make_pair(std::make_pair(WORM_TAG, WATER_TAG), &BWaterWWorm::resolve_inverse)
+    );
+
 }
 
-void PhysicsCollisionListener::_init_ending_collision_events() {
-    ending_collisions.emplace_back(std::make_unique<EWormWithGround>(world));
+void PhysicsCollisionListener::_init_ending_collisions_hit_map() {
+    // Worm foot sensor
+    ending_hit_map.insert(
+        std::make_pair(std::make_pair(WORM_FOOT_SENSOR_TAG, GROUND_TAG), &EWormFootSensorWGround::resolve)
+    );
+    ending_hit_map.insert(
+        std::make_pair(std::make_pair(GROUND_TAG, WORM_FOOT_SENSOR_TAG), &EWormFootSensorWGround::resolve_inverse)
+    );
+
+
 }
-
-
-

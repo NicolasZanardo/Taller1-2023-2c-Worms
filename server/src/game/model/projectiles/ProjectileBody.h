@@ -5,8 +5,13 @@
 #include "../core/Body.h"
 
 class ProjectileBody: public Body {
+    bool is_on_water = false;
 public:
     ProjectileBody(b2World& world, b2Body* body);
+
+    void sink();
+
+    void on_update();
 
     ~ProjectileBody() = default;
 };

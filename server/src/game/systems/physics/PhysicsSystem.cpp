@@ -11,8 +11,11 @@ PhysicsSystem::PhysicsSystem(
 ) :
     timeStep(1.0f / rate),
     world(b2Vec2(xGravity, yGravity)),
-    contactListener(world) {
+    beams(),
+    water(),
+    contactListener() {
     populate_beams(scenario);
+    // spawn_water(scenario);
     world.SetContactListener(&contactListener);
 }
 
@@ -20,7 +23,10 @@ void PhysicsSystem::update(const std::unordered_map<size_t, std::shared_ptr<Worm
     world.Step(timeStep, velocityIterations, positionIterations);
 }
 
-std::unique_ptr<WormBody> PhysicsSystem::spawn_worm(WormScenarioData worm, std::shared_ptr<Worm> wormModel) {
+std::unique_ptr<WormBody> PhysicsSystem::spawn_worm(
+    WormScenarioData worm,
+    const std::shared_ptr<Worm> &worm_model
+    ) {
     // Body def
     b2BodyDef bodyDef;
     bodyDef.type = b2_dynamicBody;
@@ -39,9 +45,9 @@ std::unique_ptr<WormBody> PhysicsSystem::spawn_worm(WormScenarioData worm, std::
 
     fixtureDef.density = 80.0f;
     fixtureDef.restitution = 0;
-    fixtureDef.userData.pointer = reinterpret_cast<uintptr_t>(wormModel.get());
-    fixtureDef.filter.categoryBits = WORM_CATEGORY;
-    fixtureDef.filter.maskBits = GROUND_CATEGORY;
+    fixtureDef.userData.pointer = reinterpret_cast<uintptr_t>(worm_model.get());
+    fixtureDef.filter.categoryBits = WORM_CATEGORY_BIT;
+    fixtureDef.filter.maskBits = GROUND_CATEGORY_BIT | WATER_CATEGORY_BIT;
     body->CreateFixture(&fixtureDef);
 
     // Shape for foot sensor
@@ -59,9 +65,9 @@ std::unique_ptr<WormBody> PhysicsSystem::spawn_worm(WormScenarioData worm, std::
     footSensorFixtureDef.density = 0;
     footSensorFixtureDef.shape = &footSensorBox;
     footSensorFixtureDef.isSensor = true; // Set as sensor to detect collisions without generating a response
-    footSensorFixtureDef.userData.pointer = reinterpret_cast<uintptr_t>(wormModel.get()); // same user data
-    fixtureDef.filter.categoryBits = WORM_CATEGORY;
-    fixtureDef.filter.maskBits = GROUND_CATEGORY | WORM_CATEGORY;
+    footSensorFixtureDef.userData.pointer = reinterpret_cast<uintptr_t>(worm_model->get_foot_sensor()); // same user data
+    fixtureDef.filter.categoryBits = WORM_CATEGORY_BIT;
+    fixtureDef.filter.maskBits = GROUND_CATEGORY_BIT | WATER_CATEGORY_BIT;
     body->CreateFixture(&footSensorFixtureDef);
 
     return std::make_unique<WormBody>(world, body);
@@ -89,14 +95,15 @@ void PhysicsSystem::spawn_beam(BeamScenarioData beam) {
         xcenter = LARGE_BEAM_WIDTH / 2;
         ycenter = LARGE_BEAM_HEIGHT / 2;
     }
-    
+
     b2PolygonShape groundBox;
     groundBox.SetAsBox(xcenter, ycenter, b2Vec2(xcenter, ycenter), beam.angle * DEG_TO_RAD);
 
     b2FixtureDef fixtureDef;
     fixtureDef.shape = &groundBox;
     fixtureDef.density = 100;
-    fixtureDef.filter.categoryBits = GROUND_CATEGORY;
+    fixtureDef.filter.categoryBits = GROUND_CATEGORY_BIT;
+    fixtureDef.userData.pointer = reinterpret_cast<uintptr_t>(&beams);
     // Set the friction based on the angle of the ground
     float groundAngle = groundBody->GetAngle();
 
@@ -123,7 +130,8 @@ std::unique_ptr<ProjectileBody> PhysicsSystem::spawn_projectile(
     bodyDef.fixedRotation = true;
     b2Vec2 offset_from_worm(aim_vector.first * SHOT_OFFSET_FROM_WORM, aim_vector.second * SHOT_OFFSET_FROM_WORM);
     // Logger::log_position("A projectile spawned", projectile_info->origin_x + offset_from_worm.x,projectile_info->origin_y + offset_from_worm.y);
-    bodyDef.position.Set(projectile_info->origin_x + offset_from_worm.x, projectile_info->origin_y + offset_from_worm.y);
+    bodyDef.position.Set(projectile_info->origin_x + offset_from_worm.x,
+                         projectile_info->origin_y + offset_from_worm.y);
     // bodyDef.linearDamping = 0.0f;
     b2Body *body = world.CreateBody(&bodyDef);
 
@@ -137,8 +145,8 @@ std::unique_ptr<ProjectileBody> PhysicsSystem::spawn_projectile(
     fixtureDef.density = PROJECTILE_DENSITY;
     fixtureDef.restitution = 0;
     fixtureDef.userData.pointer = reinterpret_cast<uintptr_t>(projectile.get());
-    fixtureDef.filter.categoryBits = PROJECTILE_CATEGORY;
-    fixtureDef.filter.maskBits = GROUND_CATEGORY | WORM_CATEGORY;
+    fixtureDef.filter.categoryBits = PROJECTILE_CATEGORY_BIT;
+    fixtureDef.filter.maskBits = GROUND_CATEGORY_BIT | WORM_CATEGORY_BIT | WATER_CATEGORY_BIT;
     body->CreateFixture(&fixtureDef);
 
     b2Vec2 initialForce(
@@ -161,3 +169,26 @@ std::pair<float, float> PhysicsSystem::angle_to_normalized_vector(float angle_de
     // Return the result as a pair of floats
     return std::make_pair(x, y);
 }
+
+void PhysicsSystem::spawn_water(const GameScenarioData &scenario_data) {
+    b2BodyDef water_body_def;
+    water_body_def.type = b2_staticBody;
+    water_body_def.position.Set(
+        scenario_data.room_width / 2,
+        scenario_data.water_height_level - (WATER_HEIGHT / 2)
+    );
+    b2Body *water_body = world.CreateBody(&water_body_def);
+
+
+    b2PolygonShape water_box;
+    water_box.SetAsBox((scenario_data.room_width + 10) / 2, WATER_HEIGHT / 2);
+
+    b2FixtureDef fixture_def;
+    fixture_def.shape = &water_box;
+    fixture_def.filter.categoryBits = WATER_CATEGORY_BIT;
+    fixture_def.filter.maskBits = WORM_CATEGORY_BIT | PROJECTILE_CATEGORY_BIT;
+
+    fixture_def.isSensor = true;
+    water_body->CreateFixture(&fixture_def);
+}
+
