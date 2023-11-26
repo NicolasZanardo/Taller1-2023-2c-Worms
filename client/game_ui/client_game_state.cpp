@@ -113,7 +113,7 @@ void ClientGameState::destroy_old_projectiles(std::vector<ProjectileDto> updated
         );
 
         if (found == updated_projectiles.end()) {
-            display.remove_sprite(it->second->get_sprite());
+            display.remove(it->second->get_sprite());
             it = projectiles.erase(it);
         } else {
             ++it;

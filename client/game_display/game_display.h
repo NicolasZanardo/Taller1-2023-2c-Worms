@@ -29,11 +29,10 @@ class GameDisplay {
     ~GameDisplay();
 
     void update(float delta_time);
-    //void remove(Displayable* item);
+    void remove(Displayable* item);
     WormAnimationSet* new_worm_animation(float size_scale, float angle);
     GameTextDisplay* new_text(const std::string& text, float x, float y, int fnt_size, TextAlign align, TextLayer layer);
     GameSprite* new_sprite(const std::string& spritekey, float width, float height, float angle = 0);
-    void remove_sprite(GameSprite *sprite);
 };
 
 #endif
