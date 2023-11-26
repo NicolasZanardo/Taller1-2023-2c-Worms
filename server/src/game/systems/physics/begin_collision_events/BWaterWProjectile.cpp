@@ -9,8 +9,6 @@ void BWaterWProjectile::resolve(Collidable *water_collideable, Collidable *proje
     }
 }
 
-BWaterWProjectile::BWaterWProjectile() {}
-
-void BWaterWProjectile::resolve_inverse(Collidable *water_collideable, Collidable *projectile_collideable) {
-
+void BWaterWProjectile::resolve_inverse(Collidable *projectile_collideable, Collidable *water_collideable) {
+    resolve(water_collideable, projectile_collideable);
 }

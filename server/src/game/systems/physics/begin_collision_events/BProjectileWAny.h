@@ -14,7 +14,7 @@ public:
 
     static void resolve(Collidable *projectile_collideable, Collidable *any);
 
-    static void resolve_inverse(Collidable *projectile_collideable, Collidable *any);
+    static void resolve_inverse(Collidable *any, Collidable *projectile_collideable);
 };
 
 

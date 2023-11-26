@@ -6,7 +6,7 @@
 
 class BWaterWProjectile {
 public:
-    BWaterWProjectile();
+    BWaterWProjectile() = default;
 
     static void resolve(Collidable *water_collideable, Collidable *projectile_collideable);
     static void resolve_inverse(Collidable *water_collideable, Collidable *projectile_collideable);

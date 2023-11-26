@@ -8,8 +8,8 @@ class BWaterWWorm {
 public:
     BWaterWWorm() = default;
 
-    static void resolve(Collidable *water_collideable, Collidable *worm_collideable);
-    static void resolve_inverse(Collidable *water_collideable, Collidable *worm_collideable);
+    static void resolve(Collidable *water_collidable, Collidable *worm_collidable);
+    static void resolve_inverse(Collidable *worm_collidable, Collidable *water_collidable);
 };
 
 #endif //TP_WORMS_BWATERWWORM_H

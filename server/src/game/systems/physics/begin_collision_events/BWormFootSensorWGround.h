@@ -6,8 +6,8 @@
 class BWormFootSensorWGround {
 public:
     explicit BWormFootSensorWGround() = default;
-    static void resolve(Collidable *worm_collideable, Collidable *ground_collideable);
-    static void resolve_inverse(Collidable *worm_collideable, Collidable *ground_collideable);
+    static void resolve(Collidable *sensor_collidable, Collidable *ground_collidable);
+    static void resolve_inverse(Collidable *ground_collidable, Collidable *sensor_collidable);
 };
 
 #endif //TP_WORMS_BWORMFOOTSENSORWGROUND_H

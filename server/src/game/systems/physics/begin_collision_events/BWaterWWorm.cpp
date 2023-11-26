@@ -1,14 +1,14 @@
 #include "BWaterWWorm.h"
 #include "../PhysicsSystem.h"
 
-void BWaterWWorm::resolve(Collidable *water_collidable, Collidable *any) {
-    auto worm = dynamic_cast<Worm*>(any);
+void BWaterWWorm::resolve(Collidable *water_collidable, Collidable *worm_collidable) {
+    auto worm = dynamic_cast<Worm*>(worm_collidable);
     if (worm) {
         worm->sink();
     }
 }
 
-void BWaterWWorm::resolve_inverse(Collidable *water_collideable, Collidable *worm_collideable) {
-    resolve(worm_collideable, water_collideable);
+void BWaterWWorm::resolve_inverse(Collidable *worm_collideable, Collidable *water_collidable) {
+    resolve(water_collidable, worm_collideable);
 }
 
