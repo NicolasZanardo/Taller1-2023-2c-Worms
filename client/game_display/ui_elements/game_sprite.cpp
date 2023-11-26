@@ -13,7 +13,7 @@ GameSprite::GameSprite(GameCamera& cam, GameSpriteInfo& info, float width, float
     x(0),y(0),w(width),h(height),
     transform(0,0,0,0),
     offset(width/2, height/2),
-    angle(angle),
+    angle(angle), angle_min(0), angle_max(360),
     is_active(true),
     flip(SDL_FLIP_NONE),
     anim_speed(0.000001f),
@@ -31,7 +31,32 @@ void GameSprite::set_size(float width, float heigth) {
 }
 
 void GameSprite::set_angle(float angle) {
+    float min = angle_min;
+    float max = angle_max;
+    angle = normalize_angle(angle);
+
+    if (min > max) { // rodea el cero y hay que desfazar angulo y maximo
+        max += 360.0f;
+        angle += 360.0f;
+    }
+
+    angle = angle + (angle < min)*(min-angle) + (angle > max)*(max-angle);
     this->angle = normalize_angle(angle);
+}
+
+void GameSprite::set_angle_range(float angle_min, float angle_max) {
+    angle_min = normalize_angle(angle_min);
+    angle_max = normalize_angle(angle_max);
+
+    if (angle_min > angle_max) { // rodea el cero y hay que desfazar angulo y maximo
+        angle_max += 360.0f;
+        angle += 360.0f;
+    }
+
+    angle = angle + (angle < angle_min)*(angle_min-angle) + (angle > angle_max)*(angle_max-angle);
+    this->angle_min = angle_min;
+    this->angle = normalize_angle(angle);
+    this->angle_max = normalize_angle(angle_max);
 }
 
 void GameSprite::image_flipped(bool image_is_flipped) {
@@ -71,8 +96,7 @@ void GameSprite::update_animation(float delta_time) {
         return;
     
     if (info.animation == SpriteAnimationType::BY_ANGLE) {
-        //float angle_delta  = 360.0f / (float)info.frame_count;
-        anim_progress = ((float)info.frame_count) * (angle + 270) / 360;
+        anim_progress = ((float)info.frame_count) * (angle + 270) / (angle_max-angle_min);
         return;
     }
 

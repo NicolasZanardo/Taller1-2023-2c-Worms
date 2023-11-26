@@ -18,7 +18,7 @@ WormEntity::WormEntity(GameDisplay& display, WormDto& values) :
     ))
     { }
 
-void WormEntity::update(WormDto& new_values) {
+void WormEntity::update(WormDto& new_values, bool active) {
     if (attributes.entity_id != new_values.entity_id)
         return;
 
@@ -28,6 +28,7 @@ void WormEntity::update(WormDto& new_values) {
 
     name->set_pos(attributes.x, attributes.y+1);
 
+    sprite->aiming(active);
     sprite->update_weapon(new_values.weapon_hold);
     sprite->update_state(new_values.movement_state);
 
