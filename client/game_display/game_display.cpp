@@ -52,20 +52,20 @@ void GameDisplay::update(float delta_time) {
     renderer.Present();
 }
 
+void GameDisplay::remove(Displayable* item) {
+    images.remove_if([item](Displayable* displayable) {
+        return displayable == item;
+    });
+
+    delete item;
+}
+
 GameSprite* GameDisplay::new_sprite(const std::string& spritekey, float width, float height, float angle) {
     GameSprite *sprite = new GameSprite(camera, *texture_manager.get(spritekey), width, height, angle);
 
     images.emplace_back(sprite);
 
     return sprite;
-}
-
-void GameDisplay::remove_sprite(GameSprite *sprite) {
-    images.remove_if([sprite](Displayable* displayable) {
-        return dynamic_cast<GameSprite*>(displayable) == sprite;
-    });
-
-    delete sprite;
 }
 
 GameTextDisplay* GameDisplay::new_text(const std::string& text, float x, float y, int fnt_size, TextAlign align, TextLayer layer) {
