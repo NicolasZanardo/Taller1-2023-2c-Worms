@@ -1,4 +1,5 @@
 #include "game_worm_animation_set.h"
+#include <iostream>
 
 WormAnimationSet::~WormAnimationSet() {
     for (auto [key, val] : worm_state_sprite) {
@@ -83,7 +84,7 @@ void WormAnimationSet::set_pos(float x, float y) {
 }
 
 void WormAnimationSet::set_weapon_angle(float angle) {
-    aiming_body->set_angle(angle);
+    aiming_body->set_angle(-angle);
 }
 
 void WormAnimationSet::image_flipped(bool image_is_flipped) {

@@ -2,8 +2,14 @@
 #include <iostream>
 #include <math.h>
 
-inline float normalize_angle(float angle) {
-    return 360 * (angle < 0) + std::fmod(angle,360);
+inline float normalize_angle(float angle, float min, float max) {
+    angle = 360.0f * (float)(angle < 0) + std::fmod(angle,360);
+    
+    angle += (float)((min > max)*(angle < min))*360.0f;
+    max += (float)(min > max)*360.0f;
+
+    angle += (float)(angle < min)*(min-angle) + (float)(angle > max)*(max-angle);
+    return angle - (float)(angle > 360) * 360.0f;
 }
 
 GameSprite::~GameSprite() { }
@@ -31,32 +37,13 @@ void GameSprite::set_size(float width, float heigth) {
 }
 
 void GameSprite::set_angle(float angle) {
-    float min = angle_min;
-    float max = angle_max;
-    angle = normalize_angle(angle);
-
-    if (min > max) { // rodea el cero y hay que desfazar angulo y maximo
-        max += 360.0f;
-        angle += 360.0f;
-    }
-
-    angle = angle + (angle < min)*(min-angle) + (angle > max)*(max-angle);
-    this->angle = normalize_angle(angle);
+    this->angle = normalize_angle(angle, angle_min, angle_max);
 }
 
 void GameSprite::set_angle_range(float angle_min, float angle_max) {
-    angle_min = normalize_angle(angle_min);
-    angle_max = normalize_angle(angle_max);
-
-    if (angle_min > angle_max) { // rodea el cero y hay que desfazar angulo y maximo
-        angle_max += 360.0f;
-        angle += 360.0f;
-    }
-
-    angle = angle + (angle < angle_min)*(angle_min-angle) + (angle > angle_max)*(angle_max-angle);
-    this->angle_min = angle_min;
-    this->angle = normalize_angle(angle);
-    this->angle_max = normalize_angle(angle_max);
+    this->angle_min = normalize_angle(angle_min, 0.0f, 360.0f);
+    this->angle_max = normalize_angle(angle_max, 0.0f, 360.0f);
+    this->angle = normalize_angle(this->angle, this->angle_min, this->angle_max);
 }
 
 void GameSprite::image_flipped(bool image_is_flipped) {
@@ -75,16 +62,14 @@ void GameSprite::render(SDL2pp::Renderer& renderer, float delta_time) {
     offset.SetY(cam.transform_h(h)/2);
 
     if (info.frame_count <= 0) {
-        renderer.Copy(info.texture,SDL2pp::NullOpt,transform,normalize_angle(-angle),offset,flip);
-        
+        renderer.Copy(info.texture,SDL2pp::NullOpt,transform,normalize_angle(-angle, angle_min, angle_max),offset,flip);
         return;
     }
 
     update_animation(delta_time);
     if (info.animation == BY_ANGLE)
         renderer.Copy(info.texture, info.image_frame(anim_progress), transform, 0.0, offset, flip);
-    else renderer.Copy(info.texture, info.image_frame(anim_progress), transform, normalize_angle(-angle), offset, flip);
-
+    else renderer.Copy(info.texture, info.image_frame(anim_progress), transform, normalize_angle(-angle, angle_min, angle_max), offset, flip);
 
     renderer.SetDrawColor(SDL2pp::Color{255,255,255,255});
     renderer.DrawRect(transform);
