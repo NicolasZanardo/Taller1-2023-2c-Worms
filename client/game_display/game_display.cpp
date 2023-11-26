@@ -31,8 +31,8 @@ GameDisplay::GameDisplay(Queue<std::shared_ptr<Command>> &command_queue, int fps
     texture_manager.add_texture("widle"           , "resources/sprites/worm/wwalk.png"          ,w,h,xoff,yoff-2,sep, SpriteAnimationType::NONE   , 28);
     // Aiming
     texture_manager.add_texture("w_bazooka"       , "resources/sprites/worm/w_bazooka.png"      ,w,h,xoff,yoff-2,sep, SpriteAnimationType::BY_ANGLE, 28);
-    texture_manager.add_texture("w_green_grenade" , "resources/sprites/worm/w_green_grenade.png",w,h,xoff,yoff-2,sep, SpriteAnimationType::BY_ANGLE, 28);
     texture_manager.add_texture("w_mortar"        , "resources/sprites/worm/w_mortar.png"       ,w,h,xoff,yoff-2,sep, SpriteAnimationType::BY_ANGLE, 28);
+    texture_manager.add_texture("w_green_grenade" , "resources/sprites/worm/w_green_grenade.png",w,h,xoff,yoff-2,sep, SpriteAnimationType::FREEZE  , 28);
     // Projectiles
     texture_manager.add_texture("p_bazooka"       , "resources/sprites/projectiles/bazooka.png"      ,w,h,xoff,yoff,sep, SpriteAnimationType::BY_ANGLE, 0);
     texture_manager.add_texture("p_mortar"        , "resources/sprites/projectiles/mortar.png"       ,w,h,xoff,yoff,sep, SpriteAnimationType::BY_ANGLE, 0);

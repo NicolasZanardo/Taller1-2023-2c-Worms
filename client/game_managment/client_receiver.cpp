@@ -33,6 +33,7 @@ void ClientReceiver::run(NetMessageInitialGameState* msg) {
 
     game_state_dto->width = msg->room_width;
     game_state_dto->height = msg->room_height;
+    game_state_dto->water_level_height = msg->water_height_level;
 
     std::cout << "w: " << msg->room_width << " - h: " << msg->room_height << '\n';
     std::cout << "worms in game " << msg->worms.size() << '\n';

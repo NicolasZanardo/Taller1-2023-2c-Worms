@@ -12,10 +12,10 @@ class NetProtocolInterpreter {
     public:
     explicit NetProtocolInterpreter(Socket& channel);
 
+    bool     read_bool ();
     uint8_t  read_byte ();
-    bool  read_bool ();
     uint16_t read_short();
-    uint32_t read_uint ();
+    int32_t  read_int  ();
     float    read_float();
     std::string   read_string();
 

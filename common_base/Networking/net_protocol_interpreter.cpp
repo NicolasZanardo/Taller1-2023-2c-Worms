@@ -41,17 +41,17 @@ uint16_t NetProtocolInterpreter::read_short() {
     throw SocketConnectionLost(&channel);
 }
 
-uint32_t NetProtocolInterpreter::read_uint() {
+int32_t NetProtocolInterpreter::read_int() {
     char buffer[UINT_SIZE];
     if (read_from_channel(buffer, UINT_SIZE)) {
-        return ntohl(*reinterpret_cast<uint32_t*>(buffer));
+        uint32_t temp = ntohl(*reinterpret_cast<uint32_t*>(buffer));
+        return *reinterpret_cast<int32_t*>(&temp);
     }
     throw SocketConnectionLost(&channel);
 }
 
 float NetProtocolInterpreter::read_float() {
-    uint32_t temp = read_uint();
-    return (float)temp / 1000.0f;
+    return ((float)read_int()) / 1000.0f;
 }
 
 string NetProtocolInterpreter::read_string() {

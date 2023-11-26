@@ -95,7 +95,6 @@ void GameNetMessageBehaviour::run(NetMessageGameAction *msg) {
 
 
 void GameNetMessageBehaviour::run(NetMessagePlayerChangedWeapon *msg) {
-    std::cout << "NetMessageBehaviour received the change weapon call\n";
     if (!game.is_client_turn(msg->client_id)) {
         return;
     }

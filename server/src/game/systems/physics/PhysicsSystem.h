@@ -36,9 +36,6 @@ public:
     static const short WATER_CATEGORY_BIT = 16;
 
 private:
-    // Define category bits for fixtures
-
-
     const float timeStep;
     const int32 velocityIterations = 8;
     const int32 positionIterations = 3;

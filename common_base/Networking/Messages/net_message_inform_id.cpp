@@ -12,11 +12,11 @@ NetMessageInformID::NetMessageInformID(int client_id)
 
 void NetMessageInformID::push_data_into(NetBuffer& container) {
     NetMessage::push_data_into(container);
-    container.push_uint(client_id);
+    container.push_int(client_id);
 }
 
 void NetMessageInformID::pull_data_from(NetProtocolInterpreter& channel) {
-    client_id = channel.read_uint();
+    client_id = channel.read_int();
 }
 
 void NetMessageInformID::execute(NetMessageBehaviour& interpreter) {

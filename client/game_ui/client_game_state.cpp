@@ -12,6 +12,7 @@ void ClientGameState::load(const std::shared_ptr<ClientGameStateDTO> &game_state
     std::cout << "Loading scenario size("
               << game_state_dto->width << ","
               << game_state_dto->height << ")"
+              << "   Water level: " << game_state_dto->water_level_height
               << "   Beams: " << game_state_dto->beams.size()
               << "   Worms: " << game_state_dto->worms.size() << "\n";
 

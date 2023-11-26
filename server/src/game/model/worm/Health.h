@@ -16,6 +16,8 @@ public:
     void receive_damage(float damage);
     void heal(float amount);
 
+    void die();
+
 };
 
 

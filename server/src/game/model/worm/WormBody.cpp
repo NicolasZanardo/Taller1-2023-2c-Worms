@@ -94,13 +94,13 @@ void WormBody::on_update() {
     if (is_moving && is_on_ground) {
         body->SetLinearVelocity((b2Vec2(facing_direction_sign() * speed, y_velocity)));
     } else if(is_on_water) {
-        std::cout << "Worm sinking\n";
         BuoyancyForce force(world);
         force.apply(this->body);
     }
 
-
-    if (y_velocity > epsilon_y) {
+    if (is_on_water) {
+        state = State::SINKING;
+    } else if (y_velocity > epsilon_y) {
         state = State::JUMPING;
     } else if (y_velocity < -epsilon_y) {
         state = State::FALLING;
