@@ -2,13 +2,13 @@
 #include "projectile_sprite_key_mapper.h"
 
 ProjectileEntity::ProjectileEntity(GameDisplay &display, ProjectileDto &values) :
-    attributes(values.entity_id, values.from_weapon, values.x, values.y),
     sprite(display.new_sprite(
         ProjectileSpriteKeyMapper::map(values.from_weapon),
         PROJECTILE_RADIUS * 2,
         PROJECTILE_RADIUS * 2
         )
-    ) {}
+    ), attributes(values.entity_id, values.from_weapon, values.x, values.y)
+    { }
 
 void ProjectileEntity::update(ProjectileDto &new_values) {
     if (attributes.entity_id != new_values.entity_id)
