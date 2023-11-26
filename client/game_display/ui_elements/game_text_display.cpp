@@ -14,10 +14,13 @@ GameTextDisplay::GameTextDisplay(
     , absolute(layer == TextLayer::UI)
     , is_hidden(false)
     , align(align)
-    {
-        Font font("resources/misc/Vera.ttf", fnt_size);
-        surfaceMessage = make_unique<Surface>(std::move(font.RenderText_Solid(text, SDL_Color{255,255,255,255})));
-    }
+    , font("resources/misc/Vera.ttf", fnt_size)
+    , surfaceMessage(font.RenderText_Solid(text, SDL_Color{255,255,255,255}))
+    { }
+
+void GameTextDisplay::update(const std::string& newval) {
+    surfaceMessage = font.RenderText_Solid(newval, SDL_Color{255,255,255,255});
+}
 
 void GameTextDisplay::hidden(bool is_hidden) {
     this->is_hidden = is_hidden;
@@ -38,7 +41,7 @@ void GameTextDisplay::render(Renderer& renderer, float delta_time) {
     }
 
     if (texture == nullptr) {
-        texture =  make_unique<Texture>(renderer, *surfaceMessage);
+        texture =  make_unique<Texture>(renderer, surfaceMessage);
         transform.SetW(texture->GetWidth());
         transform.SetH(texture->GetHeight());
 

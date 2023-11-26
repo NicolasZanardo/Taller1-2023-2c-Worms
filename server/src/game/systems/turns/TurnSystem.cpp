@@ -1,11 +1,13 @@
 #include "TurnSystem.h"
 #include <iostream>
 
-TurnSystem::TurnSystem(int rate) :
-    rate(rate),
-    clients_ids_to_worms_ids_iterator(),
-    current_client_id(0),
-    current_worm_id(0) {}
+TurnSystem::TurnSystem(int rate) : 
+    state(TurnState::TURN_TIME),
+    rate(rate), 
+    clients_ids_to_worms_ids_iterator(), 
+    current_client_id(0), 
+    current_worm_id(0)
+    {}
 
 void TurnSystem::update(
     const int it,

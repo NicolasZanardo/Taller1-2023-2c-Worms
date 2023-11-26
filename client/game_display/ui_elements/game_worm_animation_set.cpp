@@ -7,7 +7,7 @@ WormAnimationSet::~WormAnimationSet() {
     for (auto [key, val] : weapon_state_sprite) {
         delete(val);
     }
- }
+}
 
 WormAnimationSet::WormAnimationSet(
         GameSprite* idle,
@@ -43,9 +43,17 @@ void WormAnimationSet::update_state(MovementStateDto newstate) {
     newsprite->y = active_body->y;
     newsprite->angle = active_body->angle;
     newsprite->flip = active_body->flip;
-    newsprite->anim_progress = 0;
+    //newsprite->anim_progress = 0;
     
     active_body = newsprite;
+    state = newstate;
+
+    switch (newstate) {
+        case MovementStateDto::IDLE: active_weapon->hidden(false); break;
+        case MovementStateDto::MOVING: active_weapon->hidden(true); break;
+        case MovementStateDto::FALLING: active_weapon->hidden(true); break;
+        case MovementStateDto::GOING_UPWARDS: active_weapon->hidden(true); break;
+    }
 }
 void WormAnimationSet::update_weapon(WeaponTypeDto newweapon) {
     if (weapon == newweapon)
@@ -59,6 +67,7 @@ void WormAnimationSet::update_weapon(WeaponTypeDto newweapon) {
     newsprite->flip = active_weapon->flip;
     
     active_weapon = newsprite;
+    weapon = newweapon;
 }
 
 void WormAnimationSet::set_pos(float x, float y) {
