@@ -23,7 +23,8 @@ WormAnimationSet::WormAnimationSet(
 { MovementStateDto::IDLE          , idle },
 { MovementStateDto::MOVING        , moving },
 { MovementStateDto::GOING_UPWARDS , going_upwards },
-{ MovementStateDto::FALLING       , falling }
+{ MovementStateDto::FALLING       , falling },
+{ MovementStateDto::SINKING       , falling } // TODO for now same as falling
     }),
     aiming_idle_sprite({
 { WeaponTypeDto::BAZOOKA       , aiming_bazooka },

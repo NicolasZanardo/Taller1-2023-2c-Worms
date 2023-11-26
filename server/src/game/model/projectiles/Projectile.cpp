@@ -6,6 +6,8 @@ Projectile::Projectile(size_t id, const std::unique_ptr<ProjectileInfo> &info) :
     Instance(id),
     weapon_type(info->from_weapon),
     exploded(false),
+    is_on_water(false),
+    on_water_time_life(2000),
     damage(info->damage),
     explosion_radius(info->explosion_radius),
     body(nullptr)
@@ -20,7 +22,14 @@ ProjectileDto Projectile::to_dto() const {
     );
 }
 
-void Projectile::update(const int it) {
+void Projectile::update(const int it, const int rate) {
+    if (is_on_water) {
+        on_water_time_life -= it * rate;
+        if (on_water_time_life <= 0) {
+            is_active = false;
+            return;
+        }
+    }
     body->on_update();
 }
 
@@ -42,6 +51,7 @@ b2Body* Projectile::B2Body() {
 }
 
 void Projectile::sink() {
+    is_on_water = true;
     body->sink();
 }
 

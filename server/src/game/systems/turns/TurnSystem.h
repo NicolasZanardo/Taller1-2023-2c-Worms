@@ -34,7 +34,7 @@ class TurnSystem {
     bool worms_are_still(std::unordered_map<size_t, std::shared_ptr<Worm>>& worms);
 
 public:
-    TurnSystem(const int rate);
+    TurnSystem(int rate);
 
     int get_current_client_id() const;
     int get_current_worm_id() const;

@@ -3,7 +3,7 @@
 
 class Updatable {
 public:
-    virtual void update(int it) = 0;
+    virtual void update(int it, int rate) = 0;
 };
 
 #endif //TP_WORMS_UPDATABLE_H

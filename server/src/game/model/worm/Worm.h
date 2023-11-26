@@ -25,7 +25,8 @@ private:
     std::shared_ptr<Weapon> & actual_weapon;
     Health health;
     WormFootSensor foot_sensor;
-
+    bool is_on_water;
+    int water_death_timer;
     explicit Worm(size_t id);
     WeaponMap create_default_weapons();
 
@@ -40,7 +41,7 @@ public:
     b2Body* B2Body() const;
     WormFootSensor* get_foot_sensor();
 
-    void update(int it) override;
+    void update(int it, const int rate) override;
     void on_turn_ended() override;
 
     // Movement
@@ -51,7 +52,7 @@ public:
     void stop_moving() const;
     void jump_forward() const;
     void jump_backwards() const;
-    void sink() const;
+    void sink();
 
     // Aim
     void start_aiming_up();

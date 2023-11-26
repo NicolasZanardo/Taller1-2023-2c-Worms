@@ -9,7 +9,7 @@ public:
         GameScenarioData scenario;
         scenario.room_height = 40;
         scenario.room_width = 80;
-        scenario.water_height_level = 14;
+        scenario.water_height_level = 12;
         // Populate large beams next to each other at y=0
         float i = 0;
         scenario.beams.emplace_back(i++ * 6.0f + 23.0f, 13.0f, 00.0f, BeamScenarioData::Type::LONG);

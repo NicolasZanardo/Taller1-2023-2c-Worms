@@ -22,3 +22,7 @@ void Health::receive_damage(float damage) {
         is_alive = false;
     }
 }
+
+void Health::die() {
+    actual_health = 0;
+}

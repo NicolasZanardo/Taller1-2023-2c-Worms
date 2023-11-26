@@ -77,7 +77,8 @@ void GameEngineInstance::initial_broadcast(const GameScenarioData &scenario) {
 void GameEngineInstance::_broadcast_initial_game_state(const GameScenarioData &scenario) {
     auto message = new NetMessageInitialGameState(
         scenario.room_width,
-        scenario.room_height
+        scenario.room_height,
+        scenario.water_height_level
     );
 
     for (auto item: scenario.beams) {

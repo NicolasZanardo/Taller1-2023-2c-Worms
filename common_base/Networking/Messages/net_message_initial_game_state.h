@@ -10,11 +10,12 @@ class NetMessageInitialGameState : public NetMessage {
 public:
     float room_width;
     float room_height;
+    float water_height_level;
     std::vector<BeamDto> beams;
     std::vector<WormDto> worms;
     
     NetMessageInitialGameState();
-    NetMessageInitialGameState(float room_width, float room_height);
+    NetMessageInitialGameState(float room_width, float room_height, float water_height_level);
     ~NetMessageInitialGameState() override {};
 
     void add(const BeamDto& beam);

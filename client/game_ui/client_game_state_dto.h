@@ -14,6 +14,7 @@ public:
 
     float width;
     float height;
+    float water_level_height;
 
     int active_client_id;
     int active_entity_id;
