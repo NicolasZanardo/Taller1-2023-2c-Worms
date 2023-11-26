@@ -11,23 +11,27 @@ public:
     size_t shooter_id;
     float shot_angle;
     char facing_sign;
-    float damage;
+    float max_damage;
     float explosion_radius;
     float power;
     float origin_x;
     float origin_y;
     float radius = PROJECTILE_RADIUS; // TODO CONSTANT FOR ALL PROJECTILES NOW,
+    bool affected_by_wind;
+    int countdown;
     WeaponTypeDto from_weapon;
 
     ProjectileInfo(
         size_t shooter_id,
         float shot_angle,
         char facing_sign,
-        float damage,
+        float max_damage,
         float explosion_radius,
         float power,
         float origin_x,
         float origin_y,
+        bool affected_by_wind,
+        int countdown,
         WeaponTypeDto from_weapon
     );
 

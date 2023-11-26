@@ -7,6 +7,7 @@ void ShotSystem::update(const std::shared_ptr<Worm>& current_worm) {
     if (current_worm) {
         auto shot = current_worm->shot_component();
         if (shot) {
+            std::cout << "Found shot component\n";
             instances_manager.instantiate_projectiles(std::move(shot));
         }
     }

@@ -17,7 +17,7 @@ class PhysicsSystem {
 public:
     PhysicsSystem(int rate, float xGravity, float yGravity, const GameScenarioData &map);
 
-    void update(const std::unordered_map<size_t, std::shared_ptr<Worm>> &worms);
+    void update(const std::vector<std::shared_ptr<Projectile>> &projectiles);
 
     std::unique_ptr<WormBody> spawn_worm(
         WormScenarioData wormScenarioData,

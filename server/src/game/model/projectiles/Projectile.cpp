@@ -8,10 +8,10 @@ Projectile::Projectile(size_t id, const std::unique_ptr<ProjectileInfo> &info) :
     exploded(false),
     is_on_water(false),
     on_water_time_life(2000),
-    damage(info->damage),
+    wind_affected(info->affected_by_wind),
+    max_damage(info->max_damage),
     explosion_radius(info->explosion_radius),
-    body(nullptr)
-    {}
+    body(nullptr) {}
 
 ProjectileDto Projectile::to_dto() const {
     return ProjectileDto(
@@ -35,18 +35,23 @@ void Projectile::update(const int it, const int rate) {
 
 void Projectile::explode() {
     exploded = true;
-    is_active = false;
+    c_explosion = std::make_unique<CExplosion>(
+        max_damage,
+        explosion_radius,
+        body->X(),
+        body->Y()
+    );
 }
 
 bool Projectile::has_exploded() const {
     return exploded;
 }
 
-void Projectile::on_collision() {
-    explode(); // TODO Projectile polymorphism, grenades dont explode on collision
+bool Projectile::is_wind_affected() const {
+    return wind_affected;
 }
 
-b2Body* Projectile::B2Body() {
+b2Body *Projectile::B2Body() const {
     return body->B2Body();
 }
 
@@ -54,4 +59,9 @@ void Projectile::sink() {
     is_on_water = true;
     body->sink();
 }
+
+std::unique_ptr<CExplosion> Projectile::explosion_component() {
+    return std::move(c_explosion);
+}
+
 

@@ -1,5 +1,6 @@
 #include "PhysicsSystem.h"
 #include "../../core/Logger.h"
+#include "world_queries/OnExplosionWormsQuery.h"
 
 const float DEG_TO_RAD = M_PI / 180.0f;
 
@@ -19,7 +20,17 @@ PhysicsSystem::PhysicsSystem(
     world.SetContactListener(&contactListener);
 }
 
-void PhysicsSystem::update(const std::unordered_map<size_t, std::shared_ptr<Worm>> &worms) {
+void PhysicsSystem::update(const std::vector<std::shared_ptr<Projectile>> &projectiles) {
+    for (const auto&  projectile: projectiles) {
+        auto explosion = projectile->explosion_component(); // TODO Explosion system
+        if (explosion) {
+            OnExplosionWormsQuery::act_on_found(world, std::move(explosion));
+            projectile->Destroy();
+        }
+        if (projectile->is_wind_affected()) { // TODO move to WindSystem
+
+        }
+    }
     world.Step(timeStep, velocityIterations, positionIterations);
 }
 
@@ -160,7 +171,7 @@ std::unique_ptr<ProjectileBody> PhysicsSystem::spawn_projectile(
 
 std::pair<float, float> PhysicsSystem::angle_to_normalized_vector(float angle_degrees) {
     // Convert degrees to radians
-    float angle_radians = angle_degrees * M_PI / 180.0f;
+    float angle_radians = angle_degrees * DEG_TO_RAD;
 
     // Calculate the normalized vector components using trigonometry
     float x = std::cos(angle_radians);

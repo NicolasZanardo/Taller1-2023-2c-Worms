@@ -30,6 +30,8 @@ void Bazooka::start_shooting(float from_x, float from_y, char facing_sign) {
                 max_power,
                 from_x,
                 from_y,
+                true,
+                -1,
                 type
             )
         );

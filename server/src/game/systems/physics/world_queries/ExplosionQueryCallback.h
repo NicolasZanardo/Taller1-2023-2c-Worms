@@ -1,5 +1,5 @@
-#ifndef TP_WORMS_PROJECTILEEXPLOSIONQUERYCALLBACK_H
-#define TP_WORMS_PROJECTILEEXPLOSIONQUERYCALLBACK_H
+#ifndef TP_WORMS_EXPLOSIONQUERYCALLBACK_H
+#define TP_WORMS_EXPLOSIONQUERYCALLBACK_H
 
 #include <box2d/box2d.h>
 #include <algorithm>
@@ -7,12 +7,12 @@
 #include "../../../model/worm/Worm.h"
 #include <map>
 
-class ProjectileExplosionQueryCallback: public b2QueryCallback {
+class ExplosionQueryCallback: public b2QueryCallback {
     bool ReportFixture(b2Fixture* fixture) override;
 public:
     std::map<size_t , Worm*> found_worms_map;
 
-    explicit ProjectileExplosionQueryCallback();
+    explicit ExplosionQueryCallback();
 };
 
 
