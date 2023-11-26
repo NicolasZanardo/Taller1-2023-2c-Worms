@@ -14,7 +14,6 @@ bool EventHandler::handleEvents() {
         switch (event.type) {
             case SDL_KEYDOWN: {
                 SDL_KeyboardEvent &keyEvent = (SDL_KeyboardEvent &) event;
-                const char* keyName = SDL_GetKeyName(keyEvent.keysym.sym);
                 switch (keyEvent.keysym.sym) {
                     case SDLK_LEFT:
                         this->command_queue.push(std::make_shared<GameActionCommand>(GameAction::MOVE_LEFT_INIT));

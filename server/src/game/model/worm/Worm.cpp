@@ -3,15 +3,19 @@
 #include "../weapons/Mortar.h"
 #include "../weapons/GreenGrenade.h"
 #include "../../core/Logger.h"
+#include "../../core/CollideableTags.h"
 #include <iostream>
 
 Worm::Worm(size_t id) :
+    Collidable(WORM_TAG),
     Instance(id),
     weapons(create_default_weapons()),
     actual_weapon(weapons[WeaponTypeDto::BAZOOKA]),
     health(100),
+    foot_sensor(this),
     body(nullptr),
-    has_done_an_ending_turn_action(false) {}
+    has_done_an_ending_turn_action(false)
+    {}
 
 WormDto Worm::toWormDto(size_t client_id) {
     return WormDto(
@@ -52,6 +56,11 @@ b2Body* Worm::B2Body() const {
     return body->B2Body();
 }
 
+WormFootSensor* Worm::get_foot_sensor() {
+    return &foot_sensor;
+}
+
+
 void Worm::update(const int it) {
     health.on_update();
     if (!health.IsAlive()) {
@@ -76,6 +85,14 @@ void Worm::on_turn_ended() {
 
 
 // Movement
+void Worm::on_sensed_one_new_ground_contact() {
+    body->on_sensed_one_new_ground_contact();
+}
+
+void Worm::on_sensed_one_ground_contact_ended() {
+    body->on_sensed_one_ground_contact_ended();
+}
+
 void Worm::start_moving_right() const {
     body->start_moving_right();
 }
@@ -94,6 +111,10 @@ void Worm::jump_forward() const {
 
 void Worm::jump_backwards() const {
     body->jump_backwards();
+}
+
+void Worm::sink() const {
+    body->sink();
 }
 
 void Worm::start_aiming_down() {

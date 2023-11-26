@@ -8,6 +8,7 @@ enum class MovementStateDto : uint8_t {
     MOVING = 0x01,
     GOING_UPWARDS = 0x02,
     FALLING = 0x03,
+    SINKING = 0x04
 };
 
 struct WormDto {

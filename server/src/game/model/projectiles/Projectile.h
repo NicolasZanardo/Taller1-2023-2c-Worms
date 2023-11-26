@@ -2,19 +2,20 @@
 #define TP_WORMS_PROJECTILE_H
 
 #include <memory>
+#include <string>
 #include "../core/Updatable.h"
 #include "../core/Instance.h"
 #include "ProjectileBody.h"
 #include "../../../../../common_base/Game/WeaponTypeDto.h"
 #include "../../../../../common_base/Game/ProjectileDto.h"
 #include "ProjectileInfo.h"
+#include "../core/Collidable.h"
 
 class InstancesManager;
 
-class Projectile: public Instance, Updatable {
+class Projectile: public Collidable, public Instance, Updatable {
     friend class InstancesManager;
     WeaponTypeDto weapon_type;
-
     bool exploded;
     explicit Projectile(size_t id, const std::unique_ptr<ProjectileInfo> &info);
 public:
@@ -26,8 +27,11 @@ public:
     void update(int it) override;
     ProjectileDto to_dto() const;
     void explode();
-    bool has_exploded();
+    bool has_exploded() const;
     void on_collision();
+    void sink();
+
+    ~Projectile() = default;
 };
 
 

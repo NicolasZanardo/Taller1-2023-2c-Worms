@@ -9,6 +9,7 @@
 struct GameScenarioData { // TODO Have in server package
     float room_width;
     float room_height;
+    float water_height_level;
     std::vector<BeamScenarioData> beams;
     std::vector<WormScenarioData> worms;
 };
