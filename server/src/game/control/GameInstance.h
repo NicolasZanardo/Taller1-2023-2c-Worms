@@ -15,7 +15,7 @@
 #include "../../client/client.h"
 #include "../systems/physics/PhysicsSystem.h"
 #include "../systems/turns/TurnSystem.h"
-#include "../systems/instances/InstancesSystem.h"
+#include "../systems/updatables/UpdatablesSystem.h"
 #include "../systems/shot/ShotSystem.h"
 
 
@@ -47,7 +47,7 @@ class GameInstance {
     InstancesManager instances_manager;
     ClientsWorms clientsWorms;
     TurnSystem turn_system;
-    InstancesSystem instances_system;
+    UpdatablesSystem updatables_system;
     ShotSystem shot_system;
 
     void assign_worms_to_clients(const std::list<Client *> &clients);

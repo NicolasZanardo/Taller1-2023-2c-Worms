@@ -10,17 +10,21 @@
 #include "../core/OnTurnEndedListener.h"
 #include "../weapons/Weapon.h"
 #include "Health.h"
+#include "../core/Collidable.h"
+#include "WormFootSensor.h"
 
 typedef std::map<WeaponTypeDto, std::shared_ptr<Weapon>> WeaponMap;
 
 class InstancesManager;
+class WormFootSensor;
 
-class Worm: public Instance, Updatable, OnTurnEndedListener {
+class Worm: public Collidable, public Instance, Updatable, OnTurnEndedListener {
 private:
     friend class InstancesManager;
     WeaponMap weapons;
     std::shared_ptr<Weapon> & actual_weapon;
     Health health;
+    WormFootSensor foot_sensor;
 
     explicit Worm(size_t id);
     WeaponMap create_default_weapons();
@@ -34,16 +38,20 @@ public:
     float X() const;
     float Y() const;
     b2Body* B2Body() const;
+    WormFootSensor* get_foot_sensor();
 
     void update(int it) override;
     void on_turn_ended() override;
 
     // Movement
+    void on_sensed_one_new_ground_contact();
+    void on_sensed_one_ground_contact_ended();
     void start_moving_right() const;
     void start_moving_left() const;
     void stop_moving() const;
     void jump_forward() const;
     void jump_backwards() const;
+    void sink() const;
 
     // Aim
     void start_aiming_up();
@@ -62,6 +70,8 @@ public:
     // health
     void heal(float amount);
     void receive_damage(float damage);
+
+    ~Worm() = default;
 };
 
 #endif

@@ -1,16 +1,30 @@
 #include "WormBody.h"
+#include "../forces/BuoyancyForce.h"
+#include "../../core/Logger.h"
 #include <iostream>
 
 WormBody::WormBody(b2World&  world, b2Body* body) :
         Body(world, body),
-        state(State::idle),
+        state(State::IDLE),
         is_moving(false),
         is_facing_right(true),
+        is_on_water(false),
         is_on_ground(false) {};
 
 bool WormBody::facing_right() const {
     return is_facing_right;
 }
+
+void WormBody::on_sensed_one_new_ground_contact() {
+    ground_contact_count++;
+    is_on_ground = (ground_contact_count > 0);
+}
+
+void WormBody::on_sensed_one_ground_contact_ended() {
+    ground_contact_count--;
+    is_on_ground = (ground_contact_count > 0);
+}
+
 
 char WormBody::facing_direction_sign() const {
     if (is_facing_right) {
@@ -68,22 +82,33 @@ void WormBody::jump_backwards() {
     }
 }
 
+void WormBody::sink() {
+    is_moving = false;
+    is_on_ground = false;
+    is_on_water = true;
+}
+
 void WormBody::on_update() {
     float y_velocity = body->GetLinearVelocity().y;
 
     if (is_moving && is_on_ground) {
-        body->SetLinearVelocity((b2Vec2(facing_direction_sign() * speed, body->GetLinearVelocity().y)));
+        body->SetLinearVelocity((b2Vec2(facing_direction_sign() * speed, y_velocity)));
+    } else if(is_on_water) {
+        std::cout << "Worm sinking\n";
+        BuoyancyForce force(world);
+        force.apply(this->body);
     }
 
+
     if (y_velocity > epsilon_y) {
-        state = State::going_upwards;
+        state = State::JUMPING;
     } else if (y_velocity < -epsilon_y) {
-        state = State::falling;
+        state = State::FALLING;
     } else {
         if (body->GetLinearVelocity().x == 0.0f) {
-            state = State::idle;
+            state = State::IDLE;
         } else {
-            state = State::moving;
+            state = State::MOVING;
         }
     }
 }
@@ -99,13 +124,16 @@ bool WormBody::is_still_moving() {
 
 MovementStateDto WormBody::state_to_dto() const {
     switch (state) {
-        case State::idle:
+        case State::IDLE:
             return MovementStateDto::IDLE;
-        case State::moving:
+        case State::MOVING:
             return MovementStateDto::MOVING;
-        case State::going_upwards:
+        case State::JUMPING:
             return MovementStateDto::GOING_UPWARDS;
-        case State::falling:
+        case State::FALLING:
             return MovementStateDto::FALLING;
+        case State::SINKING:
+            return MovementStateDto::SINKING;
+
     }
 }

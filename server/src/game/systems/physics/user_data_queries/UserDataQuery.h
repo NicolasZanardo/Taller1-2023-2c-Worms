@@ -6,12 +6,14 @@
 
 class UserDataQuery {
 public:
-public:
     template <typename T>
-    T* get_user_data_as_type(b2Fixture* fixture);
+    static T* get_user_data_as_type(b2Fixture* fixture);
 
     template <typename T>
-    T* get_object_from_fixture(b2Fixture* fixtureA, b2Fixture* fixtureB);
+    static T* get_object_from_fixture(b2Fixture* fixtureA, b2Fixture* fixtureB);
+
+    // template <typename T>
+    // virtual T* get_or_null(b2Fixture* fixtureA, b2Fixture* fixtureB) = 0;
 };
 
 template <typename T>
@@ -25,7 +27,6 @@ T* UserDataQuery::get_user_data_as_type(b2Fixture* fixture) {
     } else {
         return nullptr;
     }
-    return reinterpret_cast<T*>(userData.pointer);
 }
 
 template <typename T>

@@ -3,17 +3,16 @@
 
 #include <box2d/box2d.h>
 #include <algorithm>
-#include "../UserDataQuery.h"
+#include "../user_data_queries/UserDataQuery.h"
 #include "../../../model/worm/Worm.h"
 #include <map>
 
 class ProjectileExplosionQueryCallback: public b2QueryCallback {
-    UserDataQuery &query;
     bool ReportFixture(b2Fixture* fixture) override;
 public:
     std::map<size_t , Worm*> found_worms_map;
 
-    explicit ProjectileExplosionQueryCallback(UserDataQuery& query);
+    explicit ProjectileExplosionQueryCallback();
 };
 
 

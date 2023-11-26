@@ -1,4 +1,5 @@
 #include "GameInstance.h"
+#include "../core/Logger.h"
 
 GameInstance::GameInstance(
         float xGravity,
@@ -11,7 +12,7 @@ GameInstance::GameInstance(
     instances_manager(physics_system, scenarioData),
     clientsWorms(),
     turn_system(rate),
-    instances_system(),
+    updatables_system(),
     shot_system(instances_manager) {
 
     assign_worms_to_clients(clients);
@@ -38,8 +39,11 @@ void GameInstance::update(const int it) {
     std::shared_ptr<Worm> active_worm = nullptr;
     if (current_worm_id != -1) {
         active_worm = instances_manager.get_worm(current_worm_id);
+        if (active_worm) {
+            // Logger::log_position("Worm", active_worm->X(), active_worm->Y());
+        }
     }
-    instances_system.update(it, worms, get_projectiles());
+    updatables_system.update(it, worms, get_projectiles());
     physics_system.update(worms);
     turn_system.update(it, worms, active_worm);
     shot_system.update(active_worm);

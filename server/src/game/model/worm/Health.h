@@ -7,7 +7,6 @@ class Health {
     float actual_health;
     bool is_alive;
 
-
 public:
     explicit Health(float initial_health);
     void on_update();
@@ -15,7 +14,7 @@ public:
     float Amount() const;
 
     void receive_damage(float damage);
-    bool heal(float amount);
+    void heal(float amount);
 
 };
 
