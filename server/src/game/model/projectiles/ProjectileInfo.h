@@ -8,7 +8,6 @@
 
 class ProjectileInfo {
 public:
-    size_t shooter_id;
     float shot_angle;
     char facing_sign;
     float max_damage;
@@ -16,13 +15,12 @@ public:
     float power;
     float origin_x;
     float origin_y;
-    float radius = PROJECTILE_RADIUS; // TODO CONSTANT FOR ALL PROJECTILES NOW,
+    float projectile_radius;
     bool affected_by_wind;
     int countdown;
     WeaponTypeDto from_weapon;
 
     ProjectileInfo(
-        size_t shooter_id,
         float shot_angle,
         char facing_sign,
         float max_damage,
@@ -30,6 +28,7 @@ public:
         float power,
         float origin_x,
         float origin_y,
+        float projectile_radius,
         bool affected_by_wind,
         int countdown,
         WeaponTypeDto from_weapon

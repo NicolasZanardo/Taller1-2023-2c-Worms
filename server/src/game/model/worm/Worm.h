@@ -12,6 +12,7 @@
 #include "Health.h"
 #include "../core/Collidable.h"
 #include "WormFootSensor.h"
+#include "../../../../../common_base/Game/ProjectileCountDown.h"
 
 typedef std::map<WeaponTypeDto, std::shared_ptr<Weapon>> WeaponMap;
 
@@ -67,6 +68,7 @@ public:
 
     // Weapon
     void change_weapon(WeaponTypeDto weapon);
+    void change_projectile_count_down(ProjectileCountDown time);
 
     // health
     void heal(float amount);

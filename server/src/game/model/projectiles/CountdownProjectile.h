@@ -12,7 +12,7 @@ class CountdownProjectile : public Projectile {
 
     void update(int it, int rate) override;
 
-    void on_collision() override;
+    void on_collision(b2Vec2 collision_point) override;
 
 };
 

@@ -14,6 +14,7 @@ add_library(common
         Game/ProjectileDto.h
         Game/GameAction.h
         Game/GameWorldEventType.h
+        Game/ProjectileCountDown.h
 
     liberror.cpp liberror.h
     network_channel.cpp network_channel.h
@@ -44,6 +45,8 @@ add_library(common
         Networking/Messages/net_message_game_action.cpp
         Networking/Messages/net_message_player_changed_weapon.h
         Networking/Messages/net_message_player_changed_weapon.cpp
+        Networking/Messages/net_message_player_changed_projectile_countdown.h
+        Networking/Messages/net_message_player_changed_projectile_countdown.cpp
 
     Networking/Messages/net_message_behaviour.h
     Networking/Messages/net_message_initial_game_state.cpp

@@ -29,6 +29,8 @@ public:
     std::unique_ptr<ProjectileBody> body;
 
     b2Body *B2Body() const;
+    float X() const;
+    float Y() const;
 
     void update(int it, int rate) override;
 
@@ -39,7 +41,7 @@ public:
     bool has_exploded() const;
     bool is_wind_affected() const;
 
-    virtual void on_collision() = 0;
+    virtual void on_collision(b2Vec2 explosion) = 0;
 
     void sink();
 

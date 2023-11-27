@@ -1,3 +1,4 @@
+#include <iostream>
 #include "CountdownProjectile.h"
 
 CountdownProjectile::CountdownProjectile(
@@ -8,9 +9,10 @@ CountdownProjectile::CountdownProjectile(
 void CountdownProjectile::update(int it, int rate) {
     Projectile::update(it, rate);
     countdown_timer -= it * rate;
+    std::cout << "countdown: " << countdown_timer << " ammo left\n";
     if (countdown_timer <= 0) {
         explode();
     }
 }
 
-void CountdownProjectile::on_collision() {}
+void CountdownProjectile::on_collision(b2Vec2 collision_point) {}

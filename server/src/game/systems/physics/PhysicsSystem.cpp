@@ -148,7 +148,7 @@ std::unique_ptr<ProjectileBody> PhysicsSystem::spawn_projectile(
 
     // Shape for hitbox
     b2CircleShape dynamicCircle;
-    dynamicCircle.m_radius = projectile_info->radius;
+    dynamicCircle.m_radius = projectile_info->projectile_radius;
 
     // Fixture for hitbox
     b2FixtureDef fixtureDef;

@@ -9,32 +9,32 @@
 
 void PhysicsCollisionListener::BeginContact(b2Contact *contact) {
 
-    auto collideable_a = reinterpret_cast<Collidable *>(contact->GetFixtureA()->GetUserData().pointer);
-    auto collideable_b = reinterpret_cast<Collidable *>(contact->GetFixtureB()->GetUserData().pointer);
+    auto collidable_a = reinterpret_cast<Collidable *>(contact->GetFixtureA()->GetUserData().pointer);
+    auto collidable_b = reinterpret_cast<Collidable *>(contact->GetFixtureB()->GetUserData().pointer);
 
-    if (!collideable_a || !collideable_b)
+    if (!collidable_a || !collidable_b)
         return;
 
-    auto tree = beginning_hit_map.find(std::make_pair(collideable_a->tag, collideable_b->tag));
+    auto tree = beginning_hit_map.find(std::make_pair(collidable_a->tag, collidable_b->tag));
     if (tree != beginning_hit_map.end()) {
         auto resolver = tree->second;
         if (resolver)
-            resolver(collideable_a, collideable_b);
+            resolver(collidable_a, collidable_b, contact->GetManifold());
     }
 }
 
 void PhysicsCollisionListener::EndContact(b2Contact *contact) {
-    auto collideable_a = reinterpret_cast<Collidable *>(contact->GetFixtureA()->GetUserData().pointer);
-    auto collideable_b = reinterpret_cast<Collidable *>(contact->GetFixtureB()->GetUserData().pointer);
+    auto collidable_a = reinterpret_cast<Collidable *>(contact->GetFixtureA()->GetUserData().pointer);
+    auto collidable_b = reinterpret_cast<Collidable *>(contact->GetFixtureB()->GetUserData().pointer);
 
-    if (!collideable_a || !collideable_b)
+    if (!collidable_a || !collidable_b)
         return;
 
-    auto tree = ending_hit_map.find(std::make_pair(collideable_a->tag, collideable_b->tag));
+    auto tree = ending_hit_map.find(std::make_pair(collidable_a->tag, collidable_b->tag));
     if (tree != ending_hit_map.end()) {
         auto resolver = tree->second;
         if (resolver)
-            resolver(collideable_a, collideable_b);
+            resolver(collidable_a, collidable_b, contact->GetManifold());
     }
 
 }

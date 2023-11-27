@@ -39,9 +39,9 @@ WeaponMap Worm::create_default_weapons() {
 
     // Damages inside weapons could later be only created one for each weapon kind and just have a reference
     // In order to not have multiple same damage object
-    default_weapons[WeaponTypeDto::BAZOOKA] = std::make_unique<Bazooka>(id, 10, 50, 2);
-    default_weapons[WeaponTypeDto::MORTAR] = std::make_unique<Mortar>(id, 10, 50, 2);
-    default_weapons[WeaponTypeDto::GREEN_GRENADE] = std::make_unique<GreenGrenade>(id, 10, 70, 4);
+    default_weapons[WeaponTypeDto::BAZOOKA] = std::make_unique<Bazooka>( 10, 50, 2);
+    default_weapons[WeaponTypeDto::MORTAR] = std::make_unique<Mortar>(10, 50, 2);
+    default_weapons[WeaponTypeDto::GREEN_GRENADE] = std::make_unique<GreenGrenade>(10, 70, 4, 5000);
 
     return default_weapons;
 }
@@ -91,6 +91,7 @@ void Worm::on_turn_ended() {
     body->on_turn_ended();
     if (actual_weapon) {
         actual_weapon->on_turn_ended();
+        actual_weapon = weapons[WeaponTypeDto::BAZOOKA];
     }
     has_done_an_ending_turn_action = false;
 }
@@ -171,6 +172,13 @@ void Worm::end_shooting() {
 void Worm::change_weapon(WeaponTypeDto weapon) {
     actual_weapon = weapons[weapon]; // We know weapons from the start
 }
+
+void Worm::change_projectile_count_down(ProjectileCountDown count_down) {
+    if (actual_weapon) {
+        actual_weapon->change_projectile_count_down(count_down);
+    }
+}
+
 
 // At this call the shot is instantiated, so here is when the worm does an ending turn action
 // Depending on the weapon could be in start_shooting, when the max power charges or in end_shooting

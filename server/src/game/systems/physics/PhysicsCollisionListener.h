@@ -14,7 +14,7 @@ class PhysicsCollisionListener : public b2ContactListener {
     void _init_beginning_collisions_hit_map();
     void _init_ending_collisions_hit_map();
 private:
-    typedef void (*hit_function_ptr)(Collidable*, Collidable*);
+    typedef void (*hit_function_ptr)(Collidable*, Collidable*, b2Manifold*);
     typedef std::map< std::pair<std::string,std::string>, hit_function_ptr > HitMap;
     HitMap beginning_hit_map;
     HitMap ending_hit_map;

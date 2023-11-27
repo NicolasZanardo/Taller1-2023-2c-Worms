@@ -1,6 +1,7 @@
 #include "event_handler.h"
 #include "commands/GameActionCommand.h"
 #include "commands/ChangeWeaponCommand.h"
+#include "commands/ChangeProjectileCountDownCommand.h"
 
 #include <iostream>
 
@@ -44,6 +45,21 @@ bool EventHandler::handleEvents() {
                         break;
                     case SDLK_e:
                         this->command_queue.push(std::make_shared<ChangeWeaponCommand>(WeaponTypeDto::GREEN_GRENADE));
+                        break;
+                    case SDLK_1:
+                        this->command_queue.push(std::make_shared<ChangeProjectileCountDownCommand>(ProjectileCountDown::ONE));
+                        break;
+                    case SDLK_2:
+                        this->command_queue.push(std::make_shared<ChangeProjectileCountDownCommand>(ProjectileCountDown::TWO));
+                        break;
+                    case SDLK_3:
+                        this->command_queue.push(std::make_shared<ChangeProjectileCountDownCommand>(ProjectileCountDown::THREE));
+                        break;
+                    case SDLK_4:
+                        this->command_queue.push(std::make_shared<ChangeProjectileCountDownCommand>(ProjectileCountDown::FOUR));
+                        break;
+                    case SDLK_5:
+                        this->command_queue.push(std::make_shared<ChangeProjectileCountDownCommand>(ProjectileCountDown::FIVE));
                         break;
                 }
             }
