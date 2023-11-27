@@ -9,6 +9,7 @@
 class WindSystem {
     float wind_speed;
     WindForce force;
+    void init();
 public:
     WindSystem(b2World &world);
 
@@ -16,7 +17,7 @@ public:
         const std::vector<std::shared_ptr<Projectile>> &projectiles
     );
 
-    float get_wind_speed();
+    float get_wind_speed() const;
 };
 
 
