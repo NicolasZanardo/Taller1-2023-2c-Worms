@@ -7,6 +7,7 @@
 #include <unordered_map>
 #include "WormIdIterator.h"
 #include "../../model/worm/Worm.h"
+#include "../../model/projectiles/Projectile.h"
 
 typedef std::unordered_map<size_t, WormIdIterator> ClientsIdsToWormsIdsIterator;
 
@@ -51,7 +52,8 @@ public:
     void update(
             const int it,
             std::unordered_map<size_t, std::shared_ptr<Worm>>& worms,
-            const std::shared_ptr<Worm>& active_worm
+            const std::shared_ptr<Worm>& active_worm,
+            const std::vector<std::shared_ptr<Projectile>> &projectiles
             );
     void end_actual_turn(const std::shared_ptr<Worm>& active_worm);
     void advance_to_next_turn();

@@ -12,7 +12,8 @@ TurnSystem::TurnSystem(int rate) :
 void TurnSystem::update(
     const int it,
     std::unordered_map<size_t, std::shared_ptr<Worm>> &worms,
-    const std::shared_ptr<Worm> &active_worm
+    const std::shared_ptr<Worm> &active_worm,
+    const std::vector<std::shared_ptr<Projectile>> &projectiles
 ) {
     // Check if the game time has run out
     if (game_time_left <= 0) {
@@ -27,9 +28,7 @@ void TurnSystem::update(
     game_time_left -= it * rate;
     switch (state) {
         case TurnState::WAITING_TO_START_NEXT_TURN: {
-            // Only advance to the next turn when worms are still
-            // TODO When explosions finished also which means projectiles vector comes empty
-            if (worms_are_still(worms)) {
+            if (worms_are_still(worms) && projectiles.empty()) {
                 advance_to_next_turn();
             }
             break;

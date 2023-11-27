@@ -46,9 +46,9 @@ void GameInstance::update(const int it) {
             // Logger::log_position("Worm", active_worm->X(), active_worm->Y());
         }
     }
-    updatables_system.update(it, worms, get_projectiles());
+    updatables_system.update(it, worms, projectiles);
     physics_system.update(projectiles);
-    turn_system.update(it, worms, active_worm);
+    turn_system.update(it, worms, active_worm, projectiles);
     shot_system.update(active_worm);
     wind_system.update(projectiles);
     instances_manager.update();
