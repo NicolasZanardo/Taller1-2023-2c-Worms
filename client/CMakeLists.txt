@@ -53,6 +53,8 @@ target_link_libraries(client_app common ${SDL2PP_LIBRARIES})
 
 file(COPY resources DESTINATION ${CMAKE_BINARY_DIR}/bin)
 
+add_subdirectory(launcher)
+
 #===============================================================================
 # include_directories(PUBLIC ${SDL2PP_INCLUDE_DIRS})
 # file(COPY resources/sprites DESTINATION ${CMAKE_BINARY_DIR}/bin)
