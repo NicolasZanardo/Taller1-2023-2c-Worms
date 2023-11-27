@@ -8,6 +8,7 @@
 #include "net_message_game_state_update.h"
 #include "net_message_game_action.h"
 #include "net_message_player_changed_weapon.h"
+#include "net_message_player_changed_projectile_countdown.h"
 
 NetMessage* NetMessageFactory::recieve(Socket& channel) {
     NetProtocolInterpreter interpreter(channel);
@@ -38,6 +39,9 @@ NetMessage* NetMessageFactory::recieve(Socket& channel) {
             break;
         case NET_MESSAGE_TYPE_PLAYER_CHANGED_WEAPON:
             inst = new NetMessagePlayerChangedWeapon();
+            break;
+        case NET_MESSAGE_TYPE_PLAYER_CHANGED_PROJECTILE_COUNTDOWN:
+            inst = new NetMessagePlayerChangedProjectileCountdown();
             break;
         default:
             break;

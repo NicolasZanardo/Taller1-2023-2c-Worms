@@ -22,6 +22,18 @@ ProjectileDto Projectile::to_dto() const {
     );
 }
 
+b2Body *Projectile::B2Body() const {
+    return body->B2Body();
+}
+
+float Projectile::X() const {
+    return body->X();
+}
+
+float Projectile::Y() const {
+    return body->Y();
+}
+
 void Projectile::update(const int it, const int rate) {
     if (is_on_water) {
         on_water_time_life -= it * rate;
@@ -51,10 +63,6 @@ bool Projectile::is_wind_affected() const {
     return wind_affected;
 }
 
-b2Body *Projectile::B2Body() const {
-    return body->B2Body();
-}
-
 void Projectile::sink() {
     is_on_water = true;
     body->sink();
@@ -63,5 +71,4 @@ void Projectile::sink() {
 std::unique_ptr<CExplosion> Projectile::explosion_component() {
     return std::move(c_explosion);
 }
-
 

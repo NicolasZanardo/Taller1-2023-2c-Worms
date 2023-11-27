@@ -6,7 +6,7 @@
 
 class NetMessagePlayerChangedWeapon : public NetMessage {
 public:
-    uint32_t client_id;
+    int client_id;
     WeaponTypeDto chosen_weapon;
 
     NetMessagePlayerChangedWeapon();

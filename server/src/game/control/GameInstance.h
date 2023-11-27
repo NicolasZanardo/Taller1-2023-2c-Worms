@@ -94,6 +94,9 @@ public:
     void start_shot_for_current_worm();
     void end_shot_for_current_worm();
 
+    // Projectile
+    void change_projectile_count_down_for_current_worm(ProjectileCountDown time);
+
 };
 
 

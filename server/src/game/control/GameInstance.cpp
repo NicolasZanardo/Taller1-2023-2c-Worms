@@ -208,3 +208,8 @@ void GameInstance::change_weapon_for_current_worm(WeaponTypeDto weapon) {
     perform_action_on_current_worm([weapon](auto worm) { worm->change_weapon(weapon); });
 }
 
+void GameInstance::change_projectile_count_down_for_current_worm(ProjectileCountDown count_down) {
+    perform_action_on_current_worm([count_down](auto worm) { worm->change_projectile_count_down(count_down); });
+}
+
+

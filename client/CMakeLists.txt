@@ -31,6 +31,7 @@ add_executable (client_app
     game_managment/event_handler.cpp game_managment/event_handler.h
     game_managment/commands/Command.h
         game_managment/commands/ChangeWeaponCommand.h game_managment/commands/ChangeWeaponCommand.cpp
+        game_managment/commands/ChangeProjectileCountDownCommand.h game_managment/commands/ChangeProjectileCountDownCommand.cpp
         game_managment/commands/GameActionCommand.h game_managment/commands/GameActionCommand.cpp
     #game_ui/animation.cpp game_ui/animation.h
     game_ui/client_game_state.cpp game_ui/client_game_state.h

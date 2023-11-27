@@ -8,6 +8,6 @@ void ExplosionForce::apply(b2Body *body) {
     float distance = blast_dir.Normalize();
     if (distance == 0)
         return;
-    float impulse_mag = explosion_power * (1 / distance);
+    float impulse_mag = explosion_power * (1 / distance) * (1 / distance);
     body->ApplyLinearImpulse(impulse_mag * blast_dir, body->GetWorldCenter(), true);
 }

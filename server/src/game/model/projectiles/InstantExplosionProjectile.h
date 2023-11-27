@@ -3,13 +3,12 @@
 
 #include "Projectile.h"
 
-
 class InstantExplosionProjectile : public Projectile {
     friend class ProjectileFactory;
 
     explicit InstantExplosionProjectile(size_t id, const std::unique_ptr<ProjectileInfo> &info);
 
-    void on_collision() override;
+    void on_collision(b2Vec2 collision_point) override;
 
 };
 

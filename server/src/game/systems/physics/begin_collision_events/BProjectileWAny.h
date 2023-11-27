@@ -8,9 +8,9 @@ class BProjectileWAny {
 public:
     BProjectileWAny() = default;
 
-    static void resolve(Collidable *projectile_collidable, Collidable *any);
+    static void resolve(Collidable *projectile_collidable, Collidable *any, b2Manifold* manifold);
 
-    static void resolve_inverse(Collidable *any, Collidable *projectile_collidable);
+    static void resolve_inverse(Collidable *any, Collidable *projectile_collidable, b2Manifold* manifold);
 };
 
 

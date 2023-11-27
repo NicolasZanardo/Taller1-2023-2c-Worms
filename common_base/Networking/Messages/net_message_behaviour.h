@@ -9,6 +9,7 @@
 #define NET_MESSAGE_TYPE_UPDATE_STATE 5
 #define NET_MESSAGE_TYPE_GAME_ACTION 6
 #define NET_MESSAGE_TYPE_PLAYER_CHANGED_WEAPON 7
+#define NET_MESSAGE_TYPE_PLAYER_CHANGED_PROJECTILE_COUNTDOWN 8
 
 class NetMessageChat;
 class NetMessageLeave;
@@ -18,6 +19,7 @@ class NetMessageInitialGameState;
 class NetMessageGameStateUpdate;
 class NetMessageGameAction;
 class NetMessagePlayerChangedWeapon;
+class NetMessagePlayerChangedProjectileCountdown;
 
 class NetMessageBehaviour {
     public:
@@ -29,6 +31,7 @@ class NetMessageBehaviour {
     virtual void run(NetMessageGameStateUpdate* msg) = 0;
     virtual void run(NetMessageGameAction* msg) = 0;
     virtual void run(NetMessagePlayerChangedWeapon* msg) = 0;
+    virtual void run(NetMessagePlayerChangedProjectileCountdown* msg) = 0;
 
     virtual ~NetMessageBehaviour() {};
 };

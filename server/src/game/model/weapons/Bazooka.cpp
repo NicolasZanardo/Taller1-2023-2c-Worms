@@ -2,12 +2,10 @@
 #include <iostream>
 
 Bazooka::Bazooka(
-    size_t owner_id,
     int ammo_left,
     float damage,
     float explosion_radius
 ) : Weapon(
-    owner_id,
     ammo_left,
     damage,
     11,
@@ -22,14 +20,14 @@ void Bazooka::start_shooting(float from_x, float from_y, char facing_sign) {
         // std::cout << "Bazooka has " << ammo_left << " ammo left\n";
         c_shot = std::make_unique<CShot>(
             std::make_unique<ProjectileInfo>(
-                owner_id,
                 rotation.aimed_angle,
                 facing_sign,
-                damage,
+                max_damage,
                 explosion_radius,
                 max_power,
                 from_x,
                 from_y,
+                PROJECTILE_RADIUS,
                 true,
                 -1,
                 type
@@ -41,3 +39,9 @@ void Bazooka::start_shooting(float from_x, float from_y, char facing_sign) {
 }
 
 void Bazooka::end_shooting(float from_x, float from_y, char facing_sign) {}
+
+bool Bazooka::change_projectile_count_down(ProjectileCountDown time) {
+    // Cant change projectile countdown
+    // TODO could return feedback to client in the future
+    return false;
+}

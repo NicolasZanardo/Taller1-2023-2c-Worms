@@ -100,3 +100,11 @@ void GameNetMessageBehaviour::run(NetMessagePlayerChangedWeapon *msg) {
     }
     game.change_weapon_for_current_worm(msg->chosen_weapon);
 }
+
+void GameNetMessageBehaviour::run(NetMessagePlayerChangedProjectileCountdown *msg) {
+    std::cout << "Received change of countdown\n";
+    if (!game.is_client_turn(msg->client_id)) {
+        return;
+    }
+    game.change_projectile_count_down_for_current_worm(msg->count_down);
+}

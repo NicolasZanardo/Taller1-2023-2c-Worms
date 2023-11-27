@@ -37,6 +37,7 @@ class WaitingLobby : public Thread, public NetMessageBehaviour {
     void run(NetMessageGameStateUpdate* msg) override;
     void run(NetMessageGameAction* msg) override;
     void run(NetMessagePlayerChangedWeapon* msg) override;
+    void run(NetMessagePlayerChangedProjectileCountdown* msg) override;
 };
 #endif
 

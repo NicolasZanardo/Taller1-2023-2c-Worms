@@ -1,14 +1,11 @@
 #include "Mortar.h"
 #include <iostream>
 
-// TODO For now same logic as bazooka
 Mortar::Mortar(
-    size_t owner_id,
     int ammo_left,
     float damage,
     float explosion_radius
 ) : Weapon(
-    owner_id,
     ammo_left,
     damage,
     10,
@@ -23,14 +20,14 @@ void Mortar::start_shooting(float from_x, float from_y, char facing_direction) {
         std::cout << "Mortar has " << ammo_left << " ammo left\n";
         c_shot = std::make_unique<CShot>(
             std::make_unique<ProjectileInfo>(
-                owner_id,
                 rotation.aimed_angle,
                 facing_direction,
-                damage,
+                max_damage,
                 explosion_radius,
                 max_power,
                 from_x,
                 from_y,
+                PROJECTILE_RADIUS, // TODO
                 true,
                 -1,
                 type
@@ -42,3 +39,7 @@ void Mortar::start_shooting(float from_x, float from_y, char facing_direction) {
 }
 
 void Mortar::end_shooting(float from_x, float from_y, char facing_direction) {}
+
+bool Mortar::change_projectile_count_down(ProjectileCountDown time) {
+    return false;
+}
