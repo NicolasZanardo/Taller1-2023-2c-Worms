@@ -34,6 +34,10 @@ float Projectile::Y() const {
     return body->Y();
 }
 
+void Projectile::receive(Force &force) const{
+    body->receive(force);
+}
+
 void Projectile::update(const int it, const int rate) {
     if (is_on_water) {
         on_water_time_life -= it * rate;

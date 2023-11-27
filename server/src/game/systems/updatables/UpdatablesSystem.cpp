@@ -13,6 +13,5 @@ void UpdatablesSystem::update(
     for (const auto&  projectile: projectiles) {
         projectile->update(it, rate);
     }
-
 }
 

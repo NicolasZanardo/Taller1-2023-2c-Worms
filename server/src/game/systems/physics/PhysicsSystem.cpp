@@ -6,12 +6,11 @@ const float DEG_TO_RAD = M_PI / 180.0f;
 
 PhysicsSystem::PhysicsSystem(
     int rate,
-    float xGravity,
-    float yGravity,
+    b2World& world,
     const GameScenarioData &scenario
 ) :
     timeStep(1.0f / rate),
-    world(b2Vec2(xGravity, yGravity)),
+    world(world),
     beams(),
     water(),
     contactListener() {
@@ -22,13 +21,10 @@ PhysicsSystem::PhysicsSystem(
 
 void PhysicsSystem::update(const std::vector<std::shared_ptr<Projectile>> &projectiles) {
     for (const auto&  projectile: projectiles) {
-        auto explosion = projectile->explosion_component(); // TODO Explosion system
+        auto explosion = projectile->explosion_component();
         if (explosion) {
             OnExplosionWormsQuery::act_on_found(world, std::move(explosion));
             projectile->Destroy();
-        }
-        if (projectile->is_wind_affected()) { // TODO move to WindSystem
-
         }
     }
     world.Step(timeStep, velocityIterations, positionIterations);

@@ -29,6 +29,7 @@ public:
     std::unique_ptr<ProjectileBody> body;
 
     b2Body *B2Body() const;
+    void receive(Force& force) const;
     float X() const;
     float Y() const;
 

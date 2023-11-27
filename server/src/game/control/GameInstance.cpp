@@ -2,18 +2,20 @@
 #include "../core/Logger.h"
 
 GameInstance::GameInstance(
-        float xGravity,
-        float yGravity,
-        const GameScenarioData &scenarioData,
-        const std::list<Client *> &clients,
-        int rate
+    float xGravity,
+    float yGravity,
+    const GameScenarioData &scenarioData,
+    const std::list<Client *> &clients,
+    int rate
 ) :
-    physics_system(rate, xGravity, yGravity, scenarioData),
+    world(b2Vec2(xGravity, yGravity)),
+    physics_system(rate, world, scenarioData),
     instances_manager(physics_system, scenarioData),
     clientsWorms(),
     turn_system(rate),
     updatables_system(rate),
-    shot_system(instances_manager) {
+    shot_system(instances_manager),
+    wind_system(world) {
 
     assign_worms_to_clients(clients);
     turn_system.randomly_assign_clients_turn();
@@ -48,6 +50,7 @@ void GameInstance::update(const int it) {
     physics_system.update(projectiles);
     turn_system.update(it, worms, active_worm);
     shot_system.update(active_worm);
+    wind_system.update(projectiles);
     instances_manager.update();
 }
 
@@ -59,8 +62,8 @@ GameState GameInstance::get_current_state() {
     return GameState(
         turn_system.get_current_client_id(),
         turn_system.get_current_worm_id(),
-        1.0f, // wind physicsSystem
-            turn_system.get_remaining_game_time(),
+        wind_system.get_wind_speed(),
+        turn_system.get_remaining_game_time(),
         turn_system.get_remaining_turn_time()
     );
 }
@@ -69,7 +72,7 @@ ClientsWorms GameInstance::get_clients_worms() {
     return clientsWorms;
 }
 
-std::vector<std::shared_ptr<Projectile>>& GameInstance::get_projectiles() {
+std::vector<std::shared_ptr<Projectile>> &GameInstance::get_projectiles() {
     return instances_manager.get_projectiles();
 }
 
@@ -114,7 +117,7 @@ void GameInstance::assign_worms_to_clients(const std::list<Client *> &clients) {
 
         // add client with its worms ids to the TurnManager
         std::list<size_t> wormIds;
-        for (const auto &worm : assignedSubset) {
+        for (const auto &worm: assignedSubset) {
             wormIds.push_back(worm->Id());
         }
         turn_system.add_player(clientId, wormIds);
@@ -125,10 +128,10 @@ void GameInstance::assign_worms_to_clients(const std::list<Client *> &clients) {
 }
 
 void GameInstance::remove_from_clients_worms_map(size_t worm_id) {
-    for (auto& [client_id, worms] : clientsWorms) {
+    for (auto &[client_id, worms]: clientsWorms) {
 
         auto it = std::remove_if(worms.begin(), worms.end(),
-                                 [worm_id](const auto& worm) {
+                                 [worm_id](const auto &worm) {
                                      return worm->Id() == worm_id;
                                  }
         );
@@ -138,7 +141,7 @@ void GameInstance::remove_from_clients_worms_map(size_t worm_id) {
 
 
 // Actions
-void GameInstance::perform_action_on_current_worm(const std::function<void(std::shared_ptr<Worm>)>& action) {
+void GameInstance::perform_action_on_current_worm(const std::function<void(std::shared_ptr<Worm>)> &action) {
     auto worm_id = turn_system.get_current_worm_id();
     if (worm_id != -1) {
         auto worm = instances_manager.get_worm(worm_id);
@@ -147,8 +150,9 @@ void GameInstance::perform_action_on_current_worm(const std::function<void(std::
     }
 }
 
-template <typename T>
-void GameInstance::perform_action_on_current_worm(const std::function<void(std::shared_ptr<Worm>, T)>& action, T parameter) {
+template<typename T>
+void
+GameInstance::perform_action_on_current_worm(const std::function<void(std::shared_ptr<Worm>, T)> &action, T parameter) {
     auto worm_id = turn_system.get_current_worm_id();
     if (worm_id != -1) {
         auto worm = instances_manager.get_worm(worm_id);

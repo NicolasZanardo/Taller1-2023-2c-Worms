@@ -78,6 +78,8 @@ add_library( server
         src/game/model/forces/BuoyancyForce.cpp
         src/game/model/forces/ExplosionForce.h
         src/game/model/forces/ExplosionForce.cpp
+        src/game/model/forces/WindForce.h
+        src/game/model/forces/WindForce.cpp
 
         src/game/model/worm/WormFootSensor.h
         src/game/model/worm/WormFootSensor.cpp
@@ -127,6 +129,9 @@ add_library( server
         src/game/systems/physics/PhysicsSystem.h
         src/game/systems/physics/PhysicsSystem.cpp
         src/game/systems/physics/user_data_queries/UserDataQuery.h
+
+        src/game/systems/wind/WindSystem.h
+        src/game/systems/wind/WindSystem.cpp
 
 
 )

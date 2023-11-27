@@ -27,3 +27,7 @@ float Body::Y() const {
 b2Body *Body::B2Body() {
     return body;
 }
+
+void Body::receive(Force &force) {
+    force.apply(body);
+}

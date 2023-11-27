@@ -15,7 +15,7 @@
 
 class PhysicsSystem {
 public:
-    PhysicsSystem(int rate, float xGravity, float yGravity, const GameScenarioData &map);
+    PhysicsSystem(int rate, b2World& world, const GameScenarioData &map);
 
     void update(const std::vector<std::shared_ptr<Projectile>> &projectiles);
 
@@ -39,7 +39,7 @@ private:
     const float timeStep;
     const int32 velocityIterations = 8;
     const int32 positionIterations = 3;
-    b2World world;
+    b2World &world;
 
     ScenarioBeams beams; // TODO move to a Map class
     ScenarioWater water; //

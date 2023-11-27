@@ -17,6 +17,7 @@
 #include "../systems/turns/TurnSystem.h"
 #include "../systems/updatables/UpdatablesSystem.h"
 #include "../systems/shot/ShotSystem.h"
+#include "../systems/wind/WindSystem.h"
 
 
 typedef std::unordered_map<size_t, std::vector<std::shared_ptr<Worm>>> ClientsWorms;
@@ -43,12 +44,14 @@ struct GameState {
 
 class GameInstance {
 
+    b2World world;
     PhysicsSystem physics_system;
     InstancesManager instances_manager;
     ClientsWorms clientsWorms;
     TurnSystem turn_system;
     UpdatablesSystem updatables_system;
     ShotSystem shot_system;
+    WindSystem wind_system;
 
     void assign_worms_to_clients(const std::list<Client *> &clients);
 
