@@ -34,8 +34,10 @@ float Projectile::Y() const {
     return body->Y();
 }
 
-void Projectile::receive(Force &force) const{
-    body->receive(force);
+void Projectile::receive(Force &force) const {
+    if (wind_affected) { // TODO For now the only force the projectile receives is the wind one
+        body->receive(force); // TODO if needed can use a ForceReceiverStrategy
+    }
 }
 
 void Projectile::update(const int it, const int rate) {

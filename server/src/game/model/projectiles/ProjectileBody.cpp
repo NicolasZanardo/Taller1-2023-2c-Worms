@@ -10,6 +10,6 @@ void ProjectileBody::sink() {
 void ProjectileBody::on_update() {
     if(is_on_water) {
         BuoyancyForce force(world);
-        force.apply(this->body);
+        receive(force);
     }
 }
