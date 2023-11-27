@@ -21,7 +21,6 @@ void GreenGrenade::start_shooting(float from_x, float from_y, char facing_direct
     if (!has_shot_this_turn && ammo_left > 0) {
         has_shot_this_turn = true;
         --ammo_left;
-        std::cout << "Projectile countdown is " << projectile_countdown << " ammo left\n";
         c_shot = std::make_unique<CShot>(
             std::make_unique<ProjectileInfo>(
                 rotation.aimed_angle,

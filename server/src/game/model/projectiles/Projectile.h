@@ -36,7 +36,7 @@ public:
 
     ProjectileDto to_dto() const;
 
-    void explode();
+    void explode(float x, float y);
 
     bool has_exploded() const;
     bool is_wind_affected() const;

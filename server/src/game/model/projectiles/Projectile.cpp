@@ -45,13 +45,13 @@ void Projectile::update(const int it, const int rate) {
     body->on_update();
 }
 
-void Projectile::explode() {
+void Projectile::explode(float x, float y) {
     exploded = true;
     c_explosion = std::make_unique<CExplosion>(
         max_damage,
         explosion_radius,
-        body->X(),
-        body->Y()
+        x,
+        y
     );
 }
 

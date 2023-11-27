@@ -17,11 +17,8 @@ void NetMessagePlayerChangedProjectileCountdown::push_data_into(NetBuffer& conta
 }
 
 void NetMessagePlayerChangedProjectileCountdown::pull_data_from(NetProtocolInterpreter& channel) {
-    std::cout << "OK\n";
     client_id = channel.read_int();
-    std::cout << "OK\n";
     count_down = static_cast<ProjectileCountDown>(channel.read_int());
-    std::cout << "OK 2\n";
 }
 
 void NetMessagePlayerChangedProjectileCountdown::execute(NetMessageBehaviour& interpreter) {

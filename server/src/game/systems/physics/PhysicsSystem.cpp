@@ -58,7 +58,7 @@ std::unique_ptr<WormBody> PhysicsSystem::spawn_worm(
     fixtureDef.restitution = 0;
     fixtureDef.userData.pointer = reinterpret_cast<uintptr_t>(worm_model.get());
     fixtureDef.filter.categoryBits = WORM_CATEGORY_BIT;
-    fixtureDef.filter.maskBits = GROUND_CATEGORY_BIT | WATER_CATEGORY_BIT;
+    fixtureDef.filter.maskBits = GROUND_CATEGORY_BIT | PROJECTILE_CATEGORY_BIT | WATER_CATEGORY_BIT;
     body->CreateFixture(&fixtureDef);
 
     // Shape for foot sensor
@@ -139,6 +139,7 @@ std::unique_ptr<ProjectileBody> PhysicsSystem::spawn_projectile(
     b2BodyDef bodyDef;
     bodyDef.type = b2_dynamicBody;
     bodyDef.fixedRotation = true;
+    bodyDef.bullet = true;
     b2Vec2 offset_from_worm(aim_vector.first * SHOT_OFFSET_FROM_WORM, aim_vector.second * SHOT_OFFSET_FROM_WORM);
     // Logger::log_position("A projectile spawned", projectile_info->origin_x + offset_from_worm.x,projectile_info->origin_y + offset_from_worm.y);
     bodyDef.position.Set(projectile_info->origin_x + offset_from_worm.x,

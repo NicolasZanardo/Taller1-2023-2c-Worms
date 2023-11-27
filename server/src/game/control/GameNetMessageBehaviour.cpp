@@ -102,7 +102,6 @@ void GameNetMessageBehaviour::run(NetMessagePlayerChangedWeapon *msg) {
 }
 
 void GameNetMessageBehaviour::run(NetMessagePlayerChangedProjectileCountdown *msg) {
-    std::cout << "Received change of countdown\n";
     if (!game.is_client_turn(msg->client_id)) {
         return;
     }

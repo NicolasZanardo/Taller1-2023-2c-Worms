@@ -19,7 +19,7 @@ void PhysicsCollisionListener::BeginContact(b2Contact *contact) {
     if (tree != beginning_hit_map.end()) {
         auto resolver = tree->second;
         if (resolver)
-            resolver(collidable_a, collidable_b, contact->GetManifold());
+            resolver(collidable_a, collidable_b, contact);
     }
 }
 
@@ -34,7 +34,7 @@ void PhysicsCollisionListener::EndContact(b2Contact *contact) {
     if (tree != ending_hit_map.end()) {
         auto resolver = tree->second;
         if (resolver)
-            resolver(collidable_a, collidable_b, contact->GetManifold());
+            resolver(collidable_a, collidable_b, contact);
     }
 
 }

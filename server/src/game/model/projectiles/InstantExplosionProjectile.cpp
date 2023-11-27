@@ -4,6 +4,6 @@ InstantExplosionProjectile::InstantExplosionProjectile(size_t id, const std::uni
 
 void InstantExplosionProjectile::on_collision(b2Vec2 collision_point) {
     if (!exploded) {
-        explode();
+        explode(collision_point.x, collision_point.y);
     }
 }
