@@ -8,8 +8,8 @@ class BWaterWProjectile {
 public:
     BWaterWProjectile() = default;
 
-    static void resolve(Collidable *water_collideable, Collidable *projectile_collideable);
-    static void resolve_inverse(Collidable *water_collideable, Collidable *projectile_collideable);
+    static void resolve(Collidable *water_collidable, Collidable *projectile_collidable);
+    static void resolve_inverse(Collidable *water_collidable, Collidable *projectile_collidable);
 };
 
 

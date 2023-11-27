@@ -1,4 +1,5 @@
 #include "InstancesManager.h"
+#include "../model/projectiles/ProjectileFactory.h"
 #include <iostream>
 
 InstancesManager::InstancesManager(
@@ -67,9 +68,7 @@ std::shared_ptr<Worm> InstancesManager::get_worm(size_t id) {
 // Projectiles
 void InstancesManager::instantiate_projectiles(std::unique_ptr<CShot> shot) {
     for (const auto& projectile_info: shot->Projectiles()) {
-        auto projectile = std::shared_ptr<Projectile>(
-            new Projectile(++total_entities_created, projectile_info)
-            );
+        auto projectile = ProjectileFactory::create_projectile(total_entities_created++, projectile_info);
         projectile->body = physics_system.spawn_projectile(projectile_info,projectile);
         projectiles_to_add.push_back(projectile);
     }

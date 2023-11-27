@@ -28,6 +28,7 @@ GameInstance::GameInstance(
 
 void GameInstance::update(const int it) {
     auto worms = instances_manager.get_worms();
+    auto projectiles = instances_manager.get_projectiles();
     /* if (worms.size() == 1) {
      * Client won
     } else if (worms.size() == 0) {
@@ -44,7 +45,7 @@ void GameInstance::update(const int it) {
         }
     }
     updatables_system.update(it, worms, get_projectiles());
-    physics_system.update(worms);
+    physics_system.update(projectiles);
     turn_system.update(it, worms, active_worm);
     shot_system.update(active_worm);
     instances_manager.update();

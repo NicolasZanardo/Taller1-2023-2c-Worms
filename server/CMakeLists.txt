@@ -61,13 +61,23 @@ add_library( server
         src/game/model/projectiles/ProjectileInfo.cpp
         src/game/model/projectiles/CShot.h
         src/game/model/projectiles/CShot.cpp
+        src/game/model/projectiles/CExplosion.h
+        src/game/model/projectiles/CExplosion.cpp
         src/game/model/projectiles/Projectile.h
         src/game/model/projectiles/Projectile.cpp
+        src/game/model/projectiles/CountdownProjectile.h
+        src/game/model/projectiles/CountdownProjectile.cpp
+        src/game/model/projectiles/InstantExplosionProjectile.h
+        src/game/model/projectiles/InstantExplosionProjectile.cpp
         src/game/model/projectiles/ProjectileBody.h
         src/game/model/projectiles/ProjectileBody.cpp
+        src/game/model/projectiles/ProjectileFactory.h
+        src/game/model/projectiles/ProjectileFactory.cpp
         src/game/model/forces/Force.h
         src/game/model/forces/BuoyancyForce.h
         src/game/model/forces/BuoyancyForce.cpp
+        src/game/model/forces/ExplosionForce.h
+        src/game/model/forces/ExplosionForce.cpp
 
         src/game/model/worm/WormFootSensor.h
         src/game/model/worm/WormFootSensor.cpp
@@ -108,8 +118,10 @@ add_library( server
         src/game/systems/physics/begin_collision_events/BWaterWProjectile.cpp
         src/game/systems/physics/end_collision_events/EWormFootSensorWGround.h
         src/game/systems/physics/end_collision_events/EWormFootSensorWGround.cpp
-        src/game/systems/physics/query_callbacks/ProjectileExplosionQueryCallback.cpp
-        src/game/systems/physics/query_callbacks/ProjectileExplosionQueryCallback.cpp
+        src/game/systems/physics/world_queries/OnExplosionWormsQuery.h
+        src/game/systems/physics/world_queries/OnExplosionWormsQuery.cpp
+        src/game/systems/physics/world_queries/ExplosionQueryCallback.h
+        src/game/systems/physics/world_queries/ExplosionQueryCallback.cpp
         src/game/systems/physics/PhysicsCollisionListener.h
         src/game/systems/physics/PhysicsCollisionListener.cpp
         src/game/systems/physics/PhysicsSystem.h

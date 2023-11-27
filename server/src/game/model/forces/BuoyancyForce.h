@@ -9,5 +9,4 @@ public:
     void apply(b2Body *body) override;
 };
 
-
 #endif //TP_WORMS_BUOYANCYFORCE_H

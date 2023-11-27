@@ -31,6 +31,8 @@ void GreenGrenade::start_shooting(float from_x, float from_y, char facing_direct
                 max_power,
                 from_x,
                 from_y,
+                true,
+                2000,
                 type
             )
         );
