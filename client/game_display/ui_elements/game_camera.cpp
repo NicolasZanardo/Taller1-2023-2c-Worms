@@ -26,6 +26,12 @@ float GameCamera::transform_w(float w) {
 float GameCamera::transform_h(float h) {
     return h * scale;
 }
+float GameCamera::px_to_w(int pixels) {
+    return (float)pixels / scale;
+}
+float GameCamera::px_to_h(int pixels) {
+    return (float)pixels / scale;
+}
 
 void GameCamera::body_to_transform(float x, float y, float w, float h, SDL2pp::Rect& transform) {
     float xx = transform_x(x);

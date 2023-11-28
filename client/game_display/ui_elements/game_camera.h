@@ -28,6 +28,8 @@ class GameCamera : public Displayable {
     float transform_y(float y);
     float transform_w(float w);
     float transform_h(float h);
+    float px_to_w(int pixels);
+    float px_to_h(int pixels);
 
     void body_to_transform(float x, float y, float w, float h, SDL2pp::Rect& transform);
 
