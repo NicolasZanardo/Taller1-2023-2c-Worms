@@ -4,6 +4,7 @@
 #include "../../core/constants/CollideableTags.h"
 #include "../weapons/chargeable_weapons/GreenGrenade.h"
 #include "../weapons/WeaponFactory.h"
+#include "../../core/Logger.h"
 #include <iostream>
 
 Worm::Worm(size_t id, WormCfg &worm_cfg, Config<WeaponCfg>& weapons_cfg) :
@@ -16,8 +17,8 @@ Worm::Worm(size_t id, WormCfg &worm_cfg, Config<WeaponCfg>& weapons_cfg) :
     foot_sensor(this),
     is_on_water(false),
     water_death_timer(WATER_DEATH_TIME),
-    body(nullptr),
-    has_done_an_ending_turn_action(false)
+    has_done_an_ending_turn_action(false),
+    body(nullptr)
     {}
 
 WormDto Worm::toWormDto(size_t client_id) {
@@ -172,7 +173,6 @@ void Worm::stop_aiming_down() {
 
 void Worm::start_shooting() {
     if (actual_weapon && !has_done_an_ending_turn_action) {
-        // Logger::log_position("Worm shot", X(), Y());
         actual_weapon->start_shooting(X(),Y(),body->facing_direction_sign());
     }
 }
@@ -184,7 +184,7 @@ void Worm::end_shooting() {
 }
 
 void Worm::change_weapon(WeaponTypeDto weapon) {
-    actual_weapon = weapons[weapon]; // We know weapons from the start
+    actual_weapon = weapons[weapon];
 }
 
 void Worm::change_projectile_count_down(ProjectileCountDown count_down) {

@@ -28,7 +28,7 @@ private:
     int WATER_DEATH_TIME = 2000;
     bool is_dead{};
     WeaponMap weapons;
-    std::shared_ptr<Weapon> & actual_weapon;
+    std::shared_ptr<Weapon> actual_weapon;
     Health health;
     WormFootSensor foot_sensor;
     bool is_on_water;
