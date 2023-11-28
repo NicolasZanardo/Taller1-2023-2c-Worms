@@ -11,6 +11,8 @@ std::string ProjectileSpriteKeyMapper::map(ProjectileTypeDto projectile) {
             return P_MORTAR;
         case ProjectileTypeDto::GREEN_GRENADE:
             return P_GREEN_GRENADE;
+        case ProjectileTypeDto::FRAGMENT:
+            return P_FRAGMENT;
         default:
             return P_BAZOOKA;
     }

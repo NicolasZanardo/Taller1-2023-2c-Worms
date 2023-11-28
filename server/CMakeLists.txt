@@ -24,12 +24,13 @@ add_library( server
 
         src/game/control/GameEngineInstance.h
         src/game/control/GameEngineInstance.cpp
-        src/game/control/GameInstance.h
-        src/game/control/GameInstance.cpp
+        src/game/core/GameInstance.h
+        src/game/core/GameInstance.cpp
 
         src/game/core/InstancesManager.h
         src/game/core/InstancesManager.cpp
         src/game/core/CollideableTags.h
+        src/game/core/GameState.h
         src/game/model/core/Instance.h
     src/game/model/core/Instance.cpp
     src/game/model/core/Updatable.h
@@ -144,6 +145,9 @@ add_library( server
 
         src/game/systems/wind/WindSystem.h
         src/game/systems/wind/WindSystem.cpp
+
+        src/game/systems/entity_camera_focus/EntityCameraFocusSystem.h
+        src/game/systems/entity_camera_focus/EntityCameraFocusSystem.cpp
 
 
 )

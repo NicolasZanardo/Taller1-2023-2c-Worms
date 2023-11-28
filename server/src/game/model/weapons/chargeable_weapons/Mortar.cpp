@@ -34,7 +34,7 @@ std::unique_ptr<CShot> Mortar::shoot(float charged_power, float from_x, float fr
                 10,
                 2,
                 FRAGMENT_RADIUS,
-                ProjectileTypeDto::MORTAR_FRAGMENT
+                ProjectileTypeDto::FRAGMENT
             )
         )
     );

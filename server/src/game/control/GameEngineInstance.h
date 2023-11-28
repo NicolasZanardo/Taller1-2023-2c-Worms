@@ -8,7 +8,7 @@
 #include <chrono>
 #include <cmath>
 #include <thread>
-#include "GameInstance.h"
+#include "../core/GameInstance.h"
 #include "../../../../common_base/Networking/Messages/net_queue.h"
 #include "../../../../common_base/networking.h"
 #include "../../../../common_base/thread.h"

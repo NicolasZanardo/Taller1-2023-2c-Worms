@@ -12,11 +12,11 @@
 #include "game_worm_animation_set.h"
 
 class WormEntity : public CameraTarget{
-    WormDto attributes; 
+    WormDto attributes;
     WormAnimationSet* sprite;
     bool is_active;
     GameTextDisplay* name;
-    
+
     public:
     WormEntity(GameDisplay& display, WormDto& values);
     void update(WormDto& new_values, bool active);

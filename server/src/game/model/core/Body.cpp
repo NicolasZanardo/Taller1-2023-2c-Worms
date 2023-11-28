@@ -31,3 +31,14 @@ b2Body *Body::B2Body() {
 void Body::receive(Force &force) {
     force.apply(body);
 }
+
+bool Body::is_moving_faster_than(const std::shared_ptr<Body> &other) {
+    b2Vec2 velocity1 = body->GetLinearVelocity();
+    b2Vec2 velocity2 = other->body->GetLinearVelocity();
+
+    float speed1 = velocity1.Length();
+    float speed2 = velocity2.Length();
+
+    return speed1 > speed2;
+}
+

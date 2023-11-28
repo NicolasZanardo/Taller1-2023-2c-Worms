@@ -56,7 +56,6 @@ void GameSprite::hidden(bool is_hidden) {
 
 void GameSprite::render(SDL2pp::Renderer& renderer, float delta_time) {
     if (!is_active) return;
-    
     cam.body_to_transform(x,y,w,h,transform);
     offset.SetX(cam.transform_w(w)/2);
     offset.SetY(cam.transform_h(h)/2);

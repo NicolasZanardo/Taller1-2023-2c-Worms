@@ -2,6 +2,7 @@
 #define TP_WORMS_BODY_H
 
 #include <box2d/box2d.h>
+#include <memory>
 #include "../forces/Force.h"
 
 class Body {
@@ -19,6 +20,8 @@ public:
     float Y() const;
 
     void receive(Force &force);
+
+    bool is_moving_faster_than(const std::shared_ptr<Body> &other);
 
     ~Body();
 };

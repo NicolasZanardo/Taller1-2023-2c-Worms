@@ -16,10 +16,11 @@ public:
     float height;
     float water_level_height;
 
-    int active_client_id;
-    int active_entity_id;
+    int current_turn_client_id;
+    int current_turn_worm_id;
+    int focused_entity_id;
     
-    float wind_speed; // positivo o negativo
+    float wind_speed;
     float remaining_game_time;
     float remaining_turn_time;
     

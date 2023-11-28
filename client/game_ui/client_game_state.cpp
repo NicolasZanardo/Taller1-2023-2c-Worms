@@ -46,14 +46,14 @@ void ClientGameState::update(const std::shared_ptr<ClientGameStateDTO> &game_sta
     game_remaining_time = game_state_dto->remaining_game_time;
     turn_remaining_time = game_state_dto->remaining_turn_time;
 
-    // Worms die
+    // Worms that die
     if (game_state_dto->worms.size() < worms.size()) {
         transfer_death_worms(game_state_dto->worms);
     }
 
     for (auto &worm_dto: game_state_dto->worms) {
         auto &it = worms[worm_dto.entity_id];
-        it->update(worm_dto, worm_dto.entity_id == game_state_dto->active_entity_id);
+        it->update(worm_dto, worm_dto.entity_id == game_state_dto->focused_entity_id);
     }
 
     if (game_state_dto->projectiles.size() < projectiles.size()) {
@@ -71,29 +71,41 @@ void ClientGameState::update(const std::shared_ptr<ClientGameStateDTO> &game_sta
             );
         }
     }
+    turnDisplay->hidden(my_client_id != game_state_dto->current_turn_client_id);
 
-    turnDisplay->hidden(my_client_id != game_state_dto->active_client_id);
+    if (game_state_dto->focused_entity_id > 0) {
+        focus_camera_on(game_state_dto->focused_entity_id);
+    }
+}
 
-    if (game_state_dto->active_entity_id > 0) {
-        display.camera.set_target(worms[game_state_dto->active_entity_id].get());
+
+void ClientGameState::focus_camera_on(int entity_id) {
+    auto worm_iter = worms.find(entity_id);
+    if (worm_iter != worms.end()) {
+        display.camera.set_target(worm_iter->second.get());
+    } else {
+        auto projectile_iter = projectiles.find(entity_id);
+        if (projectile_iter != projectiles.end()) {
+            display.camera.set_target(projectile_iter->second.get());
+        }
+        std::cout << "Correctly focused camera\n";
     }
 }
 
 void ClientGameState::transfer_death_worms(std::vector<WormDto> updated_worms) {
     auto it = worms.begin();
     while (it != worms.end()) {
-        auto wormId = it->first;
+        auto worm_id = it->first;
         auto found = std::find_if(
             updated_worms.begin(),
             updated_worms.end(),
-            [wormId](const auto &worm_dto) {
-                return worm_dto.entity_id == wormId;
+            [worm_id](const auto &worm_dto) {
+                return worm_dto.entity_id == worm_id;
             }
         );
 
         if (found == updated_worms.end()) {
             // death_worms[wormId] = it->second;
-            std::cout << "Entered here\n";
             auto worm_entity = it->second;
             auto image = display.new_sprite("wdead", WORM_SIZE, WORM_SIZE, 0);
             image->set_pos(worm_entity->get_x(), worm_entity->get_y());
@@ -117,6 +129,11 @@ void ClientGameState::destroy_old_projectiles(std::vector<ProjectileDto> updated
         );
 
         if (found == updated_projectiles.end()) {
+            // LATER CAN HAVE WORLD EVENTS DTO
+            // TODO HERE CAN TRIGGER EXPLOSION ANIM
+            // auto image = display.new_sprite("x_explosion", EXPLOSION_SIZE, EXPLOSION_SIZE, 0);
+            // image->set_pos(found->get_x(), found->get_y());
+
             display.remove(it->second->get_sprite());
             it = projectiles.erase(it);
         } else {

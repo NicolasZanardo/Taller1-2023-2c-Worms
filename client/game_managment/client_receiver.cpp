@@ -47,8 +47,9 @@ void ClientReceiver::run(NetMessageInitialGameState* msg) {
 void ClientReceiver::run(NetMessageGameStateUpdate* msg) {
     auto game_state_dto = std::make_shared<ClientGameStateDTO>();
 
-    game_state_dto->active_client_id = msg->active_client_id;
-    game_state_dto->active_entity_id = msg->active_entity_id;
+    game_state_dto->current_turn_client_id = msg->current_turn_client_id;
+    game_state_dto->current_turn_worm_id = msg->current_turn_worm_id;
+    game_state_dto->focused_entity_id = msg->focused_entity_id;
     game_state_dto->wind_speed = msg->wind_speed;
     game_state_dto->remaining_game_time = msg->remaining_game_time;
     game_state_dto->remaining_turn_time = msg->remaining_turn_time;

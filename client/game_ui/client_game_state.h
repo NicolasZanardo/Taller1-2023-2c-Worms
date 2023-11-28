@@ -28,6 +28,7 @@ class ClientGameState {
 
     void transfer_death_worms(std::vector<WormDto> updated_worms);
     void destroy_old_projectiles(std::vector<ProjectileDto> updated_projectiles);
+    void focus_camera_on(int entity_id);
 
     public:
     int my_client_id;

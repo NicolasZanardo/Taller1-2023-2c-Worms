@@ -25,7 +25,6 @@ void ChargeableWeapon::start_shooting(float from_x, float from_y, char facing_si
         started_charge_at_x = from_x;
         started_charge_at_y = from_y;
         facing_sign_when_started_charge = facing_sign;
-        std::cout << "Started charge\n";
     }
 }
 

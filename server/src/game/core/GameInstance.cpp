@@ -1,5 +1,5 @@
 #include "GameInstance.h"
-#include "../core/Logger.h"
+#include "Logger.h"
 
 GameInstance::GameInstance(
     float xGravity,
@@ -16,7 +16,8 @@ GameInstance::GameInstance(
     updatables_system(rate),
     shot_system(instances_manager),
     wind_system(world),
-    explosions_system(instances_manager, world) {
+    explosions_system(instances_manager, world),
+    entity_focus_system(rate) {
 
     assign_worms_to_clients(clients);
     turn_system.randomly_assign_clients_turn();
@@ -33,7 +34,7 @@ void GameInstance::update(const int it) {
     auto worms = instances_manager.get_worms();
     auto projectiles = instances_manager.get_projectiles();
     /* if (worms.size() == 1) {
-     * Client won
+     * Client (worms.cbegin()->first) won
     } else if (worms.size() == 0) {
         Tie
     }
@@ -53,6 +54,7 @@ void GameInstance::update(const int it) {
     shot_system.update(active_worm);
     wind_system.update(projectiles);
     explosions_system.update(projectiles);
+    entity_focus_system.update(it, worms, active_worm, projectiles);
     instances_manager.update();
 }
 
@@ -61,13 +63,14 @@ bool GameInstance::is_client_turn(size_t id) {
 }
 
 GameState GameInstance::get_current_state() {
-    return GameState(
+    return {
         turn_system.get_current_client_id(),
         turn_system.get_current_worm_id(),
+        entity_focus_system.get_focused_entity_id(),
         wind_system.get_wind_speed(),
         turn_system.get_remaining_game_time(),
         turn_system.get_remaining_turn_time()
-    );
+    };
 }
 
 ClientsWorms GameInstance::get_clients_worms() {

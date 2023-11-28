@@ -55,9 +55,9 @@ void Projectile::receive(Force &force) const {
 }
 
 void Projectile::update(const int it, const int rate) {
-    on_water_time_life -= it * rate;
+    life_time -= it * rate;
     if (life_time <= 0) {
-        is_active = false;
+        explode(X(),Y());
         return;
     }
     if (is_on_water) {

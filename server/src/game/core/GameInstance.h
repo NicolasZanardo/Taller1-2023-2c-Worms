@@ -11,7 +11,7 @@
 #include <random>
 #include <ctime>     // Include for std::time
 #include "../model/worm/Worm.h"
-#include "../core/InstancesManager.h"
+#include "InstancesManager.h"
 #include "../../client/client.h"
 #include "../systems/physics/PhysicsSystem.h"
 #include "../systems/turns/TurnSystem.h"
@@ -19,29 +19,11 @@
 #include "../systems/shot/ShotSystem.h"
 #include "../systems/wind/WindSystem.h"
 #include "../systems/explosions/ExplosionsSystem.h"
+#include "../systems/entity_camera_focus/EntityCameraFocusSystem.h"
+#include "GameState.h"
 
 
 typedef std::unordered_map<size_t, std::vector<std::shared_ptr<Worm>>> ClientsWorms;
-
-struct GameState {
-    size_t current_client_id;
-    size_t current_worm_id;
-    float windSpeed;
-    float remainingGameTime;
-    float remainingTurnTime;
-
-    GameState(
-            size_t currentTurnClientId,
-            size_t current_worm_id,
-            float windSpeed,
-            float remainingGameTime,
-            float remainingTurnTime
-    ) : current_client_id(currentTurnClientId),
-        current_worm_id(current_worm_id),
-        windSpeed(windSpeed),
-        remainingGameTime(remainingGameTime),
-        remainingTurnTime(remainingTurnTime) {}
-};
 
 class GameInstance {
 
@@ -54,6 +36,7 @@ class GameInstance {
     ShotSystem shot_system;
     WindSystem wind_system;
     ExplosionsSystem explosions_system;
+    EntityCameraFocusSystem entity_focus_system;
 
     void assign_worms_to_clients(const std::list<Client *> &clients);
 

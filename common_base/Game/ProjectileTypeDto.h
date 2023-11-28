@@ -5,6 +5,7 @@
 
 enum class ProjectileTypeDto: uint8_t {
     NONE = 0x00,
+    FRAGMENT = 0x01,
     BAZOOKA = 0x02,
     MORTAR = 0x04,
     MORTAR_FRAGMENT = 0x05,

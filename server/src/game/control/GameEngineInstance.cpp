@@ -107,15 +107,7 @@ void GameEngineInstance::switch_clients_game_queue(std::list<Client *> clients) 
 // Loop methods
 
 void GameEngineInstance::_broadcast_game_state_update() {
-    auto gameState = game.get_current_state();
-    auto gameStateUpdateMessage = new NetMessageGameStateUpdate(
-        gameState.current_client_id,
-        gameState.current_worm_id,
-        gameState.windSpeed,
-        gameState.remainingGameTime,
-        gameState.remainingTurnTime
-    );
-
+    auto gameStateUpdateMessage = new NetMessageGameStateUpdate(game.get_current_state());
 
     for (const auto &[clientId, worms]: game.get_clients_worms()) {
         for (const auto& worm: worms) {
