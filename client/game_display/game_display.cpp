@@ -101,13 +101,12 @@ void GameDisplay::remove(Displayable* item) {
 void GameDisplay::start_scenario(float width, float height, float water_level) {
     float gameW = camera.px_to_w(128);
     float gameH = camera.px_to_h(24);
-    
-    for (float i = 0; i < width; i += gameW) {
+
+    for (float i = 0.0f; i < width; i += gameW) {
         GameSprite *sprite = new GameSprite(camera, *texture_manager.get("water_line"), gameW, gameH, 0.0);
         foreground.emplace_back(sprite);
         sprite->set_pos(i, water_level);
     }
-    //foreground
 }
 
 GameSprite* GameDisplay::new_sprite(const std::string& spritekey, float width, float height, float angle) {
