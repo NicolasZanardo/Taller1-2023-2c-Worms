@@ -162,6 +162,47 @@ add_library( server
 
 )
 
+
+
+target_include_directories(server_app PUBLIC
+    "${CMAKE_CURRENT_SOURCE_DIR}/src"
+
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/game"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/game/control"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/game/core"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/game/core/configs"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/game/core/configs/model"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/game/core/configs/systems"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/game/core/constants"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/game/model"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/game/model/collidables"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/game/model/core"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/game/model/forces"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/game/model/game_events"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/game/model/projectiles"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/game/model/weapons"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/game/model/weapons/chargeable_weapons"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/game/model/weapons/instant_shot_weapons"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/game/scenario"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/game/systems"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/game/systems/entity_camera_focus"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/game/systems/explosions"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/game/systems/physics"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/game/systems/physics/begin_collision_resolvers"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/game/systems/physics/end_collision_resolvers"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/game/systems/physics/user_data_queries"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/game/systems/physics/world_queries"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/game/systems/shot"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/game/systems/turns"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/game/systems/updatables"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/game/systems/wind"
+
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/client"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/lobby"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/main"
+    "${CMAKE_CURRENT_SOURCE_DIR}/configs"
+)
+
 set(CONFIGS_FILE_PATH "${CMAKE_SOURCE_DIR}/server/configs/")
 add_compile_definitions(CONFIGS_FILE_PATH="${CONFIGS_FILE_PATH}")
 
