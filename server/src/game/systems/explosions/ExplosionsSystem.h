@@ -7,7 +7,7 @@
 class ExplosionsSystem {
     InstancesManager &instances_manager;
     b2World &world;
-    const float VELOCITY_CONSTANT = 0.03f;
+    const float FRAGMENTS_EXPLOSION_CONSTANT = 0.04f;
 
     void instantiate_individual_fragment(
         int actual,

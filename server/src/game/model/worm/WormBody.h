@@ -15,6 +15,7 @@ class WormBody: public Body {
     };
 
     State state;
+    // TODO YAML
     const float speed = 5.0f;
     const float forwardJumpHeight = 12;
     const float forwardJumpReach = 5;

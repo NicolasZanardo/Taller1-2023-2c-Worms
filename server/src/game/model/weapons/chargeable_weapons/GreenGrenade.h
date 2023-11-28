@@ -1,12 +1,12 @@
 #ifndef TP_WORMS_GREEN_GRANADE_H
 #define TP_WORMS_GREEN_GRANADE_H
 
-#include "InstantShotWeapon.h"
+#include "ChargeableWeapon.h"
 
-class GreenGrenade : public InstantShotWeapon {
+class GreenGrenade : public ChargeableWeapon {
     int projectile_countdown;
     const int default_projectile_countdown;
-    const float shoot_power;
+    const float max_shoot_power;
 public:
     explicit GreenGrenade(
         int ammo_left,
@@ -18,7 +18,7 @@ public:
 
     bool change_projectile_count_down(ProjectileCountDown time) override;
     void on_turn_ended() override;
-    std::unique_ptr<CShot> shoot(float from_x, float from_y, char facing_sign) override;
+    std::unique_ptr<CShot> shoot(float charged_power, float from_x, float from_y, char facing_sign) override;
 };
 
 #endif //TP_WORMS_GREEN_GRANADE_H

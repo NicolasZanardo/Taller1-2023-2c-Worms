@@ -4,31 +4,31 @@
 Projectile::Projectile(size_t id, const std::unique_ptr<ProjectileInfo> &info) :
     Collidable(PROJECTILE_TAG),
     Instance(id),
-    life_time(max_life_time),
+    life_time(MAX_LIFE_TIME),
     type(info->projectile_type),
     exploded(false),
     is_on_water(false),
-    on_water_time_life(2000),
+    on_water_time_life(WATER_LIFE_TIME),
     wind_affected(info->affected_by_wind),
-    c_explosion(nullptr),
-    c_fragments(info->fragment_info ? std::make_unique<CFragments>(std::move(info->fragment_info)) : nullptr),
     max_damage(info->max_damage),
     explosion_radius(info->explosion_radius),
+    c_explosion(nullptr),
+    c_fragments(info->fragment_info ? std::make_unique<CFragments>(std::move(info->fragment_info)) : nullptr),
     body(nullptr) {}
 
 Projectile::Projectile(size_t id, const std::unique_ptr<FragmentsInfo> &info) :
     Collidable(PROJECTILE_TAG),
     Instance(id),
-    life_time(max_life_time),
+    life_time(MAX_LIFE_TIME),
     type(info->projectile_type),
     exploded(false),
     is_on_water(false),
-    on_water_time_life(2000),
+    on_water_time_life(WATER_LIFE_TIME),
     wind_affected(false),
-    c_explosion(nullptr),
-    c_fragments(nullptr),
     max_damage(info->max_damage),
     explosion_radius(info->explosion_radius),
+    c_explosion(nullptr),
+    c_fragments(nullptr),
     body(nullptr) {}
 
 ProjectileDto Projectile::to_dto() const {
@@ -40,10 +40,6 @@ ProjectileDto Projectile::to_dto() const {
     );
 }
 
-b2Body *Projectile::B2Body() const {
-    return body->B2Body();
-}
-
 float Projectile::X() const {
     return body->X();
 }
@@ -53,12 +49,17 @@ float Projectile::Y() const {
 }
 
 void Projectile::receive(Force &force) const {
-    if (wind_affected) { // TODO For now the only force the projectile receives is the wind one
-        body->receive(force); // TODO if needed can use a ForceReceiverStrategy
+    if (wind_affected) { // TODO For now the only force the projectile receives with this method is the wind one
+        body->receive(force);
     }
 }
 
 void Projectile::update(const int it, const int rate) {
+    on_water_time_life -= it * rate;
+    if (life_time <= 0) {
+        is_active = false;
+        return;
+    }
     if (is_on_water) {
         on_water_time_life -= it * rate;
         if (on_water_time_life <= 0) {
@@ -81,10 +82,6 @@ void Projectile::explode(float x, float y) {
 
 bool Projectile::has_exploded() const {
     return exploded;
-}
-
-bool Projectile::is_wind_affected() const {
-    return wind_affected;
 }
 
 void Projectile::sink() {

@@ -3,11 +3,10 @@
 Weapon::Weapon(
     int ammo_left,
     float damage,
-    float max_power,
     float explosion_radius,
     WeaponTypeDto type
 ) :
-    type(type), ammo_left(ammo_left), max_damage(damage), explosion_radius(explosion_radius), charged_power(0), max_power(max_power),
+    type(type), ammo_left(ammo_left), max_damage(damage), explosion_radius(explosion_radius),
     has_shot_this_turn(false), rotation(),
     c_shot(nullptr) {
 }
@@ -28,7 +27,7 @@ void Weapon::stop_aiming_down() {
     rotation.stop_aiming_down();
 }
 
-void Weapon::on_update() {
+void Weapon::on_update(const int it, const int rate) {
     rotation.on_update();
 }
 
@@ -46,9 +45,6 @@ WeaponTypeDto Weapon::WeaponType() {
 }
 
 float Weapon::AimedAngle() const {
-    return rotation.aimed_angle;
+    return rotation.get_angle();
 }
 
-std::vector<ProjectileInfo> Weapon::fragments_from_explosion() {
-    return {};
-}

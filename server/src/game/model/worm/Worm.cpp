@@ -1,14 +1,14 @@
 #include "Worm.h"
-#include "../weapons/Bazooka.h"
-#include "../weapons/Mortar.h"
-#include "../weapons/GreenGrenade.h"
-#include "../../core/Logger.h"
+#include "../weapons/chargeable_weapons/Bazooka.h"
+#include "../weapons/chargeable_weapons/Mortar.h"
 #include "../../core/CollideableTags.h"
+#include "../weapons/chargeable_weapons/GreenGrenade.h"
 #include <iostream>
 
 Worm::Worm(size_t id) :
     Collidable(WORM_TAG),
     Instance(id),
+    is_dead(false),
     weapons(create_default_weapons()),
     actual_weapon(weapons[WeaponTypeDto::BAZOOKA]),
     health(100),
@@ -44,11 +44,10 @@ WormDto Worm::toWormDto(size_t client_id) {
 WeaponMap Worm::create_default_weapons() {
     WeaponMap default_weapons;
 
-    // Damages inside weapons could later be only created one for each weapon kind and just have a reference
-    // In order to not have multiple same damage object
-    default_weapons[WeaponTypeDto::BAZOOKA] = std::make_unique<Bazooka>( 10, 50, 2);
-    default_weapons[WeaponTypeDto::MORTAR] = std::make_unique<Mortar>(10, 50, 2);
-    default_weapons[WeaponTypeDto::GREEN_GRENADE] = std::make_unique<GreenGrenade>(10, 70, 4, 5000);
+    // TODO YAML
+    default_weapons[WeaponTypeDto::BAZOOKA] = std::make_unique<Bazooka>( 10, 50, 2, 16);
+    default_weapons[WeaponTypeDto::MORTAR] = std::make_unique<Mortar>(10, 50, 2, 12);
+    default_weapons[WeaponTypeDto::GREEN_GRENADE] = std::make_unique<GreenGrenade>(10, 70, 4, 5000, 6);
 
     return default_weapons;
 }
@@ -93,7 +92,7 @@ void Worm::update(const int it, const int rate) {
 
     body->on_update();
     if (actual_weapon) {
-        actual_weapon->on_update();
+        actual_weapon->on_update(it, rate);
     }
 }
 

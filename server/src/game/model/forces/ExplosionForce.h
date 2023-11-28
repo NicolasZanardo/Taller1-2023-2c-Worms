@@ -4,7 +4,7 @@
 #include "Force.h"
 
 class ExplosionForce: public Force {
-    constexpr static const float explosion_power = 100;
+    constexpr static const float EXPLOSION_POWER = 120;
     b2Vec2 explosion_point;
 public:
     explicit ExplosionForce(b2World& world, b2Vec2 explosion_point);

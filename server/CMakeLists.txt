@@ -48,12 +48,18 @@ add_library( server
 
         src/game/model/weapons/Weapon.h
         src/game/model/weapons/Weapon.cpp
-        src/game/model/weapons/Bazooka.h
-        src/game/model/weapons/Bazooka.cpp
-        src/game/model/weapons/Mortar.h
-        src/game/model/weapons/Mortar.cpp
-        src/game/model/weapons/GreenGrenade.h
-        src/game/model/weapons/GreenGrenade.cpp
+        src/game/model/weapons/chargeable_weapons/ChargeableWeapon.h
+        src/game/model/weapons/chargeable_weapons/ChargeableWeapon.cpp
+        src/game/model/weapons/chargeable_weapons/GreenGrenade.h
+        src/game/model/weapons/chargeable_weapons/GreenGrenade.cpp
+        src/game/model/weapons/instant_shot_weapons/InstantShotWeapon.h
+        src/game/model/weapons/instant_shot_weapons/InstantShotWeapon.cpp
+        src/game/model/weapons/chargeable_weapons/Bazooka.h
+        src/game/model/weapons/chargeable_weapons/Bazooka.cpp
+        src/game/model/weapons/chargeable_weapons/Mortar.h
+        src/game/model/weapons/chargeable_weapons/Mortar.cpp
+        src/game/model/weapons/instant_shot_weapons/InstantWeaponExample.h
+        src/game/model/weapons/instant_shot_weapons/InstantWeaponExample.cpp
 
         src/game/model/weapons/WeaponRotation.h
         src/game/model/weapons/WeaponRotation.cpp

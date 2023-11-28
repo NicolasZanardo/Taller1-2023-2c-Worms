@@ -1,4 +1,11 @@
 #include "ChargeableWeapon.h"
+#include <iostream>
+/* Cant be instantiated protected constructor
+ *
+ * Subclasses of ChargeableWeapon
+ * only need to generate the shot based on the
+ * charge_power member
+ */
 
 ChargeableWeapon::ChargeableWeapon(
     int ammo_left,
@@ -18,16 +25,18 @@ void ChargeableWeapon::start_shooting(float from_x, float from_y, char facing_si
         started_charge_at_x = from_x;
         started_charge_at_y = from_y;
         facing_sign_when_started_charge = facing_sign;
+        std::cout << "Started charge\n";
     }
 }
 
 void ChargeableWeapon::on_update(const int it, const int rate) {
     Weapon::on_update(it, rate);
-    if (is_charging && charged_power < 1.0) {
-        float charging_increment = static_cast<float>(it * rate) / charging_duration;
+    if (is_charging && charged_power < MAX_POWER) {
+        float charging_increment = static_cast<float>(it * rate) / CHARGING_DURATION;
         charged_power += charging_increment;
-        if (charged_power >= 1.0) {
-            charged_power = 1.0;
+        // std::cout << "Charged power is: " << charged_power <<"\n";
+        if (charged_power >= MAX_POWER) {
+            charged_power = MAX_POWER;
             end_shooting(started_charge_at_x, started_charge_at_y, facing_sign_when_started_charge);
         }
     }
@@ -35,7 +44,16 @@ void ChargeableWeapon::on_update(const int it, const int rate) {
 
 void ChargeableWeapon::end_shooting(float from_x, float from_y, char facing_sign) {
     if (is_charging) {
-        on_end_shooting(from_x, from_y, facing_sign);
+        c_shot = shoot(charged_power, from_x, from_y, facing_sign);
+        has_shot_this_turn = true;
         is_charging = false;
+        charged_power = 0;
     }
 }
+
+void ChargeableWeapon::on_turn_ended() {
+    Weapon::on_turn_ended();
+    charged_power = 0;
+}
+
+

@@ -7,7 +7,7 @@ class Collidable {
 public:
     const std::string& tag;
 
-    Collidable(const std::string& tag)
+    explicit Collidable(const std::string& tag)
         : tag(tag) {}
 
 

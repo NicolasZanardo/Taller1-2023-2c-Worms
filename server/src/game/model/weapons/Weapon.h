@@ -9,15 +9,12 @@
 #include "../projectiles/CShot.h"
 #include "../../../../../common_base/Game/ProjectileCountDown.h"
 
-
 class Weapon {
 protected:
     WeaponTypeDto type;
     int ammo_left;
     float max_damage;
     float explosion_radius;
-    float charged_power;
-    const float max_power;
     bool has_shot_this_turn;
     WeaponRotation rotation;
 
@@ -27,7 +24,6 @@ public:
     Weapon(
         int ammo_left,
         float damage,
-        const float max_power,
         float explosion_radius,
         WeaponTypeDto type
     );
@@ -36,13 +32,15 @@ public:
 
     float AimedAngle() const;
 
-    void on_update();
+    virtual void on_update(int it, int rate);
 
     virtual void on_turn_ended();
 
     virtual void start_shooting(float from_x, float from_y, char facing_sign) = 0;
 
     virtual void end_shooting(float from_x, float from_y, char facing_sign) = 0;
+
+    virtual bool change_projectile_count_down(ProjectileCountDown count_down) = 0;
 
     void start_aiming_up();
 
@@ -52,12 +50,9 @@ public:
 
     void stop_aiming_down();
 
-    virtual bool change_projectile_count_down(ProjectileCountDown count_down) = 0;
-    virtual std::vector<ProjectileInfo> fragments_from_explosion();
-
     std::unique_ptr<CShot> shot_component();
 
-    virtual ~Weapon() {}
+    virtual ~Weapon() = default;
 };
 
 

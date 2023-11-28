@@ -1,20 +1,25 @@
 #ifndef TP_WORMS_CHARGEABLEWEAPON_H
 #define TP_WORMS_CHARGEABLEWEAPON_H
 
-#include "Weapon.h"
+#include "../Weapon.h"
 
-class ChargeableWeapon: public Weapon {
-    void on_update(const int it, const int rate) override;
-    void start_shooting(float from_x, float from_y, char facing_sign) override;
-    void end_shooting(float from_x, float from_y, char facing_sign) final;
-protected:
+class ChargeableWeapon : public Weapon {
+    const float MAX_POWER = 1;
+    const float CHARGING_DURATION = 2000;
     float charged_power;
-    const float max_power = 1;
-    const float charging_duration = 2.0;
     bool is_charging;
     float started_charge_at_x;
     float started_charge_at_y;
     char facing_sign_when_started_charge;
+
+    void on_update(const int it, const int rate) final;
+
+    void start_shooting(float from_x, float from_y, char facing_sign) final;
+
+    void end_shooting(float from_x, float from_y, char facing_sign) final;
+
+protected:
+    void on_turn_ended() override;
 
     ChargeableWeapon(
         int ammo_left,
@@ -22,8 +27,9 @@ protected:
         float explosion_radius,
         WeaponTypeDto type
     );
+
 public:
-    void virtual on_end_shooting(float from_x, float from_y, char facing_sign) = 0;
+    virtual std::unique_ptr<CShot> shoot(float charged_power, float from_x, float from_y, char facing_sign) = 0;
 };
 
 

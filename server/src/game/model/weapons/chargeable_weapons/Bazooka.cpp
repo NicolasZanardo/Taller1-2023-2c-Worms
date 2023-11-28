@@ -4,26 +4,25 @@
 Bazooka::Bazooka(
     int ammo_left,
     float damage,
-    float explosion_radius
+    float explosion_radius,
+    float max_shoot_power
 ) : ChargeableWeapon(
     ammo_left,
     damage,
     explosion_radius,
     WeaponTypeDto::BAZOOKA
-) {}
+), max_shoot_power(max_shoot_power) {}
 
-void Bazooka::end_shooting(float from_x, float from_y, char facing_sign) {
-    // TODO If holds the shot from a previous turn and then releases the shot key calling an end shooting directly
-    // without a previous start_shooting
-    has_shot_this_turn = true;
-    --ammo_left;
-    c_shot = std::make_unique<CShot>(
+bool Bazooka::change_projectile_count_down(ProjectileCountDown time) {return false;}
+
+std::unique_ptr<CShot> Bazooka::shoot(float charged_power, float from_x, float from_y, char facing_sign) {
+    return std::make_unique<CShot>(
         std::make_unique<ProjectileInfo>(
-            rotation.aimed_angle,
+            rotation.get_angle(),
             facing_sign,
             max_damage,
             explosion_radius,
-            max_power,
+            max_shoot_power * charged_power,
             from_x,
             from_y,
             PROJECTILE_RADIUS,
@@ -33,12 +32,4 @@ void Bazooka::end_shooting(float from_x, float from_y, char facing_sign) {
             nullptr
         )
     );
-}
-
-void
-
-bool Bazooka::change_projectile_count_down(ProjectileCountDown time) {
-    // Cant change projectile countdown
-    // TODO could return feedback to client in the future
-    return false;
 }

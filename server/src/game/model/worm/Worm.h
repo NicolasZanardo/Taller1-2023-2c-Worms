@@ -22,7 +22,7 @@ class WormFootSensor;
 class Worm: public Collidable, public Instance, Updatable, OnTurnEndedListener {
 private:
     friend class InstancesManager;
-    bool is_dead;
+    bool is_dead{};
     WeaponMap weapons;
     std::shared_ptr<Weapon> & actual_weapon;
     Health health;
