@@ -1,0 +1,10 @@
+#ifndef TP_WORMS_INSNTANTSHOTWEAPON_H
+#define TP_WORMS_INSNTANTSHOTWEAPON_H
+
+
+class InsntantShotWeapon {
+
+};
+
+
+#endif //TP_WORMS_INSNTANTSHOTWEAPON_H
