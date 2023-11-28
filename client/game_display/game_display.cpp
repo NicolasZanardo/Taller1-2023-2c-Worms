@@ -105,9 +105,9 @@ void GameDisplay::start_scenario(float width, float height, float water_level) {
         sprite->set_pos(i, water_level);
         foreground.emplace_back(sprite);
     }
-    GameSprite *layer = new GameSprite(camera, *texture_manager.get("water_line"), width, height-water_level-gameH, 0.0);
+    GameSprite *layer = new GameSprite(camera, *texture_manager.get("underwater_film"), width, height-water_level-gameH, 0.0);
     layer->set_pos(0,water_level+gameH);
-    foreground.emplace(layer);
+    foreground.emplace_back(layer);
 }
 
 GameSprite* GameDisplay::new_sprite(const std::string& spritekey, float width, float height, float angle) {
