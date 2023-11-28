@@ -1,13 +1,17 @@
 #include "projectile_sprite_key_mapper.h"
 #include "sprite_keys.h"
 
-std::string ProjectileSpriteKeyMapper::map(WeaponTypeDto weapon) {
-    switch (weapon) {
-        case WeaponTypeDto::BAZOOKA:
+std::string ProjectileSpriteKeyMapper::map(ProjectileTypeDto projectile) {
+    switch (projectile) {
+        case ProjectileTypeDto::BAZOOKA:
             return P_BAZOOKA;
-        case WeaponTypeDto::MORTAR:
+        case ProjectileTypeDto::MORTAR:
             return P_MORTAR;
-        case WeaponTypeDto::GREEN_GRENADE:
+        case ProjectileTypeDto::MORTAR_FRAGMENT:
+            return P_MORTAR;
+        case ProjectileTypeDto::GREEN_GRENADE:
             return P_GREEN_GRENADE;
+        default:
+            return P_BAZOOKA;
     }
 }

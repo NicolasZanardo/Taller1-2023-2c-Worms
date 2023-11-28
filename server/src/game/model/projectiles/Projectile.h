@@ -11,18 +11,24 @@
 #include "ProjectileInfo.h"
 #include "../core/Collidable.h"
 #include "CExplosion.h"
+#include "CFragments.h"
+#include "../../../../../common_base/Game/ProjectileTypeDto.h"
 
 
 class Projectile : public Collidable, public Instance, Updatable {
+    constexpr static const float max_life_time = 7000;
+    int life_time;
 protected:
-    WeaponTypeDto weapon_type;
+    ProjectileTypeDto type;
     bool exploded;
     bool is_on_water;
     int on_water_time_life;
     bool wind_affected;
     std::unique_ptr<CExplosion> c_explosion;
+    std::unique_ptr<CFragments> c_fragments;
 public:
     explicit Projectile(size_t id, const std::unique_ptr<ProjectileInfo> &info);
+    explicit Projectile(size_t id, const std::unique_ptr<FragmentsInfo> &info);
 
     float max_damage;
     float explosion_radius;
@@ -47,6 +53,7 @@ public:
     void sink();
 
     std::unique_ptr<CExplosion> explosion_component();
+    std::unique_ptr<CFragments> fragments_component();
 
     ~Projectile() = default;
 };

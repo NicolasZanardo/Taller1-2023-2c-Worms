@@ -33,9 +33,9 @@ void GreenGrenade::start_shooting(float from_x, float from_y, char facing_direct
                 PROJECTILE_RADIUS, // TODO For each weapon can change the projectile radius
                 true,
                 projectile_countdown,
-                type
+                ProjectileTypeDto::GREEN_GRENADE,
+                nullptr
             )
-
         );
     } else {
         // std::cout << "Cant shot green grenade again\n";

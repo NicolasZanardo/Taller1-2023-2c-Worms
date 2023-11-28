@@ -1,6 +1,7 @@
 #include "BProjectileWAny.h"
 #include "../../../model/projectiles/Projectile.h"
 
+// TODO Could be more specific for Projectile with what, but for now is enough
 void BProjectileWAny::resolve(Collidable *projectile_collidable, Collidable *any, b2Contact* contact) {
     auto projectile = dynamic_cast<Projectile*>(projectile_collidable);
 

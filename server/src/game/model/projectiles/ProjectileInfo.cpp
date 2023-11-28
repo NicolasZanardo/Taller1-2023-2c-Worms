@@ -11,7 +11,8 @@ ProjectileInfo::ProjectileInfo(
     float projectile_radius,
     bool affected_by_wind,
     int countdown,
-    WeaponTypeDto from_weapon
+    ProjectileTypeDto projectile_type,
+    std::unique_ptr<FragmentsInfo> fragment_info
 ) :
     shot_angle(shot_angle),
     facing_sign(facing_sign),
@@ -23,4 +24,5 @@ ProjectileInfo::ProjectileInfo(
     projectile_radius(projectile_radius),
     affected_by_wind(affected_by_wind),
     countdown(countdown),
-    from_weapon(from_weapon) {}
+    projectile_type(projectile_type),
+    fragment_info(std::move(fragment_info)) {}

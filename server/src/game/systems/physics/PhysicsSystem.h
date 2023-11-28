@@ -17,7 +17,7 @@ class PhysicsSystem {
 public:
     PhysicsSystem(int rate, b2World& world, const GameScenarioData &map);
 
-    void update(const std::vector<std::shared_ptr<Projectile>> &projectiles);
+    void update();
 
     std::unique_ptr<WormBody> spawn_worm(
         WormScenarioData wormScenarioData,
@@ -27,6 +27,14 @@ public:
     std::unique_ptr<ProjectileBody> spawn_projectile(
         const std::unique_ptr<ProjectileInfo> &projectile_info,
         const std::shared_ptr<Projectile> &projectile
+    );
+
+    std::unique_ptr<ProjectileBody> spawn_fragment_projectile(
+        const std::shared_ptr<Projectile> &projectile,
+        const std::unique_ptr<FragmentsInfo>& info,
+        float x,
+        float y,
+        b2Vec2 speed
     );
 
     // NOT USING 1 as it is the default one

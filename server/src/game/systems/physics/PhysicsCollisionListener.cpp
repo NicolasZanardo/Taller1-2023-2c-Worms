@@ -1,10 +1,10 @@
 #include "PhysicsCollisionListener.h"
-#include "begin_collision_events/BWaterWProjectile.h"
-#include "end_collision_events/EWormFootSensorWGround.h"
 #include "../../core/CollideableTags.h"
-#include "begin_collision_events/BWaterWWorm.h"
-#include "begin_collision_events/BWormFootSensorWGround.h"
-#include "begin_collision_events/BProjectileWAny.h"
+#include "begin_collision_resolvers/BWormFootSensorWGround.h"
+#include "begin_collision_resolvers/BProjectileWAny.h"
+#include "begin_collision_resolvers/BWaterWProjectile.h"
+#include "begin_collision_resolvers/BWaterWWorm.h"
+#include "end_collision_resolvers/EWormFootSensorWGround.h"
 #include <iostream>
 
 void PhysicsCollisionListener::BeginContact(b2Contact *contact) {

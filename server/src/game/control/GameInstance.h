@@ -18,6 +18,7 @@
 #include "../systems/updatables/UpdatablesSystem.h"
 #include "../systems/shot/ShotSystem.h"
 #include "../systems/wind/WindSystem.h"
+#include "../systems/explosions/ExplosionsSystem.h"
 
 
 typedef std::unordered_map<size_t, std::vector<std::shared_ptr<Worm>>> ClientsWorms;
@@ -52,6 +53,7 @@ class GameInstance {
     UpdatablesSystem updatables_system;
     ShotSystem shot_system;
     WindSystem wind_system;
+    ExplosionsSystem explosions_system;
 
     void assign_worms_to_clients(const std::list<Client *> &clients);
 

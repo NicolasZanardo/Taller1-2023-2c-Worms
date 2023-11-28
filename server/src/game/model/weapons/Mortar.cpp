@@ -27,10 +27,17 @@ void Mortar::start_shooting(float from_x, float from_y, char facing_direction) {
                 max_power,
                 from_x,
                 from_y,
-                PROJECTILE_RADIUS, // TODO
+                PROJECTILE_RADIUS,
                 true,
                 -1,
-                type
+                ProjectileTypeDto::MORTAR,
+                std::make_unique<FragmentsInfo>(
+                    6,
+                    10,
+                    2,
+                    FRAGMENT_RADIUS,
+                    ProjectileTypeDto::MORTAR_FRAGMENT
+                    )
             )
         );
     } else {

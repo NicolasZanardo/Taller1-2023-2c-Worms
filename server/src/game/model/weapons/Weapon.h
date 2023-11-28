@@ -53,6 +53,7 @@ public:
     void stop_aiming_down();
 
     virtual bool change_projectile_count_down(ProjectileCountDown count_down) = 0;
+    virtual std::vector<ProjectileInfo> fragments_from_explosion();
 
     std::unique_ptr<CShot> shot_component();
 

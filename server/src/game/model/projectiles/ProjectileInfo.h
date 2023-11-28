@@ -2,9 +2,12 @@
 #define TP_WORMS_PROJECTILEINFO_H
 
 #include <memory>
+#include <vector>
 #include "../core/Updatable.h"
 #include "../../../../../common_base/Game/WeaponTypeDto.h"
 #include "../../../../../common_base/constants.h"
+#include "FragmentsInfo.h"
+#include "../../../../../common_base/Game/ProjectileTypeDto.h"
 
 class ProjectileInfo {
 public:
@@ -18,7 +21,8 @@ public:
     float projectile_radius;
     bool affected_by_wind;
     int countdown;
-    WeaponTypeDto from_weapon;
+    ProjectileTypeDto projectile_type;
+    std::unique_ptr<FragmentsInfo> fragment_info;
 
     ProjectileInfo(
         float shot_angle,
@@ -31,7 +35,8 @@ public:
         float projectile_radius,
         bool affected_by_wind,
         int countdown,
-        WeaponTypeDto from_weapon
+        ProjectileTypeDto projectile_type,
+        std::unique_ptr<FragmentsInfo> fragment_info
     );
 
 };

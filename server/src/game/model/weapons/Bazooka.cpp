@@ -30,7 +30,8 @@ void Bazooka::start_shooting(float from_x, float from_y, char facing_sign) {
                 PROJECTILE_RADIUS,
                 true,
                 -1,
-                type
+                ProjectileTypeDto::BAZOOKA,
+                nullptr
             )
         );
     } else {

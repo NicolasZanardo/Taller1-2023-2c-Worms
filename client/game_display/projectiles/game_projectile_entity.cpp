@@ -3,11 +3,11 @@
 
 ProjectileEntity::ProjectileEntity(GameDisplay &display, ProjectileDto &values) :
     sprite(display.new_sprite(
-        ProjectileSpriteKeyMapper::map(values.from_weapon),
+        ProjectileSpriteKeyMapper::map(values.type),
         PROJECTILE_RADIUS * 2,
         PROJECTILE_RADIUS * 2
         )
-    ), attributes(values.entity_id, values.from_weapon, values.x, values.y)
+    ), attributes(values.entity_id, values.type, values.x, values.y)
     { }
 
 void ProjectileEntity::update(ProjectileDto &new_values) {

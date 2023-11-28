@@ -15,7 +15,8 @@ GameInstance::GameInstance(
     turn_system(rate),
     updatables_system(rate),
     shot_system(instances_manager),
-    wind_system(world) {
+    wind_system(world),
+    explosions_system(instances_manager, world) {
 
     assign_worms_to_clients(clients);
     turn_system.randomly_assign_clients_turn();
@@ -47,10 +48,11 @@ void GameInstance::update(const int it) {
         }
     }
     updatables_system.update(it, worms, projectiles);
-    physics_system.update(projectiles);
+    physics_system.update();
     turn_system.update(it, worms, active_worm, projectiles);
     shot_system.update(active_worm);
     wind_system.update(projectiles);
+    explosions_system.update(projectiles);
     instances_manager.update();
 }
 

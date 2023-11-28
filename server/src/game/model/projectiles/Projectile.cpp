@@ -4,11 +4,29 @@
 Projectile::Projectile(size_t id, const std::unique_ptr<ProjectileInfo> &info) :
     Collidable(PROJECTILE_TAG),
     Instance(id),
-    weapon_type(info->from_weapon),
+    life_time(max_life_time),
+    type(info->projectile_type),
     exploded(false),
     is_on_water(false),
     on_water_time_life(2000),
     wind_affected(info->affected_by_wind),
+    c_explosion(nullptr),
+    c_fragments(info->fragment_info ? std::make_unique<CFragments>(std::move(info->fragment_info)) : nullptr),
+    max_damage(info->max_damage),
+    explosion_radius(info->explosion_radius),
+    body(nullptr) {}
+
+Projectile::Projectile(size_t id, const std::unique_ptr<FragmentsInfo> &info) :
+    Collidable(PROJECTILE_TAG),
+    Instance(id),
+    life_time(max_life_time),
+    type(info->projectile_type),
+    exploded(false),
+    is_on_water(false),
+    on_water_time_life(2000),
+    wind_affected(false),
+    c_explosion(nullptr),
+    c_fragments(nullptr),
     max_damage(info->max_damage),
     explosion_radius(info->explosion_radius),
     body(nullptr) {}
@@ -16,7 +34,7 @@ Projectile::Projectile(size_t id, const std::unique_ptr<ProjectileInfo> &info) :
 ProjectileDto Projectile::to_dto() const {
     return ProjectileDto(
         id,
-        weapon_type,
+        type,
         body->X(),
         body->Y()
     );
@@ -76,5 +94,9 @@ void Projectile::sink() {
 
 std::unique_ptr<CExplosion> Projectile::explosion_component() {
     return std::move(c_explosion);
+}
+
+std::unique_ptr<CFragments> Projectile::fragments_component() {
+    return std::move(c_fragments);
 }
 

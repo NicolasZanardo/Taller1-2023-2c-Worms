@@ -48,3 +48,7 @@ WeaponTypeDto Weapon::WeaponType() {
 float Weapon::AimedAngle() const {
     return rotation.aimed_angle;
 }
+
+std::vector<ProjectileInfo> Weapon::fragments_from_explosion() {
+    return {};
+}

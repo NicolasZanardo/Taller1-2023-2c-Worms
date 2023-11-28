@@ -15,6 +15,7 @@ add_library(common
         Game/GameAction.h
         Game/GameWorldEventType.h
         Game/ProjectileCountDown.h
+        Game/ProjectileTypeDto.h
 
     liberror.cpp liberror.h
     network_channel.cpp network_channel.h

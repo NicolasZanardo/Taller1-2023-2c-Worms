@@ -57,7 +57,7 @@ void NetMessageGameStateUpdate::push_data_into(NetBuffer &container) {
     container.push_short(projectiles.size());
     for (size_t i = 0; i < projectiles.size(); i++) {
         container.push_int(projectiles[i].entity_id);
-        container.push_byte(static_cast<uint8_t>(projectiles[i].from_weapon));
+        container.push_byte(static_cast<uint8_t>(projectiles[i].type));
         container.push_float(projectiles[i].x);
         container.push_float(projectiles[i].y);
     }
@@ -97,7 +97,7 @@ void NetMessageGameStateUpdate::pull_data_from(NetProtocolInterpreter &channel) 
     short bullets_size = channel.read_short();
     for(int i = 0; i < bullets_size; i++) {
         auto entity_id = channel.read_int();
-        auto type      = static_cast<WeaponTypeDto>(channel.read_byte());
+        auto type      = static_cast<ProjectileTypeDto>(channel.read_byte());
         auto x         = channel.read_float();
         auto y         = channel.read_float();
 

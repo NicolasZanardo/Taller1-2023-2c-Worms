@@ -59,10 +59,14 @@ add_library( server
         src/game/model/weapons/WeaponRotation.cpp
         src/game/model/projectiles/ProjectileInfo.h
         src/game/model/projectiles/ProjectileInfo.cpp
+        src/game/model/projectiles/FragmentsInfo.h
+        src/game/model/projectiles/FragmentInfo.cpp
         src/game/model/projectiles/CShot.h
         src/game/model/projectiles/CShot.cpp
         src/game/model/projectiles/CExplosion.h
         src/game/model/projectiles/CExplosion.cpp
+        src/game/model/projectiles/CFragments.h
+        src/game/model/projectiles/CFragments.cpp
         src/game/model/projectiles/Projectile.h
         src/game/model/projectiles/Projectile.cpp
         src/game/model/projectiles/CountdownProjectile.h
@@ -109,17 +113,19 @@ add_library( server
         src/game/systems/updatables/UpdatablesSystem.cpp
         src/game/systems/shot/ShotSystem.h
         src/game/systems/shot/ShotSystem.cpp
+        src/game/systems/explosions/ExplosionsSystem.h
+        src/game/systems/explosions/ExplosionsSystem.cpp
 
-        src/game/systems/physics/begin_collision_events/BWormFootSensorWGround.h
-        src/game/systems/physics/begin_collision_events/BWormFootSensorWGround.cpp
-        src/game/systems/physics/begin_collision_events/BProjectileWAny.h
-        src/game/systems/physics/begin_collision_events/BProjectileWAny.cpp
-        src/game/systems/physics/begin_collision_events/BWaterWWorm.h
-        src/game/systems/physics/begin_collision_events/BWaterWWorm.cpp
-        src/game/systems/physics/begin_collision_events/BWaterWProjectile.h
-        src/game/systems/physics/begin_collision_events/BWaterWProjectile.cpp
-        src/game/systems/physics/end_collision_events/EWormFootSensorWGround.h
-        src/game/systems/physics/end_collision_events/EWormFootSensorWGround.cpp
+        src/game/systems/physics/begin_collision_resolvers/BWormFootSensorWGround.h
+        src/game/systems/physics/begin_collision_resolvers/BWormFootSensorWGround.cpp
+        src/game/systems/physics/begin_collision_resolvers/BProjectileWAny.h
+        src/game/systems/physics/begin_collision_resolvers/BProjectileWAny.cpp
+        src/game/systems/physics/begin_collision_resolvers/BWaterWWorm.h
+        src/game/systems/physics/begin_collision_resolvers/BWaterWWorm.cpp
+        src/game/systems/physics/begin_collision_resolvers/BWaterWProjectile.h
+        src/game/systems/physics/begin_collision_resolvers/BWaterWProjectile.cpp
+        src/game/systems/physics/end_collision_resolvers/EWormFootSensorWGround.h
+        src/game/systems/physics/end_collision_resolvers/EWormFootSensorWGround.cpp
         src/game/systems/physics/world_queries/OnExplosionWormsQuery.h
         src/game/systems/physics/world_queries/OnExplosionWormsQuery.cpp
         src/game/systems/physics/world_queries/ExplosionQueryCallback.h

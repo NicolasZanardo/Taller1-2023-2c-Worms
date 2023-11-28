@@ -19,14 +19,7 @@ PhysicsSystem::PhysicsSystem(
     world.SetContactListener(&contactListener);
 }
 
-void PhysicsSystem::update(const std::vector<std::shared_ptr<Projectile>> &projectiles) {
-    for (const auto&  projectile: projectiles) {
-        auto explosion = projectile->explosion_component();
-        if (explosion) {
-            OnExplosionWormsQuery::act_on_found(world, std::move(explosion));
-            projectile->Destroy();
-        }
-    }
+void PhysicsSystem::update() {
     world.Step(timeStep, velocityIterations, positionIterations);
 }
 
@@ -198,5 +191,44 @@ void PhysicsSystem::spawn_water(const GameScenarioData &scenario_data) {
     fixture_def.userData.pointer = reinterpret_cast<uintptr_t>(&water);
     fixture_def.isSensor = true;
     water_body->CreateFixture(&fixture_def);
+}
+
+std::unique_ptr<ProjectileBody>
+PhysicsSystem::spawn_fragment_projectile(
+    const std::shared_ptr<Projectile> &projectile,
+    const std::unique_ptr<FragmentsInfo>& info,
+    float x,
+    float y,
+    b2Vec2 speed
+    ) {
+
+    // Body def
+    b2BodyDef bodyDef;
+    bodyDef.type = b2_dynamicBody;
+    bodyDef.fixedRotation = true;
+    bodyDef.bullet = true;
+    // Logger::log_position("A projectile spawned", projectile_info->origin_x + offset_from_worm.x,projectile_info->origin_y + offset_from_worm.y);
+    bodyDef.position.Set(x,y);
+    // bodyDef.linearDamping = 0.0f;
+    b2Body *body = world.CreateBody(&bodyDef);
+
+    // Shape for hitbox
+    b2CircleShape dynamicCircle;
+    dynamicCircle.m_radius = info->fragment_radius;
+
+    // Fixture for hitbox
+    b2FixtureDef fixtureDef;
+    fixtureDef.shape = &dynamicCircle;
+    fixtureDef.density = PROJECTILE_DENSITY;
+    fixtureDef.restitution = 0;
+    fixtureDef.userData.pointer = reinterpret_cast<uintptr_t>(projectile.get());
+    fixtureDef.filter.categoryBits = PROJECTILE_CATEGORY_BIT;
+    fixtureDef.filter.maskBits = GROUND_CATEGORY_BIT | WORM_CATEGORY_BIT | WATER_CATEGORY_BIT;
+    body->CreateFixture(&fixtureDef);
+
+    b2Vec2 initialForce(speed);
+    body->ApplyLinearImpulse(initialForce, body->GetWorldCenter(), true);
+
+    return std::make_unique<ProjectileBody>(world, body);
 }
 
