@@ -46,10 +46,10 @@ void ClientGameState::update(const std::shared_ptr<ClientGameStateDTO> &game_sta
     game_remaining_time = game_state_dto->remaining_game_time;
     turn_remaining_time = game_state_dto->remaining_turn_time;
 
+    // Worms die
     if (game_state_dto->worms.size() < worms.size()) {
         transfer_death_worms(game_state_dto->worms);
     }
-
 
     for (auto &worm_dto: game_state_dto->worms) {
         auto &it = worms[worm_dto.entity_id];
@@ -92,7 +92,11 @@ void ClientGameState::transfer_death_worms(std::vector<WormDto> updated_worms) {
         );
 
         if (found == updated_worms.end()) {
-            death_worms[wormId] = it->second;
+            // death_worms[wormId] = it->second;
+            std::cout << "Entered here\n";
+            auto worm_entity = it->second;
+            auto image = display.new_sprite("wdead", WORM_SIZE, WORM_SIZE, 0);
+            image->set_pos(worm_entity->get_x(), worm_entity->get_y());
             it = worms.erase(it);
         } else {
             ++it;
