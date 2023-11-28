@@ -11,10 +11,8 @@ void ExplosionsSystem::update(const std::vector<std::shared_ptr<Projectile>> &pr
     for (const auto&  projectile: projectiles) {
         auto explosion = projectile->explosion_component();
         if (explosion) {
-            std::cout << "Explosion occured\n";
             auto fragments = projectile->fragments_component();
             if (fragments) {
-                std::cout << "Fragments particles occured\n";
                 for (int i = 0; i < fragments->info()->amount; i++) {
                     instantiate_individual_fragment(i, fragments->info(), explosion);
                 }

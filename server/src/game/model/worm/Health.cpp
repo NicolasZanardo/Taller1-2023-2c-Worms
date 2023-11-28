@@ -12,8 +12,8 @@ float Health::Amount() const {
     return actual_health;
 }
 
-void Health::heal(float amount) {
-    actual_health += amount;
+void Health::adjust_health_to(float amount) {
+    actual_health = amount;
 }
 
 void Health::receive_damage(float damage) {

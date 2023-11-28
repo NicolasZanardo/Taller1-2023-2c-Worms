@@ -1,8 +1,8 @@
 #include "Instance.h"
 
-Instance::Instance(size_t id) : id(id), is_active(true) {}
+Instance::Instance(int id) : id(id), is_active(true) {}
 
-size_t Instance::Id() const {
+int Instance::Id() const {
     return id;
 }
 

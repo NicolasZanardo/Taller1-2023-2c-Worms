@@ -3,16 +3,11 @@
 
 #include "../Weapon.h"
 #include "ChargeableWeapon.h"
+#include "../../../core/configs/model/WeaponCfg.h"
 
 class Mortar: public ChargeableWeapon {
-    const float max_shoot_power;
 public:
-    explicit Mortar(
-        int ammo_left,
-        float damage,
-        float explosion_radius,
-        float max_shoot_power
-        );
+    explicit Mortar(WeaponCfg &weapon_cfg);
 
     bool change_projectile_count_down(ProjectileCountDown time) override;
     std::unique_ptr<CShot> shoot(float charged_power, float from_x, float from_y, char facing_sign) override;

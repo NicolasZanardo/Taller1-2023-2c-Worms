@@ -2,6 +2,7 @@
 #define TP_WORMS_CHARGEABLEWEAPON_H
 
 #include "../Weapon.h"
+#include "../../../core/configs/model/WeaponCfg.h"
 
 class ChargeableWeapon : public Weapon {
     const float MAX_POWER = 1;
@@ -21,12 +22,7 @@ class ChargeableWeapon : public Weapon {
 protected:
     void on_turn_ended() override;
 
-    ChargeableWeapon(
-        int ammo_left,
-        float damage,
-        float explosion_radius,
-        WeaponTypeDto type
-    );
+    explicit ChargeableWeapon(WeaponCfg &cfg);
 
 public:
     virtual std::unique_ptr<CShot> shoot(float charged_power, float from_x, float from_y, char facing_sign) = 0;

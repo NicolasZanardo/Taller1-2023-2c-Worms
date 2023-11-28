@@ -1,5 +1,5 @@
 #include "GameInstance.h"
-#include "Logger.h"
+#include "../core/Logger.h"
 
 GameInstance::GameInstance(
     float xGravity,
@@ -10,9 +10,9 @@ GameInstance::GameInstance(
 ) :
     world(b2Vec2(xGravity, yGravity)),
     physics_system(rate, world, scenarioData),
-    instances_manager(physics_system, scenarioData),
+    instances_manager(physics_system, scenarioData, worms_cfg.front(), weapons_cfg),
     clientsWorms(),
-    turn_system(rate),
+    turn_system(rate, turn_system_cfg.front()),
     updatables_system(rate),
     shot_system(instances_manager),
     wind_system(world),
@@ -41,20 +41,15 @@ void GameInstance::update(const int it) {
      */
 
     int current_worm_id = turn_system.get_current_worm_id();
-    std::shared_ptr<Worm> active_worm = nullptr;
-    if (current_worm_id != -1) {
-        active_worm = instances_manager.get_worm(current_worm_id);
-        if (active_worm) {
-            // Logger::log_position("Worm", active_worm->X(), active_worm->Y());
-        }
-    }
+    std::shared_ptr<Worm> current_turn_worm = nullptr;
+    current_turn_worm = instances_manager.get_worm(current_worm_id);
     updatables_system.update(it, worms, projectiles);
     physics_system.update();
-    turn_system.update(it, worms, active_worm, projectiles);
-    shot_system.update(active_worm);
+    turn_system.update(it, worms, current_turn_worm, projectiles);
+    shot_system.update(current_turn_worm);
     wind_system.update(projectiles);
     explosions_system.update(projectiles);
-    entity_focus_system.update(it, worms, active_worm, projectiles);
+    entity_focus_system.update(it, worms, current_turn_worm, projectiles);
     instances_manager.update();
 }
 
@@ -102,7 +97,7 @@ void GameInstance::assign_worms_to_clients(const std::list<Client *> &clients) {
 
     // Iterate through each client
     for (const auto &client: clients) {
-        size_t clientId = client->id;
+        int clientId = client->id;
 
         // Assign worms to the client
         size_t numWormsToAssign = wormsPerPlayer + (extraWorms > 0 ? 1 : 0);
@@ -111,7 +106,7 @@ void GameInstance::assign_worms_to_clients(const std::list<Client *> &clients) {
         // Adjust health for worms of players with fewer worms
         if (extraWorms > 0) {
             for (auto &worm: assignedSubset) {
-                worm->heal(25);
+                worm->adjust_health_to(worms_cfg.front().health.default_health);
             }
             --extraWorms;
         }
@@ -121,7 +116,7 @@ void GameInstance::assign_worms_to_clients(const std::list<Client *> &clients) {
 
 
         // add client with its worms ids to the TurnManager
-        std::list<size_t> wormIds;
+        std::list<int> wormIds;
         for (const auto &worm: assignedSubset) {
             wormIds.push_back(worm->Id());
         }

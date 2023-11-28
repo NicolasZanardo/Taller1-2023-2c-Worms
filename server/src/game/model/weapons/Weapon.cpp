@@ -1,15 +1,13 @@
 #include "Weapon.h"
 
-Weapon::Weapon(
-    int ammo_left,
-    float damage,
-    float explosion_radius,
-    WeaponTypeDto type
-) :
-    type(type), ammo_left(ammo_left), max_damage(damage), explosion_radius(explosion_radius),
-    has_shot_this_turn(false), rotation(),
-    c_shot(nullptr) {
-}
+Weapon::Weapon(WeaponCfg &cfg) :
+    type(cfg.type), ammo_left(cfg.ammo), max_damage(cfg.max_damage),
+    max_shoot_power(cfg.max_shoot_power), explosion_radius(cfg.explosion_radius),
+    projectile_radius(cfg.projectile_radius),
+    affected_by_wind(cfg.affected_by_wind),
+    has_shot_this_turn(false),
+    rotation(),
+    c_shot(nullptr) {}
 
 void Weapon::start_aiming_up() {
     rotation.start_aiming_up();

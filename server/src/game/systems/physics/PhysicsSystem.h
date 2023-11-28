@@ -21,7 +21,8 @@ public:
 
     std::unique_ptr<WormBody> spawn_worm(
         WormScenarioData wormScenarioData,
-        const std::shared_ptr<Worm> &worm_model
+        const std::shared_ptr<Worm> &worm_model,
+        WormCfg &worms_cfg
         );
 
     std::unique_ptr<ProjectileBody> spawn_projectile(
@@ -49,8 +50,8 @@ private:
     const int32 positionIterations = 3;
     b2World &world;
 
-    ScenarioBeams beams; // TODO move to a Map class
-    ScenarioWater water; //
+    ScenarioBeams beams;
+    ScenarioWater water;
     PhysicsCollisionListener contactListener;
 
     void populate_beams(const GameScenarioData &map);

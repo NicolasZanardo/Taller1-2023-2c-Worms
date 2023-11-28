@@ -1,0 +1,27 @@
+  1:
+    type: bazooka
+    ammo: 8
+    max_damage: 50
+    explosion_radius: 2
+    max_shoot_power: 16
+    default_projectile_countdown: -1
+    projectile_radius: 0.3
+    affected_by_wind: true
+  2:
+    type: mortar
+    ammo: 8
+    max_damage: 50
+    explosion_radius: 2
+    max_shoot_power: 12
+    default_projectile_countdown: -1
+    projectile_radius: 0.3
+    affected_by_wind: true
+  3:
+    type: green_grenade
+    ammo: 5
+    max_damage: 40
+    explosion_radius: 2
+    max_shoot_power: 6
+    default_projectile_countdown: 5000
+    projectile_radius: 0.3
+    affected_by_wind: true

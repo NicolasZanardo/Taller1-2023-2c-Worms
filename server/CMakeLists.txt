@@ -24,12 +24,20 @@ add_library( server
 
         src/game/control/GameEngineInstance.h
         src/game/control/GameEngineInstance.cpp
-        src/game/core/GameInstance.h
-        src/game/core/GameInstance.cpp
+        src/game/control/GameInstance.h
+        src/game/control/GameInstance.cpp
+        src/game/core/configs/Config.h
+        src/game/core/configs/GameCfg.h
+        src/game/core/configs/model/WeaponCfg.h
+        src/game/core/configs/model/WeaponConfig.cpp
+        src/game/core/configs/model/WormCfg.h
+        src/game/core/configs/model/WormConfig.cpp
+        src/game/core/configs/systems/TurnSystemCfg.h
+        src/game/core/configs/systems/TurnSystemConfig.cpp
 
         src/game/core/InstancesManager.h
         src/game/core/InstancesManager.cpp
-        src/game/core/CollideableTags.h
+        src/game/core/constants/CollideableTags.h
         src/game/core/GameState.h
         src/game/model/core/Instance.h
     src/game/model/core/Instance.cpp
@@ -49,6 +57,8 @@ add_library( server
 
         src/game/model/weapons/Weapon.h
         src/game/model/weapons/Weapon.cpp
+        src/game/model/weapons/WeaponFactory.h
+        src/game/model/weapons/WeaponFactory.cpp
         src/game/model/weapons/chargeable_weapons/ChargeableWeapon.h
         src/game/model/weapons/chargeable_weapons/ChargeableWeapon.cpp
         src/game/model/weapons/chargeable_weapons/GreenGrenade.h
@@ -152,11 +162,15 @@ add_library( server
 
 )
 
+set(CONFIGS_FILE_PATH "${CMAKE_SOURCE_DIR}/server/configs/")
+add_compile_definitions(CONFIGS_FILE_PATH="${CONFIGS_FILE_PATH}")
+
 add_executable(
     server_app
     server_main.cpp
 )
 
 target_link_libraries(server PUBLIC box2d)
+target_link_libraries(server PUBLIC yaml-cpp)
 target_link_libraries(server_app PUBLIC server)
 target_link_libraries(server_app PUBLIC common)

@@ -88,7 +88,6 @@ void ClientGameState::focus_camera_on(int entity_id) {
         if (projectile_iter != projectiles.end()) {
             display.camera.set_target(projectile_iter->second.get());
         }
-        std::cout << "Correctly focused camera\n";
     }
 }
 

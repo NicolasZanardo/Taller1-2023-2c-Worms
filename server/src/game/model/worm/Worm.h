@@ -13,6 +13,9 @@
 #include "../core/Collidable.h"
 #include "WormFootSensor.h"
 #include "../../../../../common_base/Game/ProjectileCountDown.h"
+#include "../../core/configs/model/WeaponCfg.h"
+#include "../../core/configs/Config.h"
+#include "../../core/configs/model/WormCfg.h"
 
 typedef std::map<WeaponTypeDto, std::shared_ptr<Weapon>> WeaponMap;
 
@@ -22,6 +25,7 @@ class WormFootSensor;
 class Worm: public Collidable, public Instance, Updatable, OnTurnEndedListener {
 private:
     friend class InstancesManager;
+    int WATER_DEATH_TIME = 2000;
     bool is_dead{};
     WeaponMap weapons;
     std::shared_ptr<Weapon> & actual_weapon;
@@ -29,8 +33,8 @@ private:
     WormFootSensor foot_sensor;
     bool is_on_water;
     int water_death_timer;
-    explicit Worm(size_t id);
-    WeaponMap create_default_weapons();
+    Worm(size_t id, WormCfg &worm_cfg, Config<WeaponCfg> &weapons_cfg);
+    static WeaponMap create_default_weapons(Config<WeaponCfg> &weapons_cfg);
 
 public:
     std::shared_ptr<WormBody> body;
@@ -72,7 +76,7 @@ public:
     void change_projectile_count_down(ProjectileCountDown time);
 
     // health
-    void heal(float amount);
+    void adjust_health_to(float amount);
     void receive_damage(float damage);
 
     ~Worm() = default;

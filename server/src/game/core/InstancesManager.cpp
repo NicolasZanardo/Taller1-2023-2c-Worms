@@ -2,15 +2,17 @@
 #include "../model/projectiles/ProjectileFactory.h"
 #include <iostream>
 
+typedef Config<WeaponCfg> &config;
+
 InstancesManager::InstancesManager(
     PhysicsSystem &physicsSystem,
-    const GameScenarioData &gameScenarioData
-) : physics_system(physicsSystem) {
+    const GameScenarioData &gameScenarioData,
+    WormCfg &worms_cfg,
+    config weapons_cfg
+) : weapons_cfg(weapons_cfg),
+    worms_cfg(worms_cfg),
+    physics_system(physicsSystem) {
     instantiate_worms(gameScenarioData);
-}
-
-void update() {
-
 }
 
 void InstancesManager::update() {
@@ -18,7 +20,6 @@ void InstancesManager::update() {
         projectiles.push_back(projectile);
     }
     projectiles_to_add.clear();
-
     remove_dead_instances(projectiles);
     remove_dead_instances(worms);
 }
@@ -31,7 +32,7 @@ void InstancesManager::remove_dead_instances(std::vector<std::shared_ptr<T>> &in
 }
 
 // Specialization definition for Worm type
-void InstancesManager::remove_dead_instances(std::unordered_map<size_t, std::shared_ptr<Worm>> &worms_map) {
+void InstancesManager::remove_dead_instances(std::unordered_map<int, std::shared_ptr<Worm>> &worms_map) {
     for (auto it = worms_map.begin(); it != worms_map.end();) {
         if (!it->second->is_active) {
             worm_death_callback(it->second->id);
@@ -43,9 +44,11 @@ void InstancesManager::remove_dead_instances(std::unordered_map<size_t, std::sha
 }
 
 
-std::shared_ptr<Worm> InstancesManager::instantiate_worm(const WormScenarioData &wormScenarioData) {
-    auto worm = std::shared_ptr<Worm>(new Worm(++total_entities_created));
-    worm->body = physics_system.spawn_worm(wormScenarioData, worm);
+std::shared_ptr<Worm> InstancesManager::instantiate_worm(
+    const WormScenarioData &wormScenarioData
+) {
+    auto worm = std::shared_ptr<Worm>(new Worm(++total_entities_created, worms_cfg,weapons_cfg));
+    worm->body = physics_system.spawn_worm(wormScenarioData, worm, worms_cfg);
     return worm;
 }
 
@@ -56,11 +59,11 @@ void InstancesManager::instantiate_worms(const GameScenarioData &gameScenarioDat
     }
 }
 
-std::unordered_map<size_t, std::shared_ptr<Worm>> InstancesManager::get_worms() {
+std::unordered_map<int, std::shared_ptr<Worm>> InstancesManager::get_worms() {
     return worms;
 }
 
-std::shared_ptr<Worm> InstancesManager::get_worm(size_t id) {
+std::shared_ptr<Worm> InstancesManager::get_worm(int id) {
     auto it = worms.find(id);
     return (it != worms.end()) ? it->second : nullptr;
 }
@@ -75,7 +78,7 @@ void InstancesManager::instantiate_projectiles(std::unique_ptr<CShot> shot) {
 }
 
 void InstancesManager::instantiate_fragment_projectile(
-    const std::unique_ptr<FragmentsInfo>& info,
+    const std::unique_ptr<FragmentsInfo> &info,
     float x,
     float y,
     b2Vec2 speed
@@ -91,6 +94,6 @@ std::vector<std::shared_ptr<Projectile>> &InstancesManager::get_projectiles() {
     return projectiles;
 }
 
-void InstancesManager::register_worm_death_callback(std::function<void(size_t)> callback) {
+void InstancesManager::register_worm_death_callback(std::function<void(int)> callback) {
     worm_death_callback = std::move(callback);
 }

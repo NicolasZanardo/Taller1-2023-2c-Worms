@@ -17,6 +17,7 @@
 
 class Projectile : public Collidable, public Instance, Updatable {
     constexpr static const float MAX_LIFE_TIME = 7000;
+    constexpr static const float MEDIUM_LIFE_TIME = 3000;
     constexpr static const float WATER_LIFE_TIME = 2000;
     int life_time;
 protected:

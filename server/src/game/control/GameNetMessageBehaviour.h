@@ -3,7 +3,7 @@
 
 #include "../../../../common_base/networking.h"
 #include "InGameClients.h"
-#include "../core/GameInstance.h"
+#include "GameInstance.h"
 
 class GameNetMessageBehaviour: public NetMessageBehaviour{
 

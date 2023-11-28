@@ -8,25 +8,24 @@
 #include "../../../../../common_base/Game/WeaponTypeDto.h"
 #include "../projectiles/CShot.h"
 #include "../../../../../common_base/Game/ProjectileCountDown.h"
+#include "../../core/configs/model/WeaponCfg.h"
 
 class Weapon {
 protected:
     WeaponTypeDto type;
     int ammo_left;
     float max_damage;
+    float max_shoot_power;
     float explosion_radius;
+    float projectile_radius;
+    bool affected_by_wind;
     bool has_shot_this_turn;
     WeaponRotation rotation;
 
     std::unique_ptr<CShot> c_shot;
 
+    explicit Weapon(WeaponCfg & weapon_cfg);
 public:
-    Weapon(
-        int ammo_left,
-        float damage,
-        float explosion_radius,
-        WeaponTypeDto type
-    );
 
     WeaponTypeDto WeaponType();
 

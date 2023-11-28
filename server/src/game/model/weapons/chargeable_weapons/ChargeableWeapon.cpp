@@ -1,23 +1,16 @@
 #include "ChargeableWeapon.h"
 #include <iostream>
+
 /* Cant be instantiated protected constructor
  *
  * Subclasses of ChargeableWeapon
  * only need to generate the shot based on the
  * charge_power member
  */
+ChargeableWeapon::ChargeableWeapon(WeaponCfg &cfg) :
+    Weapon(cfg), charged_power(0), is_charging(false), started_charge_at_x(0), started_charge_at_y(0),
+    facing_sign_when_started_charge(1) {}
 
-ChargeableWeapon::ChargeableWeapon(
-    int ammo_left,
-    float damage,
-    float explosion_radius,
-    WeaponTypeDto type
-) : Weapon(
-    ammo_left,
-    damage,
-    explosion_radius,
-    type
-), charged_power(0), is_charging(false), started_charge_at_x(0), started_charge_at_y(0), facing_sign_when_started_charge(1) {}
 
 void ChargeableWeapon::start_shooting(float from_x, float from_y, char facing_sign) {
     if (!has_shot_this_turn && ammo_left > 0) {

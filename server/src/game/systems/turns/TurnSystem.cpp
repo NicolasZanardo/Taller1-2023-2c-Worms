@@ -1,7 +1,10 @@
 #include "TurnSystem.h"
 #include <iostream>
 
-TurnSystem::TurnSystem(int rate) : 
+TurnSystem::TurnSystem(int rate, TurnSystemCfg &cfg) :
+    TURN_DURATION(cfg.turn_duration),
+    MATCH_DURATION(cfg.match_duration),
+    TIME_AFTER_ENDING_TURN_ACTION(cfg.time_after_ending_turn),
     state(TurnState::TURN_TIME),
     rate(rate), 
     clients_ids_to_worms_ids_iterator(), 
@@ -11,7 +14,7 @@ TurnSystem::TurnSystem(int rate) :
 
 void TurnSystem::update(
     const int it,
-    std::unordered_map<size_t, std::shared_ptr<Worm>> &worms,
+    std::unordered_map<int, std::shared_ptr<Worm>> &worms,
     const std::shared_ptr<Worm> &active_worm,
     const std::vector<std::shared_ptr<Projectile>> &projectiles
 ) {
@@ -96,14 +99,14 @@ void TurnSystem::advance_to_next_turn() {
     current_worm_id = currentClientIterator->second.advance_to_next_worm_id();
 }
 
-void TurnSystem::add_player(size_t client_id, const std::list<size_t> &worm_ids_from_client) {
+void TurnSystem::add_player(int client_id, const std::list<int> &worm_ids_from_client) {
     if (worm_ids_from_client.empty()) {
         throw std::runtime_error("Worm id list could not be empty");
     }
     clients_ids_to_worms_ids_iterator.emplace(client_id, worm_ids_from_client);
 }
 
-void TurnSystem::remove_worm(size_t worm_id) {
+void TurnSystem::remove_worm(int worm_id) {
     for (auto &[client_id, worm_iterator]: clients_ids_to_worms_ids_iterator) {
         // Iterate every wormIdIterator until one has that worm_id and its removed from its list
         if (worm_id == current_worm_id) {
@@ -134,7 +137,7 @@ void TurnSystem::randomly_assign_clients_turn() {
     this->current_worm_id = random_iterator->second.get_current_worm();
 }
 
-bool TurnSystem::is_clients_turn(size_t client_id) const {
+bool TurnSystem::is_clients_turn(int client_id) const {
     return client_id == current_client_id;
 }
 
@@ -162,7 +165,7 @@ float TurnSystem::get_remaining_turn_time() const {
     return turn_time_left;
 }
 
-bool TurnSystem::worms_are_still(std::unordered_map<size_t, std::shared_ptr<Worm>> &worms) {
+bool TurnSystem::worms_are_still(std::unordered_map<int, std::shared_ptr<Worm>> &worms) {
     for (const auto &[_, worm]: worms) {
         if (worm->body && worm->body->is_still_moving()) {
             return false;

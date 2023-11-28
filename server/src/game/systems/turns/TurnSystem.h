@@ -8,6 +8,7 @@
 #include "WormIdIterator.h"
 #include "../../model/worm/Worm.h"
 #include "../../model/projectiles/Projectile.h"
+#include "../../core/configs/systems/TurnSystemCfg.h"
 
 typedef std::unordered_map<size_t, WormIdIterator> ClientsIdsToWormsIdsIterator;
 
@@ -19,39 +20,39 @@ enum class TurnState {
 
 
 class TurnSystem {
-    const int TURN_DURATION = 10000; // 60000;
-    const int MATCH_DURATION = 120000; // 60000;
-    const int TIME_AFTER_ENDING_TURN_ACTION = 3000;
+    const int TURN_DURATION;
+    const int MATCH_DURATION;
+    const int TIME_AFTER_ENDING_TURN_ACTION;
 
     TurnState state;
     int rate;
     ClientsIdsToWormsIdsIterator clients_ids_to_worms_ids_iterator;
-    size_t current_client_id;
-    size_t current_worm_id;
+    int current_client_id;
+    int current_worm_id;
 
     int game_time_left = MATCH_DURATION;
     int turn_time_left = TURN_DURATION;
 
-    bool worms_are_still(std::unordered_map<size_t, std::shared_ptr<Worm>>& worms);
+    bool worms_are_still(std::unordered_map<int, std::shared_ptr<Worm>>& worms);
 
 public:
-    TurnSystem(int rate);
+    TurnSystem(int rate, TurnSystemCfg &cfg);
 
     int get_current_client_id() const;
     int get_current_worm_id() const;
     float get_remaining_game_time() const;
     float get_remaining_turn_time() const;
 
-    void add_player(size_t client_id, const std::list<size_t>& worm_ids_from_client);
-    void remove_worm(size_t worm_id);
+    void add_player(int client_id, const std::list<int>& worm_ids_from_client);
+    void remove_worm(int worm_id);
     void randomly_assign_clients_turn();
 
-    bool is_clients_turn(size_t client_id) const;
+    bool is_clients_turn(int client_id) const;
 
 
     void update(
             const int it,
-            std::unordered_map<size_t, std::shared_ptr<Worm>>& worms,
+            std::unordered_map<int, std::shared_ptr<Worm>>& worms,
             const std::shared_ptr<Worm>& active_worm,
             const std::vector<std::shared_ptr<Projectile>> &projectiles
             );

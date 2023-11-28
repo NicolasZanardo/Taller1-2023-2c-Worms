@@ -18,8 +18,8 @@ public:
 
     void update(
         int it,
-        const std::unordered_map<size_t, std::shared_ptr<Worm>> &worms,
-        const std::shared_ptr<Worm> &active_worm,
+        const std::unordered_map<int, std::shared_ptr<Worm>> &worms,
+        const std::shared_ptr<Worm> &current_turn_worm,
         const std::vector<std::shared_ptr<Projectile>> &projectiles
     );
 

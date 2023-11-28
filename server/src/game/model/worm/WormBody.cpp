@@ -63,8 +63,8 @@ void WormBody::jump_forward() {
         body->SetLinearVelocity(b2Vec2(0,0));
         body->ApplyLinearImpulseToCenter(
                 b2Vec2(
-                    facing_direction_sign() * forwardJumpReach * body->GetMass(),
-                        forwardJumpHeight* body->GetMass()
+                    facing_direction_sign() * forward_jump_reach * body->GetMass(),
+                    forward_jump_height * body->GetMass()
                         ), true);
     }
 }
@@ -75,8 +75,8 @@ void WormBody::jump_backwards() {
         body->SetLinearVelocity(b2Vec2(0,0));
         body->ApplyLinearImpulseToCenter(
                 b2Vec2(
-                    (-facing_direction_sign()) * backwardsJumpReach * body->GetMass(),
-                        backwardsJumpHeight * body->GetMass()
+                    (-facing_direction_sign()) * backwards_jump_reach * body->GetMass(),
+                    backwards_jump_height * body->GetMass()
                         ),
                 true);
     }

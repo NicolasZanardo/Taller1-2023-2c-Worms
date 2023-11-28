@@ -1,20 +1,21 @@
 #include "Worm.h"
 #include "../weapons/chargeable_weapons/Bazooka.h"
 #include "../weapons/chargeable_weapons/Mortar.h"
-#include "../../core/CollideableTags.h"
+#include "../../core/constants/CollideableTags.h"
 #include "../weapons/chargeable_weapons/GreenGrenade.h"
+#include "../weapons/WeaponFactory.h"
 #include <iostream>
 
-Worm::Worm(size_t id) :
+Worm::Worm(size_t id, WormCfg &worm_cfg, Config<WeaponCfg>& weapons_cfg) :
     Collidable(WORM_TAG),
     Instance(id),
     is_dead(false),
-    weapons(create_default_weapons()),
+    weapons(create_default_weapons(weapons_cfg)),
     actual_weapon(weapons[WeaponTypeDto::BAZOOKA]),
-    health(100),
+    health(worm_cfg.health.default_health),
     foot_sensor(this),
     is_on_water(false),
-    water_death_timer(2000),
+    water_death_timer(WATER_DEATH_TIME),
     body(nullptr),
     has_done_an_ending_turn_action(false)
     {}
@@ -41,16 +42,14 @@ WormDto Worm::toWormDto(size_t client_id) {
     );
 }
 
-WeaponMap Worm::create_default_weapons() {
+WeaponMap Worm::create_default_weapons(Config<WeaponCfg> &weapons_cfg) {
     WeaponMap default_weapons;
-
-    // TODO YAML
-    default_weapons[WeaponTypeDto::BAZOOKA] = std::make_unique<Bazooka>( 10, 50, 2, 16);
-    default_weapons[WeaponTypeDto::MORTAR] = std::make_unique<Mortar>(10, 50, 2, 12);
-    default_weapons[WeaponTypeDto::GREEN_GRENADE] = std::make_unique<GreenGrenade>(10, 70, 4, 5000, 6);
-
+    for (auto [cfg_id, weapon_cfg]: weapons_cfg) {
+        default_weapons[weapon_cfg.type] = WeaponFactory::create(weapon_cfg);
+    }
     return default_weapons;
 }
+
 
 float Worm::X() const {
     return body->X();
@@ -188,7 +187,6 @@ void Worm::change_projectile_count_down(ProjectileCountDown count_down) {
     }
 }
 
-
 // At this call the shot is instantiated, so here is when the worm does an ending turn action
 // Depending on the weapon could be in start_shooting, when the max power charges or in end_shooting
 std::unique_ptr<CShot> Worm::shot_component() {
@@ -199,8 +197,9 @@ std::unique_ptr<CShot> Worm::shot_component() {
     return c_shot;
 }
 
-void Worm::heal(float amount) {
-    health.heal(amount);
+// Health
+void Worm::adjust_health_to(float amount) {
+    health.adjust_health_to(amount);
 }
 
 void Worm::receive_damage(float damage) {

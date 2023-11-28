@@ -5,11 +5,11 @@
 
 class Instance {
 protected:
-    size_t id;
+    int id;
     bool is_active;
 public:
-    explicit Instance(size_t id);
-    size_t Id() const;
+    explicit Instance(int id);
+    int Id() const;
     void Destroy();
     bool IsActive();
 

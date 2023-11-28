@@ -1,21 +1,10 @@
 #include "GreenGrenade.h"
 #include <iostream>
 
-GreenGrenade::GreenGrenade(
-    const int ammo_left,
-    const float max_damage,
-    const float explosion_radius,
-    const int default_count_down_time,
-    const float max_shoot_power
-) : ChargeableWeapon(
-    ammo_left,
-    max_damage,
-    explosion_radius,
-    WeaponTypeDto::GREEN_GRENADE
-),
-    projectile_countdown(default_count_down_time),
-    default_projectile_countdown(default_count_down_time),
-    max_shoot_power(max_shoot_power) {}
+GreenGrenade::GreenGrenade(WeaponCfg& cfg):
+    ChargeableWeapon(cfg),
+    default_projectile_countdown(cfg.default_projectile_countdown),
+    projectile_countdown(default_projectile_countdown) {}
 
 std::unique_ptr<CShot> GreenGrenade::shoot(float charged_power, float from_x, float from_y, char facing_sign) {
     return std::make_unique<CShot>(
@@ -27,11 +16,11 @@ std::unique_ptr<CShot> GreenGrenade::shoot(float charged_power, float from_x, fl
             charged_power * max_shoot_power,
             from_x,
             from_y,
-            PROJECTILE_RADIUS,
-            true,
+            projectile_radius,
+            affected_by_wind,
             projectile_countdown,
-            ProjectileTypeDto::GREEN_GRENADE,
-            nullptr
+            ProjectileTypeDto::GREEN_GRENADE, // TODO WEAPONCFG CAN HAVE THE PROJECTILE IT SHOOTS
+            nullptr // TODO WEAPON CFG CAN DINAMICALLY MADE WEAPONS EXPLODE FRAG?
         )
     );
 }

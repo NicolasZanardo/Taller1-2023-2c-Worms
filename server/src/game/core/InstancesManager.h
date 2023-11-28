@@ -8,14 +8,18 @@
 #include "../model/worm/Worm.h"
 #include "../systems/physics/PhysicsSystem.h"
 #include "../model/projectiles/Projectile.h"
+#include "configs/Config.h"
+#include "configs/model/WormCfg.h"
 
 class InstancesManager {
 private:
-    size_t total_entities_created = 0;
+    Config<WeaponCfg>& weapons_cfg;
+    WormCfg& worms_cfg;
+    int total_entities_created = 0;
     PhysicsSystem &physics_system;
 
     // Worm id to worm map
-    std::unordered_map<size_t, std::shared_ptr<Worm>> worms;
+    std::unordered_map<int, std::shared_ptr<Worm>> worms;
 
     std::shared_ptr<Worm> instantiate_worm(const WormScenarioData &wormScenarioData);
 
@@ -31,12 +35,17 @@ private:
     void remove_dead_instances(std::vector<std::shared_ptr<T>> &instances_vec);
 
     // Specialization for Worm type
-    void remove_dead_instances(std::unordered_map<size_t, std::shared_ptr<Worm>> &worms);
+    void remove_dead_instances(std::unordered_map<int, std::shared_ptr<Worm>> &worms);
 
-    std::function<void(size_t)> worm_death_callback;
+    std::function<void(int)> worm_death_callback;
 
 public:
-    InstancesManager(PhysicsSystem &physicsSystem, const GameScenarioData &map);
+    InstancesManager(
+        PhysicsSystem &physicsSystem,
+        const GameScenarioData &map,
+        WormCfg &worms_cfg,
+        Config<WeaponCfg> &weapons_cfg
+        );
 
     void update();
 
@@ -44,11 +53,11 @@ public:
     // Worms
     void instantiate_worms(const GameScenarioData &gameScenarioData);
 
-    std::unordered_map<size_t, std::shared_ptr<Worm>> get_worms();
+    std::unordered_map<int, std::shared_ptr<Worm>> get_worms();
 
-    std::shared_ptr<Worm> get_worm(size_t id);
+    std::shared_ptr<Worm> get_worm(int id);
 
-    void register_worm_death_callback(std::function<void(size_t)> callback);
+    void register_worm_death_callback(std::function<void(int)> callback);
 
     // Projectiles
     void instantiate_projectiles(std::unique_ptr<CShot> shot);

@@ -49,6 +49,14 @@ set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
 
 #===============================================================================
+# YAML-cpp
+FetchContent_Declare(
+        yaml-cpp
+        GIT_REPOSITORY https://github.com/jbeder/yaml-cpp.git
+        GIT_TAG        0.8.0
+)
+
+FetchContent_MakeAvailable(yaml-cpp)
 add_subdirectory(common_base)
 add_subdirectory(client)
 add_subdirectory(server)

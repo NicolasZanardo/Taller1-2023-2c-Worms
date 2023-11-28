@@ -1,19 +1,9 @@
 #include "Bazooka.h"
 #include <iostream>
 
-Bazooka::Bazooka(
-    int ammo_left,
-    float damage,
-    float explosion_radius,
-    float max_shoot_power
-) : ChargeableWeapon(
-    ammo_left,
-    damage,
-    explosion_radius,
-    WeaponTypeDto::BAZOOKA
-), max_shoot_power(max_shoot_power) {}
+Bazooka::Bazooka(WeaponCfg &weapon_cfg) : ChargeableWeapon(weapon_cfg){}
 
-bool Bazooka::change_projectile_count_down(ProjectileCountDown time) {return false;}
+bool Bazooka::change_projectile_count_down(ProjectileCountDown time) { return false; }
 
 std::unique_ptr<CShot> Bazooka::shoot(float charged_power, float from_x, float from_y, char facing_sign) {
     return std::make_unique<CShot>(
@@ -25,8 +15,8 @@ std::unique_ptr<CShot> Bazooka::shoot(float charged_power, float from_x, float f
             max_shoot_power * charged_power,
             from_x,
             from_y,
-            PROJECTILE_RADIUS,
-            true,
+            projectile_radius,
+            affected_by_wind,
             -1,
             ProjectileTypeDto::BAZOOKA,
             nullptr

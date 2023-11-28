@@ -1,5 +1,5 @@
 #include "PhysicsCollisionListener.h"
-#include "../../core/CollideableTags.h"
+#include "../../core/constants/CollideableTags.h"
 #include "begin_collision_resolvers/BWormFootSensorWGround.h"
 #include "begin_collision_resolvers/BProjectileWAny.h"
 #include "begin_collision_resolvers/BWaterWProjectile.h"

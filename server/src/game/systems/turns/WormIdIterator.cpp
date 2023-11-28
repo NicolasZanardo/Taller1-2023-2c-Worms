@@ -3,16 +3,16 @@
 #include <algorithm>
 using namespace std;
 
-WormIdIterator::WormIdIterator(const list<size_t>& worms_ids) :
+WormIdIterator::WormIdIterator(const list<int>& worms_ids) :
     m_worms_ids(worms_ids),
     current_worm_iterator(m_worms_ids.begin()) {}
 
 
-size_t WormIdIterator::get_current_worm() const {
+int WormIdIterator::get_current_worm() const {
     return *current_worm_iterator;
 }
 
-size_t WormIdIterator::advance_to_next_worm_id() {
+int WormIdIterator::advance_to_next_worm_id() {
     if (m_worms_ids.empty()) {
         throw out_of_range("No remaining worms in the list");
     }
@@ -23,7 +23,7 @@ size_t WormIdIterator::advance_to_next_worm_id() {
     return *current_worm_iterator;
 }
 
-bool WormIdIterator::remove_worm_id(size_t worm_id) {
+bool WormIdIterator::remove_worm_id(int worm_id) {
     auto it = find(m_worms_ids.begin(), m_worms_ids.end(), worm_id);
     if (it != m_worms_ids.end()) {
         m_worms_ids.erase(it);

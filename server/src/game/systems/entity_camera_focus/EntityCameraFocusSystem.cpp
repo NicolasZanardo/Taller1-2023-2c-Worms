@@ -9,17 +9,20 @@ int EntityCameraFocusSystem::get_focused_entity_id() const {
 
 void EntityCameraFocusSystem::update(
     int it,
-    const std::unordered_map<size_t, std::shared_ptr<Worm>> &worms,
-    const std::shared_ptr<Worm> &active_worm,
+    const std::unordered_map<int, std::shared_ptr<Worm>> &worms,
+    const std::shared_ptr<Worm> &current_turn_worm,
     const std::vector<std::shared_ptr<Projectile>> &projectiles
 ) {
+    // Could have just been destroyed on this tick and an inactive projectile would try to be focused
     if (!projectiles.empty() && projectiles.front()->IsActive()) {
         focused_entity = projectiles.front()->Id();
         is_focusing_flying_worm = false;
         return;
     }
-    if (active_worm) {
-        focused_entity = active_worm->Id();
+
+    // Could have just been destroyed on this tick and an inactive worm would try to be focused
+    if (current_turn_worm && current_turn_worm->IsActive()) {
+        focused_entity = current_turn_worm->Id();
         is_focusing_flying_worm = false;
         return;
     }
@@ -29,7 +32,7 @@ void EntityCameraFocusSystem::update(
         if (!worms.empty()) {
             fastest_worm = worms.cbegin()->second;
             for (const auto &[_, worm]: worms) {
-                if (worm->body->is_moving_faster_than(fastest_worm->body)) {
+                if (worm->body->is_moving_faster_than(fastest_worm->body) && worm->IsActive()) {
                     fastest_worm = worm;
                 }
             }

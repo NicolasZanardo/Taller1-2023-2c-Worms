@@ -1,0 +1,12 @@
+health:
+  default_health: 100
+  disadvantage_health: 125
+body:
+  speed: 5.0
+  forward_jump_height: 12
+  forward_jump_reach: 5
+  backwards_jump_height: 18
+  backwards_jump_reach: 2
+  size: 1.2
+  restitution: 0
+  density: 80.0

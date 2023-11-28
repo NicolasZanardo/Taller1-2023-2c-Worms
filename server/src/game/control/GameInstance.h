@@ -11,7 +11,7 @@
 #include <random>
 #include <ctime>     // Include for std::time
 #include "../model/worm/Worm.h"
-#include "InstancesManager.h"
+#include "../core/InstancesManager.h"
 #include "../../client/client.h"
 #include "../systems/physics/PhysicsSystem.h"
 #include "../systems/turns/TurnSystem.h"
@@ -20,12 +20,21 @@
 #include "../systems/wind/WindSystem.h"
 #include "../systems/explosions/ExplosionsSystem.h"
 #include "../systems/entity_camera_focus/EntityCameraFocusSystem.h"
-#include "GameState.h"
+#include "../core/GameState.h"
+#include "../core/configs/GameCfg.h"
+#include "../core/configs/Config.h"
+#include "../core/configs/systems/TurnSystemCfg.h"
+#include "../core/configs/model/WormCfg.h"
 
 
 typedef std::unordered_map<size_t, std::vector<std::shared_ptr<Worm>>> ClientsWorms;
 
 class GameInstance {
+
+    Config<WeaponCfg> weapons_cfg;
+    Config<WormCfg> worms_cfg;
+    Config<TurnSystemCfg> turn_system_cfg;
+    // TODO Could do more cfgs
 
     b2World world;
     PhysicsSystem physics_system;

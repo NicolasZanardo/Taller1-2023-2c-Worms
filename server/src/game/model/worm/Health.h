@@ -14,7 +14,7 @@ public:
     float Amount() const;
 
     void receive_damage(float damage);
-    void heal(float amount);
+    void adjust_health_to(float amount);
 
     void die();
 

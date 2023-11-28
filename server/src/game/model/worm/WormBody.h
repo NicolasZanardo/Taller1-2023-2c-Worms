@@ -4,6 +4,7 @@
 #include "box2d/box2d.h"
 #include "../../../../../common_base/Game/wormDto.h"
 #include "../core/Body.h"
+#include "../../core/configs/model/WormCfg.h"
 
 class WormBody: public Body {
     enum class State : uint8_t {
@@ -17,10 +18,10 @@ class WormBody: public Body {
     State state;
     // TODO YAML
     const float speed = 5.0f;
-    const float forwardJumpHeight = 12;
-    const float forwardJumpReach = 5;
-    const float backwardsJumpHeight = 18;
-    const float backwardsJumpReach = 2;
+    const float forward_jump_height = 12;
+    const float forward_jump_reach = 5;
+    const float backwards_jump_height = 18;
+    const float backwards_jump_reach = 2;
 
     const float epsilon_y = 0.1f;
 

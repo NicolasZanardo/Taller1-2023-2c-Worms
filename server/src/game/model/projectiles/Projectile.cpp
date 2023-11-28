@@ -1,5 +1,5 @@
 #include "Projectile.h"
-#include "../../core/CollideableTags.h"
+#include "../../core/constants/CollideableTags.h"
 
 Projectile::Projectile(size_t id, const std::unique_ptr<ProjectileInfo> &info) :
     Collidable(PROJECTILE_TAG),
@@ -19,7 +19,7 @@ Projectile::Projectile(size_t id, const std::unique_ptr<ProjectileInfo> &info) :
 Projectile::Projectile(size_t id, const std::unique_ptr<FragmentsInfo> &info) :
     Collidable(PROJECTILE_TAG),
     Instance(id),
-    life_time(MAX_LIFE_TIME),
+    life_time(MEDIUM_LIFE_TIME),
     type(info->projectile_type),
     exploded(false),
     is_on_water(false),

@@ -1,5 +1,5 @@
 #include "WormFootSensor.h"
-#include "../../core/CollideableTags.h"
+#include "../../core/constants/CollideableTags.h"
 #include "Worm.h"
 
 WormFootSensor::WormFootSensor(Worm *worm): Collidable(WORM_FOOT_SENSOR_TAG), worm(worm) {}
