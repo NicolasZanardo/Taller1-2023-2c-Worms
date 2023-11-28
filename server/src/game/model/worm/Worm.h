@@ -33,12 +33,12 @@ private:
     WormFootSensor foot_sensor;
     bool is_on_water;
     int water_death_timer;
+    bool has_done_an_ending_turn_action;
+
     Worm(size_t id, WormCfg &worm_cfg, Config<WeaponCfg> &weapons_cfg);
     static WeaponMap create_default_weapons(Config<WeaponCfg> &weapons_cfg);
-
 public:
     std::shared_ptr<WormBody> body;
-    bool has_done_an_ending_turn_action;
 
     WormDto toWormDto(size_t client_id);
 
@@ -49,6 +49,8 @@ public:
 
     void update(int it, const int rate) override;
     void on_turn_ended() override;
+
+    bool has_done_ending_turn_action() const;
 
     // Movement
     void on_sensed_one_new_ground_contact() const;

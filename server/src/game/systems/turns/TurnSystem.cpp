@@ -20,7 +20,6 @@ void TurnSystem::update(
 ) {
     // Check if the game time has run out
     if (game_time_left <= 0) {
-        // TODO ID IS SIZE_T NOT CORRECT, CHANGE TO INT
         current_client_id = -1;
         current_worm_id = -1;
         return;
@@ -62,7 +61,7 @@ bool TurnSystem::step_turn_time(const int it, const std::shared_ptr<Worm> &activ
 }
 
 void TurnSystem::check_ending_turn_action(const std::shared_ptr<Worm> &active_worm) {
-    if (active_worm && active_worm->has_done_an_ending_turn_action) {
+    if (active_worm && active_worm->has_done_ending_turn_action()) {
         turn_time_left = TIME_AFTER_ENDING_TURN_ACTION;
         state = TurnState::ADDITIONAL_TURN_TIME;
     }

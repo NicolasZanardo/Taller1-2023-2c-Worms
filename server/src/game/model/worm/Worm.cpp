@@ -95,6 +95,9 @@ void Worm::update(const int it, const int rate) {
     }
 }
 
+
+// Turn
+
 void Worm::on_turn_ended() {
     body->on_turn_ended();
     if (actual_weapon) {
@@ -104,6 +107,9 @@ void Worm::on_turn_ended() {
     has_done_an_ending_turn_action = false;
 }
 
+bool Worm::has_done_ending_turn_action() const {
+    return has_done_an_ending_turn_action;
+}
 
 // Movement
 void Worm::on_sensed_one_new_ground_contact() const {
@@ -205,5 +211,6 @@ void Worm::adjust_health_to(float amount) {
 void Worm::receive_damage(float damage) {
     std::cout << "Worm id: " << id << " received: " << damage << " damage\n";
     health.receive_damage(damage);
+    has_done_an_ending_turn_action = true;
 }
 
