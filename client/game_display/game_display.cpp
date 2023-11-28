@@ -16,7 +16,7 @@ GameDisplay::GameDisplay(Queue<std::shared_ptr<Command>> &command_queue, int fps
     // Scenario
     texture_manager.add_texture("beam_large", "resources/sprites/scenario/beam_large.png");
     texture_manager.add_texture("underwater_film", "resources/sprites/scenario/underwater_film.png");
-    texture_manager.add_texture("water_line", "resources/sprites/scenario/water_line.png", 128,24,0,0,0,SpriteAnimationType::LOOP, 28);
+    texture_manager.add_texture("water_line", "resources/sprites/scenario/water_line.png", 128,24,0,0,0,SpriteAnimationType::LOOP, 14);
 
     int w = 36;
     int h = 36;
