@@ -8,18 +8,20 @@ ClientGameState::ClientGameState(GameDisplay &display)
     turnDisplay->hidden(true);
 }
 
-void ClientGameState::load(const std::shared_ptr<ClientGameStateDTO> &game_state_dto) {
+void ClientGameState::load(const std::shared_ptr<ClientGameStateDTO> &game) {
     std::cout << "Loading scenario size("
-              << game_state_dto->width << ","
-              << game_state_dto->height << ")"
-              << "   Water level: " << game_state_dto->water_level_height
-              << "   Beams: " << game_state_dto->beams.size()
-              << "   Worms: " << game_state_dto->worms.size() << "\n";
+              << game->width << ","
+              << game->height << ")"
+              << "   Water level: " << game->water_level_height
+              << "   Beams: " << game->beams.size()
+              << "   Worms: " << game->worms.size() << "\n";
 
-    width = game_state_dto->width;
-    height = game_state_dto->height;
+    width = game->width;
+    height = game->height;
 
-    for (auto &beam: game_state_dto->beams) {
+    display.start_scenario(game->width, game->height, game->water_level_height);
+
+    for (auto &beam: game->beams) {
         float beam_w = 0, beam_h = 0;
         switch (beam.type) {
             case BeamDto::Type::LONG:
@@ -36,7 +38,7 @@ void ClientGameState::load(const std::shared_ptr<ClientGameStateDTO> &game_state
         image->set_pos(beam.x, beam.y);
     }
 
-    for (auto &worm: game_state_dto->worms) {
+    for (auto &worm: game->worms) {
         worms.emplace(worm.entity_id, std::make_shared<WormEntity>(display, worm));
         display.camera.set_target(worms[worm.entity_id].get());
     }
