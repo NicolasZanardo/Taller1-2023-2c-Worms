@@ -13,10 +13,10 @@ GameDisplay::GameDisplay(Queue<std::shared_ptr<Command>> &command_queue, int fps
         camera(UiUtils::WINDOW_WIDTH, UiUtils::WINDOW_HEIGHT, 30.0f),
         event_handler(window, command_queue)
 {
-    images.emplace_back(&camera);
-
     // Scenario
     texture_manager.add_texture("beam_large", "resources/sprites/scenario/beam_large.png");
+    texture_manager.add_texture("underwater_film", "resources/sprites/scenario/underwater_film.png");
+    texture_manager.add_texture("water_line", "resources/sprites/scenario/water_line.png", 128,24,0,0,0,SpriteAnimationType::LOOP, 28);
 
     int w = 36;
     int h = 36;
@@ -45,21 +45,68 @@ GameDisplay::~GameDisplay() {
     for (auto spr: images) {
         delete (spr);
     }
+
+    for (auto spr: foreground) {
+        delete (spr);
+    }
+    
+    for (auto spr: user_interface) {
+        delete (spr);
+    }
 }
 
 void GameDisplay::update(float delta_time) {
+    camera.render(renderer, delta_time);
+
     renderer.Clear();
     for (auto spr: images)
+        spr->render(renderer, delta_time);
+
+    for (auto spr: foreground)
+        spr->render(renderer, delta_time);
+
+    for (auto spr: user_interface)
         spr->render(renderer, delta_time);
     renderer.Present();
 }
 
 void GameDisplay::remove(Displayable* item) {
     images.remove_if([item](Displayable* displayable) {
-        return displayable == item;
+        if (displayable == item) {
+            delete(item);
+            return true;
+        }
+        return false;
+    });
+
+    foreground.remove_if([item](Displayable* displayable) {
+        if (displayable == item) {
+            delete(item);
+            return true;
+        }
+        return false;
+    });
+
+    user_interface.remove_if([item](Displayable* displayable) {
+        if (displayable == item) {
+            delete(item);
+            return true;
+        }
+        return false;
     });
 
     delete item;
+}
+
+void GameDisplay::start_scenario(float width, float height, float water_level) {
+    float gameW = camera.px_to_w(128);
+    float gameH = camera.px_to_h(24);
+
+    for (float i = 0.0f; i < width; i += gameW) {
+        GameSprite *sprite = new GameSprite(camera, *texture_manager.get("water_line"), gameW, gameH, 0.0);
+        foreground.emplace_back(sprite);
+        sprite->set_pos(i, water_level);
+    }
 }
 
 GameSprite* GameDisplay::new_sprite(const std::string& spritekey, float width, float height, float angle) {
@@ -72,7 +119,7 @@ GameSprite* GameDisplay::new_sprite(const std::string& spritekey, float width, f
 
 GameTextDisplay* GameDisplay::new_text(const std::string& text, float x, float y, int fnt_size, TextAlign align, TextLayer layer) {
     GameTextDisplay *display = new GameTextDisplay(camera, x, y, fnt_size, align, layer, text);
-    images.emplace_back(display);
+    user_interface.emplace_back(display);
     return display;
 }
 
