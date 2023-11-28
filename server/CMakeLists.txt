@@ -158,11 +158,12 @@ add_library( server
 
         src/game/systems/entity_camera_focus/EntityCameraFocusSystem.h
         src/game/systems/entity_camera_focus/EntityCameraFocusSystem.cpp
-
-
 )
 
-
+add_executable(
+    server_app
+    server_main.cpp
+)
 
 target_include_directories(server_app PUBLIC
     "${CMAKE_CURRENT_SOURCE_DIR}/src"
@@ -206,10 +207,6 @@ target_include_directories(server_app PUBLIC
 set(CONFIGS_FILE_PATH "${CMAKE_SOURCE_DIR}/server/configs/")
 add_compile_definitions(CONFIGS_FILE_PATH="${CONFIGS_FILE_PATH}")
 
-add_executable(
-    server_app
-    server_main.cpp
-)
 
 target_link_libraries(server PUBLIC box2d)
 target_link_libraries(server PUBLIC yaml-cpp)

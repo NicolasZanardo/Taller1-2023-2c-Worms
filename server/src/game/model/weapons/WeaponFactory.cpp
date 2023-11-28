@@ -1,3 +1,4 @@
+#include <stdexcept>
 #include "WeaponFactory.h"
 #include "chargeable_weapons/Bazooka.h"
 #include "chargeable_weapons/Mortar.h"
