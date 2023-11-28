@@ -15,6 +15,7 @@ WormAnimationSet::WormAnimationSet(
         GameSprite* moving,
         GameSprite* going_upwards,
         GameSprite* falling,
+        GameSprite* dead,
 
         GameSprite* aiming_bazooka,
         GameSprite* aiming_mortar,
@@ -25,6 +26,7 @@ WormAnimationSet::WormAnimationSet(
 { MovementStateDto::MOVING        , moving },
 { MovementStateDto::GOING_UPWARDS , going_upwards },
 { MovementStateDto::FALLING       , falling },
+{ MovementStateDto::DEAD          , dead },
 { MovementStateDto::SINKING       , falling } // TODO for now same as falling
     }),
     aiming_idle_sprite({

@@ -29,6 +29,7 @@ GameDisplay::GameDisplay(Queue<std::shared_ptr<Command>> &command_queue, int fps
     texture_manager.add_texture("wfall"           , "resources/sprites/worm/wfall.png"          ,w,h,xoff,yoff  ,sep, SpriteAnimationType::FREEZE , 28);
     texture_manager.add_texture("wjumpu"          , "resources/sprites/worm/wjumpu.png"         ,w,h,xoff,yoff  ,sep, SpriteAnimationType::REVERSE, 28);
     texture_manager.add_texture("widle"           , "resources/sprites/worm/wwalk.png"          ,w,h,xoff,yoff-2,sep, SpriteAnimationType::NONE   , 28);
+    texture_manager.add_texture("wdead"           , "resources/sprites/worm/grave1.png"         ,w,h,xoff,yoff-2,sep, SpriteAnimationType::LOOP   , 28);
     // Aiming
     texture_manager.add_texture("w_bazooka"       , "resources/sprites/worm/w_bazooka.png"      ,w,h,xoff,yoff-2,sep, SpriteAnimationType::BY_ANGLE, 28);
     texture_manager.add_texture("w_mortar"        , "resources/sprites/worm/w_mortar.png"       ,w,h,xoff,yoff-2,sep, SpriteAnimationType::BY_ANGLE, 28);
@@ -37,6 +38,7 @@ GameDisplay::GameDisplay(Queue<std::shared_ptr<Command>> &command_queue, int fps
     texture_manager.add_texture("p_bazooka"       , "resources/sprites/projectiles/bazooka.png"      ,w,h,xoff,yoff,sep, SpriteAnimationType::BY_ANGLE, 0);
     texture_manager.add_texture("p_mortar"        , "resources/sprites/projectiles/mortar.png"       ,w,h,xoff,yoff,sep, SpriteAnimationType::BY_ANGLE, 0);
     texture_manager.add_texture("p_green_grenade" , "resources/sprites/projectiles/green_grenade.png",w,h,xoff,yoff,sep, SpriteAnimationType::BY_ANGLE, 0);
+    texture_manager.add_texture("p_clustlet"      , "resources/sprites/projectiles/clustlet.png"     ,w,h,xoff,yoff,sep, SpriteAnimationType::LOOP    , 0);
 }
 
 GameDisplay::~GameDisplay() {
@@ -80,6 +82,7 @@ WormAnimationSet* GameDisplay::new_worm_animation(float size_scale, float angle)
         new GameSprite(camera, *texture_manager.get("wwalk") , WORM_SIZE*size_scale, WORM_SIZE*size_scale, angle),
         new GameSprite(camera, *texture_manager.get("wjumpu"), WORM_SIZE*size_scale, WORM_SIZE*size_scale, angle),
         new GameSprite(camera, *texture_manager.get("wfall") , WORM_SIZE*size_scale, WORM_SIZE*size_scale, angle),
+        new GameSprite(camera, *texture_manager.get("wdead") , WORM_SIZE*size_scale, WORM_SIZE*size_scale, angle),
 
         new GameSprite(camera, *texture_manager.get("w_bazooka")      , WORM_SIZE*size_scale, WORM_SIZE*size_scale, angle),
         new GameSprite(camera, *texture_manager.get("w_mortar")       , WORM_SIZE*size_scale, WORM_SIZE*size_scale, angle),
