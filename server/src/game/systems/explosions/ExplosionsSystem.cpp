@@ -37,8 +37,6 @@ void ExplosionsSystem::instantiate_individual_fragment(
         fragment_speed_magnitude * std::sin(fragmentAngle)
         );
 
-    std::cout << "Fragment " << actual + 1 << ": angle :" << fragmentAngle << "\n";
-    std::cout << "Fragment " << actual + 1 << ": Speed (" << fragment_speed.x << ", " << fragment_speed.y << ")\n";
     // Instantiate a fragment projectile with the calculated direction and velocity
     instances_manager.instantiate_fragment_projectile(
         info,

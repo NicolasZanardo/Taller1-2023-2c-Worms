@@ -22,6 +22,7 @@ class WormFootSensor;
 class Worm: public Collidable, public Instance, Updatable, OnTurnEndedListener {
 private:
     friend class InstancesManager;
+    bool is_dead;
     WeaponMap weapons;
     std::shared_ptr<Weapon> & actual_weapon;
     Health health;
@@ -46,8 +47,8 @@ public:
     void on_turn_ended() override;
 
     // Movement
-    void on_sensed_one_new_ground_contact();
-    void on_sensed_one_ground_contact_ended();
+    void on_sensed_one_new_ground_contact() const;
+    void on_sensed_one_ground_contact_ended() const;
     void start_moving_right() const;
     void start_moving_left() const;
     void stop_moving() const;

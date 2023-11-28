@@ -20,6 +20,13 @@ Worm::Worm(size_t id) :
     {}
 
 WormDto Worm::toWormDto(size_t client_id) {
+    MovementStateDto state;
+    if (health.IsAlive()) {
+        state = body->state_to_dto();
+    } else {
+        state = MovementStateDto::DEAD; // TODO For simplicity is in movementState
+    }
+
     return WormDto(
         client_id,
         id,
@@ -28,7 +35,7 @@ WormDto Worm::toWormDto(size_t client_id) {
         0,
         body->facing_right(),
         health.Amount(),
-        body->state_to_dto(),
+        state,
         actual_weapon->WeaponType(),
         actual_weapon->AimedAngle()
     );
@@ -64,12 +71,15 @@ WormFootSensor* Worm::get_foot_sensor() {
 
 
 void Worm::update(const int it, const int rate) {
+    if (is_dead) {
+        is_active = false;
+    }
     if (is_on_water) {
         water_death_timer -= it * rate;
         if (water_death_timer <= 0) {
             // std::cout << "Worm id: " << id << "died\n";
             health.die();
-            is_active = false;
+            is_dead = true;
             return;
         }
     }
@@ -77,7 +87,7 @@ void Worm::update(const int it, const int rate) {
     health.on_update();
     if (!health.IsAlive()) {
         // std::cout << "Worm id: " << id << "died\n";
-        is_active = false;
+        is_dead = true;
         return;
     }
 
@@ -98,11 +108,11 @@ void Worm::on_turn_ended() {
 
 
 // Movement
-void Worm::on_sensed_one_new_ground_contact() {
+void Worm::on_sensed_one_new_ground_contact() const {
     body->on_sensed_one_new_ground_contact();
 }
 
-void Worm::on_sensed_one_ground_contact_ended() {
+void Worm::on_sensed_one_ground_contact_ended() const {
     body->on_sensed_one_ground_contact_ended();
 }
 
