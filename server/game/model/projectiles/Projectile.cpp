@@ -38,7 +38,7 @@ ProjectileDto Projectile::to_dto() const {
         body->X(),
         body->Y(),
         body->did_spawned_facing_right(),
-        body->Angle()
+        body->AngleInDeg()
     };
 }
 

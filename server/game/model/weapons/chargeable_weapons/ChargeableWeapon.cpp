@@ -8,7 +8,7 @@
  * charge_power member
  */
 ChargeableWeapon::ChargeableWeapon(WeaponCfg &cfg) :
-    Weapon(cfg), charged_power(0), is_charging(false), started_charge_at_x(0), started_charge_at_y(0),
+    Weapon(cfg), charged_power(0.2f), is_charging(false), started_charge_at_x(0), started_charge_at_y(0),
     facing_sign_when_started_charge(1) {}
 
 

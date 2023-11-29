@@ -66,7 +66,7 @@ std::unique_ptr<WormBody> PhysicsSystem::spawn_worm(
     footSensorFixtureDef.density = 0;
     footSensorFixtureDef.shape = &footSensorBox;
     footSensorFixtureDef.isSensor = true; // Set as sensor to detect collisions without generating a response
-    footSensorFixtureDef.userData.pointer = reinterpret_cast<uintptr_t>(worm_model->get_foot_sensor()); // same user data
+    footSensorFixtureDef.userData.pointer = reinterpret_cast<uintptr_t>(worm_model->get_foot_sensor());
     fixtureDef.filter.categoryBits = WORM_CATEGORY_BIT;
     fixtureDef.filter.maskBits = GROUND_CATEGORY_BIT | WATER_CATEGORY_BIT;
     body->CreateFixture(&footSensorFixtureDef);
@@ -109,7 +109,7 @@ void PhysicsSystem::spawn_beam(BeamScenarioData beam) {
     float groundAngle = groundBody->GetAngle();
 
     if (std::abs(groundAngle) <= MAX_BEAM_WALKABLE_ANGLE) {
-        fixtureDef.friction = 0.8f;  // Friction for walking
+        fixtureDef.friction = 1;  // Friction for walking granades sliding
     } else {
         fixtureDef.friction = 0.005f; // Lower friction for sliding
     }
@@ -121,21 +121,25 @@ std::unique_ptr<ProjectileBody> PhysicsSystem::spawn_projectile(
     const std::unique_ptr<ProjectileInfo> &projectile_info,
     const std::shared_ptr<Projectile> &projectile
 ) {
+
     auto aim_vector = angle_to_normalized_vector(projectile_info->shot_angle);
-    bool is_facing_right = true;
-    if (projectile_info->facing_sign == -1) {
-        is_facing_right = false;
-        aim_vector.first *= -1.0f;  // Reverse the x-component for left-facing shot
-    }
     // Body def
     b2BodyDef bodyDef;
     bodyDef.type = b2_dynamicBody;
     bodyDef.bullet = true;
+    bodyDef.fixedRotation = false;
+    bool is_facing_right = true;
+
+    if (projectile_info->facing_sign == -1) {
+        is_facing_right = false;
+        aim_vector.first *= -1.0f;  // Reverse the x-component for left-facing shot
+    }
+
     b2Vec2 offset_from_worm(aim_vector.first * SHOT_OFFSET_FROM_WORM, aim_vector.second * SHOT_OFFSET_FROM_WORM);
     // Logger::log_position("A projectile spawned", projectile_info->origin_x + offset_from_worm.x,projectile_info->origin_y + offset_from_worm.y);
     bodyDef.position.Set(projectile_info->origin_x + offset_from_worm.x,
                          projectile_info->origin_y + offset_from_worm.y);
-    // bodyDef.linearDamping = 0.0f;
+
     b2Body *body = world.CreateBody(&bodyDef);
 
     // Shape for hitbox
@@ -146,6 +150,7 @@ std::unique_ptr<ProjectileBody> PhysicsSystem::spawn_projectile(
     b2FixtureDef fixtureDef;
     fixtureDef.shape = &dynamicCircle;
     fixtureDef.density = PROJECTILE_DENSITY;
+    fixtureDef.friction = 1;
     fixtureDef.restitution = 0;
     fixtureDef.userData.pointer = reinterpret_cast<uintptr_t>(projectile.get());
     fixtureDef.filter.categoryBits = PROJECTILE_CATEGORY_BIT;
@@ -153,11 +158,11 @@ std::unique_ptr<ProjectileBody> PhysicsSystem::spawn_projectile(
     body->CreateFixture(&fixtureDef);
 
     b2Vec2 initialForce(
-        aim_vector.first * projectile_info->power * SHOOT_POTENCY,
-        aim_vector.second * projectile_info->power * SHOOT_POTENCY
+        aim_vector.first * projectile_info->power,
+        aim_vector.second * projectile_info->power
     );
     body->ApplyLinearImpulse(initialForce, body->GetWorldCenter(), true);
-
+    body->SetAngularDamping(0.1f);
     return std::make_unique<ProjectileBody>(world, body, is_facing_right);
 }
 
@@ -165,12 +170,9 @@ std::pair<float, float> PhysicsSystem::angle_to_normalized_vector(float angle_de
     // Convert degrees to radians
     float angle_radians = angle_degrees * DEG_TO_RAD;
 
-    // Calculate the normalized vector components using trigonometry
     float x = std::cos(angle_radians);
     float y = std::sin(angle_radians);
-
-    // Return the result as a pair of floats
-    return std::make_pair(x, y);
+    return std::make_pair(std::abs(x), y);
 }
 
 void PhysicsSystem::spawn_water(const GameScenarioData &scenario_data) {

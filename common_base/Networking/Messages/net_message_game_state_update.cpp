@@ -1,19 +1,18 @@
 #include "net_message_game_state_update.h"
-
 NetMessageGameStateUpdate::NetMessageGameStateUpdate()
     : NetMessage(NET_MESSAGE_TYPE_UPDATE_STATE) {}
 
 NetMessageGameStateUpdate::NetMessageGameStateUpdate(
-    int active_client_id,
-    int active_entity_id,
+    int current_turn_client_id,
     int current_turn_worm_id,
+    int focused_entity_id,
     float wind_speed,
     float remaining_game_time,
     float remaining_turn_time
 ) : NetMessage(NET_MESSAGE_TYPE_UPDATE_STATE),
-    current_turn_client_id(active_client_id),
+    current_turn_client_id(current_turn_client_id),
     current_turn_worm_id(current_turn_worm_id),
-    focused_entity_id(active_entity_id),
+    focused_entity_id(focused_entity_id),
     wind_speed(wind_speed),
     remaining_game_time(remaining_game_time),
     remaining_turn_time(remaining_turn_time) {}
@@ -108,7 +107,6 @@ void NetMessageGameStateUpdate::pull_data_from(NetProtocolInterpreter &channel) 
         auto y = channel.read_float();
         auto spawned_facing_right = channel.read_bool();
         auto angle = channel.read_float();
-
         projectiles.emplace_back(entity_id, type, x, y, spawned_facing_right, angle);
     }
 
