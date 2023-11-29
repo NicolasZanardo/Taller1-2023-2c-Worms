@@ -18,7 +18,7 @@ void ProjectileEntity::update(ProjectileDto &new_values) {
     attributes.y = new_values.y;
     sprite->set_pos(attributes.x,attributes.y);
     sprite->image_flipped( attributes.spawned_facing_right);
-    sprite->set_angle(attributes.angle);
+    sprite->set_angle(new_values.angle);
 }
 
 float ProjectileEntity::get_x() {

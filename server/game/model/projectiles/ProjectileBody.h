@@ -7,6 +7,9 @@
 class ProjectileBody: public Body {
     bool spawned_facing_right;
     bool is_on_water;
+
+    void update_rotation();
+
 public:
     ProjectileBody(b2World& world, b2Body* body, bool is_facing_right);
 

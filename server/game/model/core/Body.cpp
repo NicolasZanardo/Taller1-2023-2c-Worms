@@ -1,6 +1,8 @@
 #include "Body.h"
 #include <stdexcept>
 
+const float RAD_TO_DEG = 180.0f / M_PI;
+
 Body::Body(b2World &world, b2Body *body, bool is_facing_right) :
     world(world), body(body), is_facing_right(is_facing_right) {}
 
@@ -20,8 +22,13 @@ float Body::Y() const {
 }
 
 float Body::Angle() const {
-    return body->GetPosition().y;
+    return body->GetAngle();
 }
+
+float Body::AngleInDeg() const {
+    return body->GetAngle() * RAD_TO_DEG;
+}
+
 b2Body *Body::B2Body() {
     return body;
 }

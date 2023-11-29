@@ -3,7 +3,7 @@
     ammo: 8
     max_damage: 50
     explosion_radius: 2
-    max_shoot_power: 16
+    max_shoot_power: 14
     default_projectile_countdown: -1
     projectile_radius: 0.3
     affected_by_wind: true
@@ -12,7 +12,7 @@
     ammo: 8
     max_damage: 50
     explosion_radius: 2
-    max_shoot_power: 12
+    max_shoot_power: 11
     default_projectile_countdown: -1
     projectile_radius: 0.3
     affected_by_wind: true
@@ -21,7 +21,7 @@
     ammo: 5
     max_damage: 40
     explosion_radius: 2
-    max_shoot_power: 6
+    max_shoot_power: 7
     default_projectile_countdown: 5000
     projectile_radius: 0.3
     affected_by_wind: true
