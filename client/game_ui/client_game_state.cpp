@@ -49,9 +49,9 @@ void ClientGameState::update(const std::shared_ptr<ClientGameStateDTO> &game_sta
     turn_remaining_time = game_state_dto->remaining_turn_time;
 
     // Worms that die
-    if (game_state_dto->worms.size() < worms.size()) {
-        transfer_death_worms(game_state_dto->worms);
-    }
+    //if (game_state_dto->worms.size() < worms.size()) {
+    //    transfer_death_worms(game_state_dto->worms);
+    //}
 
     for (auto &worm_dto: game_state_dto->worms) {
         auto &it = worms[worm_dto.entity_id];
