@@ -5,7 +5,7 @@ Health::Health(float initial_health): actual_health(initial_health), is_alive(ac
 void Health::on_update() {}
 
 bool Health::IsAlive() const {
-    return is_alive;
+    return is_alive; // TODO Just use <= 0
 }
 
 float Health::Amount() const {
@@ -25,4 +25,5 @@ void Health::receive_damage(float damage) {
 
 void Health::die() {
     actual_health = 0;
+    is_alive = false; // TODO
 }

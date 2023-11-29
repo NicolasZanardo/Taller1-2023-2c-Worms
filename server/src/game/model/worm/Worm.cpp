@@ -1,10 +1,6 @@
 #include "Worm.h"
-#include "../weapons/chargeable_weapons/Bazooka.h"
-#include "../weapons/chargeable_weapons/Mortar.h"
 #include "../../core/constants/CollideableTags.h"
-#include "../weapons/chargeable_weapons/GreenGrenade.h"
 #include "../weapons/WeaponFactory.h"
-#include "../../core/Logger.h"
 #include <iostream>
 
 Worm::Worm(size_t id, WormCfg &worm_cfg, Config<WeaponCfg>& weapons_cfg) :
