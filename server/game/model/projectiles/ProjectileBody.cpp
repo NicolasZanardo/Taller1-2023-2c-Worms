@@ -1,5 +1,6 @@
 #include "ProjectileBody.h"
 #include "BuoyancyForce.h"
+#include <cmath>
 
 ProjectileBody::ProjectileBody(
     b2World &world,
