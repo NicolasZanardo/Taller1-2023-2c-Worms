@@ -6,7 +6,7 @@
 
 class ChargeableWeapon : public Weapon {
     const float MAX_POWER = 1;
-    const float CHARGING_DURATION = 2000;
+    const float CHARGING_DURATION = 1500;
     float charged_power;
     bool is_charging;
     float started_charge_at_x;

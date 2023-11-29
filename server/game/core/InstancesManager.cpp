@@ -71,7 +71,7 @@ std::shared_ptr<Worm> InstancesManager::get_worm(int id) {
 // Projectiles
 void InstancesManager::instantiate_projectiles(std::unique_ptr<CShot> shot) {
     for (const auto &projectile_info: shot->Projectiles()) {
-        auto projectile = ProjectileFactory::create_projectile(total_entities_created++, projectile_info);
+        auto projectile = ProjectileFactory::create_projectile(++total_entities_created, projectile_info);
         projectile->body = physics_system.spawn_projectile(projectile_info, projectile);
         projectiles_to_add.push_back(projectile);
     }
@@ -83,7 +83,7 @@ void InstancesManager::instantiate_fragment_projectile(
     float y,
     b2Vec2 speed
 ) {
-    auto projectile = ProjectileFactory::create_fragment_projectile(total_entities_created++, info);
+    auto projectile = ProjectileFactory::create_fragment_projectile(++total_entities_created, info);
     projectile->body = physics_system.spawn_fragment_projectile(
         projectile, info, x, y, speed
     );

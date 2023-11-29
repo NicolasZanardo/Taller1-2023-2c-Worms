@@ -22,6 +22,8 @@ public:
 
     float Angle() const;
 
+    float AngleInDeg() const;
+
     void receive(Force &force);
 
     bool is_moving_faster_than(const std::shared_ptr<Body> &other);
