@@ -93,7 +93,6 @@ void GameNetMessageBehaviour::run(NetMessageGameAction *msg) {
     }
 }
 
-
 void GameNetMessageBehaviour::run(NetMessagePlayerChangedWeapon *msg) {
     if (!game.is_client_turn(msg->client_id)) {
         return;

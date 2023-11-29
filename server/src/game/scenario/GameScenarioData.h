@@ -5,8 +5,7 @@
 #include "WormScenarioData.h"
 #include "BeamScenarioData.h"
 
-
-struct GameScenarioData { // TODO Have in server package
+struct GameScenarioData {
     float room_width;
     float room_height;
     float water_height_level;

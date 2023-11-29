@@ -128,14 +128,15 @@ void GameInstance::assign_worms_to_clients(const std::list<Client *> &clients) {
 }
 
 void GameInstance::remove_from_clients_worms_map(size_t worm_id) {
-    for (auto &[client_id, worms]: clientsWorms) {
-
-        auto it = std::remove_if(worms.begin(), worms.end(),
-                                 [worm_id](const auto &worm) {
-                                     return worm->Id() == worm_id;
-                                 }
-        );
-        worms.erase(it, worms.end());
+    for (auto &[client_id, worms] : clientsWorms) {
+        if (!worms.empty()) {
+            auto it = std::remove_if(worms.begin(), worms.end(),
+                                     [worm_id](const auto &worm) {
+                                         return worm->Id() == worm_id;
+                                     }
+            );
+            worms.erase(it, worms.end());
+        }
     }
 }
 

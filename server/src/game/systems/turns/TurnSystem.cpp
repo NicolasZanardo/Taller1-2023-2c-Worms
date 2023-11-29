@@ -52,7 +52,7 @@ void TurnSystem::update(
 // Returns true if the step ended the actual turn, false otherwise
 bool TurnSystem::step_turn_time(const int it, const std::shared_ptr<Worm> &active_worm) {
     turn_time_left -= it * rate;
-    // std::cout << "Turn time left: " << turn_time_left << std::endl;
+    std::cout << "Turn time left: " << turn_time_left << std::endl;
     if (turn_time_left <= 0) {
         end_actual_turn(active_worm);
         return true;
@@ -79,9 +79,14 @@ void TurnSystem::advance_to_next_turn() {
     state = TurnState::TURN_TIME;
     turn_time_left = TURN_DURATION;
 
+    if (clients_ids_to_worms_ids_iterator.empty()) {
+        current_client_id = -1;
+        current_worm_id = -1;
+        return;
+    }
+
     // Find the iterator for the current client
     auto currentClientIterator = clients_ids_to_worms_ids_iterator.find(current_client_id);
-
     // If the current client was not found or it was the last client, reset to the first client
     if (currentClientIterator == clients_ids_to_worms_ids_iterator.end() ||
         std::next(currentClientIterator) == clients_ids_to_worms_ids_iterator.end()) {
@@ -90,12 +95,19 @@ void TurnSystem::advance_to_next_turn() {
         // Otherwise, move to the next client
         currentClientIterator++;
     }
+    // Check if the iterator is not equal to end() before dereferencing it
+    //    if (currentClientIterator != clients_ids_to_worms_ids_iterator.end()) {
 
     // Update currentClientId to the next client
     current_client_id = currentClientIterator->first;
 
     // Update currentWormId to the next worm from that client
     current_worm_id = currentClientIterator->second.advance_to_next_worm_id();
+
+    //else {
+    // current_client_id = -1;
+    // current_worm_id = -1;
+   // }
 }
 
 void TurnSystem::add_player(int client_id, const std::list<int> &worm_ids_from_client) {

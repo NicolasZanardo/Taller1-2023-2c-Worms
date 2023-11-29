@@ -3,7 +3,7 @@
 GameEngineInstance::GameEngineInstance(
     float xGravity,
     float yGravity,
-    const GameScenarioData &scenario, // TODO Game config struct
+    const GameScenarioData &scenario,
     const std::list<Client *> &clients
 ) : rate(60),
     gameClients(clients),
@@ -39,7 +39,7 @@ void GameEngineInstance::run() {
         rest = rate - std::ceil(diff.count());
 
         if (rest < 0) {
-            fprintf(stderr, ">> Ciclo principal: pérdida de frame/s.\n");
+            // fprintf(stderr, ">> Ciclo principal: pérdida de frame/s.\n");
             behind = -rest;
             // lost = rate + (behind - behind % rate);
             rest = rate - behind % rate;
@@ -47,8 +47,6 @@ void GameEngineInstance::run() {
             t1 += std::chrono::milliseconds(lost);
             it += std::floor(lost / rate);
         }
-
-        // fprintf(stderr, "ENGINE: Sleeping for %i ms.\n", rest);
 
         std::this_thread::sleep_for(std::chrono::milliseconds(rest));
         t1 += std::chrono::milliseconds(rate);

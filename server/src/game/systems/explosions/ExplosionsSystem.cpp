@@ -28,7 +28,7 @@ void ExplosionsSystem::instantiate_individual_fragment(
     const std::unique_ptr<FragmentsInfo>& info,
     const std::unique_ptr<CExplosion>& explosion
     ) {
-    float fragmentAngle = (2 * b2_pi * actual / info->amount); // * DEG_TO_RAD;
+    float fragmentAngle = (2 * b2_pi * actual / info->amount);
     float fragment_speed_magnitude = explosion->max_damage * FRAGMENTS_EXPLOSION_CONSTANT;
     b2Vec2 fragment_speed(
         fragment_speed_magnitude * std::cos(fragmentAngle),

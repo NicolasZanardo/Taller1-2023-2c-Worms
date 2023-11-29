@@ -15,7 +15,6 @@ void InGameClients::send(size_t clientId, std::shared_ptr<NetMessage> msg) {
 }
 
 void InGameClients::sendAll(std::shared_ptr<NetMessage> msg) {
-    // Iterate and send it to every client
     for (const auto &[id, client]: clients) {
         client->communicate(msg);
     }
