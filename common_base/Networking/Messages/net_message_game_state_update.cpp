@@ -6,25 +6,17 @@ NetMessageGameStateUpdate::NetMessageGameStateUpdate()
 NetMessageGameStateUpdate::NetMessageGameStateUpdate(
     int active_client_id,
     int active_entity_id,
+    int current_turn_worm_id,
     float wind_speed,
     float remaining_game_time,
     float remaining_turn_time
 ) : NetMessage(NET_MESSAGE_TYPE_UPDATE_STATE),
     current_turn_client_id(active_client_id),
+    current_turn_worm_id(current_turn_worm_id),
     focused_entity_id(active_entity_id),
     wind_speed(wind_speed),
     remaining_game_time(remaining_game_time),
     remaining_turn_time(remaining_turn_time) {}
-
-NetMessageGameStateUpdate::NetMessageGameStateUpdate(GameState state) :
-    NetMessage(NET_MESSAGE_TYPE_UPDATE_STATE),
-    current_turn_client_id(state.current_turn_client_id),
-    current_turn_worm_id(state.current_turn_worm_id),
-    focused_entity_id(state.focused_entity_id),
-    wind_speed(state.wind_speed),
-    remaining_game_time(state.remaining_game_time),
-    remaining_turn_time(state.remaining_turn_time) {}
-
 
 void NetMessageGameStateUpdate::add(const WormDto &worm) {
     worms.push_back(worm);

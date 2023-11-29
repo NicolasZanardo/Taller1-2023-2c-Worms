@@ -2,8 +2,8 @@
 #include <stdexcept>
 #include <string>
 
-#include "src/main/server.h"
-#include "src/dumb_client.h"
+#include "server.h"
+#include "dumb_client.h"
 
 
 #define SERVER_CMND_LINE_ARGS 1
