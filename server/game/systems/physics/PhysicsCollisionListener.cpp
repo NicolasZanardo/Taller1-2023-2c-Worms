@@ -5,7 +5,6 @@
 #include "BWaterWProjectile.h"
 #include "BWaterWWorm.h"
 #include "EWormFootSensorWGround.h"
-#include <iostream>
 
 void PhysicsCollisionListener::BeginContact(b2Contact *contact) {
 

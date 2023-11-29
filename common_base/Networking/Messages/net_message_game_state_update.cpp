@@ -63,6 +63,8 @@ void NetMessageGameStateUpdate::push_data_into(NetBuffer &container) {
         container.push_byte(static_cast<uint8_t>(projectiles[i].type));
         container.push_float(projectiles[i].x);
         container.push_float(projectiles[i].y);
+        container.push_bool(projectiles[i].spawned_facing_right);
+        container.push_float(projectiles[i].angle);
     }
 
     container.push_short(events.size());
@@ -98,14 +100,16 @@ void NetMessageGameStateUpdate::pull_data_from(NetProtocolInterpreter &channel) 
         worms.emplace_back(client_id, entity_id, x, y, angle, is_facing_right, life, state, weapon_hold, aiming_angle);
     }
 
-    short bullets_size = channel.read_short();
-    for (int i = 0; i < bullets_size; i++) {
+    short projectiles_size = channel.read_short();
+    for (int i = 0; i < projectiles_size; i++) {
         auto entity_id = channel.read_int();
         auto type = static_cast<ProjectileTypeDto>(channel.read_byte());
         auto x = channel.read_float();
         auto y = channel.read_float();
+        auto spawned_facing_right = channel.read_bool();
+        auto angle = channel.read_float();
 
-        projectiles.emplace_back(entity_id, type, x, y);
+        projectiles.emplace_back(entity_id, type, x, y, spawned_facing_right, angle);
     }
 
     short events_size = channel.read_short();

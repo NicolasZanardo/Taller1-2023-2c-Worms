@@ -4,10 +4,9 @@
 #include <iostream>
 
 WormBody::WormBody(b2World&  world, b2Body* body) :
-        Body(world, body),
+        Body(world, body, true),
         state(State::IDLE),
         is_moving(false),
-        is_facing_right(true),
         is_on_water(false),
         is_on_ground(false) {};
 

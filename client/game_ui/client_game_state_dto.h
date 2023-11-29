@@ -4,7 +4,7 @@
 #include <vector>
 #include "Game/wormDto.h"
 #include "Game/beamDto.h"
-#include "Game/bulletDto.h"
+#include "Game/ProjectileDto.h"
 #include "Game/eventDto.h"
 
 class ClientGameStateDTO {

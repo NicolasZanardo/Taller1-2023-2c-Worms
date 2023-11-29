@@ -7,7 +7,7 @@ ProjectileEntity::ProjectileEntity(GameDisplay &display, ProjectileDto &values) 
         PROJECTILE_RADIUS * 2,
         PROJECTILE_RADIUS * 2
         )
-    ), attributes(values.entity_id, values.type, values.x, values.y)
+    ), attributes(values.entity_id, values.type, values.x, values.y, values.spawned_facing_right, values.angle)
     { }
 
 void ProjectileEntity::update(ProjectileDto &new_values) {
@@ -17,8 +17,8 @@ void ProjectileEntity::update(ProjectileDto &new_values) {
     attributes.x = new_values.x;
     attributes.y = new_values.y;
     sprite->set_pos(attributes.x,attributes.y);
-    sprite->image_flipped( false); // TODO VIA NETWORK
-    sprite->set_angle(0); // TODO Projectile rotation;
+    sprite->image_flipped( attributes.spawned_facing_right);
+    sprite->set_angle(attributes.angle);
 }
 
 float ProjectileEntity::get_x() {
