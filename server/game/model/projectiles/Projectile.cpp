@@ -1,6 +1,5 @@
 #include "Projectile.h"
 #include "CollideableTags.h"
-#include <iostream>
 
 Projectile::Projectile(size_t id, const std::unique_ptr<ProjectileInfo> &info) :
     Collidable(PROJECTILE_TAG),
