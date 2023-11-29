@@ -113,7 +113,6 @@ void NetMessageGameStateUpdate::pull_data_from(NetProtocolInterpreter &channel) 
         auto x = channel.read_float();
         auto y = channel.read_float();
 
-
         projectiles.emplace_back(entity_id, type, x, y);
     }
 
