@@ -1,0 +1,14 @@
+id: 1
+name: "Basic"
+height: 40
+width: 80
+water_level: 12
+
+beams:
+  - { x: 23, y: 13, angle: 0, type: "large" }
+  - { x: 29, y: 13, angle: 15, type: "short" }
+  - { x: 33, y: 13.4, angle: 32, type: "short" }
+
+worms:
+  - { x: 25.0, y: 18.0 }
+  - { x: 30.0, y: 18.0 }
