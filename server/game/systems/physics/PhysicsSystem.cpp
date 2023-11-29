@@ -122,13 +122,14 @@ std::unique_ptr<ProjectileBody> PhysicsSystem::spawn_projectile(
     const std::shared_ptr<Projectile> &projectile
 ) {
     auto aim_vector = angle_to_normalized_vector(projectile_info->shot_angle);
+    bool is_facing_right = true;
     if (projectile_info->facing_sign == -1) {
+        is_facing_right = false;
         aim_vector.first *= -1.0f;  // Reverse the x-component for left-facing shot
     }
     // Body def
     b2BodyDef bodyDef;
     bodyDef.type = b2_dynamicBody;
-    bodyDef.fixedRotation = true;
     bodyDef.bullet = true;
     b2Vec2 offset_from_worm(aim_vector.first * SHOT_OFFSET_FROM_WORM, aim_vector.second * SHOT_OFFSET_FROM_WORM);
     // Logger::log_position("A projectile spawned", projectile_info->origin_x + offset_from_worm.x,projectile_info->origin_y + offset_from_worm.y);
@@ -157,7 +158,7 @@ std::unique_ptr<ProjectileBody> PhysicsSystem::spawn_projectile(
     );
     body->ApplyLinearImpulse(initialForce, body->GetWorldCenter(), true);
 
-    return std::make_unique<ProjectileBody>(world, body);
+    return std::make_unique<ProjectileBody>(world, body, is_facing_right);
 }
 
 std::pair<float, float> PhysicsSystem::angle_to_normalized_vector(float angle_degrees) {
@@ -206,7 +207,6 @@ PhysicsSystem::spawn_fragment_projectile(
     // Body def
     b2BodyDef bodyDef;
     bodyDef.type = b2_dynamicBody;
-    bodyDef.fixedRotation = true;
     bodyDef.bullet = true;
     // Logger::log_position("A projectile spawned", projectile_info->origin_x + offset_from_worm.x,projectile_info->origin_y + offset_from_worm.y);
     bodyDef.position.Set(x,y);
@@ -226,10 +226,12 @@ PhysicsSystem::spawn_fragment_projectile(
     fixtureDef.filter.categoryBits = PROJECTILE_CATEGORY_BIT;
     fixtureDef.filter.maskBits = GROUND_CATEGORY_BIT | WORM_CATEGORY_BIT | WATER_CATEGORY_BIT;
     body->CreateFixture(&fixtureDef);
+    body->ApplyLinearImpulse(speed, body->GetWorldCenter(), true);
+    bool is_facing_right = true;
+    if (speed.x < 0) {
+        is_facing_right = false;
+    }
 
-    b2Vec2 initialForce(speed);
-    body->ApplyLinearImpulse(initialForce, body->GetWorldCenter(), true);
-
-    return std::make_unique<ProjectileBody>(world, body);
+    return std::make_unique<ProjectileBody>(world, body, is_facing_right);
 }
 
