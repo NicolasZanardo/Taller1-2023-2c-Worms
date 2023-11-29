@@ -23,7 +23,7 @@ class WormBody: public Body {
     const float backwards_jump_height = 18;
     const float backwards_jump_reach = 2;
 
-    const float epsilon_y = 0.1f;
+    const float epsilon_y = 1.5f;
 
     bool is_moving;
     bool is_on_water;

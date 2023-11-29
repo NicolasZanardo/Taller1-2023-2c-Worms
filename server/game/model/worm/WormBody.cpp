@@ -104,7 +104,7 @@ void WormBody::on_update() {
     } else if (y_velocity < -epsilon_y) {
         state = State::FALLING;
     } else {
-        if (body->GetLinearVelocity().x == 0.0f) {
+        if (abs(body->GetLinearVelocity().x) < epsilon_y) {
             state = State::IDLE;
         } else {
             state = State::MOVING;
