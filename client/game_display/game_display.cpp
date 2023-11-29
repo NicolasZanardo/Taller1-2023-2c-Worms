@@ -15,6 +15,7 @@ GameDisplay::GameDisplay(Queue<std::shared_ptr<Command>> &command_queue, int fps
 {
     // Scenario
     texture_manager.add_texture("beam_large", "resources/sprites/scenario/beam_large.png");
+    texture_manager.add_texture("fondo", "resources/sprites/scenario/fondo.png");
     texture_manager.add_texture("underwater_film", "resources/sprites/scenario/underwater_film.png");
     texture_manager.add_texture("water_line", "resources/sprites/scenario/water_line.png", 128,24,0,0,0,SpriteAnimationType::LOOP, 14);
 
@@ -27,7 +28,7 @@ GameDisplay::GameDisplay(Queue<std::shared_ptr<Command>> &command_queue, int fps
     // Worms
     texture_manager.add_texture("wwalk"           , "resources/sprites/worm/wwalk.png"          ,w,h,xoff,yoff-2 ,sep, SpriteAnimationType::LOOP   , 28);
     texture_manager.add_texture("wfall"           , "resources/sprites/worm/wfall.png"          ,w,h,xoff,yoff   ,sep, SpriteAnimationType::FREEZE , 28);
-    texture_manager.add_texture("wjumpu"          , "resources/sprites/worm/wjumpu.png"         ,w,h,xoff,yoff   ,sep, SpriteAnimationType::REVERSE, 28);
+    texture_manager.add_texture("wjumpu"          , "resources/sprites/worm/wjumpu.png"         ,w,h,xoff,yoff   ,sep, SpriteAnimationType::FREEZE , 28);
     texture_manager.add_texture("widle"           , "resources/sprites/worm/wwalk.png"          ,w,h,xoff,yoff-2 ,sep, SpriteAnimationType::NONE   , 28);
     texture_manager.add_texture("wdead"           , "resources/sprites/worm/grave1.png"         ,w,h,xoff,yoff-10,sep, SpriteAnimationType::REVERSE, 28);
     // Aiming
@@ -100,6 +101,10 @@ void GameDisplay::start_scenario(float width, float height, float water_level) {
     float gameW = camera.px_to_w(128);
     float gameH = camera.px_to_h(24);
 
+    GameSprite *background = new GameSprite(camera, *texture_manager.get("fondo"), width, height, 0.0);
+    background->set_pos(0, water_level + height / 2 - gameH/2);
+    images.emplace_back(background);
+
     for (float i = 0.0f; i < width; i += gameW) {
         GameSprite *sprite = new GameSprite(camera, *texture_manager.get("water_line"), gameW, gameH, 0.0);
         sprite->set_pos(i, water_level);
@@ -107,7 +112,7 @@ void GameDisplay::start_scenario(float width, float height, float water_level) {
     }
     GameSprite *layer = new GameSprite(camera, *texture_manager.get("underwater_film"), width, height-water_level-gameH, 0.0);
     layer->set_pos(0,water_level-gameH);
-    foreground.emplace_back(layer);
+    foreground.emplace_back(layer); 
 }
 
 GameSprite* GameDisplay::new_sprite(const std::string& spritekey, float width, float height, float angle) {
