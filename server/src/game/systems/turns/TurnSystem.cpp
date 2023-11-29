@@ -52,7 +52,7 @@ void TurnSystem::update(
 // Returns true if the step ended the actual turn, false otherwise
 bool TurnSystem::step_turn_time(const int it, const std::shared_ptr<Worm> &active_worm) {
     turn_time_left -= it * rate;
-    std::cout << "Turn time left: " << turn_time_left << std::endl;
+    // std::cout << "Turn time left: " << turn_time_left << std::endl;
     if (turn_time_left <= 0) {
         end_actual_turn(active_worm);
         return true;

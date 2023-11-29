@@ -6,29 +6,30 @@ GameEngineInstance::GameEngineInstance(
     const GameScenarioData &scenario,
     const std::list<Client *> &clients
 ) : rate(60),
-    gameClients(clients),
+    game_clients(clients),
     game(xGravity, yGravity, scenario, clients, rate),
-    gameQueue(1000),
-    netMessageBehaviour(gameClients, game),
+    game_queue(1000),
+    net_message_behaviour(game_clients, game),
     keep_executing(true) {
     switch_clients_game_queue(clients);
     initial_broadcast(scenario);
 }
 
 void GameEngineInstance::run() {
-    // Variables para controlar el frame-rate
     auto t1 = std::chrono::steady_clock::now();
     auto t2 = t1;
     std::chrono::duration<float, std::milli> diff;
     int rest = 0, behind = 0, lost = 0;
     int it = 1;
 
-    // Loop principal
     while (keep_executing) {
-        _process_actions();
-        game.update(it);
+        process_actions();
+        if (game.update(it)) {
+            keep_executing = false;
+            break;
+        }
         // _maintain_connections();
-        _broadcast_game_state_update();
+        broadcast_game_state_update();
         // _synchronize()
 
         // https://eldipa.github.io/book-of-gehn/articles/2019/10/23/Constant-Rate-Loop.html
@@ -53,26 +54,39 @@ void GameEngineInstance::run() {
         it += 1;
     }
 
-
-    // Terminamos las conexiones
-    // TODO game clients to lobby?
-    // gameQueue.close() ? or is it maneged by server
+    broadcast_game_ended();
+    // TODO clients back to lobby?
+    game_queue.close();
 }
 
 void GameEngineInstance::stop() {
     // TODO Clients back to WaitingLobbyx
 }
 
-// Init methods
+void GameEngineInstance::process_actions() {
+    std::shared_ptr<NetMessage> msg = nullptr;
+    while (game_queue.try_pop(msg)) {
+        msg->execute(net_message_behaviour);
+    }
+}
 
-void GameEngineInstance::initial_broadcast(const GameScenarioData &scenario) {
-    _broadcast_initial_game_state(scenario);
-    std::this_thread::sleep_for(std::chrono::seconds(1));
-    _broadcast_game_state_update();
+void GameEngineInstance::switch_clients_game_queue(std::list<Client *> clients) {
+    for (auto client: clients) {
+        client->switch_lobby(&game_queue);
+    }
 }
 
 
-void GameEngineInstance::_broadcast_initial_game_state(const GameScenarioData &scenario) {
+// Broadcasts
+
+void GameEngineInstance::initial_broadcast(const GameScenarioData &scenario) {
+    broadcast_initial_game_state(scenario);
+    std::this_thread::sleep_for(std::chrono::seconds(1));
+    broadcast_game_state_update();
+}
+
+
+void GameEngineInstance::broadcast_initial_game_state(const GameScenarioData &scenario) {
     auto message = new NetMessageInitialGameState(
         scenario.room_width,
         scenario.room_height,
@@ -80,52 +94,37 @@ void GameEngineInstance::_broadcast_initial_game_state(const GameScenarioData &s
     );
 
     for (auto item: scenario.beams) {
-        std::cout << "Beam x: " << item.x << " y: " << item.y << std::endl;
         message->add(item.toBeamDto());
-        std::cout << "BeamDto x: " << item.toBeamDto().x << " y: " << item.toBeamDto().y << std::endl;
     }
 
     for (const auto &[clientId, worms]: game.get_clients_worms()) {
         for (const auto &wrm: worms) {
-            std::cout << "Init Worm id: " << wrm->toWormDto(clientId).entity_id
-                      << " with client id: " << wrm->toWormDto(clientId).client_id << std::endl;
             message->add(wrm->toWormDto(clientId));
         }
     }
 
-    gameClients.sendAll(message->share());
+    game_clients.send_all(message->share());
 }
 
-void GameEngineInstance::switch_clients_game_queue(std::list<Client *> clients) {
-    for (auto client: clients) {
-        client->switch_lobby(&gameQueue);
-    }
-}
+void GameEngineInstance::broadcast_game_state_update() {
+    auto game_state_update_message = new NetMessageGameStateUpdate(game.get_current_state());
 
-// Loop methods
-
-void GameEngineInstance::_broadcast_game_state_update() {
-    auto gameStateUpdateMessage = new NetMessageGameStateUpdate(game.get_current_state());
-
-    for (const auto &[clientId, worms]: game.get_clients_worms()) {
+    for (const auto &[client_id, worms]: game.get_clients_worms()) {
         for (const auto& worm: worms) {
-            gameStateUpdateMessage->add(worm->toWormDto(clientId));
+            game_state_update_message->add(worm->toWormDto(client_id));
         }
     }
 
     for (const auto &projectile : game.get_projectiles()) {
-        gameStateUpdateMessage->add(projectile->to_dto());
+        game_state_update_message->add(projectile->to_dto());
     }
 
     // TODO ALSO ADD(&EventDtos)
 
-    gameClients.sendAll(gameStateUpdateMessage->share());
+    game_clients.send_all(game_state_update_message->share());
 }
 
-
-void GameEngineInstance::_process_actions() {
-    std::shared_ptr<NetMessage> msg = nullptr;
-    while (gameQueue.try_pop(msg)) {
-        msg->execute(netMessageBehaviour);
-    }
+void GameEngineInstance::broadcast_game_ended() {
+    auto end_game_message = new NetMessageGameEnded(game.get_winner_client_id());
+    game_clients.send_all(end_game_message->share());
 }

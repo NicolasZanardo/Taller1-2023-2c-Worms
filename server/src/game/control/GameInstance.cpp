@@ -11,7 +11,7 @@ GameInstance::GameInstance(
     world(b2Vec2(xGravity, yGravity)),
     physics_system(rate, world, scenarioData),
     instances_manager(physics_system, scenarioData, worms_cfg.front(), weapons_cfg),
-    clientsWorms(),
+    clients_worms(),
     turn_system(rate, turn_system_cfg.front()),
     updatables_system(rate),
     shot_system(instances_manager),
@@ -30,15 +30,15 @@ GameInstance::GameInstance(
 }
 
 
-void GameInstance::update(const int it) {
+bool GameInstance::update(const int it) {
     auto worms = instances_manager.get_worms();
     auto projectiles = instances_manager.get_projectiles();
-    /* if (worms.size() == 1) {
-     * Client (worms.cbegin()->first) won
-    } else if (worms.size() == 0) {
-        Tie
+
+    if (clients_worms.size() == 1) {
+        // return true;
+    } else if (clients_worms.empty()) {
+        // return true;
     }
-     */
 
     int current_worm_id = turn_system.get_current_worm_id();
     std::shared_ptr<Worm> current_turn_worm = nullptr;
@@ -51,6 +51,7 @@ void GameInstance::update(const int it) {
     explosions_system.update(projectiles);
     entity_focus_system.update(it, worms, current_turn_worm, projectiles);
     instances_manager.update();
+    return false;
 }
 
 bool GameInstance::is_client_turn(size_t id) {
@@ -68,8 +69,18 @@ GameState GameInstance::get_current_state() {
     };
 }
 
+int GameInstance::get_winner_client_id() {
+    if (clients_worms.size() == 1) {
+        return clients_worms.begin()->first; // Winner id
+    } else if (clients_worms.empty()) {
+        return 0; // Tie
+    } else {
+        return -1; // Game Ended by error
+    }
+}
+
 ClientsWorms GameInstance::get_clients_worms() {
-    return clientsWorms;
+    return clients_worms;
 }
 
 std::vector<std::shared_ptr<Projectile>> &GameInstance::get_projectiles() {
@@ -123,19 +134,31 @@ void GameInstance::assign_worms_to_clients(const std::list<Client *> &clients) {
         turn_system.add_player(clientId, wormIds);
 
         // assign Worm* to clients ids
-        clientsWorms[clientId] = std::move(assignedSubset);
+        clients_worms[clientId] = std::move(assignedSubset);
     }
 }
 
 void GameInstance::remove_from_clients_worms_map(size_t worm_id) {
-    for (auto &[client_id, worms] : clientsWorms) {
+    for (auto it = clients_worms.begin(); it != clients_worms.end();) {
+        auto &worms = it->second;
+
         if (!worms.empty()) {
-            auto it = std::remove_if(worms.begin(), worms.end(),
-                                     [worm_id](const auto &worm) {
-                                         return worm->Id() == worm_id;
-                                     }
+            auto removeIt = std::remove_if(worms.begin(), worms.end(),
+                                           [worm_id](const auto &worm) {
+                                               return worm->Id() == worm_id;
+                                           }
             );
-            worms.erase(it, worms.end());
+            worms.erase(removeIt, worms.end());
+
+            // Check if the vector is empty after removal, and erase the entry if it is
+            if (worms.empty()) {
+                it = clients_worms.erase(it);
+            } else {
+                ++it;
+            }
+        } else {
+            // Remove this entry
+            it = clients_worms.erase(it);
         }
     }
 }

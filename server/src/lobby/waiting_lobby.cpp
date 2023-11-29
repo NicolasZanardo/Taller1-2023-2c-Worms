@@ -124,3 +124,7 @@ void WaitingLobby::run(NetMessagePlayerChangedWeapon* msg) {
 void WaitingLobby::run(NetMessagePlayerChangedProjectileCountdown* msg) {
     cerr << "Error: received action in lobby..";
 }
+
+void WaitingLobby::run(NetMessageGameEnded* msg) {
+    cerr << "Error: received GameEnded in lobby..";
+}

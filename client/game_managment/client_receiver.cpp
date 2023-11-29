@@ -94,3 +94,7 @@ void ClientReceiver::run(NetMessagePlayerChangedProjectileCountdown* msg) {
     // Client shouldnt receive
     // cout << "action for worm id: " << msg->client_id << "\n"; //<< " height: " << msg->room_height << " amount of beams on map: " << msg->beams.size() << "\n";
 }
+
+void ClientReceiver::run(NetMessageGameEnded* msg) {
+    // TODO VICTORY/TIE/DEFEAT SCREEN flow
+}

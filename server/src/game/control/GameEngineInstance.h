@@ -21,23 +21,21 @@
 class GameEngineInstance : public Thread {
 private:
     int rate;
-    InGameClients gameClients;
+    InGameClients game_clients;
     GameInstance game;
-    NetQueue gameQueue;
-    GameNetMessageBehaviour netMessageBehaviour;
+    NetQueue game_queue;
+    GameNetMessageBehaviour net_message_behaviour;
     std::atomic_bool keep_executing;
 
     // Init methods
     void switch_clients_game_queue(std::list<Client *> clients);
     void initial_broadcast(const GameScenarioData &scenario);
 
-    void _broadcast_initial_game_state(const GameScenarioData &scenario);
+    void process_actions();
 
-    // Loop methods
-    void _process_actions();
-
-    void _broadcast_game_state_update();
-
+    void broadcast_initial_game_state(const GameScenarioData &scenario);
+    void broadcast_game_state_update();
+    void broadcast_game_ended();
 
 public:
     GameEngineInstance(

@@ -39,7 +39,7 @@ class GameInstance {
     b2World world;
     PhysicsSystem physics_system;
     InstancesManager instances_manager;
-    ClientsWorms clientsWorms;
+    ClientsWorms clients_worms;
     TurnSystem turn_system;
     UpdatablesSystem updatables_system;
     ShotSystem shot_system;
@@ -63,9 +63,8 @@ public:
 
     std::vector<std::shared_ptr<Projectile>>& get_projectiles();
     GameState get_current_state();
-
-
-    void update(const int it);
+    int get_winner_client_id();
+    bool update(const int it);
     bool is_client_turn(size_t id);
 
     // Actions

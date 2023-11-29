@@ -125,3 +125,8 @@ void DumbInterpreter::run(NetMessagePlayerChangedWeapon* msg) {
 void DumbInterpreter::run(NetMessagePlayerChangedProjectileCountdown * msg) {
     // Client shouldnt receive
 }
+
+void DumbInterpreter::run(NetMessageGameEnded * msg) {
+    // Client shouldnt receive
+}
+
