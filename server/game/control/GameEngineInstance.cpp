@@ -110,7 +110,15 @@ void GameEngineInstance::broadcast_initial_game_state(const GameScenarioData &sc
 }
 
 void GameEngineInstance::broadcast_game_state_update() {
-    auto msg = new NetMessageGameStateUpdate(game.get_current_state());
+    GameState state = game.get_current_state();
+    auto msg = new NetMessageGameStateUpdate(
+        state.current_turn_client_id,
+        state.current_turn_worm_id,
+        state.focused_entity_id,
+        state.wind_speed,
+        state.remaining_game_time,
+        state.remaining_turn_time
+        );
 
     for (const auto &[client_id, worms]: game.get_clients_worms()) {
         for (const auto& worm: worms) {

@@ -8,6 +8,7 @@
 #include "net_message_dependencies.h"
 #include "../../Game/ProjectileDto.h"
 
+
 class NetMessageGameStateUpdate : public NetMessage {
 public:
     int current_turn_client_id;
@@ -34,8 +35,8 @@ public:
     void add(const ProjectileDto& projectile);
     void add(const WorldEventDto& event);
 
-    virtual void push_data_into(NetBuffer& container) override;
-    virtual void pull_data_from(NetProtocolInterpreter& channel) override;
-    virtual void execute(NetMessageBehaviour& interpreter) override;
+    void push_data_into(NetBuffer& container) override;
+    void pull_data_from(NetProtocolInterpreter& channel) override;
+    void execute(NetMessageBehaviour& interpreter) override;
 };
 #endif
