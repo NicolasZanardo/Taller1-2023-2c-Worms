@@ -1,7 +1,8 @@
 #include "Body.h"
 #include <stdexcept>
 
-Body::Body(b2World &world, b2Body *body) : world(world), body(body) {}
+Body::Body(b2World &world, b2Body *body, bool is_facing_right) :
+    world(world), body(body), is_facing_right(is_facing_right) {}
 
 Body::~Body() {
     if (body) {
@@ -11,19 +12,16 @@ Body::~Body() {
 }
 
 float Body::X() const {
-    if (body == nullptr) {
-        throw std::runtime_error("Attempted to access X() on a detached body.");
-    }
     return body->GetPosition().x;
 }
 
 float Body::Y() const {
-    if (body == nullptr) {
-        throw std::runtime_error("Attempted to access Y() on a detached body.");
-    }
     return body->GetPosition().y;
 }
 
+float Body::Angle() const {
+    return body->GetPosition().y;
+}
 b2Body *Body::B2Body() {
     return body;
 }
@@ -40,5 +38,10 @@ bool Body::is_moving_faster_than(const std::shared_ptr<Body> &other) {
     float speed2 = velocity2.Length();
 
     return speed1 > speed2;
+}
+
+
+bool Body::facing_right() const {
+    return is_facing_right;
 }
 

@@ -5,13 +5,16 @@
 #include "Body.h"
 
 class ProjectileBody: public Body {
-    bool is_on_water = false;
+    bool spawned_facing_right;
+    bool is_on_water;
 public:
-    ProjectileBody(b2World& world, b2Body* body);
+    ProjectileBody(b2World& world, b2Body* body, bool is_facing_right);
 
     void sink();
 
     void on_update();
+
+    bool did_spawned_facing_right() const;
 
     ~ProjectileBody() = default;
 };

@@ -2,11 +2,10 @@
 #define COMMON_NET_MESSAGE_GAME_SATE_UPDATE_H_
 
 #include <vector>
-#include "../../Game/bulletDto.h"
 #include "../../Game/wormDto.h"
 #include "../../Game/eventDto.h"
-#include "net_message_dependencies.h"
 #include "../../Game/ProjectileDto.h"
+#include "net_message_dependencies.h"
 
 
 class NetMessageGameStateUpdate : public NetMessage {

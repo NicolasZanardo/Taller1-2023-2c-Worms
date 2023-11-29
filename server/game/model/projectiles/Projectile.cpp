@@ -32,12 +32,14 @@ Projectile::Projectile(size_t id, const std::unique_ptr<FragmentsInfo> &info) :
     body(nullptr) {}
 
 ProjectileDto Projectile::to_dto() const {
-    return ProjectileDto(
+    return {
         id,
         type,
         body->X(),
-        body->Y()
-    );
+        body->Y(),
+        body->did_spawned_facing_right(),
+        body->Angle()
+    };
 }
 
 float Projectile::X() const {
