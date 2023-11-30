@@ -3,7 +3,7 @@
 #include "constants.h"
 
 ClientGameState::ClientGameState(GameDisplay &display)
-    : display(display), turnDisplay(display.new_text("Es mi turno!", 400, 0, 30, TextAlign::center, TextLayer::UI)),
+    : display(display), turnDisplay(display.new_text("Es mi turno!", 400, 0, TextAlign::center, TextLayer::UI, TextType::title)),
       worms(), my_client_id(-1) {
     turnDisplay->hidden(true);
 }
@@ -48,11 +48,6 @@ void ClientGameState::update(const std::shared_ptr<ClientGameStateDTO> &game_sta
     game_remaining_time = game_state_dto->remaining_game_time;
     turn_remaining_time = game_state_dto->remaining_turn_time;
 
-    // Worms that die
-    //if (game_state_dto->worms.size() < worms.size()) {
-    //    transfer_death_worms(game_state_dto->worms);
-    //}
-
     for (auto &explosion: game_state_dto->explosions) {
         // auto image = display.new_sprite("wdead", WORM_SIZE, WORM_SIZE, 0);
         // image->set_pos(explosion.x, explosion.y);
@@ -94,30 +89,6 @@ void ClientGameState::focus_camera_on(int entity_id) {
         auto projectile_iter = projectiles.find(entity_id);
         if (projectile_iter != projectiles.end()) {
             display.camera.set_target(projectile_iter->second.get());
-        }
-    }
-}
-
-void ClientGameState::transfer_death_worms(std::vector<WormDto> updated_worms) {
-    auto it = worms.begin();
-    while (it != worms.end()) {
-        auto worm_id = it->first;
-        auto found = std::find_if(
-            updated_worms.begin(),
-            updated_worms.end(),
-            [worm_id](const auto &worm_dto) {
-                return worm_dto.entity_id == worm_id;
-            }
-        );
-
-        if (found == updated_worms.end()) {
-            // death_worms[wormId] = it->second;
-            auto worm_entity = it->second;
-            auto image = display.new_sprite("wdead", WORM_SIZE, WORM_SIZE, 0);
-            image->set_pos(worm_entity->get_x(), worm_entity->get_y());
-            it = worms.erase(it);
-        } else {
-            ++it;
         }
     }
 }

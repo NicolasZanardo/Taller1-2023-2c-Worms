@@ -6,13 +6,11 @@ add_executable (client_app
     client.cpp client.h
     # dumb_simple_client/dumb_client.cpp dumb_simple_client/dumb_client.h
 
-    game_display/game_sprite_manager.h game_display/game_sprite_manager.cpp
+    game_display/game_resources_manager.h game_display/game_resources_manager.cpp
     game_display/game_clock.h game_display/game_clock.cpp
     game_display/game_display.h game_display/game_display.cpp
         
-    game_display/worm/game_worm_entity.h game_display/worm/game_worm_entity.cpp
-    game_display/worm/worm_anim_key_mapper.h game_display/worm/worm_anim_key_mapper.cpp
-        game_display/worm/worm_anim_key.h
+    game_display/game_worm_entity.h game_display/game_worm_entity.cpp
 
     game_display/projectiles/game_projectile_entity.h game_display/projectiles/game_projectile_entity.cpp
     game_display/projectiles/projectile_sprite_key_mapper.h game_display/projectiles/projectile_sprite_key_mapper.cpp
@@ -34,15 +32,15 @@ add_executable (client_app
         game_managment/commands/ChangeProjectileCountDownCommand.h game_managment/commands/ChangeProjectileCountDownCommand.cpp
         game_managment/commands/GameActionCommand.h game_managment/commands/GameActionCommand.cpp
     #game_ui/animation.cpp game_ui/animation.h
-    game_ui/client_game_state.cpp game_ui/client_game_state.h
-    game_ui/game_loop.cpp game_ui/game_loop.h
-    game_ui/ui_utils.h game_ui/ui_utils.cpp
+    game/client_game_state.cpp game/client_game_state.h
+    game/game_loop.cpp game/game_loop.h
+    game/ui_utils.h game/ui_utils.cpp
 )
 
 target_include_directories(client_app PUBLIC
     "${CMAKE_CURRENT_SOURCE_DIR}/"
     "${CMAKE_CURRENT_SOURCE_DIR}/game_managment"
-    "${CMAKE_CURRENT_SOURCE_DIR}/game_ui"
+    "${CMAKE_CURRENT_SOURCE_DIR}/game"
     "${CMAKE_CURRENT_SOURCE_DIR}/game_display"
     "${CMAKE_CURRENT_SOURCE_DIR}/game_display/worm"
     "${CMAKE_CURRENT_SOURCE_DIR}/game_display/projectiles"

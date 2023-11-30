@@ -70,9 +70,9 @@ void GameSprite::render(SDL2pp::Renderer& renderer, float delta_time) {
         renderer.Copy(info.texture, info.image_frame(anim_progress), transform, 0.0, offset, flip);
     else renderer.Copy(info.texture, info.image_frame(anim_progress), transform, normalize_angle(-angle, angle_min, angle_max), offset, flip);
 
-    renderer.SetDrawColor(SDL2pp::Color{255,255,255,255});
-    renderer.DrawRect(transform);
-    renderer.SetDrawColor(SDL2pp::Color{0,0,0,0});
+    //renderer.SetDrawColor(SDL2pp::Color{255,255,255,255});
+    //renderer.DrawRect(transform);
+    //renderer.SetDrawColor(SDL2pp::Color{0,0,0,0});
 }
 
 void GameSprite::update_animation(float delta_time) {

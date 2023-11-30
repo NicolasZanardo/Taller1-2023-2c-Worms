@@ -6,7 +6,6 @@
 #include "game_display.h"
 #include "game_displayable.h"
 #include "game_camera.h"
-#include "worm_anim_key.h"
 #include "game_sprite.h"
 #include "game_text_display.h"
 #include "game_worm_animation_set.h"

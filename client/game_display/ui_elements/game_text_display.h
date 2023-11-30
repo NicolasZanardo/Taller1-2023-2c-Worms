@@ -17,15 +17,15 @@ class GameTextDisplay : public Displayable {
     SDL2pp::Rect transform;
     float x,y;
     bool absolute;
-    std::unique_ptr<SDL2pp::Texture> texture;
     bool is_hidden;
     TextAlign align;
-    SDL2pp::Font font;
+    SDL2pp::Font* font;
+    SDL2pp::Texture* texture;
     SDL2pp::Surface surfaceMessage;
 
     public:
     ~GameTextDisplay() override;
-    explicit GameTextDisplay(GameCamera& cam, float x, float y, int fnt_size, TextAlign align, TextLayer layer, const std::string& text);
+    explicit GameTextDisplay(GameCamera& cam, float x, float y, SDL2pp::Font* font, TextAlign align, TextLayer layer, const std::string& text);
 
     void update(const std::string& newval);
     void hidden(bool is_hidden);

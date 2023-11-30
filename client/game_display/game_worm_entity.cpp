@@ -1,6 +1,5 @@
 #include "game_worm_entity.h"
 #include "constants.h"
-#include "worm_anim_key_mapper.h"
 
 WormEntity::WormEntity(GameDisplay& display, WormDto& values) :
     attributes(
@@ -13,8 +12,10 @@ WormEntity::WormEntity(GameDisplay& display, WormDto& values) :
     , is_active(true)
     , name(display.new_text(
         std::to_string(values.life), 
-        values.x, values.y + 1, 12,
-        TextAlign::center, TextLayer::ingame
+        values.x, values.y + 1,
+        TextAlign::center, 
+        TextLayer::ingame,
+        TextType::gametext
     ))
     { }
 

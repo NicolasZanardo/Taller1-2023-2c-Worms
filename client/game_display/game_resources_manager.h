@@ -7,13 +7,14 @@
 #include <SDL2pp/SDL2pp.hh>
 #include "game_sprite_info.h"
 
-class GameSpriteManager {
+enum TextType { title, gametext };
+class ResourceManager {
     SDL2pp::Renderer& renderer;
     std::map<std::string, GameSpriteInfo*> textures;
-
+    std::map<TextType, SDL2pp::Font*> fonts;
     public:
-    explicit GameSpriteManager(SDL2pp::Renderer& renderer);
-    ~GameSpriteManager();
+    explicit ResourceManager(SDL2pp::Renderer& renderer);
+    ~ResourceManager();
     
     void add_texture(const std::string keyname, const std::string file_path);
     void add_texture(
@@ -31,6 +32,7 @@ class GameSpriteManager {
     );
 
     
-    GameSpriteInfo* get(const std::string idx);
+    GameSpriteInfo* get_sprite(const std::string idx);
+    SDL2pp::Font* get_font(TextType type);
 };
 #endif
