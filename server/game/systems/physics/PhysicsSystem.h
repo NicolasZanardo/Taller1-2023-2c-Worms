@@ -11,6 +11,7 @@
 #include "Projectile.h"
 #include "ScenarioBeams.h"
 #include "ScenarioWater.h"
+#include "ScenarioBoundaries.h"
 
 
 class PhysicsSystem {
@@ -43,6 +44,7 @@ public:
     static const short GROUND_CATEGORY_BIT = 4;
     static const short PROJECTILE_CATEGORY_BIT = 8;
     static const short WATER_CATEGORY_BIT = 16;
+    static const short BOUNDARY_CATEGORY_BIT = 32;
 
 private:
     const float timeStep;
@@ -52,6 +54,7 @@ private:
 
     ScenarioBeams beams;
     ScenarioWater water;
+    ScenarioBoundaries boundaries;
     PhysicsCollisionListener contactListener;
 
     void populate_beams(const GameScenarioData &map);
@@ -59,6 +62,10 @@ private:
     void spawn_beam(BeamScenarioData beam);
 
     void spawn_water(const GameScenarioData & scenario_data);
+
+    void spawn_boundaries(const GameScenarioData & scenario_data);
+
+    static void set_fixture_filter(b2Fixture* fixture, uint16 categoryBits, uint16 maskBits);
 
     std::pair<float, float> angle_to_normalized_vector(float angleDegrees);
 

@@ -4,7 +4,6 @@
 Projectile::Projectile(size_t id, const std::unique_ptr<ProjectileInfo> &info) :
     Collidable(PROJECTILE_TAG),
     Instance(id),
-    life_time(MAX_LIFE_TIME),
     type(info->projectile_type),
     exploded(false),
     is_on_water(false),
@@ -19,7 +18,6 @@ Projectile::Projectile(size_t id, const std::unique_ptr<ProjectileInfo> &info) :
 Projectile::Projectile(size_t id, const std::unique_ptr<FragmentsInfo> &info) :
     Collidable(PROJECTILE_TAG),
     Instance(id),
-    life_time(MEDIUM_LIFE_TIME),
     type(info->projectile_type),
     exploded(false),
     is_on_water(false),
@@ -61,11 +59,6 @@ void Projectile::receive(Force &force) const {
 }
 
 void Projectile::update(const int it, const int rate) {
-    life_time -= it * rate;
-    if (life_time <= 0) {
-        explode(X(),Y());
-        return;
-    }
     if (is_on_water) {
         on_water_time_life -= it * rate;
         if (on_water_time_life <= 0) {

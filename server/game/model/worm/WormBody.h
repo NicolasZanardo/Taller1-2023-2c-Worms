@@ -16,12 +16,12 @@ class WormBody: public Body {
     };
 
     State state;
-    // TODO YAML
-    const float speed = 5.0f;
-    const float forward_jump_height = 12;
-    const float forward_jump_reach = 5;
-    const float backwards_jump_height = 18;
-    const float backwards_jump_reach = 2;
+
+    const float speed ;
+    const float forward_jump_height;
+    const float forward_jump_reach;
+    const float backwards_jump_height;
+    const float backwards_jump_reach;
 
     const float epsilon_y = 1.5f;
 
@@ -33,7 +33,7 @@ class WormBody: public Body {
 
 public:
 
-    WormBody(b2World&  world, b2Body* body);
+    WormBody(b2World&  world, b2Body* body, WormCfg &worm_cfg);
 
     bool facing_right() const;
     char facing_direction_sign() const;

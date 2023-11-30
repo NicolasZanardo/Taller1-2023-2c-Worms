@@ -109,6 +109,8 @@ add_executable(
     game/model/collidables/ScenarioWater.cpp
     game/model/collidables/ScenarioBeams.h
     game/model/collidables/ScenarioBeams.cpp
+    game/model/collidables/ScenarioBoundaries.h
+    game/model/collidables/ScenarioBoundaries.cpp
 
     game/control/GameNetMessageBehaviour.h
     game/control/GameNetMessageBehaviour.cpp
