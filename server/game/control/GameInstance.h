@@ -58,12 +58,14 @@ public:
             int rate
     );
 
+    GameState get_current_state();
     ClientsWorms get_clients_worms();
+    std::vector<std::shared_ptr<Projectile>>& get_projectiles();
+    std::vector<ExplosionDto>& get_explosions();
+    int get_winner_client_id();
+
     void remove_from_clients_worms_map(size_t worm_id);
 
-    std::vector<std::shared_ptr<Projectile>>& get_projectiles();
-    GameState get_current_state();
-    int get_winner_client_id();
     bool update(const int it);
     bool is_client_turn(size_t id);
 

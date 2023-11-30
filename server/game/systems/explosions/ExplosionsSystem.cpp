@@ -1,13 +1,13 @@
 #include "ExplosionsSystem.h"
 #include "OnExplosionWormsQuery.h"
 
-
 ExplosionsSystem::ExplosionsSystem(
     InstancesManager &instances_manager,
     b2World& world
     ): instances_manager(instances_manager), world(world) {}
 
 void ExplosionsSystem::update(const std::vector<std::shared_ptr<Projectile>> &projectiles)  {
+    explosions.clear();
     for (const auto&  projectile: projectiles) {
         auto explosion = projectile->explosion_component();
         if (explosion) {
@@ -17,6 +17,7 @@ void ExplosionsSystem::update(const std::vector<std::shared_ptr<Projectile>> &pr
                     instantiate_individual_fragment(i, fragments->info(), explosion);
                 }
             }
+            explosions.emplace_back(projectile->get_type(), explosion->x, explosion->y, explosion->radius);
             OnExplosionWormsQuery::act_on_found(world, std::move(explosion));
             projectile->Destroy();
         }
@@ -44,3 +45,6 @@ void ExplosionsSystem::instantiate_individual_fragment(
     );
 }
 
+std::vector<ExplosionDto>& ExplosionsSystem::get_explosions() {
+     return explosions;
+};

@@ -130,7 +130,9 @@ void GameEngineInstance::broadcast_game_state_update() {
         msg->add(projectile->to_dto());
     }
 
-    // TODO ALSO ADD(&EventDtos)
+    for (const auto &explosion : game.get_explosions()) {
+        msg->add(explosion);
+    }
 
     game_clients.send_all(msg->share());
 }

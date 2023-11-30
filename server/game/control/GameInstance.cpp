@@ -87,6 +87,10 @@ std::vector<std::shared_ptr<Projectile>> &GameInstance::get_projectiles() {
     return instances_manager.get_projectiles();
 }
 
+std::vector<ExplosionDto>& GameInstance::get_explosions() {
+    return explosions_system.get_explosions();
+}
+
 void GameInstance::assign_worms_to_clients(const std::list<Client *> &clients) {
     // Seed for random number generation
     std::srand(static_cast<unsigned int>(std::time(nullptr)));
