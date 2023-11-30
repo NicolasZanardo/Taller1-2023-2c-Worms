@@ -29,6 +29,10 @@ void NetMessageGameStateUpdate::add(const WorldEventDto &event) {
     events.push_back(event);
 }
 
+void NetMessageGameStateUpdate::add(const ExplosionDto &explosion) {
+    explosions.push_back(explosion);
+}
+
 void NetMessageGameStateUpdate::execute(NetMessageBehaviour &interpreter) {
     interpreter.run(this);
 }
@@ -72,6 +76,14 @@ void NetMessageGameStateUpdate::push_data_into(NetBuffer &container) {
         container.push_float(events[i].x);
         container.push_float(events[i].y);
         container.push_byte(static_cast<uint8_t>(events[i].type));
+    }
+
+    container.push_short(explosions.size());
+    for (size_t i = 0; i < explosions.size(); i++) {
+        container.push_byte(static_cast<uint8_t>(explosions[i].projectile_type));
+        container.push_float(explosions[i].x);
+        container.push_float(explosions[i].y);
+        container.push_float(explosions[i].radius);
     }
 }
 
@@ -118,5 +130,15 @@ void NetMessageGameStateUpdate::pull_data_from(NetProtocolInterpreter &channel) 
         auto type = static_cast<WorldEventDto::Type>(channel.read_byte());
 
         events.emplace_back(entity_id, x, y, type);
+    }
+
+    short explosions_size = channel.read_short();
+    for (int i = 0; i < explosions_size; i++) {
+        auto type = static_cast<ProjectileTypeDto>(channel.read_byte());
+        auto x = channel.read_float();
+        auto y = channel.read_float();
+        auto radius = channel.read_float();
+
+        explosions.emplace_back(type, x, y, radius);
     }
 }

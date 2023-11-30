@@ -6,6 +6,7 @@
 #include "../../Game/eventDto.h"
 #include "../../Game/ProjectileDto.h"
 #include "net_message_dependencies.h"
+#include "Game/ExplosionDto.h"
 
 
 class NetMessageGameStateUpdate : public NetMessage {
@@ -19,7 +20,8 @@ public:
     std::vector<WormDto> worms;
     std::vector<ProjectileDto> projectiles;
     std::vector<WorldEventDto> events;
-    
+    std::vector<ExplosionDto> explosions;
+
     NetMessageGameStateUpdate();
     NetMessageGameStateUpdate(
         int active_client_id,
@@ -33,6 +35,7 @@ public:
     void add(const WormDto& worm);
     void add(const ProjectileDto& projectile);
     void add(const WorldEventDto& event);
+    void add(const ExplosionDto& explosionDto);
 
     void push_data_into(NetBuffer& container) override;
     void pull_data_from(NetProtocolInterpreter& channel) override;

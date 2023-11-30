@@ -28,6 +28,7 @@ public:
     std::vector<BeamDto> beams;
     std::vector<ProjectileDto> projectiles;
     std::vector<WorldEventDto> events;
+    std::vector<ExplosionDto> explosions;
 
     // const float scale;
     // const float xoffset;

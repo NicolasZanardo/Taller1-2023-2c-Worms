@@ -110,9 +110,6 @@ add_executable(
     game/model/collidables/ScenarioBeams.h
     game/model/collidables/ScenarioBeams.cpp
 
-    game/model/game_events/GameWorldEvent.h
-    game/model/game_events/GameWorldEvent.cpp
-
     game/control/GameNetMessageBehaviour.h
     game/control/GameNetMessageBehaviour.cpp
 

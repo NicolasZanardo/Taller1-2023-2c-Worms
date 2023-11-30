@@ -42,6 +42,10 @@ ProjectileDto Projectile::to_dto() const {
     };
 }
 
+ProjectileTypeDto Projectile::get_type() {
+    return type;
+}
+
 float Projectile::X() const {
     return body->X();
 }

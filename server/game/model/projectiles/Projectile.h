@@ -37,6 +37,8 @@ public:
 
     std::unique_ptr<ProjectileBody> body;
 
+    ProjectileTypeDto get_type();
+
     float X() const;
 
     float Y() const;

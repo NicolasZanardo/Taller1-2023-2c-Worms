@@ -57,6 +57,7 @@ void ClientReceiver::run(NetMessageGameStateUpdate* msg) {
     game_state_dto->worms = std::move(msg->worms);
     game_state_dto->projectiles = std::move(msg->projectiles);
     game_state_dto->events = std::move(msg->events);
+    game_state_dto->explosions = std::move(msg->explosions);
 
     this->state_queue.push(game_state_dto);
 }
