@@ -20,7 +20,8 @@ std::unique_ptr<CShot> GreenGrenade::shoot(float charged_power, float from_x, fl
             affected_by_wind,
             projectile_countdown,
             ProjectileTypeDto::GREEN_GRENADE, // TODO WEAPONCFG CAN HAVE THE PROJECTILE IT SHOOTS
-            nullptr // TODO WEAPON CFG CAN DINAMICALLY MADE WEAPONS EXPLODE FRAG?
+            nullptr,
+            RotationType::AngularVelocity // TODO WEAPONCFG CAN HAVE THE PROJECTILE IT SHOOTS
         )
     );
 }

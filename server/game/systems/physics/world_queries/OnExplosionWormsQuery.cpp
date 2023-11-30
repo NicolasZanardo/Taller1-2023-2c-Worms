@@ -22,12 +22,15 @@ void OnExplosionWormsQuery::act_on_found(b2World& world, std::unique_ptr<CExplos
         //ignore worms outside the explosion radius
         b2Vec2 blast_dir = body_center_mass - explosion_point;
         float distance = blast_dir.Length();
+        distance -= (WORM_SIZE / 2); // Adjust with the worm radius from the center of body mass
         if (distance >= explosion->radius)
             continue;
 
+        // At max distance (distance / explosion->radius) = 1 -> max_damage * 0
+        // At min distance (distance / explosion->radius) = 0 -> max_damage * 1
         float damage = explosion->max_damage * (1.0f - distance / explosion->radius);
         worm->receive_damage(damage);
-        ExplosionForce force(world, explosion_point);
+        ExplosionForce force(world, explosion_point, explosion->radius);
         force.apply(body);
     }
 }

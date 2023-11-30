@@ -14,7 +14,6 @@ struct WormCfg {
         float forward_jump_reach;
         float backwards_jump_height;
         float backwards_jump_reach;
-        float size;
         float restitution;
         float density;
     };

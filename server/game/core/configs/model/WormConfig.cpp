@@ -21,7 +21,6 @@ void Config<WormCfg>::parse_file() {
         cfg.body.forward_jump_reach = body_node["forward_jump_reach"].as<float>();
         cfg.body.backwards_jump_height = body_node["backwards_jump_height"].as<float>();
         cfg.body.backwards_jump_reach = body_node["backwards_jump_reach"].as<float>();
-        cfg.body.size = body_node["size"].as<float>();
         cfg.body.restitution = body_node["restitution"].as<float>();
         cfg.body.density = body_node["density"].as<float>();
 

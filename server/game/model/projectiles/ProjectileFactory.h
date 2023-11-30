@@ -11,5 +11,4 @@ public:
     static std::shared_ptr<Projectile> create_fragment_projectile(size_t id, const std::unique_ptr<FragmentsInfo> &info);
 };
 
-
 #endif //TP_WORMS_PROJECTILEFACTORY_H

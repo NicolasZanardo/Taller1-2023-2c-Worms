@@ -16,8 +16,10 @@ public:
         float max_damage,
         float explosion_radius,
         float fragment_radius,
-        ProjectileTypeDto projectileTypeDto
-    );
+        ProjectileTypeDto projectile_type
+    ) :
+        amount(amount), max_damage(max_damage), explosion_radius(explosion_radius),
+        fragment_radius(fragment_radius), projectile_type(projectile_type) {}
 
 };
 

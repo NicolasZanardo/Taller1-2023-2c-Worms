@@ -7,6 +7,5 @@ body:
   forward_jump_reach: 5
   backwards_jump_height: 18
   backwards_jump_reach: 2
-  size: 1.2
   restitution: 0
-  density: 80.0
+  density: 40.0
