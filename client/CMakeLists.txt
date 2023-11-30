@@ -36,7 +36,7 @@ add_executable (client_app
     #game_ui/animation.cpp game_ui/animation.h
     game_ui/client_game_state.cpp game_ui/client_game_state.h
     game_ui/game_loop.cpp game_ui/game_loop.h
-    game_ui/ui_utils.h game_ui/ui_utils.cpp
+    game_ui/utils_constants.h game_ui/utils_constants.cpp
 )
 
 target_include_directories(client_app PUBLIC

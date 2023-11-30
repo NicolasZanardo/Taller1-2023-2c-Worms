@@ -1,5 +1,5 @@
 #include "game_display.h"
-#include "game_ui/ui_utils.h"
+#include "game_ui/utils_constants.h"
 #include "game_sprite.h"
 
 GameDisplay::GameDisplay(Queue<std::shared_ptr<Command>> &command_queue, int fps) :

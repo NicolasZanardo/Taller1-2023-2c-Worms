@@ -7,7 +7,7 @@
 
 class NetMessageJoinGameResponse : public NetMessage {
 public:
-    NetMessageJoinGameResponse() = delete;
+    NetMessageJoinGameResponse();
     NetMessageJoinGameResponse(bool was_Joind);
     virtual ~NetMessageJoinGameResponse() = default;
 

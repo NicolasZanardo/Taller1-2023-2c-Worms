@@ -7,7 +7,7 @@
 
 class NetMessageCreateGameResponse : public NetMessage {
 public:
-    NetMessageCreateGameResponse() = delete;
+    NetMessageCreateGameResponse();
     NetMessageCreateGameResponse(bool was_created);
     virtual ~NetMessageCreateGameResponse() = default;
 

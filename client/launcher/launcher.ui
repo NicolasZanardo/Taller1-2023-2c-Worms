@@ -16,6 +16,12 @@
     <verstretch>0</verstretch>
    </sizepolicy>
   </property>
+  <property name="maximumSize">
+   <size>
+    <width>800</width>
+    <height>600</height>
+   </size>
+  </property>
   <property name="font">
    <font>
     <family>Monospace</family>
@@ -144,21 +150,58 @@
       </widget>
      </item>
      <item>
-      <widget class="QLabel" name="labelList">
-       <property name="font">
-        <font>
-         <family>Monospace</family>
-         <pointsize>16</pointsize>
-         <bold>true</bold>
-        </font>
-       </property>
-       <property name="text">
-        <string>Partidas</string>
-       </property>
-      </widget>
+      <layout class="QHBoxLayout" name="horizontalLayoutList">
+       <item>
+        <widget class="QLabel" name="labelList">
+         <property name="font">
+          <font>
+           <family>Monospace</family>
+           <pointsize>16</pointsize>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>Partidas</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButtonJoin_2">
+         <property name="font">
+          <font>
+           <family>Monospace</family>
+           <pointsize>12</pointsize>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>Listar Partidas</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </item>
      <item>
       <widget class="QTreeWidget" name="treeWidgetList">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>0</height>
+        </size>
+       </property>
        <property name="font">
         <font>
          <family>Monospace</family>
@@ -166,6 +209,12 @@
          <bold>true</bold>
         </font>
        </property>
+       <attribute name="headerMinimumSectionSize">
+        <number>250</number>
+       </attribute>
+       <attribute name="headerStretchLastSection">
+        <bool>true</bool>
+       </attribute>
        <column>
         <property name="text">
          <string>Nombre</string>
@@ -178,12 +227,7 @@
        </column>
        <column>
         <property name="text">
-         <string>#Jugadores Unidos</string>
-        </property>
-       </column>
-       <column>
-        <property name="text">
-         <string>#Jugadores Totales</string>
+         <string>#Jugadores</string>
         </property>
        </column>
       </widget>
@@ -259,12 +303,41 @@
     </property>
     <addaction name="actionExit"/>
    </widget>
+   <widget class="QMenu" name="menuAyuda">
+    <property name="title">
+     <string>Ayuda</string>
+    </property>
+    <addaction name="actionObtenerAyuda"/>
+    <addaction name="separator"/>
+    <addaction name="actionAcercaDeTPWorms"/>
+   </widget>
    <addaction name="menuFile"/>
+   <addaction name="menuAyuda"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="actionExit">
    <property name="text">
     <string>Salir</string>
+   </property>
+  </action>
+  <action name="actionAcerca_de_TP_Worms">
+   <property name="text">
+    <string>Acerca de TP Worms</string>
+   </property>
+  </action>
+  <action name="actionObtener_Ayuda">
+   <property name="text">
+    <string>Obtener Ayuda</string>
+   </property>
+  </action>
+  <action name="actionObtenerAyuda">
+   <property name="text">
+    <string>Obtener Ayuda</string>
+   </property>
+  </action>
+  <action name="actionAcercaDeTPWorms">
+   <property name="text">
+    <string>Acerca de TP - Worms</string>
    </property>
   </action>
  </widget>

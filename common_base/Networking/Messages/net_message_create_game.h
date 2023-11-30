@@ -7,8 +7,8 @@
 
 class NetMessageCreateGame : public NetMessage {
 public:
-    NetMessage() = delete;
-    NetMessageCreateGame(const std::string& game_room, uint8_t num_players);
+    NetMessageCreateGame();
+    NetMessageCreateGame(const std::string& game_room, const std::string& scenario, uint8_t num_players);
     virtual ~NetMessageCreateGame() = default;
 
     void push_data_into(NetBuffer& container) override;
@@ -16,6 +16,7 @@ public:
     void execute(NetMessageBehaviour& interpreter) override;
 
     std::string game_room;
+    std::string scenario;
     uint8_t num_players;
 };
 

@@ -6,6 +6,7 @@ add_library(common
     Networking/net_protocol_interpreter.cpp 
     Networking/net_protocol_interpreter.h
 
+        Game/game_info_dto.h
         Game/beamDto.h
         Game/bulletDto.h
         Game/eventDto.h
@@ -53,6 +54,13 @@ add_library(common
     Networking/Messages/net_message_initial_game_state.h
     Networking/Messages/net_message_game_state_update.cpp
     Networking/Messages/net_message_game_state_update.h
+
+    Networking/Messages/net_message_create_game.h
+    Networking/Messages/net_message_create_game_response.h
+    Networking/Messages/net_message_list_games.h
+    Networking/Messages/net_message_list_games_response.h
+    Networking/Messages/net_message_join_game.h
+    Networking/Messages/net_message_join_game_response.h
 
     Networking/net_channel.cpp 
     Networking/net_channel.h 

@@ -7,7 +7,7 @@
 
 class NetMessageJoinGame : public NetMessage {
 public:
-    NetMessage() = delete;
+    NetMessageJoinGame();
     NetMessageJoinGame(const std::string& game_room, uint8_t num_players);
     virtual ~NetMessageJoinGame() = default;
 
@@ -16,7 +16,6 @@ public:
     void execute(NetMessageBehaviour& interpreter) override;
 
     std::string game_room;
-    uint8_t num_players;
 };
 
 #endif  // COMMON_NET_MESSAGE_JOIN_GAME_H_
