@@ -48,6 +48,7 @@ std::unique_ptr<WormBody> PhysicsSystem::spawn_worm(
 
     fixtureDef.density = worms_cfg.body.density;
     fixtureDef.restitution = worms_cfg.body.restitution;
+    fixtureDef.friction = 0.2;
     fixtureDef.userData.pointer = reinterpret_cast<uintptr_t>(worm_model.get());
     fixtureDef.filter.categoryBits = WORM_CATEGORY_BIT;
     fixtureDef.filter.maskBits = GROUND_CATEGORY_BIT | PROJECTILE_CATEGORY_BIT | WATER_CATEGORY_BIT | BOUNDARY_CATEGORY_BIT;
@@ -146,7 +147,7 @@ std::unique_ptr<ProjectileBody> PhysicsSystem::spawn_projectile(
 
     // Shape for hitbox
     b2CircleShape dynamicCircle;
-    dynamicCircle.m_radius = projectile_info->projectile_radius;
+    dynamicCircle.m_radius = PROJECTILE_RADIUS; // todo cfg
 
     // Fixture for hitbox
     b2FixtureDef fixtureDef;
@@ -219,7 +220,7 @@ PhysicsSystem::spawn_fragment_projectile(
 
     // Shape for hitbox
     b2CircleShape dynamicCircle;
-    dynamicCircle.m_radius = info->fragment_radius;
+    dynamicCircle.m_radius = PROJECTILE_RADIUS;
 
     // Fixture for hitbox
     b2FixtureDef fixtureDef;

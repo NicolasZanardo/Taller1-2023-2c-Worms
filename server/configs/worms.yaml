@@ -9,4 +9,4 @@ body:
   backwards_jump_reach: 2
   size: 1.2
   restitution: 0
-  density: 80.0
+  density: 20.0
