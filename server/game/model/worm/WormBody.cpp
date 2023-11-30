@@ -7,7 +7,7 @@ WormBody::WormBody(b2World&  world, b2Body* body, WormCfg &worm_cfg) :
         state(State::IDLE),
         speed(worm_cfg.body.speed),
         forward_jump_height(worm_cfg.body.forward_jump_height),
-        forward_jump_reach(worm_cfg.body.forward_jump_height),
+        forward_jump_reach(worm_cfg.body.forward_jump_reach),
         backwards_jump_height(worm_cfg.body.backwards_jump_height),
         backwards_jump_reach(worm_cfg.body.backwards_jump_reach),
         is_moving(false),
