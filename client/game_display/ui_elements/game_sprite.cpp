@@ -14,7 +14,12 @@ inline float normalize_angle(float angle, float min, float max) {
 
 GameSprite::~GameSprite() { }
 GameSprite::GameSprite(GameCamera& cam, GameSpriteInfo& info, float width, float height, float angle) :
-    cam(cam),
+    GameSprite(info, width, height, angle)
+    {
+        this->cam = &cam;
+    }
+
+GameSprite::GameSprite(GameSpriteInfo& info, float width, float height, float angle) :
     info(info),
     x(0),y(0),w(width),h(height),
     transform(0,0,0,0),
@@ -23,8 +28,10 @@ GameSprite::GameSprite(GameCamera& cam, GameSpriteInfo& info, float width, float
     is_active(true),
     flip(SDL_FLIP_NONE),
     anim_speed(0.000001f),
-    anim_progress(0)
-    { }
+    anim_progress(0),
+    cam(nullptr)
+    {}
+
 
 void GameSprite::set_pos(float x, float y) {
     this->x = x;
@@ -56,12 +63,31 @@ void GameSprite::hidden(bool is_hidden) {
 
 void GameSprite::render(SDL2pp::Renderer& renderer, float delta_time) {
     if (!is_active) return;
-    cam.body_to_transform(x,y,w,h,transform);
-    offset.SetX(cam.transform_w(w)/2);
-    offset.SetY(cam.transform_h(h)/2);
+
+    if (cam != nullptr) {
+        cam->body_to_transform(x,y,w,h,transform);
+        offset.SetX(cam->transform_w(w)/2);
+        offset.SetY(cam->transform_h(h)/2);
+    } else {
+        transform.SetX(x);
+        transform.SetY(y);
+        transform.SetW(w);
+        transform.SetH(h);
+        offset.SetX(w/2);
+        offset.SetY(h/2);
+    }
 
     if (info.frame_count <= 0) {
         renderer.Copy(info.texture,SDL2pp::NullOpt,transform,normalize_angle(-angle, angle_min, angle_max),offset,flip);
+
+        if (cam != nullptr) {
+            renderer.SetDrawColor(SDL2pp::Color{255,255,255,255});
+            //renderer.DrawRect(transform);
+            int relx = cam->transform_x(x);
+            int rely = cam->transform_y(y);
+            renderer.DrawRect(relx-1,rely-1,relx+1,rely+1);
+            renderer.SetDrawColor(SDL2pp::Color{0,0,0,0});
+        }
         return;
     }
 
@@ -70,9 +96,14 @@ void GameSprite::render(SDL2pp::Renderer& renderer, float delta_time) {
         renderer.Copy(info.texture, info.image_frame(anim_progress), transform, 0.0, offset, flip);
     else renderer.Copy(info.texture, info.image_frame(anim_progress), transform, normalize_angle(-angle, angle_min, angle_max), offset, flip);
 
-    //renderer.SetDrawColor(SDL2pp::Color{255,255,255,255});
-    //renderer.DrawRect(transform);
-    //renderer.SetDrawColor(SDL2pp::Color{0,0,0,0});
+    if (cam != nullptr) {
+        renderer.SetDrawColor(SDL2pp::Color{255,255,255,255});
+        //renderer.DrawRect(transform);
+        int relx = cam->transform_x(x);
+        int rely = cam->transform_y(y);
+        renderer.DrawRect(relx-1,rely-1,relx+1,rely+1);
+        renderer.SetDrawColor(SDL2pp::Color{0,0,0,0});
+    }
 }
 
 void GameSprite::update_animation(float delta_time) {

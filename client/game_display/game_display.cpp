@@ -14,8 +14,8 @@ GameDisplay::GameDisplay(Queue<std::shared_ptr<Command>> &command_queue, int fps
         event_handler(window, command_queue)
 {
     // UI
-    resources.add_texture("ui_bazooka", "resources/weapon_icons/bazooka.png");
-    resources.add_texture("ui_mortar", "resources/weapon_icons/mortar.png");
+    resources.add_texture("ui_bazooka"      , "resources/weapon_icons/bazooka.png");
+    resources.add_texture("ui_mortar"       , "resources/weapon_icons/mortar.png");
     resources.add_texture("ui_green_grenade", "resources/weapon_icons/green_grenade.png");
 
     // Scenario
@@ -149,5 +149,16 @@ void GameDisplay::start_scenario(float width, float height, float water_level) {
     layer->set_pos(0,water_level-gameH);
     foreground.emplace_back(layer); 
 
+    Displayable* overlay[] {
+        new GameSprite(*resources.get_sprite("ui_bazooka"), 32, 32, 0),
+        new GameSprite(*resources.get_sprite("ui_mortar"), 32, 32, 0),
+        new GameSprite(*resources.get_sprite("ui_green_grenade"), 32, 32, 0),
+        new GameTextDisplay(camera, 0, 32, resources.get_font(TextType::title), TextAlign::left, TextLayer::UI, "Q  W  E")
+    };
 
+    for (auto it : overlay)
+        foreground.emplace_back(it);
+    
+    ((GameSprite*)overlay[1])->set_pos(42,0);
+    ((GameSprite*)overlay[2])->set_pos(88,0);
 }
