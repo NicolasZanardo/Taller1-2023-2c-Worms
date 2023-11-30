@@ -14,7 +14,7 @@ private:
     void parse_file();
 
 public:
-    /* Constructor */
+
     Config() {
         parse_file();
     }
@@ -24,13 +24,10 @@ public:
     Config(Config&& other) = delete;
     Config& operator=(Config&& other) = delete;
 
-    // Define iterator type
     using iterator = typename std::unordered_map<int, T>::iterator;
 
-    // Define const iterator type
     using const_iterator = typename std::unordered_map<int, T>::const_iterator;
 
-    // Define begin and end functions
     iterator begin() { return config.begin(); }
     iterator end() { return config.end(); }
 
