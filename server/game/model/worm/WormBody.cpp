@@ -1,12 +1,12 @@
 #include "WormBody.h"
 #include "BuoyancyForce.h"
 #include "Logger.h"
-#include <iostream>
 
 WormBody::WormBody(b2World&  world, b2Body* body) :
         Body(world, body, true),
         state(State::IDLE),
         is_moving(false),
+        is_jumping(false),
         is_on_water(false),
         is_on_ground(false) {};
 
@@ -17,6 +17,7 @@ bool WormBody::facing_right() const {
 void WormBody::on_sensed_one_new_ground_contact() {
     ground_contact_count++;
     is_on_ground = (ground_contact_count > 0);
+    is_jumping = false;
 }
 
 void WormBody::on_sensed_one_ground_contact_ended() {
@@ -59,6 +60,7 @@ void WormBody::stop_moving() { //left right
 void WormBody::jump_forward() {
     if (is_on_ground) {
         is_moving = false;
+        is_jumping = true;
         body->SetLinearVelocity(b2Vec2(0,0));
         body->ApplyLinearImpulseToCenter(
                 b2Vec2(
@@ -71,6 +73,7 @@ void WormBody::jump_forward() {
 void WormBody::jump_backwards() {
     if (is_on_ground) {
         is_moving = false;
+        is_jumping = true;
         body->SetLinearVelocity(b2Vec2(0,0));
         body->ApplyLinearImpulseToCenter(
                 b2Vec2(
@@ -99,7 +102,7 @@ void WormBody::on_update() {
 
     if (is_on_water) {
         state = State::SINKING;
-    } else if (y_velocity > epsilon_y) {
+    } else if (is_jumping) {
         state = State::JUMPING;
     } else if (y_velocity < -epsilon_y) {
         state = State::FALLING;
@@ -133,6 +136,5 @@ MovementStateDto WormBody::state_to_dto() const {
             return MovementStateDto::FALLING;
         case State::SINKING:
             return MovementStateDto::SINKING;
-
     }
 }

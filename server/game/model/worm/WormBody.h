@@ -26,6 +26,7 @@ class WormBody: public Body {
     const float epsilon_y = 1.5f;
 
     bool is_moving;
+    bool is_jumping;
     bool is_on_water;
     bool is_on_ground;
     int ground_contact_count = 0;
