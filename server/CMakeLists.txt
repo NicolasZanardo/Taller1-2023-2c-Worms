@@ -70,22 +70,16 @@ add_executable(
     game/model/weapons/chargeable_weapons/Bazooka.cpp
     game/model/weapons/chargeable_weapons/Mortar.h
     game/model/weapons/chargeable_weapons/Mortar.cpp
-    game/model/weapons/instant_shot_weapons/InstantWeaponExample.h
-    game/model/weapons/instant_shot_weapons/InstantWeaponExample.cpp
 
-    game/model/weapons/WeaponRotation.h
+        game/model/weapons/WeaponRotation.h
     game/model/weapons/WeaponRotation.cpp
     game/model/projectiles/ProjectileInfo.h
-    game/model/projectiles/ProjectileInfo.cpp
-    game/model/projectiles/FragmentsInfo.h
-    game/model/projectiles/FragmentInfo.cpp
-    game/model/projectiles/CShot.h
+        game/model/projectiles/FragmentsInfo.h
+        game/model/projectiles/CShot.h
     game/model/projectiles/CShot.cpp
     game/model/projectiles/CExplosion.h
-    game/model/projectiles/CExplosion.cpp
-    game/model/projectiles/CFragments.h
-    game/model/projectiles/CFragments.cpp
-    game/model/projectiles/Projectile.h
+        game/model/projectiles/CFragments.h
+        game/model/projectiles/Projectile.h
     game/model/projectiles/Projectile.cpp
     game/model/projectiles/CountdownProjectile.h
     game/model/projectiles/CountdownProjectile.cpp
@@ -158,6 +152,8 @@ add_executable(
 
     game/systems/entity_camera_focus/EntityCameraFocusSystem.h
     game/systems/entity_camera_focus/EntityCameraFocusSystem.cpp
+        game/model/projectiles/RotationStrategy.h
+        game/model/projectiles/VelocityAlignedRotation.cpp
 )
 
 target_include_directories(server_app PUBLIC

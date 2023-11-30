@@ -30,7 +30,7 @@ void WeaponRotation::stop_aiming_down() {
 
 void WeaponRotation::on_update() {
     if (is_aim_angle_rotating) {
-        // std::cout << "Rotation angle is: " << aimed_angle << std::endl;
+         std::cout << "Rotation angle is: " << aimed_angle << std::endl;
         if (is_aim_angle_rotating_upwards && aimed_angle < MAX_WEAPON_ROTATING) {
             aimed_angle += speed;
         } else if (!is_aim_angle_rotating_upwards && aimed_angle > -MAX_WEAPON_ROTATING){

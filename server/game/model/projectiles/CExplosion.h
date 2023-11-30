@@ -3,7 +3,14 @@
 
 class CExplosion {
 public:
-    explicit CExplosion(float max_damage,float radius, float x, float y);
+    CExplosion(
+        float max_damage,
+        float damage_radius,
+        float x,
+        float y
+    ) :
+        max_damage(max_damage), radius(damage_radius), x(x), y(y) {}
+
     float max_damage;
     float radius;
     float x;

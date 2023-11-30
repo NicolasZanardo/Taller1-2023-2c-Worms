@@ -25,7 +25,8 @@ std::unique_ptr<CShot> Mortar::shoot(float charged_power, float from_x, float fr
                 2,
                 FRAGMENT_RADIUS,
                 ProjectileTypeDto::FRAGMENT
-            )
+            ),
+            RotationType::VelocityAligned
         )
     );
 }

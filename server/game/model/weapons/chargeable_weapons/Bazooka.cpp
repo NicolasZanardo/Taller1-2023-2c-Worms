@@ -19,7 +19,8 @@ std::unique_ptr<CShot> Bazooka::shoot(float charged_power, float from_x, float f
             affected_by_wind,
             -1,
             ProjectileTypeDto::BAZOOKA,
-            nullptr
+            nullptr,
+            RotationType::VelocityAligned
         )
     );
 }
