@@ -70,6 +70,13 @@ void PhysicsCollisionListener::_init_beginning_collisions_hit_map() {
         std::make_pair(std::make_pair(WORM_TAG, PROJECTILE_TAG), &BProjectileWAny::resolve_inverse)
     );
 
+    beginning_hit_map.insert(
+        std::make_pair(std::make_pair(PROJECTILE_TAG, SCENARIO_BOUNDARIES_TAG), &BProjectileWAny::resolve)
+    );
+    beginning_hit_map.insert(
+        std::make_pair(std::make_pair(SCENARIO_BOUNDARIES_TAG, PROJECTILE_TAG), &BProjectileWAny::resolve_inverse)
+    );
+
 
     // Water
 

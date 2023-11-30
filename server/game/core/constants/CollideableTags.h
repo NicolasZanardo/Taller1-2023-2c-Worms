@@ -8,5 +8,6 @@ const std::string WORM_FOOT_SENSOR_TAG = "WORM_FOOT_SENSOR";
 const std::string PROJECTILE_TAG = "PROJECTILE";
 const std::string WATER_TAG = "WATER";
 const std::string GROUND_TAG = "GROUND";
+const std::string SCENARIO_BOUNDARIES_TAG = "SCENARIO_BOUNDARIES";
 
 #endif //TP_WORMS_COLLIDEABLETAGS_H

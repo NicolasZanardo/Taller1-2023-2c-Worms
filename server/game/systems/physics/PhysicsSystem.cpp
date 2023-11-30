@@ -6,16 +6,18 @@ const float DEG_TO_RAD = M_PI / 180.0f;
 
 PhysicsSystem::PhysicsSystem(
     int rate,
-    b2World& world,
+    b2World &world,
     const GameScenarioData &scenario
 ) :
     timeStep(1.0f / rate),
     world(world),
     beams(),
     water(),
+    boundaries(),
     contactListener() {
     populate_beams(scenario);
     spawn_water(scenario);
+    spawn_boundaries(scenario);
     world.SetContactListener(&contactListener);
 }
 
@@ -27,7 +29,7 @@ std::unique_ptr<WormBody> PhysicsSystem::spawn_worm(
     WormScenarioData worm,
     const std::shared_ptr<Worm> &worm_model,
     WormCfg &worms_cfg
-    ) {
+) {
     // Body def
     b2BodyDef bodyDef;
     bodyDef.type = b2_dynamicBody;
@@ -48,7 +50,7 @@ std::unique_ptr<WormBody> PhysicsSystem::spawn_worm(
     fixtureDef.restitution = worms_cfg.body.restitution;
     fixtureDef.userData.pointer = reinterpret_cast<uintptr_t>(worm_model.get());
     fixtureDef.filter.categoryBits = WORM_CATEGORY_BIT;
-    fixtureDef.filter.maskBits = GROUND_CATEGORY_BIT | PROJECTILE_CATEGORY_BIT | WATER_CATEGORY_BIT;
+    fixtureDef.filter.maskBits = GROUND_CATEGORY_BIT | PROJECTILE_CATEGORY_BIT | WATER_CATEGORY_BIT | BOUNDARY_CATEGORY_BIT;
     body->CreateFixture(&fixtureDef);
 
     // Shape for foot sensor
@@ -68,10 +70,10 @@ std::unique_ptr<WormBody> PhysicsSystem::spawn_worm(
     footSensorFixtureDef.isSensor = true; // Set as sensor to detect collisions without generating a response
     footSensorFixtureDef.userData.pointer = reinterpret_cast<uintptr_t>(worm_model->get_foot_sensor());
     fixtureDef.filter.categoryBits = WORM_CATEGORY_BIT;
-    fixtureDef.filter.maskBits = GROUND_CATEGORY_BIT | WATER_CATEGORY_BIT;
+    fixtureDef.filter.maskBits = GROUND_CATEGORY_BIT | WATER_CATEGORY_BIT | BOUNDARY_CATEGORY_BIT;
     body->CreateFixture(&footSensorFixtureDef);
 
-    return std::make_unique<WormBody>(world, body);
+    return std::make_unique<WormBody>(world, body, worms_cfg);
 }
 
 /* PRIVATE */
@@ -154,7 +156,7 @@ std::unique_ptr<ProjectileBody> PhysicsSystem::spawn_projectile(
     fixtureDef.restitution = 0;
     fixtureDef.userData.pointer = reinterpret_cast<uintptr_t>(projectile.get());
     fixtureDef.filter.categoryBits = PROJECTILE_CATEGORY_BIT;
-    fixtureDef.filter.maskBits = GROUND_CATEGORY_BIT | WORM_CATEGORY_BIT | WATER_CATEGORY_BIT;
+    fixtureDef.filter.maskBits = GROUND_CATEGORY_BIT | WORM_CATEGORY_BIT | WATER_CATEGORY_BIT | BOUNDARY_CATEGORY_BIT;
     body->CreateFixture(&fixtureDef);
 
     b2Vec2 initialForce(
@@ -200,18 +202,18 @@ void PhysicsSystem::spawn_water(const GameScenarioData &scenario_data) {
 std::unique_ptr<ProjectileBody>
 PhysicsSystem::spawn_fragment_projectile(
     const std::shared_ptr<Projectile> &projectile,
-    const std::unique_ptr<FragmentsInfo>& info,
+    const std::unique_ptr<FragmentsInfo> &info,
     float x,
     float y,
     b2Vec2 speed
-    ) {
+) {
 
     // Body def
     b2BodyDef bodyDef;
     bodyDef.type = b2_dynamicBody;
     bodyDef.bullet = true;
     // Logger::log_position("A projectile spawned", projectile_info->origin_x + offset_from_worm.x,projectile_info->origin_y + offset_from_worm.y);
-    bodyDef.position.Set(x,y);
+    bodyDef.position.Set(x, y);
     // bodyDef.linearDamping = 0.0f;
     b2Body *body = world.CreateBody(&bodyDef);
 
@@ -226,7 +228,7 @@ PhysicsSystem::spawn_fragment_projectile(
     fixtureDef.restitution = 0;
     fixtureDef.userData.pointer = reinterpret_cast<uintptr_t>(projectile.get());
     fixtureDef.filter.categoryBits = PROJECTILE_CATEGORY_BIT;
-    fixtureDef.filter.maskBits = GROUND_CATEGORY_BIT | WORM_CATEGORY_BIT | WATER_CATEGORY_BIT;
+    fixtureDef.filter.maskBits = GROUND_CATEGORY_BIT | WORM_CATEGORY_BIT | WATER_CATEGORY_BIT | BOUNDARY_CATEGORY_BIT;
     body->CreateFixture(&fixtureDef);
     body->ApplyLinearImpulse(speed, body->GetWorldCenter(), true);
     bool is_facing_right = true;
@@ -237,3 +239,45 @@ PhysicsSystem::spawn_fragment_projectile(
     return std::make_unique<ProjectileBody>(world, body, is_facing_right);
 }
 
+void PhysicsSystem::spawn_boundaries(const GameScenarioData &scenario_data) {
+
+    b2EdgeShape top_edge, bottom_edge, left_edge, right_edge;
+    b2BodyDef boundaryBodyDef;
+
+    // Top boundary
+    top_edge.SetTwoSided(b2Vec2(0, scenario_data.room_height), b2Vec2(scenario_data.room_width, scenario_data.room_height));
+    boundaryBodyDef.type = b2_staticBody;
+    b2Body* top_body = world.CreateBody(&boundaryBodyDef);
+    b2Fixture* top_fixture = top_body->CreateFixture(&top_edge, 0.0f);
+    top_fixture->GetUserData().pointer = reinterpret_cast<uintptr_t>(&boundaries);
+
+    // Bottom boundary
+    bottom_edge.SetTwoSided(b2Vec2(0, 0), b2Vec2(scenario_data.room_width, 0));
+    b2Body* bottom_body = world.CreateBody(&boundaryBodyDef);
+    b2Fixture* bottom_fixture = bottom_body->CreateFixture(&bottom_edge, 0.0f);
+    bottom_fixture->GetUserData().pointer = reinterpret_cast<uintptr_t>(&boundaries);
+
+    // Left boundary
+    left_edge.SetTwoSided(b2Vec2(0, 0), b2Vec2(0, scenario_data.room_height));
+    b2Body* left_body = world.CreateBody(&boundaryBodyDef);
+    b2Fixture* left_fixture = left_body->CreateFixture(&left_edge, 0.0f);
+    left_fixture->GetUserData().pointer = reinterpret_cast<uintptr_t>(&boundaries);
+
+    // Right boundary
+    right_edge.SetTwoSided(b2Vec2(scenario_data.room_width, 0), b2Vec2(scenario_data.room_width, scenario_data.room_height));
+    b2Body* right_body = world.CreateBody(&boundaryBodyDef);
+    b2Fixture* right_fixture = right_body->CreateFixture(&right_edge, 0.0f);
+    right_fixture->GetUserData().pointer = reinterpret_cast<uintptr_t>(&boundaries);
+
+    set_fixture_filter(top_fixture, BOUNDARY_CATEGORY_BIT, PROJECTILE_CATEGORY_BIT | WORM_CATEGORY_BIT);
+    set_fixture_filter(bottom_fixture, BOUNDARY_CATEGORY_BIT, PROJECTILE_CATEGORY_BIT | WORM_CATEGORY_BIT);
+    set_fixture_filter(left_fixture, BOUNDARY_CATEGORY_BIT, PROJECTILE_CATEGORY_BIT | WORM_CATEGORY_BIT);
+    set_fixture_filter(right_fixture, BOUNDARY_CATEGORY_BIT, PROJECTILE_CATEGORY_BIT | WORM_CATEGORY_BIT);
+}
+
+void PhysicsSystem::set_fixture_filter(b2Fixture* fixture, uint16 categoryBits, uint16 maskBits) {
+    b2Filter filter = fixture->GetFilterData();
+    filter.categoryBits = categoryBits;
+    filter.maskBits = maskBits;
+    fixture->SetFilterData(filter);
+}

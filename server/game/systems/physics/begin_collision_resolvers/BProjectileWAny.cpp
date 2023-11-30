@@ -1,10 +1,9 @@
 #include "BProjectileWAny.h"
 #include "Projectile.h"
 
-// TODO Could be more specific for Projectile with what, but for now is enough
+
 void BProjectileWAny::resolve(Collidable *projectile_collidable, Collidable *any, b2Contact* contact) {
     auto projectile = dynamic_cast<Projectile*>(projectile_collidable);
-
     if (projectile != nullptr && !projectile->has_exploded()) {
         b2WorldManifold world_manifold;
         contact->GetWorldManifold(&world_manifold);
