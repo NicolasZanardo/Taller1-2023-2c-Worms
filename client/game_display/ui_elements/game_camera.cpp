@@ -34,8 +34,8 @@ float GameCamera::px_to_h(int pixels) {
 }
 
 void GameCamera::body_to_transform(float x, float y, float w, float h, SDL2pp::Rect& transform) {
-    float xx = transform_x(x);
-    float yy = transform_y(y);
+    float xx = transform_x(x)- transform_w(w)/2;
+    float yy = transform_y(y)- transform_h(h)/2;
     transform.SetX(xx);
     transform.SetY(yy);
     transform.SetW(transform_w(w));

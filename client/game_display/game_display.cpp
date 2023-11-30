@@ -137,16 +137,16 @@ void GameDisplay::start_scenario(float width, float height, float water_level) {
     float gameH = camera.px_to_h(24);
 
     GameSprite *background = new GameSprite(camera, *resources.get_sprite("fondo"), width, height, 0.0);
-    background->set_pos(0, water_level + height / 2 - gameH/2);
+    background->set_pos(width/2, water_level + height / 2 - gameH/2);
     images.emplace_back(background);
 
     for (float i = 0.0f; i < width; i += gameW) {
         GameSprite *sprite = new GameSprite(camera, *resources.get_sprite("water_line"), gameW, gameH, 0.0);
-        sprite->set_pos(i, water_level);
+        sprite->set_pos(i+gameW/2, water_level-gameH/2);
         foreground.emplace_back(sprite);
     }
     GameSprite *layer = new GameSprite(camera, *resources.get_sprite("underwater_film"), width, height-water_level-gameH, 0.0);
-    layer->set_pos(0,water_level-gameH);
+    layer->set_pos(width/2,water_level-gameH-((height-water_level-gameH)/2));
     foreground.emplace_back(layer); 
 
     Displayable* overlay[] {

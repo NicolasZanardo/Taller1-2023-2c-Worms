@@ -98,7 +98,7 @@ void PhysicsSystem::spawn_beam(BeamScenarioData beam) {
     }
 
     b2PolygonShape groundBox;
-    groundBox.SetAsBox(xcenter, ycenter, b2Vec2(xcenter, ycenter), beam.angle * DEG_TO_RAD);
+    groundBox.SetAsBox(xcenter, ycenter, b2Vec2(0, 0), beam.angle * DEG_TO_RAD);
 
     b2FixtureDef fixtureDef;
     fixtureDef.shape = &groundBox;
