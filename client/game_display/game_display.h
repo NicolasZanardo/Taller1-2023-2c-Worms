@@ -7,7 +7,7 @@
 #include "queue.h"
 #include "game_camera.h"
 #include "event_handler.h"
-#include "game_sprite_manager.h"
+#include "game_resources_manager.h"
 #include "game_displayable.h"
 #include "game_sprite.h"
 #include "Game/GameAction.h"
@@ -20,7 +20,7 @@ class GameDisplay {
     SDL2pp::SDLTTF ttf;
     SDL2pp::Window window;
     SDL2pp::Renderer renderer;
-    GameSpriteManager texture_manager;
+    ResourceManager resources;
     std::list<Displayable*> images;
     std::list<Displayable*> foreground;
     std::list<Displayable*> user_interface;
@@ -34,7 +34,7 @@ class GameDisplay {
     void remove(Displayable* item);
     void start_scenario(float width, float height, float water_level);
     WormAnimationSet* new_worm_animation(float size_scale, float angle);
-    GameTextDisplay* new_text(const std::string& text, float x, float y, int fnt_size, TextAlign align, TextLayer layer);
+    GameTextDisplay* new_text(const std::string& text, float x, float y, TextAlign align, TextLayer layer, TextType type);
     GameSprite* new_sprite(const std::string& spritekey, float width, float height, float angle = 0);
 };
 

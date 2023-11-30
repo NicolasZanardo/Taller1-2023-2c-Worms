@@ -6,20 +6,24 @@ using namespace std;
 GameTextDisplay::GameTextDisplay(
         GameCamera& cam, 
         float x, float y,
-        int fnt_size, TextAlign align, TextLayer layer,
-        const std::string& text
+        Font* font, TextAlign align, TextLayer layer,
+        const string& text
     ) : cam(cam)
-    , transform(x,y,0,0)
-    , x(x), y(y)
+    , transform(x,y,0,0), x(x), y(y)
     , absolute(layer == TextLayer::UI)
     , is_hidden(false)
-    , align(align)
-    , font("resources/misc/Vera.ttf", fnt_size)
-    , surfaceMessage(font.RenderText_Solid(text, SDL_Color{255,255,255,255}))
+    , align(align), font(font)
+    , texture(nullptr)
+    , surfaceMessage(font->RenderText_Solid(text, SDL_Color{255,255,255,255}))
     { }
 
 void GameTextDisplay::update(const std::string& newval) {
-    surfaceMessage = font.RenderText_Solid(newval, SDL_Color{255,255,255,255});
+    surfaceMessage = font->RenderText_Solid(newval, SDL_Color{255,255,255,255});
+
+    if (texture != nullptr) {
+        delete(texture);
+        texture = nullptr;
+    }
 }
 
 void GameTextDisplay::hidden(bool is_hidden) {
@@ -41,7 +45,7 @@ void GameTextDisplay::render(Renderer& renderer, float delta_time) {
     }
 
     if (texture == nullptr) {
-        texture =  make_unique<Texture>(renderer, surfaceMessage);
+        texture =  new Texture(renderer, surfaceMessage);
         transform.SetW(texture->GetWidth());
         transform.SetH(texture->GetHeight());
 
@@ -54,4 +58,8 @@ void GameTextDisplay::render(Renderer& renderer, float delta_time) {
     renderer.Copy(*texture, SDL2pp::NullOpt, transform, 0, SDL2pp::NullOpt, 0);
 }
 
-GameTextDisplay::~GameTextDisplay() {}
+GameTextDisplay::~GameTextDisplay() {
+    if (texture != nullptr) {
+        delete(texture);
+    }
+}

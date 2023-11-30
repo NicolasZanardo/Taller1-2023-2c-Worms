@@ -11,7 +11,7 @@
 #include "client_sender.h"
 #include "client_game_state_dto.h"
 #include "game_display.h"
-#include "game_ui/ui_utils.h"
+#include "game/ui_utils.h"
 
 class Client {
 public:

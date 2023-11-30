@@ -6,7 +6,7 @@
 #include <memory>
 
 #include "game_display.h"
-#include "game_display/worm/game_worm_entity.h"
+#include "game_worm_entity.h"
 #include "game_text_display.h"
 #include "client_game_state_dto.h"
 #include "projectiles/game_projectile_entity.h"
