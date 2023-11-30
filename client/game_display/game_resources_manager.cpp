@@ -54,6 +54,23 @@ void ResourceManager::add_texture(
         );
     }
 
+void ResourceManager::add_texture(
+        const string keyname, const string file_path,
+        uint16_t image_width, uint16_t image_height,
+        uint16_t image_xoffset, uint16_t image_yoffset,
+        uint16_t image_sep, float angle_ini, float angle_span
+    ) {
+        textures.emplace(
+            keyname,
+            new GameSpriteInfo(
+                renderer, file_path,
+                image_width, image_height,
+                image_xoffset, image_yoffset,
+                image_sep, angle_ini, angle_span
+            )
+        );
+    }
+
 GameSpriteInfo* ResourceManager::get_sprite(const std::string idx) {
     return textures[idx];
 }

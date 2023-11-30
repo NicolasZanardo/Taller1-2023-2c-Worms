@@ -1,4 +1,5 @@
 #include "game_worm_animation_set.h"
+#include "sprite_animation.h"
 #include <iostream>
 
 WormAnimationSet::~WormAnimationSet() {
@@ -54,7 +55,7 @@ void WormAnimationSet::update_state(MovementStateDto newstate) {
     newsprite->y = active_body->y;
     newsprite->angle = active_body->angle;
     newsprite->flip = active_body->flip;
-    newsprite->anim_progress = 0;
+    newsprite->animation->restart();
     
     active_body = newsprite;
     state = newstate;
@@ -74,7 +75,7 @@ void WormAnimationSet::update_weapon(WeaponTypeDto newweapon) {
     newsprite->y = aiming_body->y;
     newsprite->flip = aiming_body->flip;
     newsprite->angle = aiming_body->angle;
-    newsprite->anim_progress = 0;
+    newsprite->animation->restart();
     
     aiming_body = newsprite;
     weapon = newweapon;

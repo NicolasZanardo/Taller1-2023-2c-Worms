@@ -1,4 +1,5 @@
 #include "game_sprite.h"
+#include "sprite_animation.h"
 #include <iostream>
 #include <math.h>
 
@@ -12,12 +13,12 @@ inline float normalize_angle(float angle, float min, float max) {
     return angle - (float)(angle > 360) * 360.0f;
 }
 
-GameSprite::~GameSprite() { }
+GameSprite::~GameSprite() {
+    delete(animation);
+}
+
 GameSprite::GameSprite(GameCamera& cam, GameSpriteInfo& info, float width, float height, float angle) :
-    GameSprite(info, width, height, angle)
-    {
-        this->cam = &cam;
-    }
+    GameSprite(info, width, height, angle) { this->cam = &cam; }
 
 GameSprite::GameSprite(GameSpriteInfo& info, float width, float height, float angle) :
     info(info),
@@ -27,11 +28,9 @@ GameSprite::GameSprite(GameSpriteInfo& info, float width, float height, float an
     angle(angle), angle_min(0), angle_max(360),
     is_active(true),
     flip(SDL_FLIP_NONE),
-    anim_speed(0.000001f),
-    anim_progress(0),
-    cam(nullptr)
+    cam(nullptr),
+    animation(info.new_animation())
     {}
-
 
 void GameSprite::set_pos(float x, float y) {
     this->x = x;
@@ -79,90 +78,9 @@ void GameSprite::render(SDL2pp::Renderer& renderer, float delta_time) {
 
     if (info.frame_count <= 0) {
         renderer.Copy(info.texture,SDL2pp::NullOpt,transform,normalize_angle(-angle, angle_min, angle_max),offset,flip);
-
-        if (cam != nullptr) {
-            renderer.SetDrawColor(SDL2pp::Color{255,255,255,255});
-            //renderer.DrawRect(transform);
-            int relx = cam->transform_x(x);
-            int rely = cam->transform_y(y);
-            renderer.DrawRect(relx-1,rely-1,relx+1,rely+1);
-            renderer.SetDrawColor(SDL2pp::Color{0,0,0,0});
-        }
-        return;
-    }
-
-    update_animation(delta_time);
-    if (info.animation == BY_ANGLE)
-        renderer.Copy(info.texture, info.image_frame(anim_progress), transform, 0.0, offset, flip);
-    else renderer.Copy(info.texture, info.image_frame(anim_progress), transform, normalize_angle(-angle, angle_min, angle_max), offset, flip);
-
-    if (cam != nullptr) {
-        renderer.SetDrawColor(SDL2pp::Color{255,255,255,255});
-        //renderer.DrawRect(transform);
-        int relx = cam->transform_x(x);
-        int rely = cam->transform_y(y);
-        renderer.DrawRect(relx-1,rely-1,relx+1,rely+1);
-        renderer.SetDrawColor(SDL2pp::Color{0,0,0,0});
-    }
-}
-
-void GameSprite::update_animation(float delta_time) {
-    if (info.animation == SpriteAnimationType::NONE)
-        return;
-    
-    if (info.animation == SpriteAnimationType::BY_ANGLE) {
-        anim_progress = ((float)info.frame_count) * (angle + 270) / (angle_max-angle_min);
-        return;
-    }
-
-    float true_delta = delta_time * anim_speed * info.frame_speed;
-    if (true_delta == 0)
-        return;
-
-    anim_progress += true_delta;
-    if (anim_progress < info.frame_count && anim_progress >= 0) {
-        return;
-    }
-
-    // Las correcciones se hacen dentro de un ciclo,
-    // por si se lagueo por mas de un ciclo entero de animaciones.
-    switch (info.animation) {
-        case SpriteAnimationType::LOOP:
-            // Se reinicia la animacion manteniando el progreso del servidor.
-            // de esta manera todos los clientes van a tener el mismo progreso de animacion, incluso despues de un lag.
-            while (anim_progress >= info.frame_count) {
-                anim_progress -= info.frame_count;
-            }
-            break;
-
-        case SpriteAnimationType::REVERSE:
-            // Cambiar el sendito de la animacion y retroceder del final, o volver a empezar 
-            // El codigo abajo realiza la siguiente desicion:
-            //     Si llego al final avanzando, retrocede lo que se paso del ultimo frame.
-            while(anim_progress > info.frame_count || anim_progress < 0) {
-                anim_progress = (float)info.frame_count - (anim_progress-(float)info.frame_count)*(float)(anim_speed > 0)
-                              + (-anim_progress)*(float)(anim_speed < 0);
-                anim_speed = -anim_speed;
-
-                // En el caso de que se sincronize perfectamente con la cantidad de frames, este algoritmo entra en un loop infinito, 
-                // por lo que lo desfazamos una milesima de progreso de animacion.
-                if (anim_progress == 0.0f) {
-                    anim_progress = 0.001f;
-                }
-            }
-            break;
-
-        case SpriteAnimationType::FREEZE:
-            if (anim_progress > info.frame_count-1)
-                anim_progress = info.frame_count-1;
-            break;
-
-        case SpriteAnimationType::NONE:
-            //TODO: agregar una excepcion
-            break;
-
-        case SpriteAnimationType::BY_ANGLE:
-            //TODO: agregar una excepcion
-            break;
+    } else if (info.animation == BY_ANGLE) {
+        renderer.Copy(info.texture, animation->update(angle), transform, 0.0, offset, flip);
+    } else {
+        renderer.Copy(info.texture, animation->update(delta_time), transform, normalize_angle(-angle, angle_min, angle_max), offset, flip);
     }
 }

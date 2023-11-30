@@ -34,8 +34,8 @@ float GameCamera::px_to_h(int pixels) {
 }
 
 void GameCamera::body_to_transform(float x, float y, float w, float h, SDL2pp::Rect& transform) {
-    float xx = transform_x(x);
-    float yy = transform_y(y);
+    float xx = transform_x(x)- transform_w(w)/2;
+    float yy = transform_y(y)- transform_h(h)/2;
     transform.SetX(xx);
     transform.SetY(yy);
     transform.SetW(transform_w(w));
@@ -43,8 +43,11 @@ void GameCamera::body_to_transform(float x, float y, float w, float h, SDL2pp::R
 }
 
 void GameCamera::set_pos(float x, float y) {
-    xoffset = x - hlf_width / scale;
-    yoffset = y + hlf_height / scale;
+    float wscaled = hlf_width / scale;
+    xoffset = std::clamp(x - wscaled, 0.0f, room_width - 2*wscaled);
+
+    float hscaled = hlf_height / scale;
+    yoffset = std::clamp(y + hscaled, hscaled, room_height-hscaled);
 }
 
 void GameCamera::render(SDL2pp::Renderer& renderer, float delta_time) {
@@ -52,4 +55,9 @@ void GameCamera::render(SDL2pp::Renderer& renderer, float delta_time) {
         return;
 
     set_pos(target->get_x(), target->get_y());
+}
+
+void GameCamera::set_bounds(float width, float height) {
+    room_width = width;
+    room_height = height;
 }
