@@ -53,6 +53,11 @@ void ClientGameState::update(const std::shared_ptr<ClientGameStateDTO> &game_sta
     //    transfer_death_worms(game_state_dto->worms);
     //}
 
+    for (auto &explosion: game_state_dto->explosions) {
+        // auto image = display.new_sprite("wdead", WORM_SIZE, WORM_SIZE, 0);
+        // image->set_pos(explosion.x, explosion.y);
+    }
+
     for (auto &worm_dto: game_state_dto->worms) {
         auto &it = worms[worm_dto.entity_id];
         it->update(worm_dto, worm_dto.entity_id == game_state_dto->focused_entity_id);
