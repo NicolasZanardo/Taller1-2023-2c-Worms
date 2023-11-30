@@ -41,7 +41,7 @@ std::unique_ptr<WormBody> PhysicsSystem::spawn_worm(
 
     // Shape for hitbox
     b2CircleShape dynamicCircle;
-    dynamicCircle.m_radius = worms_cfg.body.size / 2;
+    dynamicCircle.m_radius = WORM_SIZE / 2;
 
     // Fixture for hitbox
     b2FixtureDef fixtureDef;
@@ -57,11 +57,11 @@ std::unique_ptr<WormBody> PhysicsSystem::spawn_worm(
 
     // Shape for foot sensor
     b2PolygonShape footSensorBox;
-    float sensorHeight = worms_cfg.body.size / 4;
+    float sensorHeight = WORM_SIZE / 4;
     footSensorBox.SetAsBox(
-        worms_cfg.body.size / 2,
+        WORM_SIZE / 2,
         sensorHeight,
-        b2Vec2(0.0f, -(worms_cfg.body.size / 2) - (sensorHeight / 2)),
+        b2Vec2(0.0f, -(WORM_SIZE / 2) - (sensorHeight / 2)),
         0
     );
 
