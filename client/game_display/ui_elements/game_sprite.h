@@ -8,7 +8,6 @@
 #include "game_sprite_info.h"
 
 class GameSprite : public Displayable {
-    GameCamera& cam;
     GameSpriteInfo& info;
     float x,y,w,h;
     SDL2pp::Rect transform;
@@ -19,9 +18,11 @@ class GameSprite : public Displayable {
     
     float anim_speed;
     float anim_progress;
+    GameCamera* cam;
 
     public:
     ~GameSprite() override;
+    explicit GameSprite(GameSpriteInfo& info, float width, float height, float angle);
     explicit GameSprite(GameCamera& cam, GameSpriteInfo& info, float width, float height, float angle);
 
     void set_size(float width, float heigth);
