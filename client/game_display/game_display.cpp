@@ -37,13 +37,13 @@ GameDisplay::GameDisplay(Queue<std::shared_ptr<Command>> &command_queue, int fps
     resources.add_texture("widle"           , "resources/sprites/worm/wwalk.png"          ,w,h,xoff,yoff-2 ,sep, SpriteAnimationType::NONE   , 28);
     resources.add_texture("wdead"           , "resources/sprites/worm/grave1.png"         ,w,h,xoff,yoff-10,sep, SpriteAnimationType::REVERSE, 28);
     // Aiming
-    resources.add_texture("w_bazooka"       , "resources/sprites/worm/w_bazooka.png"      ,w,h,xoff,yoff-2,sep, SpriteAnimationType::BY_ANGLE, 28);
-    resources.add_texture("w_mortar"        , "resources/sprites/worm/w_mortar.png"       ,w,h,xoff,yoff-2,sep, SpriteAnimationType::BY_ANGLE, 28);
+    resources.add_texture("w_bazooka"       , "resources/sprites/worm/w_bazooka.png"      ,w,h,xoff,yoff-2,sep, 90,-180);
+    resources.add_texture("w_mortar"        , "resources/sprites/worm/w_mortar.png"       ,w,h,xoff,yoff-2,sep, 90,-180);
     resources.add_texture("w_green_grenade" , "resources/sprites/worm/w_green_grenade.png",w,h,xoff,yoff-2,sep, SpriteAnimationType::FREEZE  , 28);
     // Projectiles
-    resources.add_texture("p_bazooka"       , "resources/sprites/projectiles/bazooka.png"      ,w,h,xoff,yoff,sep, SpriteAnimationType::BY_ANGLE, 0);
-    resources.add_texture("p_mortar"        , "resources/sprites/projectiles/mortar.png"       ,w,h,xoff,yoff,sep, SpriteAnimationType::BY_ANGLE, 0);
-    resources.add_texture("p_green_grenade" , "resources/sprites/projectiles/green_grenade.png",w,h,xoff,yoff,sep, SpriteAnimationType::BY_ANGLE, 0);
+    resources.add_texture("p_bazooka"       , "resources/sprites/projectiles/bazooka.png"      ,w,h,xoff,yoff,sep, 90,360);
+    resources.add_texture("p_mortar"        , "resources/sprites/projectiles/mortar.png"       ,w,h,xoff,yoff,sep, 90,360);
+    resources.add_texture("p_green_grenade" , "resources/sprites/projectiles/green_grenade.png",w,h,xoff,yoff,sep, 90,360);
     resources.add_texture("p_clustlet"      , "resources/sprites/projectiles/clustlet.png"     ,w,h,xoff,yoff,sep, SpriteAnimationType::LOOP    , 0);
 }
 
@@ -135,9 +135,11 @@ WormAnimationSet* GameDisplay::new_worm_animation(float size_scale, float angle)
 void GameDisplay::start_scenario(float width, float height, float water_level) {
     float gameW = camera.px_to_w(128);
     float gameH = camera.px_to_h(24);
+    
+    //camera.set_bounds(width, height); TODO hacer que la camara no salga del salon
 
     GameSprite *background = new GameSprite(camera, *resources.get_sprite("fondo"), width, height, 0.0);
-    background->set_pos(width/2, water_level + height / 2 - gameH/2);
+    background->set_pos(width/2, water_level - gameH/2);
     images.emplace_back(background);
 
     for (float i = 0.0f; i < width; i += gameW) {

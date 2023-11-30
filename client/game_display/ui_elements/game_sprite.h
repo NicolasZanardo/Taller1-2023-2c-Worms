@@ -6,6 +6,7 @@
 #include "game_camera.h"
 #include "game_displayable.h"
 #include "game_sprite_info.h"
+class SpriteAnimation;
 
 class GameSprite : public Displayable {
     GameSpriteInfo& info;
@@ -15,10 +16,8 @@ class GameSprite : public Displayable {
     float angle, angle_min, angle_max;
     bool is_active;
     SDL_RendererFlip flip;
-    
-    float anim_speed;
-    float anim_progress;
     GameCamera* cam;
+    SpriteAnimation* animation;
 
     public:
     ~GameSprite() override;
@@ -34,8 +33,6 @@ class GameSprite : public Displayable {
     void set_pos(float x, float y);
     void image_flipped(bool image_is_flipped);
     void render(SDL2pp::Renderer& renderer, float delta_time) override;
-
-    void update_animation(float delta_time);
     friend class WormAnimationSet;
 };
 
