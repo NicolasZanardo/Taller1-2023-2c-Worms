@@ -5,14 +5,14 @@
 #include <vector>
 #include "FragmentsInfo.h"
 
-class CFragments {
-    std::unique_ptr<FragmentsInfo> m_fragments_info;
-public:
-    explicit CFragments(std::unique_ptr<FragmentsInfo> fragments_info);
+struct CFragments {
 
-    const std::unique_ptr<FragmentsInfo>& info() const;
+    std::unique_ptr<FragmentsInfo> info;
+
+    explicit CFragments(
+        std::unique_ptr<FragmentsInfo> frag_info
+    ) : info(std::move(frag_info)) {}
 
 };
-
 
 #endif //TP_WORMS_CFRAGMENTS_H

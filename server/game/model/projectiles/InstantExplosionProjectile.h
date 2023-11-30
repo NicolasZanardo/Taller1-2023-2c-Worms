@@ -2,6 +2,7 @@
 #define TP_WORMS_INSTANTEXPLOSIONPROJECTILE_H
 
 #include "Projectile.h"
+#include <memory>
 
 class InstantExplosionProjectile : public Projectile {
     friend class ProjectileFactory;

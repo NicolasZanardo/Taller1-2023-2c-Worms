@@ -13,8 +13,8 @@ void ExplosionsSystem::update(const std::vector<std::shared_ptr<Projectile>> &pr
         if (explosion) {
             auto fragments = projectile->fragments_component();
             if (fragments) {
-                for (int i = 0; i < fragments->info()->amount; i++) {
-                    instantiate_individual_fragment(i, fragments->info(), explosion);
+                for (int i = 0; i < fragments->info->amount; i++) {
+                    instantiate_individual_fragment(i, fragments->info, explosion);
                 }
             }
             explosions.emplace_back(projectile->get_type(), explosion->x, explosion->y, explosion->radius);

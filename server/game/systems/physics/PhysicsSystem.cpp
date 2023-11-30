@@ -3,6 +3,7 @@
 #include "OnExplosionWormsQuery.h"
 
 const float DEG_TO_RAD = M_PI / 180.0f;
+const float RAD_TO_DEG = 180.0f / M_PI;
 
 PhysicsSystem::PhysicsSystem(
     int rate,
@@ -48,7 +49,7 @@ std::unique_ptr<WormBody> PhysicsSystem::spawn_worm(
 
     fixtureDef.density = worms_cfg.body.density;
     fixtureDef.restitution = worms_cfg.body.restitution;
-    fixtureDef.friction = 0.2;
+    fixtureDef.friction = 0.5;
     fixtureDef.userData.pointer = reinterpret_cast<uintptr_t>(worm_model.get());
     fixtureDef.filter.categoryBits = WORM_CATEGORY_BIT;
     fixtureDef.filter.maskBits = GROUND_CATEGORY_BIT | PROJECTILE_CATEGORY_BIT | WATER_CATEGORY_BIT | BOUNDARY_CATEGORY_BIT;
@@ -125,18 +126,34 @@ std::unique_ptr<ProjectileBody> PhysicsSystem::spawn_projectile(
     const std::shared_ptr<Projectile> &projectile
 ) {
 
-    auto aim_vector = angle_to_normalized_vector(projectile_info->shot_angle);
     // Body def
     b2BodyDef bodyDef;
     bodyDef.type = b2_dynamicBody;
     bodyDef.bullet = true;
-    bodyDef.fixedRotation = false;
-    bool is_facing_right = true;
 
+    std::unique_ptr<RotationStrategy> rotation_strategy = nullptr;
+    switch(projectile_info->rotation_type) {
+        case RotationType::None:
+            break;
+        case RotationType::VelocityAligned:
+            rotation_strategy = std::make_unique<VelocityAlignedRotation>();
+            break;
+        case RotationType::AngularVelocity:
+            bodyDef.angularVelocity = 5;
+            break;
+    }
+
+    auto aim_vector = angle_to_normalized_vector(projectile_info->shot_angle);
+    bool is_facing_right = true;
     if (projectile_info->facing_sign == -1) {
         is_facing_right = false;
         aim_vector.first *= -1.0f;  // Reverse the x-component for left-facing shot
     }
+
+    b2Vec2 initialForce(
+        aim_vector.first * projectile_info->power,
+        aim_vector.second * projectile_info->power
+    );
 
     b2Vec2 offset_from_worm(aim_vector.first * SHOT_OFFSET_FROM_WORM, aim_vector.second * SHOT_OFFSET_FROM_WORM);
     // Logger::log_position("A projectile spawned", projectile_info->origin_x + offset_from_worm.x,projectile_info->origin_y + offset_from_worm.y);
@@ -149,6 +166,9 @@ std::unique_ptr<ProjectileBody> PhysicsSystem::spawn_projectile(
     b2CircleShape dynamicCircle;
     dynamicCircle.m_radius = PROJECTILE_RADIUS; // todo cfg
 
+    // b2PolygonShape dynamicCircle;
+    // dynamicCircle.SetAsBox(PROJECTILE_RADIUS, PROJECTILE_RADIUS * 2, b2Vec2(0, 0), 0);
+
     // Fixture for hitbox
     b2FixtureDef fixtureDef;
     fixtureDef.shape = &dynamicCircle;
@@ -160,13 +180,10 @@ std::unique_ptr<ProjectileBody> PhysicsSystem::spawn_projectile(
     fixtureDef.filter.maskBits = GROUND_CATEGORY_BIT | WORM_CATEGORY_BIT | WATER_CATEGORY_BIT | BOUNDARY_CATEGORY_BIT;
     body->CreateFixture(&fixtureDef);
 
-    b2Vec2 initialForce(
-        aim_vector.first * projectile_info->power,
-        aim_vector.second * projectile_info->power
-    );
+
     body->ApplyLinearImpulse(initialForce, body->GetWorldCenter(), true);
     body->SetAngularDamping(0.1f);
-    return std::make_unique<ProjectileBody>(world, body, is_facing_right);
+    return std::make_unique<ProjectileBody>(world, body, is_facing_right, std::move(rotation_strategy));
 }
 
 std::pair<float, float> PhysicsSystem::angle_to_normalized_vector(float angle_degrees) {
@@ -218,6 +235,8 @@ PhysicsSystem::spawn_fragment_projectile(
     // bodyDef.linearDamping = 0.0f;
     b2Body *body = world.CreateBody(&bodyDef);
 
+    std::unique_ptr<RotationStrategy> rotation_strategy = nullptr;
+
     // Shape for hitbox
     b2CircleShape dynamicCircle;
     dynamicCircle.m_radius = PROJECTILE_RADIUS;
@@ -237,7 +256,7 @@ PhysicsSystem::spawn_fragment_projectile(
         is_facing_right = false;
     }
 
-    return std::make_unique<ProjectileBody>(world, body, is_facing_right);
+    return std::make_unique<ProjectileBody>(world, body, is_facing_right, nullptr);
 }
 
 void PhysicsSystem::spawn_boundaries(const GameScenarioData &scenario_data) {
