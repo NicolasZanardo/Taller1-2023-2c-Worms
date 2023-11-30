@@ -2,13 +2,18 @@
 #include "BuoyancyForce.h"
 #include "Logger.h"
 
-WormBody::WormBody(b2World&  world, b2Body* body) :
+WormBody::WormBody(b2World&  world, b2Body* body, WormCfg &worm_cfg) :
         Body(world, body, true),
         state(State::IDLE),
+        speed(worm_cfg.body.speed),
+        forward_jump_height(worm_cfg.body.forward_jump_height),
+        forward_jump_reach(worm_cfg.body.forward_jump_height),
+        backwards_jump_height(worm_cfg.body.backwards_jump_height),
+        backwards_jump_reach(worm_cfg.body.backwards_jump_reach),
         is_moving(false),
         is_jumping(false),
         is_on_water(false),
-        is_on_ground(false) {};
+        is_on_ground(false){};
 
 bool WormBody::facing_right() const {
     return is_facing_right;
