@@ -133,10 +133,10 @@ WormAnimationSet* GameDisplay::new_worm_animation(float size_scale, float angle)
 
 
 void GameDisplay::start_scenario(float width, float height, float water_level) {
+    camera.set_bounds(width, height);
     float gameW = camera.px_to_w(128);
     float gameH = camera.px_to_h(24);
     
-    //camera.set_bounds(width, height); TODO hacer que la camara no salga del salon
 
     GameSprite *background = new GameSprite(camera, *resources.get_sprite("fondo"), width, height, 0.0);
     background->set_pos(width/2, water_level - gameH/2);
