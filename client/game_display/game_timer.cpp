@@ -3,6 +3,7 @@
 #include <sstream>
 
 const int MS = 1000;
+const int MINUTE_TO_SEC = 60;
 
 GameTimer::GameTimer(GameDisplay &display) :
     last_updated_game_time(0),
@@ -43,12 +44,12 @@ void GameTimer::update(int updated_turn_time, int updated_game_time) {
 }
 
 std::string GameTimer::to_minutes_seconds_format(int seconds) {
-    int minutes = seconds / 60;
-    int remainingSeconds = seconds % 60;
+    int minutes = seconds / MINUTE_TO_SEC;
+    int remaining_seconds = seconds % MINUTE_TO_SEC;
 
     std::ostringstream oss;
     oss << std::setw(2) << std::setfill('0') << minutes << " : "
-        << std::setw(2) << std::setfill('0') << remainingSeconds;
+        << std::setw(2) << std::setfill('0') << remaining_seconds;
 
     return oss.str();
 }
