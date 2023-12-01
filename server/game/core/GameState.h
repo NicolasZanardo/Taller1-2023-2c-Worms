@@ -9,16 +9,16 @@ struct GameState {
     int current_turn_worm_id;
     int focused_entity_id;
     float wind_speed;
-    float remaining_game_time;
-    float remaining_turn_time;
+    int remaining_game_time;
+    int remaining_turn_time;
 
     GameState(
         int current_client_turn_id,
         int current_turn_worm_id,
         int focused_entity_id,
         float wind_speed,
-        float remaining_game_time,
-        float remaining_turn_time
+        int remaining_game_time,
+        int remaining_turn_time
     ) : current_turn_client_id(current_client_turn_id),
         current_turn_worm_id(current_turn_worm_id),
         focused_entity_id(focused_entity_id),

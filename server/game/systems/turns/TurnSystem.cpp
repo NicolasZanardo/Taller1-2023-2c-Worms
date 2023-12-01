@@ -168,11 +168,11 @@ int TurnSystem::get_current_worm_id() const {
     }
 }
 
-float TurnSystem::get_remaining_game_time() const {
+int TurnSystem::get_remaining_game_time() const {
     return game_time_left;
 }
 
-float TurnSystem::get_remaining_turn_time() const {
+int TurnSystem::get_remaining_turn_time() const {
     return turn_time_left;
 }
 

@@ -7,8 +7,8 @@ NetMessageGameStateUpdate::NetMessageGameStateUpdate(
     int current_turn_worm_id,
     int focused_entity_id,
     float wind_speed,
-    float remaining_game_time,
-    float remaining_turn_time
+    int remaining_game_time,
+    int remaining_turn_time
 ) : NetMessage(NET_MESSAGE_TYPE_UPDATE_STATE),
     current_turn_client_id(current_turn_client_id),
     current_turn_worm_id(current_turn_worm_id),
@@ -43,8 +43,8 @@ void NetMessageGameStateUpdate::push_data_into(NetBuffer &container) {
     container.push_int(current_turn_worm_id);
     container.push_int(focused_entity_id);
     container.push_float(wind_speed);
-    container.push_float(remaining_game_time);
-    container.push_float(remaining_turn_time);
+    container.push_int(remaining_game_time);
+    container.push_int(remaining_turn_time);
 
     container.push_short(worms.size());
     for (size_t i = 0; i < worms.size(); i++) {
@@ -92,8 +92,8 @@ void NetMessageGameStateUpdate::pull_data_from(NetProtocolInterpreter &channel) 
     current_turn_worm_id = channel.read_int();
     focused_entity_id = channel.read_int();
     wind_speed = channel.read_float();
-    remaining_game_time = channel.read_float();
-    remaining_turn_time = channel.read_float();
+    remaining_game_time = channel.read_int();
+    remaining_turn_time = channel.read_int();
 
     short worms_size = channel.read_short();
     for (int i = 0; i < worms_size; i++) {
