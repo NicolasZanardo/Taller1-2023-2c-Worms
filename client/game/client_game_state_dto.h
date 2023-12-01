@@ -21,8 +21,8 @@ public:
     int focused_entity_id;
     
     float wind_speed;
-    float remaining_game_time;
-    float remaining_turn_time;
+    int remaining_game_time;
+    int remaining_turn_time;
     
     std::vector<WormDto> worms;
     std::vector<BeamDto> beams;

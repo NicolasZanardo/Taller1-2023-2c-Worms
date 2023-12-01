@@ -11,9 +11,9 @@ WormEntity::WormEntity(GameDisplay& display, WormDto& values) :
     , sprite(display.new_worm_animation(1.0f, 0.0f))
     , is_active(true)
     , name(display.new_text(
-        std::to_string(values.life), 
+        std::to_string(values.life),
         values.x, values.y + 1,
-        TextAlign::center, 
+        TextAlign::center,
         TextLayer::ingame,
         TextType::gametext
     ))

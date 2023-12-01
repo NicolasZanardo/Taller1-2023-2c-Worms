@@ -3,7 +3,9 @@
 #include "constants.h"
 
 ClientGameState::ClientGameState(GameDisplay &display)
-    : display(display), turnDisplay(display.new_text("Es mi turno!", 400, 0, TextAlign::center, TextLayer::UI, TextType::title)),
+    : display(display),
+      turnDisplay(display.new_text("Es mi turno!", 400, 0, TextAlign::center, TextLayer::UI, TextType::title)),
+      timer(display),
       worms(), my_client_id(-1) {
     turnDisplay->hidden(true);
 }
@@ -45,8 +47,8 @@ void ClientGameState::load(const std::shared_ptr<ClientGameStateDTO> &game) {
 }
 
 void ClientGameState::update(const std::shared_ptr<ClientGameStateDTO> &game_state_dto) {
-    game_remaining_time = game_state_dto->remaining_game_time;
-    turn_remaining_time = game_state_dto->remaining_turn_time;
+    timer.update(game_state_dto->remaining_turn_time, game_state_dto->remaining_game_time);
+
 
     for (auto &explosion: game_state_dto->explosions) {
         // auto image = display.new_sprite("wdead", WORM_SIZE, WORM_SIZE, 0);

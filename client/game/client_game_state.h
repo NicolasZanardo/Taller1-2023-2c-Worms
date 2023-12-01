@@ -10,15 +10,14 @@
 #include "game_text_display.h"
 #include "client_game_state_dto.h"
 #include "projectiles/game_projectile_entity.h"
+#include "game_timer.h"
 
 class ClientGameState {
     GameDisplay& display;
-    int game_remaining_time;
-    int turn_remaining_time;
     float width;
     float height;
     GameTextDisplay* turnDisplay;
-
+    GameTimer timer;
 
     // std::unique_ptr<ClientGameStateDTO> game_state_dto;
     std::map<int, std::shared_ptr<WormEntity>> worms;
