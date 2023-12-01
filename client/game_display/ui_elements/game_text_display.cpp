@@ -48,7 +48,6 @@ void GameTextDisplay::render(Renderer& renderer, float delta_time) {
         texture =  new Texture(renderer, surfaceMessage);
         transform.SetW(texture->GetWidth());
         transform.SetH(texture->GetHeight());
-
         if (align == TextAlign::right)
             transform.SetX(transform.GetX()-transform.GetW());
         else if (align == TextAlign::center)

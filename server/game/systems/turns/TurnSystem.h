@@ -40,8 +40,8 @@ public:
 
     int get_current_client_id() const;
     int get_current_worm_id() const;
-    float get_remaining_game_time() const;
-    float get_remaining_turn_time() const;
+    int get_remaining_game_time() const;
+    int get_remaining_turn_time() const;
 
     void add_player(int client_id, const std::list<int>& worm_ids_from_client);
     void remove_worm(int worm_id);

@@ -11,6 +11,7 @@ add_executable (client_app
     game_display/game_display.h game_display/game_display.cpp
         
     game_display/game_worm_entity.h game_display/game_worm_entity.cpp
+    game_display/game_timer.h game_display/game_timer.cpp
 
     game_display/projectiles/game_projectile_entity.h game_display/projectiles/game_projectile_entity.cpp
     game_display/projectiles/projectile_sprite_key_mapper.h game_display/projectiles/projectile_sprite_key_mapper.cpp
