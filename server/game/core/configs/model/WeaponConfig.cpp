@@ -35,8 +35,7 @@ ProjectileTypeDto string_to_projectile_type(const std::string &type_str) {
         {"GREEN_GRENADE", ProjectileTypeDto::GREEN_GRENADE},
         {"HOLY_GRENADE",  ProjectileTypeDto::HOLY_GRENADE},
         {"DYNAMITE",      ProjectileTypeDto::DYNAMITE},
-        {"CLUSTLET",      ProjectileTypeDto::FRAGMENT},
-        // Add more mappings as needed
+        {"CLUSTLET",      ProjectileTypeDto::FRAGMENT}
     };
 
     auto it = PROJECTILE_TYPE_MAPPING.find(type_str);
@@ -62,26 +61,16 @@ RotationType string_to_rotation_type(const std::string &rotation_type_str) {
     }
 }
 
-// Add a function to parse the ProjectileCfg based on the projectile_id
 ProjectileCfg parse_projectile_from_id(const YAML::Node &projectiles, int projectile_id) {
-    // Assuming "projectiles" is a YAML::Node containing your projectile configurations
     const YAML::Node &projectile_node = projectiles[projectile_id];
 
     ProjectileCfg projectile_cfg;
     projectile_cfg.type = string_to_projectile_type(projectile_node["type"].as<std::string>());
-    std::cout << "Type is: " << projectile_node["type"].as<std::string>() << std::endl;
-
     projectile_cfg.max_damage = projectile_node["max_damage"].as<float>();
-    std::cout << "damage is: " << projectile_cfg.max_damage << std::endl;
-
     projectile_cfg.explosion_radius = projectile_node["explosion_radius"].as<float>();
-    std::cout << "explosion radius is: " << projectile_cfg.explosion_radius << std::endl;
-
     projectile_cfg.affected_by_wind = projectile_node["affected_by_wind"].as<bool>();
     projectile_cfg.rotation = string_to_rotation_type(projectile_node["rotation_type"].as<std::string>());
-
     projectile_cfg.default_explosion_countdown = projectile_node["default_explosion_countdown"].as<int>();
-    std::cout << "default_explosion_countdown is: " << projectile_cfg.default_explosion_countdown << std::endl;
 
     if (projectile_node["fragments"]) {
         projectile_cfg.fragments.emplace();
@@ -108,21 +97,17 @@ void Config<WeaponCfg>::parse_file() {
             if (projectiles[projectile_id]) {
                 weaponCfg.projectile = parse_projectile_from_id(projectiles, projectile_id);
             } else {
-                throw std::runtime_error("Weapon needs a projectile, no mele weapons implemented for now");
+                throw std::runtime_error("Weapon needs a projectile, no melee weapons implemented for now");
             }
 
             weaponCfg.ammo = entry.second["ammo"].as<int>();
-            std::cout << "Ammo is: " << weaponCfg.ammo << std::endl;
             weaponCfg.shoot_power = entry.second["shoot_power"].as<float>();
-            std::cout << "Shoot power is: " << weaponCfg.shoot_power << std::endl;
 
             // Parsing Charge (if present)
             if (entry.second["charge"]) {
                 weaponCfg.charge.emplace();
                 weaponCfg.charge->time_to_charge = entry.second["charge"]["time_to_charge"].as<int>();
-                std::cout << "time_to_charge is: " << weaponCfg.charge->time_to_charge << std::endl;
                 weaponCfg.charge->initial_charged_percentage = entry.second["charge"]["initial_charged_percentage"].as<float>();
-                std::cout << "initial_charged_percentage is: " << weaponCfg.charge->initial_charged_percentage  << std::endl;
             }
             config.emplace(id, weaponCfg);
         }
@@ -131,6 +116,6 @@ void Config<WeaponCfg>::parse_file() {
         throw (e);
     } catch (const std::exception &ex) {
         std::cerr << "Error in parse_file: " << ex.what() << " on WeaponConfig.cpp" << std::endl;
-        throw;  // rethrow the exception to terminate the program
+        throw;
     }
 }

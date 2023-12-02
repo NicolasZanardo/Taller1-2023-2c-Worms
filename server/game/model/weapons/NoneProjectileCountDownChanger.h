@@ -10,5 +10,4 @@ public:
     void change_countdown(int new_countdown) override;
 };
 
-
 #endif //TP_WORMS_NONEPROJECTILECOUNTDOWNCHANGER_H

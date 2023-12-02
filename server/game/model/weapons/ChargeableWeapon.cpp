@@ -1,13 +1,6 @@
 #include "ChargeableWeapon.h"
 #include "Logger.h"
-#include <iostream>
 
-/* Cant be instantiated protected constructor
- *
- * Subclasses of ChargeableWeapon
- * only need to generate the shot based on the
- * charge_power member
- */
 ChargeableWeapon::ChargeableWeapon(WeaponCfg &cfg, std::unique_ptr<ProjectileCountDownChanger> projectile_countdown_changer) :
     Weapon(cfg, std::move(projectile_countdown_changer)),
     time_to_fully_charge(cfg.charge->time_to_charge),
