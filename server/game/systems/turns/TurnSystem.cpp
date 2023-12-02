@@ -178,7 +178,7 @@ int TurnSystem::get_remaining_turn_time() const {
 
 bool TurnSystem::worms_are_still(std::unordered_map<int, std::shared_ptr<Worm>> &worms) {
     for (const auto &[_, worm]: worms) {
-        if (worm->body && worm->body->is_still_moving()) {
+        if (!worm->is_still()) {
             return false;
         }
     }

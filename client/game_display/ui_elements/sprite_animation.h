@@ -8,6 +8,7 @@
 struct SpriteAnimation {
     float speed;
     float progress;
+    float framecount;
     GameSpriteInfo& info;
     virtual SDL2pp::Rect update(float deltatime) = 0;
     virtual void restart() {
@@ -17,14 +18,14 @@ struct SpriteAnimation {
     virtual ~SpriteAnimation() {}
     SpriteAnimation(GameSpriteInfo& info) :
         speed(info.frame_speed * 0.000001f), progress(0),
-        info(info) { }
+        framecount(info.frame_count), info(info) { }
 };
 
 struct NoAnimation : public SpriteAnimation {
     NoAnimation(GameSpriteInfo& info) :
     SpriteAnimation(info) { }
 
-    SDL2pp::Rect update(float deltatime) {
+    SDL2pp::Rect update(float deltatime) override {
         return info.image_frame(0);
     }
 };
@@ -54,8 +55,6 @@ struct ReversingAnimation : public SpriteAnimation {
 
     SDL2pp::Rect update(float deltatime) override {
         progress += speed * deltatime;
-        
-        float framecount = info.frame_count;
         while (progress >= framecount || progress < 0) {
             float asc = progress > framecount;
             progress = (2*framecount - progress)*asc - progress*(1.0f-asc);
@@ -81,8 +80,7 @@ struct RotationAnimation : public SpriteAnimation {
     { }
 
     SDL2pp::Rect update(float angle) override {
-        float framecount = info.frame_count+1.0f;
-        progress = framecount * (angle - angle_ini) / (angle_span);
+        progress = (framecount+1.0f) * (angle - angle_ini) / (angle_span);
 
         if (progress >= framecount-1)
             progress = framecount-1;
@@ -96,8 +94,37 @@ struct FreezingAnimation : public SpriteAnimation {
     SpriteAnimation(info) { }
 
     SDL2pp::Rect update(float deltatime) override {
+        progress += speed * deltatime;
         if (progress >= info.frame_count) {
             progress = info.frame_count-1;
+        }
+        if (progress < 0) {
+            progress = 0;
+        }
+
+        return info.image_frame(progress);
+    }
+};
+
+#include "game_display.h"
+struct VFXAnimation : public SpriteAnimation {
+    GameDisplay* holder;
+    Displayable* image;
+
+    VFXAnimation(GameSpriteInfo& info) :
+    SpriteAnimation(info), holder(nullptr), 
+    image(nullptr) { }
+
+    void setup(GameDisplay& display, Displayable& sprite) {
+        image = &sprite;
+        holder = &display;
+    }
+
+    SDL2pp::Rect update(float deltatime) override {
+        progress += speed * deltatime;
+        if (progress >= info.frame_count || progress < 0) {
+            holder->remove(image);
+            return SDL2pp::Rect(0,0,0,0);
         }
 
         return info.image_frame(progress);

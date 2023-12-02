@@ -24,6 +24,7 @@ class GameDisplay {
     std::list<Displayable*> images;
     std::list<Displayable*> foreground;
     std::list<Displayable*> user_interface;
+    std::list<Displayable*> toremove;
     public:
     GameCamera camera;
     EventHandler event_handler;
@@ -36,6 +37,10 @@ class GameDisplay {
     WormAnimationSet* new_worm_animation(float size_scale, float angle);
     GameTextDisplay* new_text(const std::string& text, float x, float y, TextAlign align, TextLayer layer, TextType type);
     GameSprite* new_sprite(const std::string& spritekey, float width, float height, float angle = 0);
+    void new_vfx(const std::string& spritekey, float x, float y, float width, float height, float angle = 0);
+
+    private:
+    void clean_removed_sprites();
 };
 
 #endif

@@ -7,7 +7,7 @@
 class SpriteAnimation;
 
 enum SpriteAnimationType {
-    LOOP, REVERSE, FREEZE, NONE, BY_ANGLE
+    LOOP, REVERSE, FREEZE, NONE, BY_ANGLE, VFX
 };
 
 class GameSpriteInfo {
