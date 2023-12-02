@@ -5,9 +5,10 @@
 #include "WeaponCfg.h"
 
 class ChargeableWeapon : public Weapon {
+    friend class WeaponFactory;
     const float MAX_POWER = 1;
-    const float CHARGING_DURATION = 1500;
-    float charged_power;
+    const int time_to_fully_charge;
+    float charged_percentage;
     bool is_charging;
     float started_charge_at_x;
     float started_charge_at_y;
@@ -22,10 +23,10 @@ class ChargeableWeapon : public Weapon {
 protected:
     void on_turn_ended() override;
 
-    explicit ChargeableWeapon(WeaponCfg &cfg);
+    explicit ChargeableWeapon(WeaponCfg &cfg, std::unique_ptr<ProjectileCountDownChanger> projectile_countdown_changer);
 
 public:
-    virtual std::unique_ptr<CShot> shoot(float charged_power, float from_x, float from_y, char facing_sign) = 0;
+    std::unique_ptr<CShot> shoot(float from_x, float from_y, char facing_sign) override;
 };
 
 

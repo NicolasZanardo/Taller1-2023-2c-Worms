@@ -4,7 +4,7 @@
 #include "box2d/box2d.h"
 
 enum class RotationType {
-    None , VelocityAligned, AngularVelocity
+    NONE , VELOCITY_ALIGNED, INITIAL_ANGULAR_VELOCITY
 };
 
 class RotationStrategy {

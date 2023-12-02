@@ -25,7 +25,7 @@ class WormFootSensor;
 class Worm: public Collidable, public Instance, Updatable, OnTurnEndedListener {
 private:
     friend class InstancesManager;
-    int WATER_DEATH_TIME = 2000;
+    int WATER_DEATH_TIME = 1500;
     bool is_dead;
     WeaponMap weapons;
     std::shared_ptr<Weapon> actual_weapon;

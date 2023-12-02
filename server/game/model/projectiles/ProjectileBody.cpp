@@ -1,7 +1,6 @@
 #include "ProjectileBody.h"
 #include "BuoyancyForce.h"
 #include "RotationStrategy.h"
-#include <iostream>
 
 ProjectileBody::ProjectileBody(
     b2World &world,

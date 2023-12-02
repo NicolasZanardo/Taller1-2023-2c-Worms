@@ -9,22 +9,23 @@
 #include "CShot.h"
 #include "ProjectileCountDown.h"
 #include "WeaponCfg.h"
+#include "ProjectileCountDownChanger.h"
 
 class Weapon {
 protected:
+    ProjectileCfg projectile_data;
     WeaponTypeDto type;
     int ammo_left;
-    float max_damage;
     float max_shoot_power;
-    float explosion_radius;
-    float projectile_radius;
-    bool affected_by_wind;
     bool has_shot_this_turn;
     WeaponRotation rotation;
+    std::unique_ptr<ProjectileCountDownChanger> countdown_changer;
 
     std::unique_ptr<CShot> c_shot;
 
-    explicit Weapon(WeaponCfg & weapon_cfg);
+    explicit Weapon(WeaponCfg & weapon_data, std::unique_ptr<ProjectileCountDownChanger> projectile_countdown_changer);
+    virtual std::unique_ptr<CShot> shoot(float from_x, float from_y, char facing_sign);
+
 public:
 
     WeaponTypeDto WeaponType();
@@ -39,7 +40,7 @@ public:
 
     virtual void end_shooting(float from_x, float from_y, char facing_sign) = 0;
 
-    virtual bool change_projectile_count_down(ProjectileCountDown count_down) = 0;
+    void change_projectile_count_down(ProjectileCountDown count_down);
 
     void start_aiming_up();
 

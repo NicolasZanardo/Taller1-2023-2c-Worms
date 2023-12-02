@@ -1,7 +1,7 @@
-#include <iostream>
 #include "ProjectileFactory.h"
 #include "CountdownProjectile.h"
 #include "InstantExplosionProjectile.h"
+#include "Logger.h"
 
 std::shared_ptr<Projectile> ProjectileFactory::create_projectile(size_t id, const std::unique_ptr<ProjectileInfo> &info) {
     if (info->countdown <= 0) {

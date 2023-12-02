@@ -7,7 +7,7 @@ void BuoyancyForce::apply(b2Body *body) {
     float buoyancy_force_magnitude = -gravity.y * body->GetMass();
 
     // Apply additional damping to simulate water resistance
-    b2Vec2 damping_force = -0.1f * body->GetLinearVelocity();
+    b2Vec2 damping_force = -0.35f * body->GetLinearVelocity();
 
     // Apply the combined buoyancy and damping forces
     b2Vec2 buoyancy_force(0.0f, buoyancy_force_magnitude);

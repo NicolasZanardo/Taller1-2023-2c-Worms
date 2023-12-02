@@ -16,7 +16,7 @@
 
 
 class Projectile : public Collidable, public Instance, Updatable {
-    constexpr static const float WATER_LIFE_TIME = 2000;
+    constexpr static const float WATER_LIFE_TIME = 1500;
 protected:
     ProjectileTypeDto type;
     bool exploded;

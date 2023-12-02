@@ -1,34 +1,24 @@
-#include <stdexcept>
 #include "WeaponFactory.h"
-#include "Bazooka.h"
-#include "Mortar.h"
-#include "GreenGrenade.h"
+#include "InstantShotWeapon.h"
+#include "DefaultProjectileCountDownChanger.h"
+#include "NoneProjectileCountDownChanger.h"
+#include "ChargeableWeapon.h"
 
 std::shared_ptr<Weapon> WeaponFactory::create(WeaponCfg &weapon_cfg) {
 
-    switch (weapon_cfg.type) {
-        case WeaponTypeDto::NONE:
-            break;
-        case WeaponTypeDto::BAZOOKA:
-            return std::make_shared<Bazooka>(weapon_cfg);
-        case WeaponTypeDto::MORTAR:
-            return std::make_shared<Mortar>(weapon_cfg);
-        case WeaponTypeDto::GREEN_GRENADE:
-            return std::make_shared<GreenGrenade>(weapon_cfg);
-        case WeaponTypeDto::SAINT_GRENADE:
-            break;
-        case WeaponTypeDto::BASEBALL_BAT:
-            break;
-        case WeaponTypeDto::RED_GRENADE:
-            break;
-        case WeaponTypeDto::BANANA:
-            break;
-        case WeaponTypeDto::AIRSTRIKE:
-            break;
-        case WeaponTypeDto::TELEPORTATION:
-            break;
+    std::unique_ptr<ProjectileCountDownChanger> projectile_count_down_changer = nullptr;
+    if (weapon_cfg.projectile.default_explosion_countdown > 0) {
+        projectile_count_down_changer = std::make_unique<DefaultProjectileCountdownChanger>(
+            weapon_cfg.projectile.default_explosion_countdown
+            );
+    } else {
+        projectile_count_down_changer = std::make_unique<NoneProjectileCountDownChanger>(0);
     }
-    // TODO FOR NOW THROW ERROR THEN CAN HANDLE WITH NULLPTR
-    throw std::runtime_error("Unimplemented Weapon constructor");
-    return nullptr;
+
+    if (weapon_cfg.charge.has_value()) {
+        return std::shared_ptr<ChargeableWeapon>( new ChargeableWeapon(weapon_cfg, std::move(projectile_count_down_changer)));
+    } else {
+        return std::shared_ptr<InstantShotWeapon>( new InstantShotWeapon(weapon_cfg, std::move(projectile_count_down_changer)));
+    }
+
 }

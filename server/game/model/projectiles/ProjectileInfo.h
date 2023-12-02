@@ -19,7 +19,6 @@ public:
     float power;
     float origin_x;
     float origin_y;
-    float projectile_radius;
     bool affected_by_wind;
     int countdown;
     ProjectileTypeDto projectile_type;
@@ -34,7 +33,6 @@ public:
         float power,
         float origin_x,
         float origin_y,
-        float projectile_radius,
         bool affected_by_wind,
         int countdown,
         ProjectileTypeDto projectile_type,
@@ -48,7 +46,6 @@ public:
         power(power),
         origin_x(origin_x),
         origin_y(origin_y),
-        projectile_radius(projectile_radius),
         affected_by_wind(affected_by_wind),
         countdown(countdown),
         projectile_type(projectile_type),
