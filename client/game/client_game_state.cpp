@@ -75,15 +75,16 @@ void ClientGameState::update(const std::shared_ptr<ClientGameStateDTO> &game_sta
             );
         }
     }
-    turnDisplay->hidden(my_client_id != game_state_dto->current_turn_client_id);
 
-    if (game_state_dto->focused_entity_id > 0) {
-        focus_camera_on(game_state_dto->focused_entity_id);
-    }
+    turnDisplay->hidden(my_client_id != game_state_dto->current_turn_client_id);
+    focus_camera_on(game_state_dto->focused_entity_id);
 }
 
 
 void ClientGameState::focus_camera_on(int entity_id) {
+    if (entity_id <= 0) {
+        display.camera.set_target(nullptr);
+    }
     auto worm_iter = worms.find(entity_id);
     if (worm_iter != worms.end()) {
         display.camera.set_target(worm_iter->second.get());
@@ -108,11 +109,6 @@ void ClientGameState::destroy_old_projectiles(std::vector<ProjectileDto> updated
         );
 
         if (found == updated_projectiles.end()) {
-            // LATER CAN HAVE WORLD EVENTS DTO
-            // TODO HERE CAN TRIGGER EXPLOSION ANIM
-            // auto image = display.new_sprite("x_explosion", EXPLOSION_SIZE, EXPLOSION_SIZE, 0);
-            // image->set_pos(found->get_x(), found->get_y());
-
             display.remove(it->second->get_sprite());
             it = projectiles.erase(it);
         } else {

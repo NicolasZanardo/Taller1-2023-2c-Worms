@@ -44,6 +44,7 @@ public:
 
     float X() const;
     float Y() const;
+    bool is_still() const;
     b2Body* B2Body() const;
     WormFootSensor* get_foot_sensor();
 

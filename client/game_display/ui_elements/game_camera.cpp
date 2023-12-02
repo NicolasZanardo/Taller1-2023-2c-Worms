@@ -53,7 +53,6 @@ void GameCamera::set_pos(float x, float y) {
 void GameCamera::render(SDL2pp::Renderer& renderer, float delta_time) {
     if (target == nullptr)
         return;
-
     set_pos(target->get_x(), target->get_y());
 }
 

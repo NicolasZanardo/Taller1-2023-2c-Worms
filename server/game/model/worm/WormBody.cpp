@@ -124,11 +124,6 @@ void WormBody::on_turn_ended() {
     is_moving = false;
 }
 
-bool WormBody::is_still_moving() {
-    return body->GetLinearVelocity().x != 0 && body->GetLinearVelocity().y != 0;
-}
-
-
 MovementStateDto WormBody::state_to_dto() const {
     switch (state) {
         case State::IDLE:
