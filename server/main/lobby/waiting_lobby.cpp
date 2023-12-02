@@ -49,13 +49,18 @@ bool purged_zombie(Client* cli) {
 }
 
 GameEngineInstance* WaitingLobby::start_game() {
-    auto game = new GameEngineInstance(
+    try {
+        auto game = new GameEngineInstance(
             0, -40, HardcodedScenarioData::get(),  // TODO GameConfig struct
             clients
-            );
-    game->start();
-    
-    return game;
+        );
+        game->start();
+        return game;
+    } catch (const std::exception &ex) {
+        std::cerr << "Error:" << ex.what()  << std::endl;
+        throw;  // rethrow the exception to terminate the program
+    }
+
 } // TODO There is no Join for now
 
 void WaitingLobby::add(Client* new_client) {

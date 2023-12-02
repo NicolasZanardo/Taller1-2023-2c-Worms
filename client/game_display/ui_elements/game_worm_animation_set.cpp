@@ -20,7 +20,9 @@ WormAnimationSet::WormAnimationSet(
 
         GameSprite* aiming_bazooka,
         GameSprite* aiming_mortar,
-        GameSprite* aiming_green_granade
+        GameSprite* aiming_green_granade,
+        GameSprite* aiming_hgrenade,
+        GameSprite* aiming_dynamite
     ) :
     worm_state_sprite({
 { MovementStateDto::IDLE          , idle },
@@ -33,7 +35,9 @@ WormAnimationSet::WormAnimationSet(
     aiming_idle_sprite({
 { WeaponTypeDto::BAZOOKA       , aiming_bazooka },
 { WeaponTypeDto::MORTAR        , aiming_mortar },
-{ WeaponTypeDto::GREEN_GRENADE , aiming_green_granade }
+{ WeaponTypeDto::GREEN_GRENADE , aiming_green_granade },
+{ WeaponTypeDto::HOLY_GRENADE , aiming_hgrenade },
+{ WeaponTypeDto::DYNAMITE , aiming_dynamite }
     }),
     active_body(falling), 
     aiming_body(aiming_bazooka), 

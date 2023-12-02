@@ -20,6 +20,6 @@ const float PROJECTILE_RADIUS = 0.2f;
 const float FRAGMENT_RADIUS = 0.15f;
 const float SHOT_OFFSET_FROM_WORM = (WORM_SIZE / 2) + PROJECTILE_RADIUS * 2;
 
-const float WATER_HEIGHT = 4;
+const float WATER_HEIGHT = 6;
 
 #endif

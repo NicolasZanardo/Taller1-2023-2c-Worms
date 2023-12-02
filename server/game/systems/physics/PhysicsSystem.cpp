@@ -125,7 +125,6 @@ std::unique_ptr<ProjectileBody> PhysicsSystem::spawn_projectile(
     const std::unique_ptr<ProjectileInfo> &projectile_info,
     const std::shared_ptr<Projectile> &projectile
 ) {
-
     // Body def
     b2BodyDef bodyDef;
     bodyDef.type = b2_dynamicBody;
@@ -133,13 +132,14 @@ std::unique_ptr<ProjectileBody> PhysicsSystem::spawn_projectile(
 
     std::unique_ptr<RotationStrategy> rotation_strategy = nullptr;
     switch(projectile_info->rotation_type) {
-        case RotationType::None:
+        case RotationType::NONE:
+            bodyDef.fixedRotation = true;
             break;
-        case RotationType::VelocityAligned:
+        case RotationType::VELOCITY_ALIGNED:
             rotation_strategy = std::make_unique<VelocityAlignedRotation>();
             break;
-        case RotationType::AngularVelocity:
-            bodyDef.angularVelocity = 5;
+        case RotationType::INITIAL_ANGULAR_VELOCITY:
+            bodyDef.angularVelocity = -5 * projectile_info->facing_sign; // TODO Check sign
             break;
     }
 
@@ -150,13 +150,12 @@ std::unique_ptr<ProjectileBody> PhysicsSystem::spawn_projectile(
         aim_vector.first *= -1.0f;  // Reverse the x-component for left-facing shot
     }
 
-    b2Vec2 initialForce(
+    b2Vec2 initial_force(
         aim_vector.first * projectile_info->power,
         aim_vector.second * projectile_info->power
     );
 
     b2Vec2 offset_from_worm(aim_vector.first * SHOT_OFFSET_FROM_WORM, aim_vector.second * SHOT_OFFSET_FROM_WORM);
-    // Logger::log_position("A projectile spawned", projectile_info->origin_x + offset_from_worm.x,projectile_info->origin_y + offset_from_worm.y);
     bodyDef.position.Set(projectile_info->origin_x + offset_from_worm.x,
                          projectile_info->origin_y + offset_from_worm.y);
 
@@ -180,8 +179,7 @@ std::unique_ptr<ProjectileBody> PhysicsSystem::spawn_projectile(
     fixtureDef.filter.maskBits = GROUND_CATEGORY_BIT | WORM_CATEGORY_BIT | WATER_CATEGORY_BIT | BOUNDARY_CATEGORY_BIT;
     body->CreateFixture(&fixtureDef);
 
-
-    body->ApplyLinearImpulse(initialForce, body->GetWorldCenter(), true);
+    body->ApplyLinearImpulse(initial_force, body->GetWorldCenter(), true);
     body->SetAngularDamping(0.1f);
     return std::make_unique<ProjectileBody>(world, body, is_facing_right, std::move(rotation_strategy));
 }
@@ -255,7 +253,6 @@ PhysicsSystem::spawn_fragment_projectile(
     if (speed.x < 0) {
         is_facing_right = false;
     }
-
     return std::make_unique<ProjectileBody>(world, body, is_facing_right, nullptr);
 }
 

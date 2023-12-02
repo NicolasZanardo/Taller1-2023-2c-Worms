@@ -22,6 +22,7 @@ bool ProjectileBody::did_spawned_facing_right() const {
 }
 
 void ProjectileBody::on_update() {
+    std::cout << "Angle degrees: " << AngleInDeg() << std::endl;
     if (rotation_strategy) {
         rotation_strategy->update_rotation(body);
     }

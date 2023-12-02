@@ -46,6 +46,12 @@ bool EventHandler::handleEvents() {
                     case SDLK_e:
                         this->command_queue.push(std::make_shared<ChangeWeaponCommand>(WeaponTypeDto::GREEN_GRENADE));
                         break;
+                    case SDLK_r:
+                        this->command_queue.push(std::make_shared<ChangeWeaponCommand>(WeaponTypeDto::HOLY_GRENADE));
+                        break;
+                    case SDLK_f:
+                        this->command_queue.push(std::make_shared<ChangeWeaponCommand>(WeaponTypeDto::DYNAMITE));
+                        break;
                     case SDLK_1:
                         this->command_queue.push(std::make_shared<ChangeProjectileCountDownCommand>(ProjectileCountDown::ONE));
                         break;

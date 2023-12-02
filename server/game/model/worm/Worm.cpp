@@ -1,6 +1,8 @@
 #include "Worm.h"
 #include "CollideableTags.h"
 #include "WeaponFactory.h"
+#include "GameAction.h"
+#include "Logger.h"
 #include <iostream>
 
 Worm::Worm(size_t id, WormCfg &worm_cfg, Config<WeaponCfg>& weapons_cfg) :

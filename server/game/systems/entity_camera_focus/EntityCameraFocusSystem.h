@@ -12,7 +12,7 @@ class EntityCameraFocusSystem {
     bool is_focusing_flying_worm;
     int focused_entity;
     const int rate;
-    int changing_focus_cooldown{};
+    int change_focus_of_flying_worm_cooldown{};
 public:
     explicit EntityCameraFocusSystem(int rate);
 

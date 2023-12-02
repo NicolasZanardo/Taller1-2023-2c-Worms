@@ -1,6 +1,7 @@
 #include "InstantShotWeapon.h"
 
-InstantShotWeapon::InstantShotWeapon(WeaponCfg &cfg) : Weapon(cfg) {}
+InstantShotWeapon::InstantShotWeapon(WeaponCfg &cfg, std::unique_ptr<ProjectileCountDownChanger> countdown_changer) :
+    Weapon(cfg, std::move(countdown_changer)) {}
 
 void InstantShotWeapon::start_shooting(float from_x, float from_y, char facing_sign) {
     if (!has_shot_this_turn && ammo_left > 0) {

@@ -1,27 +1,37 @@
-  1:
-    type: bazooka
-    ammo: 8
-    max_damage: 50
-    explosion_radius: 2
-    max_shoot_power: 14
-    default_projectile_countdown: -1
-    projectile_radius: 0.3
-    affected_by_wind: true
-  2:
-    type: mortar
-    ammo: 8
-    max_damage: 50
-    explosion_radius: 2
-    max_shoot_power: 11
-    default_projectile_countdown: -1
-    projectile_radius: 0.3
-    affected_by_wind: true
-  3:
-    type: green_grenade
-    ammo: 5
-    max_damage: 40
-    explosion_radius: 2
-    max_shoot_power: 7
-    default_projectile_countdown: 5000
-    projectile_radius: 0.3
-    affected_by_wind: true
+1:
+  type: BAZOOKA
+  projectile_id: 1
+  ammo: 8
+  shoot_power: 14
+  charge:
+    time_to_charge: 1500
+    initial_charged_percentage: 0.2
+2:
+  type: MORTAR
+  projectile_id: 2
+  ammo: 8
+  shoot_power: 11
+  charge:
+    time_to_charge: 1500
+    initial_charged_percentage: 0.2
+3:
+  type: GREEN_GRENADE
+  projectile_id: 3
+  ammo: 5
+  shoot_power: 7
+  charge:
+    time_to_charge: 1500
+    initial_charged_percentage: 0.2
+4:
+  type: HOLY_GRENADE
+  projectile_id: 4
+  ammo: 5
+  shoot_power: 7
+  charge:
+    time_to_charge: 1500
+    initial_charged_percentage: 0.2
+5:
+  type: DYNAMITE
+  projectile_id: 5
+  ammo: 5
+  shoot_power: 0
