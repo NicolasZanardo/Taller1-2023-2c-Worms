@@ -1,6 +1,7 @@
 #include "Body.h"
-#include <stdexcept>
+#include <cmath>
 
+const float EPSILON = 0.005;
 const float RAD_TO_DEG = 180.0f / M_PI;
 
 Body::Body(b2World &world, b2Body *body, bool is_facing_right) :
@@ -19,6 +20,11 @@ float Body::X() const {
 
 float Body::Y() const {
     return body->GetPosition().y;
+}
+
+bool Body::is_still() const {
+    return std::abs(body->GetLinearVelocity().x) < EPSILON &&
+        std::abs(body->GetLinearVelocity().y) < EPSILON;
 }
 
 float Body::Angle() const {

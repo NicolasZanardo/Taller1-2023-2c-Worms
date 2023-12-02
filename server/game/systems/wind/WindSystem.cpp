@@ -24,6 +24,5 @@ void WindSystem::init() {
     if (left_direction) {
         wind_speed *= -1;
     }
-
     force.on_wind_change(wind_speed);
 }

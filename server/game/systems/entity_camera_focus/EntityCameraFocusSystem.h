@@ -8,16 +8,11 @@
 #include "Projectile.h"
 
 class EntityCameraFocusSystem {
-    const int COOLDOWN = 1500;
-    bool is_focusing_flying_worm;
     int focused_entity;
-    const int rate;
-    int change_focus_of_flying_worm_cooldown{};
 public:
-    explicit EntityCameraFocusSystem(int rate);
+    explicit EntityCameraFocusSystem();
 
     void update(
-        int it,
         const std::unordered_map<int, std::shared_ptr<Worm>> &worms,
         const std::shared_ptr<Worm> &current_turn_worm,
         const std::vector<std::shared_ptr<Projectile>> &projectiles

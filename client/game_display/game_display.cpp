@@ -69,7 +69,6 @@ GameDisplay::~GameDisplay() {
 
 void GameDisplay::update(float delta_time) {
     camera.render(renderer, delta_time);
-
     renderer.Clear();
     for (auto spr: images)
         spr->render(renderer, delta_time);

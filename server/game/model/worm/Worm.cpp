@@ -56,6 +56,10 @@ float Worm::Y() const {
     return body->Y();
 }
 
+bool Worm::is_still() const {
+    return body->is_still();
+}
+
 b2Body* Worm::B2Body() const {
     return body->B2Body();
 }
@@ -152,7 +156,6 @@ void Worm::start_aiming_up() {
     if (actual_weapon) {
         actual_weapon->start_aiming_up();
     }
-
 }
 
 void Worm::stop_aiming_up() {

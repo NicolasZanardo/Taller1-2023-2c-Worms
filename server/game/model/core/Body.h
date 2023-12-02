@@ -20,6 +20,8 @@ public:
 
     float Y() const;
 
+    bool is_still() const;
+
     float Angle() const;
 
     float AngleInDeg() const;

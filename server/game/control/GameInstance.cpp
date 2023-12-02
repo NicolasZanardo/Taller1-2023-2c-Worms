@@ -17,7 +17,7 @@ GameInstance::GameInstance(
     shot_system(instances_manager),
     wind_system(world),
     explosions_system(instances_manager, world),
-    entity_focus_system(rate) {
+    entity_focus_system() {
     assign_worms_to_clients(clients);
     turn_system.randomly_assign_clients_turn();
 
@@ -48,7 +48,7 @@ bool GameInstance::update(const int it) {
     shot_system.update(current_turn_worm);
     wind_system.update(projectiles);
     explosions_system.update(projectiles);
-    entity_focus_system.update(it, worms, current_turn_worm, projectiles);
+    entity_focus_system.update(worms, current_turn_worm, projectiles);
     instances_manager.update();
     return false;
 }
