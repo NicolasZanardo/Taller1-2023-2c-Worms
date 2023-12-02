@@ -17,9 +17,9 @@ class GameSprite : public Displayable {
     bool is_active;
     SDL_RendererFlip flip;
     GameCamera* cam;
-    SpriteAnimation* animation;
 
     public:
+    SpriteAnimation* animation;
     ~GameSprite() override;
     explicit GameSprite(GameSpriteInfo& info, float width, float height, float angle);
     explicit GameSprite(GameCamera& cam, GameSpriteInfo& info, float width, float height, float angle);

@@ -51,8 +51,7 @@ void ClientGameState::update(const std::shared_ptr<ClientGameStateDTO> &game_sta
 
 
     for (auto &explosion: game_state_dto->explosions) {
-        // auto image = display.new_sprite("wdead", WORM_SIZE, WORM_SIZE, 0);
-        // image->set_pos(explosion.x, explosion.y);
+        display.new_vfx("explosion", explosion.x, explosion.y, 2*explosion.radius, 2*explosion.radius);
     }
 
     for (auto &worm_dto: game_state_dto->worms) {

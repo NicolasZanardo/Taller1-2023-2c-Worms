@@ -1,6 +1,7 @@
 #include "game_display.h"
 #include "ui_utils.h"
 #include "game_sprite.h"
+#include "sprite_animation.h"
 
 GameDisplay::GameDisplay(Queue<std::shared_ptr<Command>> &command_queue, int fps) :
         fps(fps), sdl(SDL_INIT_VIDEO), ttf(),
@@ -20,6 +21,8 @@ GameDisplay::GameDisplay(Queue<std::shared_ptr<Command>> &command_queue, int fps
     resources.add_texture("ui_hgrenade", "resources/weapon_icons/hgrenade.png");
     resources.add_texture("ui_dynamite", "resources/weapon_icons/dynamite.png");
 
+    resources.add_texture("explosion", "resources/sprites/effects/circle50.png",100,100,0,0,0,SpriteAnimationType::FREEZE,28);
+    
     // Scenario
     resources.add_texture("beam_large", "resources/sprites/scenario/beam_large.png");
     resources.add_texture("fondo", "resources/sprites/scenario/fondo.png");
@@ -65,47 +68,62 @@ GameDisplay::~GameDisplay() {
     for (auto spr: user_interface) {
         delete (spr);
     }
+
+    for (auto spr: toremove) {
+        delete (spr);
+    }
 }
 
 void GameDisplay::update(float delta_time) {
+    clean_removed_sprites();
+
     camera.render(renderer, delta_time);
     renderer.Clear();
-    for (auto spr: images)
-        spr->render(renderer, delta_time);
+        for (auto spr: images)
+            spr->render(renderer, delta_time);
 
-    for (auto spr: foreground)
-        spr->render(renderer, delta_time);
+        for (auto spr: foreground)
+            spr->render(renderer, delta_time);
 
-    for (auto spr: user_interface)
-        spr->render(renderer, delta_time);
+        for (auto spr: user_interface)
+            spr->render(renderer, delta_time);
     renderer.Present();
+
+    clean_removed_sprites();
 }
 
 void GameDisplay::remove(Displayable* item) {
-    images.remove_if([item](Displayable* displayable) {
-        if (displayable == item) {
-            delete(item);
-            return true;
-        }
-        return false;
-    });
-
-    foreground.remove_if([item](Displayable* displayable) {
-        if (displayable == item) {
-            delete(item);
-            return true;
-        }
-        return false;
-    });
-
-    user_interface.remove_if([item](Displayable* displayable) {
-        if (displayable == item) {
-            delete(item);
-            return true;
-        }
-        return false;
-    });
+    toremove.emplace_back(item);
 }
+void GameDisplay::clean_removed_sprites() {
+    for (auto item : toremove) {
+        images.remove_if([item](Displayable* displayable) {
+            if (displayable == item) {
+                delete(item);
+                return true;
+            }
+            return false;
+        });
+
+        foreground.remove_if([item](Displayable* displayable) {
+            if (displayable == item) {
+                delete(item);
+                return true;
+            }
+            return false;
+        });
+
+        user_interface.remove_if([item](Displayable* displayable) {
+            if (displayable == item) {
+                delete(item);
+                return true;
+            }
+            return false;
+        });
+    }
+    toremove.clear();
+}
+
 
 GameSprite* GameDisplay::new_sprite(const std::string& spritekey, float width, float height, float angle) {
     GameSprite *sprite = new GameSprite(camera, *resources.get_sprite(spritekey), width, height, angle);
@@ -174,4 +192,18 @@ void GameDisplay::start_scenario(float width, float height, float water_level) {
     ((GameSprite*)overlay[2])->set_pos(88,0);
     ((GameSprite*)overlay[3])->set_pos(134,0);
     ((GameSprite*)overlay[4])->set_pos(180,0);
+}
+
+void GameDisplay::new_vfx(const std::string& spritekey, float x, float y, float width, float height, float angle) {
+    auto& info = *resources.get_sprite(spritekey);
+
+    GameSprite *sprite = new GameSprite(camera, info, width, height, angle);
+    sprite->set_pos(x,y);
+
+    auto vfx = new VFXAnimation(info);
+    delete(sprite->animation);
+    sprite->animation = vfx;
+    vfx->setup(*this, *sprite);
+
+    images.emplace_back(sprite);
 }

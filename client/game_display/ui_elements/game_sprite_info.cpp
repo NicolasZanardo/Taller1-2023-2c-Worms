@@ -106,6 +106,8 @@ SpriteAnimation* GameSpriteInfo::new_animation() {
             return new NoAnimation(*this);
         case SpriteAnimationType::FREEZE:
             return new FreezingAnimation(*this);
+        case SpriteAnimationType::VFX:
+            return new VFXAnimation(*this);
     }
     return new NoAnimation(*this);
 }
