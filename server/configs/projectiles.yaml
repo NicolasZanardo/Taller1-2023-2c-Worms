@@ -1,0 +1,47 @@
+1:
+  type: P_BAZOOKA
+  max_damage: 50
+  explosion_radius: 2
+  affected_by_wind: true
+  rotation_type: VELOCITY_ALIGNED
+  default_explosion_countdown: -1
+2:
+  type: P_MORTAR
+  max_damage: 50
+  explosion_radius: 2
+  affected_by_wind: true
+  rotation_type: VELOCITY_ALIGNED
+  default_explosion_countdown: -1
+  fragments:
+    amount: 5
+    max_damage: 10
+    explosion_radius: 1
+    affected_by_wind: true
+3:
+  type: GREEN_GRENADE
+  max_damage: 40
+  explosion_radius: 2
+  affected_by_wind: true
+  rotation_type: INITIAL_ANGULAR_VELOCITY
+  default_explosion_countdown: 5000
+4:
+  type: HOLY_GRENADE
+  max_damage: 80
+  explosion_radius: 2
+  affected_by_wind: false
+  rotation_type: INITIAL_ANGULAR_VELOCITY
+  default_explosion_countdown: 5000
+5:
+  type: DYNAMITE
+  max_damage: 50
+  explosion_radius: 4
+  affected_by_wind: false
+  rotation_type: NONE
+  default_explosion_countdown: 5000
+6:
+  type: CLUSTLET
+  max_damage: 50
+  explosion_radius: 2
+  affected_by_wind: true
+  rotation_type: VELOCITY_ALIGNED
+  default_explosion_countdown: -1

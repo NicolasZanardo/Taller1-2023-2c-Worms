@@ -18,6 +18,12 @@ void Logger::log_weapon(const std::string &log, WeaponTypeDto weapon) {
         case WeaponTypeDto::GREEN_GRENADE:
             name = "GREEN_GRENADE\n";
             break;
+        case WeaponTypeDto::HOLY_GRENADE:
+            name = "HOLY_GRENADE\n";
+            break;
+        case WeaponTypeDto::DYNAMITE:
+            name = "DYNAMITE\n";
+            break;
         default:
             name = "WEAPON NAME MAPPING NOT IMPLEMENTED\n";
             break;

@@ -2,7 +2,7 @@
 #define TP_WORMS_WEAPONROTATION_H
 
 class WeaponRotation {
-    const float MAX_WEAPON_ROTATING = 90;
+    const float MAX_WEAPON_ROTATION = 90;
     bool is_aim_angle_rotating;
     bool is_aim_angle_rotating_upwards;
     float speed;

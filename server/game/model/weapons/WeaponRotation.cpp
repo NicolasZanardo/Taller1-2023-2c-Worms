@@ -19,7 +19,7 @@ void WeaponRotation::start_aiming_down() {
 }
 
 void WeaponRotation::stop_aiming_up() {
-    is_aim_angle_rotating = false; // TODO Better mechanics for when both are pressed/released
+    is_aim_angle_rotating = false;
     is_aim_angle_rotating_upwards = false;
 }
 
@@ -30,10 +30,9 @@ void WeaponRotation::stop_aiming_down() {
 
 void WeaponRotation::on_update() {
     if (is_aim_angle_rotating) {
-         std::cout << "Rotation angle is: " << aimed_angle << std::endl;
-        if (is_aim_angle_rotating_upwards && aimed_angle < MAX_WEAPON_ROTATING) {
+        if (is_aim_angle_rotating_upwards && aimed_angle < MAX_WEAPON_ROTATION) {
             aimed_angle += speed;
-        } else if (!is_aim_angle_rotating_upwards && aimed_angle > -MAX_WEAPON_ROTATING){
+        } else if (!is_aim_angle_rotating_upwards && aimed_angle > -MAX_WEAPON_ROTATION){
             aimed_angle -= speed;
         }
     }

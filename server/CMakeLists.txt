@@ -60,16 +60,10 @@ add_executable(
     game/model/weapons/Weapon.cpp
     game/model/weapons/WeaponFactory.h
     game/model/weapons/WeaponFactory.cpp
-    game/model/weapons/chargeable_weapons/ChargeableWeapon.h
-    game/model/weapons/chargeable_weapons/ChargeableWeapon.cpp
-    game/model/weapons/chargeable_weapons/GreenGrenade.h
-    game/model/weapons/chargeable_weapons/GreenGrenade.cpp
-    game/model/weapons/instant_shot_weapons/InstantShotWeapon.h
-    game/model/weapons/instant_shot_weapons/InstantShotWeapon.cpp
-    game/model/weapons/chargeable_weapons/Bazooka.h
-    game/model/weapons/chargeable_weapons/Bazooka.cpp
-    game/model/weapons/chargeable_weapons/Mortar.h
-    game/model/weapons/chargeable_weapons/Mortar.cpp
+        game/model/weapons/ChargeableWeapon.h
+        game/model/weapons/ChargeableWeapon.cpp
+        game/model/weapons/InstantShotWeapon.h
+        game/model/weapons/InstantShotWeapon.cpp
 
         game/model/weapons/WeaponRotation.h
     game/model/weapons/WeaponRotation.cpp
@@ -154,6 +148,11 @@ add_executable(
     game/systems/entity_camera_focus/EntityCameraFocusSystem.cpp
         game/model/projectiles/RotationStrategy.h
         game/model/projectiles/VelocityAlignedRotation.cpp
+        game/model/weapons/ProjectileCountDownChanger.h
+        game/model/weapons/DefaultProjectileCountDownChanger.h
+        game/model/weapons/DefaultProjectileCountDownChanger.cpp
+        game/model/weapons/NoneProjectileCountDownChanger.h
+        game/model/weapons/NoneProjectileCountDownChanger.cpp
 )
 
 target_include_directories(server_app PUBLIC

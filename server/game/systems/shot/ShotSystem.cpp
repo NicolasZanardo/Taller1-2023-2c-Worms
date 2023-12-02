@@ -1,5 +1,5 @@
 #include "ShotSystem.h"
-#include <iostream>
+#include "Logger.h"
 
 ShotSystem::ShotSystem(InstancesManager &instances_manager): instances_manager(instances_manager) {}
 

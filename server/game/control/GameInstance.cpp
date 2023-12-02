@@ -18,7 +18,6 @@ GameInstance::GameInstance(
     wind_system(world),
     explosions_system(instances_manager, world),
     entity_focus_system(rate) {
-
     assign_worms_to_clients(clients);
     turn_system.randomly_assign_clients_turn();
 
