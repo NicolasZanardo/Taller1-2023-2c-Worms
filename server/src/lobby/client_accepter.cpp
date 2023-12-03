@@ -15,6 +15,7 @@ void ClientAccepter::run() {
             Socket skt = host.accept();
             Client* newClient = new Client(next_id++, std::move(skt), *(this->games_manager));
             lobby.add(newClient);
+
         } catch (const std::exception& ex) {
             keep_running_ = false;
         }

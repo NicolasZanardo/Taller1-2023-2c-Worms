@@ -41,6 +41,17 @@ std::list<GameInfoDTO> GamesManager::listGames() {
     return info_list;
 }
 
+void GamesManager::startGame(const std::string& game_room) {
+    std::lock_guard<std::mutex> lck(this->mtx);
+
+    auto iter = this->rooms.find(game_room);
+    if (iter == this->rooms.end()) {
+        return false;
+    }
+
+    iter->second.start();
+}
+
 void GamesManager::cleanEndedGames() {
     std::lock_guard<std::mutex> lck(this->mtx);
 

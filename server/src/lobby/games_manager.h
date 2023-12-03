@@ -30,6 +30,7 @@ public:
     bool createGame(const std::string& game_room, const std::string& scenario, uint8_t total_players);
     bool joinGame(const std::string& game_room, Client& client);
     std::list<GameInfoDTO> listGames();
+    void startGame(const std::string& game_room);
 
     void cleanEndedGames();
 

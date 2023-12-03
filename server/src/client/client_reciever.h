@@ -16,6 +16,9 @@ class Reciever : public Thread, public NetMessageBehaviour {
     NetQueue* send_queue;
     GamesManager* games_manager;
 
+    std::string game_room;
+    std::shared_ptr<NetMessage> msg;
+
     public:
     Reciever(const int client_id, Client& client, NetChannel* channel, NetQueue& send_queue, GamesManager& games_manager);
     
@@ -25,15 +28,15 @@ class Reciever : public Thread, public NetMessageBehaviour {
     
     ~Reciever();
 
-    void run(NetMessageChat* msg) override { }
-    void run(NetMessageLeave* msg) override { }
-    void run(NetMessage_test* msg) override { }
-    void run(NetMessageInformID* msg) override { }
-    void run(NetMessageInitialGameState* msg) override { }
-    void run(NetMessageGameStateUpdate* msg) override { }
-    void run(NetMessageGameAction* msg) override { }
-    void run(NetMessagePlayerChangedWeapon* msg) override { }
-    void run(NetMessagePlayerChangedProjectileCountdown* msg) override { }
+    void run(NetMessageChat* msg) override;
+    void run(NetMessageLeave* msg) override;
+    void run(NetMessage_test* msg) override;
+    void run(NetMessageInformID* msg) override;
+    void run(NetMessageInitialGameState* msg) override;
+    void run(NetMessageGameStateUpdate* msg) override;
+    void run(NetMessageGameAction* msg) override;
+    void run(NetMessagePlayerChangedWeapon* msg) override;
+    void run(NetMessagePlayerChangedProjectileCountdown* msg) override;
 
     void run(NetMessageCreateGame* msg) override;
     void run(NetMessageListGames* msg) override;

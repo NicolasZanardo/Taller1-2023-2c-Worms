@@ -18,8 +18,10 @@ Reciever::~Reciever() {
 void Reciever::run() {
     while (keep_running_) {
         try {
-            std::shared_ptr<NetMessage> msg(channel->read_message());
-            msg->execute(*this);
+            // std::shared_ptr<NetMessage> msg(channel->read_message());
+            this->msg = channel->read_message();
+            this->msg->execute(*this);
+            // msg->execute(*this);
             // if (game_queue != nullptr)
             //     game_queue->push(msg);
         } catch (const std::exception& ex) {
@@ -55,15 +57,51 @@ void Reciever::run(NetMessageListGames* msg) {
 
 void Reciever::run(NetMessageJoinGame* msg) {
     bool success = this->games_manager->joinGame(msg->game_room, *(this->client));
+    this->game_room = msg->game_room;
 
     std::shared_ptr<NetMessage> response = std::make_shared<NetMessageJoinGameResponse>(success);
 
     this->send_queue->push(response);
-
-    // set game queue.
 }
 
-void run(NetMessageStartGame* msg) {
-    // game.start();
+void Reciever::run(NetMessageStartGame* msg) {
+    this->games_manager.startGame(this->game_room);
 }
 
+void Reciever::run(NetMessageChat* msg) { }
+
+void Reciever::run(NetMessageLeave* msg) { }
+
+void Reciever::run(NetMessage_test* msg) { }
+
+void Reciever::run(NetMessageInformID* msg) { }
+
+void Reciever::run(NetMessageInitialGameState* msg_) {
+    if (game_queue != nullptr) {
+        game_queue->push(this->msg);
+    }
+}
+
+void Reciever::run(NetMessageGameStateUpdate* msg_) {
+    if (game_queue != nullptr) {
+        game_queue->push(this->msg);
+    }
+}
+
+void Reciever::run(NetMessageGameAction* msg_) {
+    if (game_queue != nullptr) {
+        game_queue->push(this->msg);
+    }
+}
+
+void Reciever::run(NetMessagePlayerChangedWeapon* msg_) {
+    if (game_queue != nullptr) {
+        game_queue->push(this->msg);
+    }
+}
+
+void Reciever::run(NetMessagePlayerChangedProjectileCountdown* msg) {
+    if (game_queue != nullptr) {
+        game_queue->push(this->msg);
+    }
+}

@@ -7,6 +7,8 @@
 
 #include "../../../common_base/Game/game_info_dto.h"
 
+#include "../game/control/GameEngineInstance.h"
+
 class Client;
 
 class GameRoom {
@@ -34,6 +36,9 @@ private:
     uint8_t total_players;
 
     std::unordered_map<uint32_t, Client&> players;
+    std::list<Client*> list_clients;
+
+    GameEngineInstance* game_instance;
 
     bool was_ended;
 };
