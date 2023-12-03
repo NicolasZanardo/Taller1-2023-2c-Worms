@@ -35,7 +35,7 @@ class GameDisplay {
     void remove(Displayable* item);
     void start_scenario(float width, float height, float water_level);
     WormAnimationSet* new_worm_animation(float size_scale, float angle);
-    GameTextDisplay* new_text(const std::string& text, float x, float y, TextAlign align, TextLayer layer, TextType type);
+    GameTextDisplay* new_text(const std::string& text, float x, float y, TextAlign align, TextLayer layer, TextType type, int color = 0xFFFFFF);
     GameSprite* new_sprite(const std::string& spritekey, float width, float height, float angle = 0);
     void new_vfx(const std::string& spritekey, float x, float y, float width, float height, float angle = 0);
 

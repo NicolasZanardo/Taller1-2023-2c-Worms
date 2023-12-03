@@ -131,8 +131,10 @@ GameSprite* GameDisplay::new_sprite(const std::string& spritekey, float width, f
     return sprite;
 }
 
-GameTextDisplay* GameDisplay::new_text(const std::string& text, float x, float y, TextAlign align, TextLayer layer, TextType type) {
-    GameTextDisplay *display = new GameTextDisplay(camera, x, y, resources.get_font(type), align, layer, text);
+GameTextDisplay* GameDisplay::new_text(const std::string& text, float x, float y, TextAlign align, TextLayer layer, TextType type, int color) {
+    uint8_t* prt = (uint8_t*)&color;
+    SDL2pp::Color txtcolor{*(prt+2), *(prt+1), *(prt+0), 255 };
+    GameTextDisplay *display = new GameTextDisplay(camera, x, y, resources.get_font(type), align, layer, text, txtcolor);
     user_interface.emplace_back(display);
     return display;
 }
@@ -182,7 +184,7 @@ void GameDisplay::start_scenario(float width, float height, float water_level) {
         new GameSprite(*resources.get_sprite("ui_green_grenade"), 32, 32, 0),
         new GameSprite(*resources.get_sprite("ui_hgrenade"), 32, 32, 0),
         new GameSprite(*resources.get_sprite("ui_dynamite"), 32, 32, 0),
-        new GameTextDisplay(camera, 0, 32, resources.get_font(TextType::title), TextAlign::left, TextLayer::UI, "Q  W  E   R  F")
+        new GameTextDisplay(camera, 0, 32, resources.get_font(TextType::title), TextAlign::left, TextLayer::UI, "Q  W  E   R  F", {255,255,255,255})
     };
 
     for (auto it : overlay)
