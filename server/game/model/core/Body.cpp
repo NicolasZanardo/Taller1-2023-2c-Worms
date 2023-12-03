@@ -1,6 +1,6 @@
 #include "Body.h"
 #include <cmath>
-
+#include <iostream>
 const float EPSILON = 0.005;
 const float RAD_TO_DEG = 180.0f / M_PI;
 
@@ -8,8 +8,11 @@ Body::Body(b2World &world, b2Body *body, bool is_facing_right) :
     world(world), body(body), is_facing_right(is_facing_right) {}
 
 Body::~Body() {
+    std::cout << "Entered ~Body" << std::endl;
     if (body) {
+        std::cout << "body is not null" << std::endl;
         world.DestroyBody(body);
+        std::cout << "Destroyed body with world on ~Body\n";
         body = nullptr;
     }
 }

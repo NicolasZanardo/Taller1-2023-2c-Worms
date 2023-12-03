@@ -86,3 +86,8 @@ std::unique_ptr<CShot> Weapon::shoot(float from_x, float from_y, char facing_sig
         )
     );
 }
+
+void Weapon::upgrade(int ammo, float damage) {
+    projectile_data.max_damage = damage;
+    ammo_left = ammo;
+}

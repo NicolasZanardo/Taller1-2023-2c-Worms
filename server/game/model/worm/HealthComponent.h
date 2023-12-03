@@ -10,6 +10,7 @@ class HealthComponent {
     float actual_health;
     bool is_dead;
     int water_death_timer;
+    bool on_cheat_mode;
 
 public:
     explicit HealthComponent(float initial_health);
@@ -20,6 +21,8 @@ public:
     void adjust_health_to(float amount);
 
     void die(const std::shared_ptr<Worm>& worm);
+
+    void toggle_cheat_mode();
 
 };
 

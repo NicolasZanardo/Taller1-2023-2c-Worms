@@ -5,7 +5,7 @@
 #include "wormDto.h"
 #include "Body.h"
 #include "WormCfg.h"
-
+#include <iostream>
 class Worm;
 
 class WormBodyComponent : public Body {
@@ -83,7 +83,10 @@ public:
 
     virtual void on_turn_ended() = 0;
 
-    virtual ~WormBodyComponent() = default;
+    ~WormBodyComponent() {
+        std::cout << "Entered ~WormBodyComponent\n";
+        Body::~Body();
+    }
 
 };
 

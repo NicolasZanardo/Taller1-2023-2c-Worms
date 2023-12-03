@@ -35,6 +35,8 @@ public:
     void change_weapon(WeaponTypeDto weapon);
     void change_projectile_count_down(ProjectileCountDown count_down);
 
+    void upgrade_actual_weapon(int ammo, float damage);
+
 };
 
 

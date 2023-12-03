@@ -82,7 +82,6 @@ void WeaponsComponent::change_weapon(WeaponTypeDto weapon) {
     if (it != weapons.end()) {
         actual_weapon = it->second;
     } else {
-        std::cout << "Weapon not found in weapons map\n";
     }
 }
 
@@ -95,4 +94,10 @@ void WeaponsComponent::change_projectile_count_down(ProjectileCountDown count_do
 std::unique_ptr<CShot> WeaponsComponent::shot_component() {
     auto c_shot = actual_weapon->shot_component();
     return c_shot;
+}
+
+void WeaponsComponent::upgrade_actual_weapon(int ammo, float damage) {
+    if (actual_weapon) {
+        actual_weapon->upgrade(ammo, damage);
+    }
 }

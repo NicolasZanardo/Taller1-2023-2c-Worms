@@ -43,6 +43,11 @@ private:
     friend class WormBody;
     friend class WormCheatBody;
 
+    friend class CheatManager;
+    void cheat_movement(bool toggled);
+    void cheat_health();
+    void cheat_weapon(int new_ammo, float new_damage);
+
     WormStateDto state;
     std::shared_ptr<WeaponsComponent> weapons_component;
     std::shared_ptr<WormBodyComponent> body;
@@ -51,7 +56,6 @@ private:
 
     WormFootSensor foot_sensor;
     bool is_on_water;
-    bool cheat_mode;
     bool has_done_an_ending_turn_action;
 
     Worm(
@@ -105,8 +109,8 @@ public:
 
     // Cheat
     void toggle_cheat_mode(CheatType type);
-    void cheat_movement(bool toggled);
 
+    void receive_force(Force& force);
 
     ~Worm() = default;
 };

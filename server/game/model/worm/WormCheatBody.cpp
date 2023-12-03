@@ -46,7 +46,6 @@ char WormCheatBody::facing_direction_sign() const {
 }
 
 void WormCheatBody::start_moving_right() {
-    std::cout << "Entered here\n";
     is_facing_right = true;
     is_moving = true;
 }
@@ -64,7 +63,6 @@ void WormCheatBody::stop_moving() { //left right
 }
 
 void WormCheatBody::jump_forward() {
-    std::cout << "Entered here\n";
     is_jumping = true;
     body->SetLinearVelocity(b2Vec2(0, 0));
     body->ApplyLinearImpulseToCenter(
@@ -89,3 +87,5 @@ void WormCheatBody::jump_backwards() {
 void WormCheatBody::sink() {}
 
 void WormCheatBody::on_turn_ended() { is_moving = false; }
+
+void WormCheatBody::receive(Force &force) {}// Cheat body doesnt receive forces

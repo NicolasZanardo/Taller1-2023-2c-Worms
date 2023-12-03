@@ -41,15 +41,25 @@ bool GameInstance::update(const int it) {
 
     int current_worm_id = turn_system.get_current_worm_id();
     std::shared_ptr<Worm> current_turn_worm = nullptr;
+    //std::cout << "Before get worms\n";
     current_turn_worm = instances_manager.get_worm(current_worm_id);
+    //std::cout << "Before updatables\n";
     updatables_system.update(it, worms, projectiles);
+    //std::cout << "Before physics\n";
     physics_system.update();
+    //std::cout << "Before turn system\n";
     turn_system.update(it, worms, current_turn_worm, projectiles);
+    //std::cout << "Before shot system\n";
     shot_system.update(current_turn_worm);
+    //std::cout << "Before shot system\n";
     wind_system.update(projectiles);
+    //std::cout << "Before explosions system\n";
     explosions_system.update(projectiles);
+    //std::cout << "Before entity focus \n";
     entity_focus_system.update(worms, current_turn_worm, projectiles);
+    //std::cout << "Before instance manager \n";
     instances_manager.update();
+    //std::cout << "After instance manager \n";
     return false;
 }
 

@@ -21,7 +21,6 @@ Worm::Worm(
     health(worm_cfg.health.default_health),
     foot_sensor(this),
     is_on_water(false),
-    cheat_mode(false),
     has_done_an_ending_turn_action(false) {}
 
 WormDto Worm::toWormDto(size_t client_id) {
@@ -62,6 +61,10 @@ bool Worm::is_still() const {
 
 b2Body *Worm::B2Body() const {
     return body->B2Body();
+}
+
+void Worm::receive_force(Force& force) {
+    body->receive(force);
 }
 
 std::shared_ptr<WormBodyComponent> Worm::get_body() const {
@@ -202,4 +205,12 @@ void Worm::cheat_movement(bool toggled) {
     } else {
         body = std::make_shared<WormBody>(std::move(body));
     }
+}
+
+void Worm::cheat_health() {
+    health.toggle_cheat_mode();
+}
+
+void Worm::cheat_weapon(int new_ammo, float new_damage) {
+    weapons_component->upgrade_actual_weapon(new_ammo, new_damage);
 }

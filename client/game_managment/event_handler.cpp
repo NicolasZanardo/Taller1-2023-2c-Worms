@@ -72,7 +72,6 @@ bool EventHandler::handleEvents() {
                         this->command_queue.push(std::make_shared<ToggleCheatCommand>(CheatType::HEALTH));
                         break;
                     case SDLK_x:
-                        std::cout << "Sendin cheat\n";
                         this->command_queue.push(std::make_shared<ToggleCheatCommand>(CheatType::MOVEMENT));
                         break;
                     case SDLK_c:

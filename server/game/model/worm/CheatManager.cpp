@@ -13,20 +13,14 @@ void CheatManager::toggle_cheat(CheatType cheat, std::shared_ptr<Worm> worm) {
     cheat_map[cheat] = !cheat_map.at(cheat);
     auto toggled_on = cheat_map.at(cheat);
     switch (cheat) {
-        case CheatType::HEALTH: {
-            if (toggled_on) {
-                // worm->body = std::make_shared<WormCheatBody>(std::move(worm->body));
-            } else {
-                // worm->body = std::make_shared<WormBody>(std::move(worm->body));
-            }
-        }
+        case CheatType::HEALTH:
+            worm->cheat_health();
             break;
-        case CheatType::MOVEMENT: {
+        case CheatType::MOVEMENT:
             worm->cheat_movement(toggled_on);
-        }
             break;
-        case CheatType::WEAPON: {
-        }
+        case CheatType::WEAPON:
+            worm->cheat_weapon(refill_ammo, cheat_damage);
             break;
     }
 }

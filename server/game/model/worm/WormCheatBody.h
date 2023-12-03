@@ -33,5 +33,7 @@ public:
 
     void on_turn_ended() override;
 
+    void receive(Force &force) override;
+
 };
 #endif //TP_WORMS_WORMCHEATBODY_H
