@@ -4,7 +4,7 @@
 #include <iostream>
 #include <utility>
 
-#include "client.h"
+#include "../client/client.h"
 
 bool GamesManager::createGame(const std::string& game_room, const std::string& scenario) {
     std::lock_guard<std::mutex> lck(this->mtx);
@@ -13,7 +13,7 @@ bool GamesManager::createGame(const std::string& game_room, const std::string& s
         return false;
     }
 
-    this->games.emplace_back(game_room, scenario);
+    this->rooms.emplace(std::make_pair(game_room, GameRoom(game_room, scenario)));
 
     return true;
 }
@@ -26,7 +26,20 @@ bool GamesManager::joinGame(const std::string& game_room, Client& client) {
         return false;
     }
 
-    this->rooms.join(Client& client);
+    iter->second.join(client);
 
     return true;
+}
+
+void GamesManager::cleanEndedGames() {
+    std::lock_guard<std::mutex> lck(this->mtx);
+
+    for (auto it = this->rooms.begin(); it != this->rooms.end();)
+    {
+        if (it->second.wasEnded()) {
+            it = this->rooms.erase(it);
+        } else {
+            ++it;
+        }
+    }
 }

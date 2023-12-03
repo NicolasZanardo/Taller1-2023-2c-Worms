@@ -17,6 +17,7 @@ class Client {
     Client(const int id, Socket skt);
 
     const bool is_alive() const;
+    int getID() const;
     void switch_lobby(NetQueue* game_queue);
     void communicate(std::shared_ptr<NetMessage> net_message);
     void disconnect();

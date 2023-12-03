@@ -22,6 +22,10 @@ Client::~Client() {
         disconnect();
 }
 
+int Client::getID() const {
+    return this->id;
+}
+
 void Client::switch_lobby(NetQueue* new_game_queue) {
     game_queue = new_game_queue;
     msg_reciever.switch_lobby(new_game_queue);

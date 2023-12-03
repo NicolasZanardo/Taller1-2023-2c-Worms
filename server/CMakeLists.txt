@@ -16,6 +16,13 @@ add_library( server
     src/lobby/client_accepter.h
     src/lobby/client_accepter.cpp
 
+    src/lobby/id_generator.cpp
+    src/lobby/id_generator.h
+    src/lobby/game_room.cpp
+    src/lobby/game_room.h
+    src/lobby/games_manager.cpp
+    src/lobby/games_manager.h
+
     src/main/server.h
     src/main/server.cpp
 

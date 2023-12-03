@@ -8,7 +8,7 @@
 class NetMessageJoinGameResponse : public NetMessage {
 public:
     NetMessageJoinGameResponse();
-    NetMessageJoinGameResponse(bool was_Joind);
+    NetMessageJoinGameResponse(bool was_Joined);
     virtual ~NetMessageJoinGameResponse() = default;
 
     void push_data_into(NetBuffer& container) override;
