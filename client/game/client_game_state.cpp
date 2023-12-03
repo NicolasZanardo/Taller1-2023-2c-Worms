@@ -4,10 +4,10 @@
 
 ClientGameState::ClientGameState(GameDisplay &display)
     : display(display),
-      turnDisplay(display.new_text("Es mi turno!", 400, 0, TextAlign::center, TextLayer::UI, TextType::title)),
+      turnDisplay(nullptr),
       timer(display),
       worms(), my_client_id(-1) {
-    turnDisplay->hidden(true);
+    
 }
 
 void ClientGameState::load(const std::shared_ptr<ClientGameStateDTO> &game) {
@@ -21,6 +21,7 @@ void ClientGameState::load(const std::shared_ptr<ClientGameStateDTO> &game) {
     width = game->width;
     height = game->height;
 
+    turnDisplay = display.new_text("Es mi turno!", 400, 0, TextAlign::center, TextLayer::UI, TextType::title, COLOR_BY_CLIENT[my_client_id]);
     display.start_scenario(game->width, game->height, game->water_level_height);
 
     for (auto &beam: game->beams) {
