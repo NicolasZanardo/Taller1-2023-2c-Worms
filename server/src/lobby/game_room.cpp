@@ -3,6 +3,7 @@
 #include <stdexcept>
 
 #include "../client/client.h"  // Del server.
+#include "../game/scenario/HardcodedScenarioData.h"
 
 GameRoom::GameRoom()
     : was_ended(false) {}

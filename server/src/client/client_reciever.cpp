@@ -19,7 +19,7 @@ void Reciever::run() {
     while (keep_running_) {
         try {
             // std::shared_ptr<NetMessage> msg(channel->read_message());
-            this->msg = channel->read_message();
+            this->msg = std::shared_ptr<NetMessage>(channel->read_message());
             this->msg->execute(*this);
             // msg->execute(*this);
             // if (game_queue != nullptr)
@@ -40,6 +40,7 @@ void Reciever::switch_lobby(NetQueue* new_game_queue) {
 }
 
 void Reciever::run(NetMessageCreateGame* msg) {
+    std::cout << "room: " << msg->game_room << "- scenario: " << msg->scenario << " - players: " <<  msg->num_players << '\n';
     bool success = this->games_manager->createGame(msg->game_room, msg->scenario, msg->num_players);
 
     std::shared_ptr<NetMessage> response = std::make_shared<NetMessageCreateGameResponse>(success);
@@ -65,7 +66,7 @@ void Reciever::run(NetMessageJoinGame* msg) {
 }
 
 void Reciever::run(NetMessageStartGame* msg) {
-    this->games_manager.startGame(this->game_room);
+    this->games_manager->startGame(this->game_room);
 }
 
 void Reciever::run(NetMessageChat* msg) { }

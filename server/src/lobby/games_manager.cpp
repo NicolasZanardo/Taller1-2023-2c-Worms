@@ -6,15 +6,20 @@
 
 #include "../client/client.h"
 
-bool GamesManager::createGame(const std::string& game_room, const std::string& scenario, uint8_t total_players) {
-    std::lock_guard<std::mutex> lck(this->mtx);
+GamesManager::GamesManager()
+    : rooms() {}
 
-    if (this->rooms.find(game_room) == this->rooms.end()) {
+bool GamesManager::createGame(const std::string& game_room, const std::string& scenario, uint16_t total_players) {
+    std::cout << "create game\n - name: " << game_room << '|' << scenario << " | " << total_players;
+    // std::lock_guard<std::mutex> lck(this->mtx);
+    std::cout << "in mutex\n";
+    if (this->rooms.empty() || (this->rooms.find(game_room) == this->rooms.end())) {
         return false;
     }
 
+    std::cout << "creating\n";
     this->rooms.emplace(std::make_pair(game_room, GameRoom(game_room, scenario, total_players)));
-    
+    std::cout << "created\n";
     return true;
 }
 
@@ -41,7 +46,7 @@ std::list<GameInfoDTO> GamesManager::listGames() {
     return info_list;
 }
 
-void GamesManager::startGame(const std::string& game_room) {
+bool GamesManager::startGame(const std::string& game_room) {
     std::lock_guard<std::mutex> lck(this->mtx);
 
     auto iter = this->rooms.find(game_room);
@@ -50,6 +55,7 @@ void GamesManager::startGame(const std::string& game_room) {
     }
 
     iter->second.start();
+    return true;
 }
 
 void GamesManager::cleanEndedGames() {

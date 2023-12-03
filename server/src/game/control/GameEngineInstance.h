@@ -13,10 +13,11 @@
 #include "../../../../common_base/networking.h"
 #include "../../../../common_base/thread.h"
 #include "../scenario/GameScenarioData.h"
-#include "../../client/client.h"
+// #include "../../client/client.h"
 #include "GameNetMessageBehaviour.h"
 #include "InGameClients.h"
 
+class Client;
 
 class GameEngineInstance : public Thread {
 private:

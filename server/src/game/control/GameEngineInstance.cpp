@@ -1,5 +1,7 @@
 #include "GameEngineInstance.h"
 
+#include "../../client/client.h"
+
 GameEngineInstance::GameEngineInstance(
     float xGravity,
     float yGravity,

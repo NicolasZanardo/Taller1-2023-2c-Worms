@@ -3,7 +3,11 @@
 
 #include <unordered_map>
 #include <list>
-#include "../../client/client.h"
+#include <memory>
+
+#include "../../../../common_base/networking.h"
+
+class Client;
 
 class InGameClients {
 
