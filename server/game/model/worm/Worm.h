@@ -33,7 +33,7 @@ private:
     WormFootSensor foot_sensor;
     bool is_on_water;
     int water_death_timer;
-    bool has_done_an_ending_turn_action;
+    bool finished_turn;
 
     Worm(size_t id, WormCfg &worm_cfg, Config<WeaponCfg> &weapons_cfg);
     static WeaponMap create_default_weapons(Config<WeaponCfg> &weapons_cfg);
@@ -45,6 +45,7 @@ public:
     float X() const;
     float Y() const;
     bool is_still() const;
+    bool is_alive() const;
     b2Body* B2Body() const;
     WormFootSensor* get_foot_sensor();
 

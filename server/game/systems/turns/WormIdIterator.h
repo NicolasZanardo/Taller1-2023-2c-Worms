@@ -1,4 +1,4 @@
-#ifndef TP_WORMS_WORMIDITERATOR_H
+/*#ifndef TP_WORMS_WORMIDITERATOR_H
 #define TP_WORMS_WORMIDITERATOR_H
 
 #include <list>
@@ -18,3 +18,4 @@ public:
 };
 
 #endif
+*/

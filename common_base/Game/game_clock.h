@@ -1,5 +1,5 @@
-#ifndef _CLIENT_GAME_CLOCK_H_
-#define _CLIENT_GAME_CLOCK_H_
+#ifndef GAME_CLOCK_H
+#define GAME_CLOCK_H
 
 #include <chrono>
 

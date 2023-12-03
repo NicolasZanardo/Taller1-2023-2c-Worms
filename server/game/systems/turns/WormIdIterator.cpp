@@ -1,4 +1,4 @@
-#include "WormIdIterator.h"
+/*#include "WormIdIterator.h"
 #include <iostream>
 #include <algorithm>
 using namespace std;
@@ -24,6 +24,8 @@ int WormIdIterator::advance_to_next_worm_id() {
 }
 
 bool WormIdIterator::remove_worm_id(int worm_id) {
+    //m_worms_ids.
+
     auto it = find(m_worms_ids.begin(), m_worms_ids.end(), worm_id);
     if (it != m_worms_ids.end()) {
         m_worms_ids.erase(it);
@@ -35,10 +37,10 @@ bool WormIdIterator::remove_worm_id(int worm_id) {
 
         return true;  // Worm found and removed
     }
-
     return false;  // Worm not found
 }
 
 bool WormIdIterator::is_empty() const {
     return m_worms_ids.empty();
 }
+*/

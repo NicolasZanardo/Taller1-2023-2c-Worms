@@ -12,21 +12,28 @@ GameInstance::GameInstance(
     physics_system(rate, world, scenarioData),
     instances_manager(physics_system, scenarioData, worms_cfg.front(), weapons_cfg),
     clients_worms(),
-    turn_system(rate, turn_system_cfg.front()),
     updatables_system(rate),
     shot_system(instances_manager),
     wind_system(world),
     explosions_system(instances_manager, world),
-    entity_focus_system() {
-    assign_worms_to_clients(clients);
-    turn_system.randomly_assign_clients_turn();
-
-    auto on_worm_death = [this](size_t worm_id) {
-        turn_system.remove_worm(worm_id);
-        remove_from_clients_worms_map(worm_id);
-    };
-    instances_manager.register_worm_death_callback(on_worm_death);
-}
+    entity_focus_system(),
+    
+    turn_system(
+        instances_manager.get_projectiles(), 
+        instances_manager.get_worms(),
+        turn_system_cfg.front().match_duration,
+        turn_system_cfg.front().turn_duration,
+        turn_system_cfg.front().time_after_ending_turn,
+        rate
+    ) {
+        assign_worms_to_clients(clients);
+        
+        auto on_worm_death = [this](size_t worm_id) {
+            turn_system.remove(worm_id);
+            remove_from_clients_worms_map(worm_id);
+        };
+        instances_manager.register_worm_death_callback(on_worm_death);
+    }
 
 
 bool GameInstance::update(const int it) {
@@ -34,37 +41,31 @@ bool GameInstance::update(const int it) {
     auto projectiles = instances_manager.get_projectiles();
 
     if (clients_worms.size() == 1) {
-        // return true;
+        return true;
     } else if (clients_worms.empty()) {
-        // return true;
+        return true;
     }
 
-    int current_worm_id = turn_system.get_current_worm_id();
-    std::shared_ptr<Worm> current_turn_worm = nullptr;
-    current_turn_worm = instances_manager.get_worm(current_worm_id);
+    auto current_turn_worm = turn_system.current_entity();
     updatables_system.update(it, worms, projectiles);
     physics_system.update();
-    turn_system.update(it, worms, current_turn_worm, projectiles);
     shot_system.update(current_turn_worm);
     wind_system.update(projectiles);
     explosions_system.update(projectiles);
     entity_focus_system.update(worms, current_turn_worm, projectiles);
+    turn_system.update(it);
     instances_manager.update();
-    return false;
-}
-
-bool GameInstance::is_client_turn(size_t id) {
-    return turn_system.is_clients_turn(id);
+    return turn_system.game_has_ended();
 }
 
 GameState GameInstance::get_current_state() {
     return {
-        turn_system.get_current_client_id(),
-        turn_system.get_current_worm_id(),
+        turn_system.current_client(),
+        turn_system.current_entity()->Id(),
         entity_focus_system.get_focused_entity_id(),
         wind_system.get_wind_speed(),
-        turn_system.get_remaining_game_time(),
-        turn_system.get_remaining_turn_time()
+        turn_system.get_game_remaining_time(),
+        turn_system.get_turn_remaining_time()
     };
 }
 
@@ -130,18 +131,17 @@ void GameInstance::assign_worms_to_clients(const std::list<Client *> &clients) {
 
 
         // add client with its worms ids to the TurnManager
-        std::list<int> wormIds;
         for (const auto &worm: assignedSubset) {
-            wormIds.push_back(worm->Id());
+            turn_system.add_player(clientId, worm);
         }
-        turn_system.add_player(clientId, wormIds);
+        
 
         // assign Worm* to clients ids
         clients_worms[clientId] = std::move(assignedSubset);
     }
 }
 
-void GameInstance::remove_from_clients_worms_map(size_t worm_id) {
+void GameInstance::remove_from_clients_worms_map(int worm_id) {
     for (auto it = clients_worms.begin(); it != clients_worms.end();) {
         auto &worms = it->second;
 
@@ -166,26 +166,19 @@ void GameInstance::remove_from_clients_worms_map(size_t worm_id) {
     }
 }
 
+bool GameInstance::is_client_turn(int id) {
+    return turn_system.current_client() == id;
+}
 
 // Actions
 void GameInstance::perform_action_on_current_worm(const std::function<void(std::shared_ptr<Worm>)> &action) {
-    auto worm_id = turn_system.get_current_worm_id();
-    if (worm_id != -1) {
-        auto worm = instances_manager.get_worm(worm_id);
-        if (worm)
-            action(worm);
-    }
+    action(turn_system.current_entity());
 }
 
 template<typename T>
 void
 GameInstance::perform_action_on_current_worm(const std::function<void(std::shared_ptr<Worm>, T)> &action, T parameter) {
-    auto worm_id = turn_system.get_current_worm_id();
-    if (worm_id != -1) {
-        auto worm = instances_manager.get_worm(worm_id);
-        if (worm)
-            action(worm, parameter);
-    }
+    action(turn_system.current_entity(),parameter);
 }
 
 // Movement

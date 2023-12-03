@@ -13,7 +13,7 @@ Worm::Worm(size_t id, WormCfg &worm_cfg, Config<WeaponCfg>& weapons_cfg) :
     foot_sensor(this),
     is_on_water(false),
     water_death_timer(WATER_DEATH_TIME),
-    has_done_an_ending_turn_action(false),
+    finished_turn(false),
     body(nullptr)
     {}
 
@@ -58,6 +58,10 @@ float Worm::Y() const {
 
 bool Worm::is_still() const {
     return body->is_still();
+}
+
+bool Worm::is_alive() const {
+    return !is_dead;
 }
 
 b2Body* Worm::B2Body() const {
@@ -105,11 +109,11 @@ void Worm::on_turn_ended() {
         actual_weapon->on_turn_ended();
         actual_weapon = weapons[WeaponTypeDto::BAZOOKA];
     }
-    has_done_an_ending_turn_action = false;
+    finished_turn = false;
 }
 
 bool Worm::has_done_ending_turn_action() const {
-    return has_done_an_ending_turn_action;
+    return finished_turn;
 }
 
 // Movement
@@ -171,13 +175,13 @@ void Worm::stop_aiming_down() {
 }
 
 void Worm::start_shooting() {
-    if (actual_weapon && !has_done_an_ending_turn_action) {
+    if (actual_weapon && !finished_turn) {
         actual_weapon->start_shooting(X(),Y(),body->facing_direction_sign());
     }
 }
 
 void Worm::end_shooting() {
-    if (actual_weapon && !has_done_an_ending_turn_action) {
+    if (actual_weapon && !finished_turn) {
         actual_weapon->end_shooting(X(),Y(),body->facing_direction_sign());
     }
 }
@@ -197,7 +201,7 @@ void Worm::change_projectile_count_down(ProjectileCountDown count_down) {
 std::unique_ptr<CShot> Worm::shot_component() {
     auto c_shot = actual_weapon->shot_component();
     if (c_shot) {
-        has_done_an_ending_turn_action = true;
+        finished_turn = true;
     }
     return c_shot;
 }

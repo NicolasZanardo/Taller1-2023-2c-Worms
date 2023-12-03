@@ -10,10 +10,11 @@ GameEngineInstance::GameEngineInstance(
     game(xGravity, yGravity, scenario, clients, rate),
     game_queue(1000),
     net_message_behaviour(game_clients, game),
-    keep_executing(true) {
-    switch_clients_game_queue(clients);
-    initial_broadcast(scenario);
-}
+    keep_executing(true)
+    {
+        switch_clients_game_queue(clients);
+        initial_broadcast(scenario);
+    }
 
 void GameEngineInstance::run() {
     auto t1 = std::chrono::steady_clock::now();

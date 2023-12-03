@@ -1,4 +1,4 @@
-#ifndef SERVER_TURNMANAGER_H
+/*#ifndef SERVER_TURNMANAGER_H
 #define SERVER_TURNMANAGER_H
 
 #include <vector>
@@ -66,3 +66,4 @@ public:
 
 
 #endif
+*/

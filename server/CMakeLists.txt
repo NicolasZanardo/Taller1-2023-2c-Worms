@@ -110,6 +110,9 @@ add_executable(
     game/scenario/ScenarioReader.h
     game/scenario/ScenarioReader.cpp
 
+    game/systems/turns/TurnManager.h
+    game/systems/turns/TurnManager.cpp
+    
     game/systems/turns/TurnSystem.h
     game/systems/turns/TurnSystem.cpp
     game/systems/turns/WormIdIterator.h
