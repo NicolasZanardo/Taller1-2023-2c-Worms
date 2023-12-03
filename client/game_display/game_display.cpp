@@ -182,7 +182,7 @@ void GameDisplay::start_scenario(float width, float height, float water_level) {
         new GameSprite(*resources.get_sprite("ui_green_grenade"), 32, 32, 0),
         new GameSprite(*resources.get_sprite("ui_hgrenade"), 32, 32, 0),
         new GameSprite(*resources.get_sprite("ui_dynamite"), 32, 32, 0),
-        new GameTextDisplay(camera, 0, 32, resources.get_font(TextType::title), TextAlign::left, TextLayer::UI, "Q  W  E  R  F")
+        new GameTextDisplay(camera, 0, 32, resources.get_font(TextType::title), TextAlign::left, TextLayer::UI, "Q  W  E   R  F")
     };
 
     for (auto it : overlay)
