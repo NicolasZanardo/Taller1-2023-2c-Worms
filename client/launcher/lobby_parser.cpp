@@ -22,8 +22,9 @@ std::unique_ptr<NetMessage> LobbyParser::parse(const std::string& str) {
 
         // Los nombres de la sala y el escenario no deben tener espacios.
         iss >> game_room >> scenario >> num_players;
+        std::cout << "room: " << game_room << "- scenario: " << scenario << " - players: " <<  num_players;
 
-        return std::make_unique<NetMessageCreateGame>(game_room, scenario, static_cast<uint8_t>(num_players));
+        return std::make_unique<NetMessageCreateGame>(game_room, scenario, num_players);
     } else if (action == CLIENT_COMMAND_JOIN) {
         std::string game_room;
 

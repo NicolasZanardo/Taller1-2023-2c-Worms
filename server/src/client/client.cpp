@@ -1,6 +1,8 @@
 #include "client.h"
 #include <iostream>
 
+#include "../lobby/games_manager.h"
+
 Client::Client(const int id, Socket skt, GamesManager& games_manager) :
     channel(std::move(skt)),
     send_queue(60),

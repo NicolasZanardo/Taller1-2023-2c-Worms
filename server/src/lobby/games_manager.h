@@ -18,7 +18,7 @@ class Client;
 
 class GamesManager {
 public:
-    GamesManager() = default;
+    GamesManager();
     ~GamesManager() = default;
 
     GamesManager(const GamesManager& other) = delete;
@@ -27,10 +27,10 @@ public:
     GamesManager(GamesManager& other) = delete;
     GamesManager& operator=(GamesManager&& other) = delete;
 
-    bool createGame(const std::string& game_room, const std::string& scenario, uint8_t total_players);
+    bool createGame(const std::string& game_room, const std::string& scenario, uint16_t total_players);
     bool joinGame(const std::string& game_room, Client& client);
     std::list<GameInfoDTO> listGames();
-    void startGame(const std::string& game_room);
+    bool startGame(const std::string& game_room);
 
     void cleanEndedGames();
 

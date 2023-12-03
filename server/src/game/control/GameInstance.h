@@ -12,12 +12,13 @@
 #include <ctime>     // Include for std::time
 #include "../model/worm/Worm.h"
 #include "../core/InstancesManager.h"
-#include "../../client/client.h"
+// #include "../../client/client.h"
 #include "../systems/physics/PhysicsSystem.h"
 #include "../systems/turns/TurnSystem.h"
 #include "../systems/updatables/UpdatablesSystem.h"
 #include "../systems/shot/ShotSystem.h"
 
+class Client;
 
 typedef std::unordered_map<size_t, std::vector<std::shared_ptr<Worm>>> ClientsWorms;
 

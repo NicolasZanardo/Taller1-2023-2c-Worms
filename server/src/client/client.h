@@ -7,6 +7,8 @@
 
 #include "../lobby/games_manager.h"
 
+class GamesManager;
+
 class Client {
     NetChannel channel;
     NetQueue  send_queue;

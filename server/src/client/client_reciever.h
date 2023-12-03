@@ -1,6 +1,8 @@
 #ifndef SERVER_CLIENT_RECIEVER_H_
 #define SERVER_CLIENT_RECIEVER_H_
 
+#include <memory>
+
 #include "../../../common_base/thread.h"
 #include "../../../common_base/networking.h"
 
