@@ -1,14 +1,14 @@
-#include "net_message_list_games.cpp"
+#include "net_message_list_games_response.h"
 
-NetMessageListGames::NetMessageListGames()
+NetMessageListGamesResponse::NetMessageListGamesResponse()
     : NetMessage(NET_MESSAGE_TYPE_LIST_GAMES_RESPONSE) {}
 
-void NetMessageListGames::push_data_into(NetBuffer& container) {
+void NetMessageListGamesResponse::push_data_into(NetBuffer& container) {
     NetMessage::push_data_into(container);
 }
 
-void NetMessageListGames::pull_data_from(NetProtocolInterpreter& channel) { }
+void NetMessageListGamesResponse::pull_data_from(NetProtocolInterpreter& channel) { }
 
-void NetMessageListGames::execute(NetMessageBehaviour& interpreter) {
+void NetMessageListGamesResponse::execute(NetMessageBehaviour& interpreter) {
     interpreter.run(this);
 }

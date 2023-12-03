@@ -1,4 +1,4 @@
-#include "net_message_join_game.cpp"
+#include "net_message_join_game.h"
 
 NetMessageJoinGame::NetMessageJoinGame()
     : NetMessage(NET_MESSAGE_TYPE_JOIN_GAME) {}

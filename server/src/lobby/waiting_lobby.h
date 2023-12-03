@@ -38,6 +38,16 @@ class WaitingLobby : public Thread, public NetMessageBehaviour {
     void run(NetMessageGameAction* msg) override;
     void run(NetMessagePlayerChangedWeapon* msg) override;
     void run(NetMessagePlayerChangedProjectileCountdown* msg) override;
+
+    void run(NetMessageCreateGame* msg) override { }
+    void run(NetMessageListGames* msg) override { }
+    void run(NetMessageJoinGame* msg) override { }
+
+    void run(NetMessageCreateGameResponse* msg) override { }
+    void run(NetMessageJoinGameResponse* msg) override { }
+    void run(NetMessageListGamesResponse* msg) override { }
+
+    void run(NetMessageStartGame* msg) override { }
 };
 #endif
 

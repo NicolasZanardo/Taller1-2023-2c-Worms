@@ -55,6 +55,7 @@ public:
     virtual void run(NetMessageListGamesResponse* msg) = 0;
     virtual void run(NetMessageJoinGame* msg) = 0;
     virtual void run(NetMessageJoinGameResponse* msg) = 0;
+
     virtual void run(NetMessageStartGame* msg) = 0;
 
     virtual ~NetMessageBehaviour() {};

@@ -1,4 +1,4 @@
-#include "net_message_list_games.cpp"
+#include "net_message_list_games.h"
 
 NetMessageListGames::NetMessageListGames()
     : NetMessage(NET_MESSAGE_TYPE_LIST_GAMES) {}

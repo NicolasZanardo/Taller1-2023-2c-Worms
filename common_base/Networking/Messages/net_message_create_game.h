@@ -11,9 +11,9 @@ public:
     NetMessageCreateGame(const std::string& game_room, const std::string& scenario, uint8_t num_players);
     virtual ~NetMessageCreateGame() = default;
 
-    void push_data_into(NetBuffer& container) override;
-    void pull_data_from(NetProtocolInterpreter& channel) override;
-    void execute(NetMessageBehaviour& interpreter) override;
+    virtual void push_data_into(NetBuffer& container) override;
+    virtual void pull_data_from(NetProtocolInterpreter& channel) override;
+    virtual void execute(NetMessageBehaviour& interpreter) override;
 
     std::string game_room;
     std::string scenario;

@@ -1,21 +1,21 @@
-#include "net_message_create_game_response.cpp"
+#include "net_message_create_game_response.h"
 
-NetMessageCreateGameResponse::NetMessageResponse()
+NetMessageCreateGameResponse::NetMessageCreateGameResponse()
     : NetMessage(NET_MESSAGE_TYPE_CREATE_GAME_RESPONSE) {}
 
-NetMessageCreateGameResponse::NetMessageResponse(bool was_created)
+NetMessageCreateGameResponse::NetMessageCreateGameResponse(bool was_created)
     : NetMessage(NET_MESSAGE_TYPE_CREATE_GAME_RESPONSE)
     , was_created(was_created) {}
 
-void NetMessageCreateGame::push_data_into(NetBuffer& container) {
+void NetMessageCreateGameResponse::push_data_into(NetBuffer& container) {
     NetMessage::push_data_into(container);
     container.push_bool(this->was_created);
 }
 
-void NetMessageCreateGame::pull_data_from(NetProtocolInterpreter& channel) {
+void NetMessageCreateGameResponse::pull_data_from(NetProtocolInterpreter& channel) {
     this->was_created = channel.read_bool();
 }
 
-void NetMessageCreateGame::execute(NetMessageBehaviour& interpreter) {
+void NetMessageCreateGameResponse::execute(NetMessageBehaviour& interpreter) {
     interpreter.run(this);
 }

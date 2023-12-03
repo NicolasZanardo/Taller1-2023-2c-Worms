@@ -10,9 +10,9 @@ public:
     NetMessageListGames();
     virtual ~NetMessageListGames() = default;
 
-    void push_data_into(NetBuffer& container) override;
-    void pull_data_from(NetProtocolInterpreter& channel) override;
-    void execute(NetMessageBehaviour& interpreter) override;
+    virtual void push_data_into(NetBuffer& container) override;
+    virtual void pull_data_from(NetProtocolInterpreter& channel) override;
+    virtual void execute(NetMessageBehaviour& interpreter) override;
 
     std::string game_room;
 };

@@ -1,4 +1,4 @@
-#include "net_message_start_game.cpp"
+#include "net_message_start_game.h"
 
 NetMessageStartGame::NetMessageStartGame()
     : NetMessage(NET_MESSAGE_TYPE_START_GAME) {}
