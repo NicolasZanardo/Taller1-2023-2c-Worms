@@ -1,6 +1,7 @@
 #ifndef TP_WORMS_CHEATMANAGER_H
 #define TP_WORMS_CHEATMANAGER_H
 
+#include <memory>
 #include <unordered_map>
 #include "CheatType.h"
 #include <memory>
