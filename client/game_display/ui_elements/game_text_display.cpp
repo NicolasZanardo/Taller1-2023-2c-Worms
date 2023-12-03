@@ -7,18 +7,19 @@ GameTextDisplay::GameTextDisplay(
         GameCamera& cam, 
         float x, float y,
         Font* font, TextAlign align, TextLayer layer,
-        const string& text
+        const string& text,
+        SDL2pp::Color color
     ) : cam(cam)
-    , transform(x,y,0,0), x(x), y(y)
+    , transform(x,y,0,0), x(x), y(y), color(color)
     , absolute(layer == TextLayer::UI)
     , is_hidden(false)
     , align(align), font(font)
     , texture(nullptr)
-    , surfaceMessage(font->RenderText_Solid(text, SDL_Color{255,255,255,255}))
+    , surfaceMessage(font->RenderText_Solid(text, color))
     { }
 
 void GameTextDisplay::update(const std::string& newval) {
-    surfaceMessage = font->RenderText_Solid(newval, SDL_Color{255,255,255,255});
+    surfaceMessage = font->RenderText_Solid(newval, color);
 
     if (texture != nullptr) {
         delete(texture);

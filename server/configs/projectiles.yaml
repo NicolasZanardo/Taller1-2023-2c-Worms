@@ -27,7 +27,7 @@
 4:
   type: HOLY_GRENADE
   max_damage: 80
-  explosion_radius: 2
+  explosion_radius: 3
   affected_by_wind: false
   rotation_type: INITIAL_ANGULAR_VELOCITY
   default_explosion_countdown: 5000
