@@ -62,6 +62,8 @@ add_library(common
     Networking/Messages/net_message_join_game.h
     Networking/Messages/net_message_join_game_response.h
 
+    Networking/Messages/net_message_start_game.h
+
     Networking/net_channel.cpp 
     Networking/net_channel.h 
 

@@ -21,11 +21,13 @@ void ClientLobbySettings::run(NetMessageJoinGameResponse* msg) {
 
 void ClientLobbySettings::run(NetMessageListGamesResponse* msg) {
     for (auto& game_info : msg->games_info) {
-        std::cout << "Room: " << game_info.room_name
+        std::cout << "Room: " << game_info.game_room
                 << " - Scenario: " << game_info.scenario
                 << " - Players (" << game_info.joined_players
                 << '/' << game_info.total_players << '\n';
     }
 }
 
-#endif  // __CLIENT_LOBBY_SETTINGS_H__
+void ClientLobbySettings::run(NetMessageStartGame* msg) {
+    this->ready_to_start = true;
+}

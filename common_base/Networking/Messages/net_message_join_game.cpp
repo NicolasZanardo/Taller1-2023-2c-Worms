@@ -3,7 +3,7 @@
 NetMessageJoinGame::NetMessageJoinGame()
     : NetMessage(NET_MESSAGE_TYPE_JOIN_GAME) {}
 
-NetMessageJoinGame::NetMessageJoinGame(const std::string& game_room, uint8_t num_players)
+NetMessageJoinGame::NetMessageJoinGame(const std::string& game_room)
     : NetMessage(NET_MESSAGE_TYPE_JOIN_GAME)
     , game_room(game_room) {}
 

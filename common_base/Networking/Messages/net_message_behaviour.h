@@ -17,6 +17,7 @@
 #define NET_MESSAGE_TYPE_LIST_GAMES_RESPONSE 103
 #define NET_MESSAGE_TYPE_JOIN_GAME 104
 #define NET_MESSAGE_TYPE_JOIN_GAME_RESPONSE 105
+#define NET_MESSAGE_TYPE_START_GAME 106
 
 class NetMessageChat;
 class NetMessageLeave;
@@ -34,9 +35,10 @@ class NetMessageListGames;
 class NetMessageListGamesResponse;
 class NetMessageJoinGame;
 class NetMessageJoinGameResponse;
+class NetMessageStartGame;
 
 class NetMessageBehaviour {
-    public:
+public:
     virtual void run(NetMessageChat* msg) = 0;
     virtual void run(NetMessageLeave* msg) = 0;
     virtual void run(NetMessage_test* msg) = 0;
@@ -53,6 +55,7 @@ class NetMessageBehaviour {
     virtual void run(NetMessageListGamesResponse* msg) = 0;
     virtual void run(NetMessageJoinGame* msg) = 0;
     virtual void run(NetMessageJoinGameResponse* msg) = 0;
+    virtual void run(NetMessageStartGame* msg) = 0;
 
     virtual ~NetMessageBehaviour() {};
 };

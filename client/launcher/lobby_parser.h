@@ -8,14 +8,14 @@
 
 class LobbyParser {
 public:
-    Parser() = default;
-    ~Parser() = default;
+    LobbyParser() = default;
+    ~LobbyParser() = default;
 
-    Parser(const Parser& other) = delete;
-    Parser &operator=(const Parser& other) = delete;
+    LobbyParser(const LobbyParser& other) = delete;
+    LobbyParser &operator=(const LobbyParser& other) = delete;
 
-    Parser(Parser&& other) = delete;
-    Parser &operator=(Parser&& other) = delete;
+    LobbyParser(LobbyParser&& other) = delete;
+    LobbyParser &operator=(LobbyParser&& other) = delete;
 
     std::unique_ptr<NetMessage> parse(const std::string& str);
 };

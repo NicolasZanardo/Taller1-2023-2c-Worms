@@ -20,14 +20,15 @@ void ClientLobby::execute() {
         }
 
         std::unique_ptr<NetMessage> request = this->parser.parse(input_string);
-        msg->execute(*this);
 
-        // if (this->net_channel.isClosed) { break; }
+        if (!(this->net_channel.is_open())) {
+            break;
+        }
 
-        std::unique_ptr<NetMessage> response(this->net_channel->read_message());
-        msg->execute(*this);
+        this->net_channel.send_message(*request);
 
-        // if (this->net_channel.isClosed) { break; }
+        std::unique_ptr<NetMessage> response(this->net_channel.read_message());
+        response->execute(this->lobby_settings);
 
         if (this->lobby_settings.isReadyToStart()) {
             std::cout << "Starting game.\n";

@@ -8,7 +8,7 @@
 class NetMessageJoinGame : public NetMessage {
 public:
     NetMessageJoinGame();
-    NetMessageJoinGame(const std::string& game_room, uint8_t num_players);
+    NetMessageJoinGame(const std::string& game_room);
     virtual ~NetMessageJoinGame() = default;
 
     void push_data_into(NetBuffer& container) override;

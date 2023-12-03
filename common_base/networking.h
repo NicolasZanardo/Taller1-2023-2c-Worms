@@ -28,6 +28,8 @@
 #include "Networking/Messages/net_message_join_game.h"
 #include "Networking/Messages/net_message_join_game_response.h"
 
+#include "Networking/Messages/net_message_start_game.h"
+
 #include "Networking/Messages/net_message_factory.h" 
 #include "Networking/Messages/net_message_behaviour.h"
 
