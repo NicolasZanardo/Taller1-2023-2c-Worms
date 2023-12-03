@@ -1,6 +1,6 @@
 #include "HealthComponent.h"
 #include "Worm.h"
-#include <iostream>
+
 HealthComponent::HealthComponent(float initial_health): actual_health(initial_health), is_dead(false), water_death_timer(WATER_DEATH_TIME), on_cheat_mode(false) {}
 
 bool HealthComponent::update(const std::shared_ptr<Worm>& worm, const int it, const int rate) {

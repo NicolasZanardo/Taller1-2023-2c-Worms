@@ -13,7 +13,7 @@ class WormBody: public WormBodyComponent {
 public:
 
     WormBody(b2World&  world, b2Body* body, WormCfg &worm_cfg);
-    explicit WormBody(std::shared_ptr<WormBodyComponent> &&other);
+    explicit WormBody(std::shared_ptr<WormBodyComponent> other);
 
     char facing_direction_sign() const override;
 

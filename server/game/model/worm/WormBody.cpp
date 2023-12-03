@@ -6,7 +6,7 @@
 WormBody::WormBody(b2World&  world, b2Body* body, WormCfg &worm_cfg) :
         WormBodyComponent(world, body, worm_cfg) {};
 
-WormBody::WormBody(std::shared_ptr<WormBodyComponent> &&other) : WormBodyComponent(std::move(other)) {}
+WormBody::WormBody(std::shared_ptr<WormBodyComponent> other) : WormBodyComponent(other) {}
 
 void WormBody::update(const std::shared_ptr<Worm>& worm) {
     float y_velocity = body->GetLinearVelocity().y;

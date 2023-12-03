@@ -13,6 +13,7 @@ protected:
 public:
 
     Body(b2World &world, b2Body *body, bool is_facing_right);
+    Body(Body&& other) noexcept;
 
     b2Body *B2Body();
 

@@ -7,6 +7,11 @@ const float RAD_TO_DEG = 180.0f / M_PI;
 Body::Body(b2World &world, b2Body *body, bool is_facing_right) :
     world(world), body(body), is_facing_right(is_facing_right) {}
 
+Body::Body(Body&& other) noexcept
+    : world(other.world), body(other.body), is_facing_right(other.is_facing_right) {
+    other.body = nullptr;
+}
+
 Body::~Body() {
     std::cout << "Entered ~Body" << std::endl;
     if (body) {

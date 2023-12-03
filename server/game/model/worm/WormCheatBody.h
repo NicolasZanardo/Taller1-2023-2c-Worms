@@ -9,7 +9,7 @@ class WormCheatBody : public WormBodyComponent {
 public:
 
     WormCheatBody(b2World &world, b2Body *body, WormCfg &worm_cfg);
-    explicit WormCheatBody(std::shared_ptr<WormBodyComponent> &&other);
+    explicit WormCheatBody(std::shared_ptr<WormBodyComponent> other);
 
     char facing_direction_sign() const override;
 

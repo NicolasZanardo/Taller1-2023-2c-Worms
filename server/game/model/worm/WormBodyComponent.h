@@ -56,7 +56,6 @@ public:
         is_moving(other->is_jumping),
         is_jumping(other->is_jumping),
         is_on_ground(other->is_on_ground) {
-        this->body = other->body;
         other->body = nullptr;
     };
 
@@ -82,11 +81,6 @@ public:
     virtual void update(const std::shared_ptr<Worm> &worm) = 0;
 
     virtual void on_turn_ended() = 0;
-
-    ~WormBodyComponent() {
-        std::cout << "Entered ~WormBodyComponent\n";
-        Body::~Body();
-    }
 
 };
 

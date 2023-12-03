@@ -5,7 +5,7 @@
 WormCheatBody::WormCheatBody(b2World &world, b2Body *body, WormCfg &worm_cfg) :
     WormBodyComponent(world, body, worm_cfg) {};
 
-WormCheatBody::WormCheatBody(std::shared_ptr<WormBodyComponent> &&other) : WormBodyComponent(std::move(other)) {}
+WormCheatBody::WormCheatBody(std::shared_ptr<WormBodyComponent> other) : WormBodyComponent(std::move(other)) {}
 
 void WormCheatBody::update(const std::shared_ptr<Worm> &worm) {
     float y_velocity = body->GetLinearVelocity().y;
