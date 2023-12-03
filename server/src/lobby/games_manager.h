@@ -3,6 +3,7 @@
 
 #include <cstdint>
 
+#include <list>
 #include <map>
 #include <mutex>
 #include <stdexcept>
@@ -10,18 +11,10 @@
 
 #include "game_room.h"
 
+#include "../../../common_base/Game/game_info_dto.h"
+
 class Client;
 
-// class GameAlredyExists : public std::runtime_error {
-// public:
-//     GameAlredyExists() : std::runtime_error("Game Alredy Exists.") {}
-// };
-
-
-// class GameNotExists : public std::runtime_error {
-// public:
-//     GameNotExists() : std::runtime_error("Game Not Exists.") {}
-// };
 
 class GamesManager {
 public:
@@ -34,8 +27,10 @@ public:
     GamesManager(GamesManager& other) = delete;
     GamesManager& operator=(GamesManager&& other) = delete;
 
-    bool createGame(const std::string& game_room, const std::string& scenario);
+    bool createGame(const std::string& game_room, const std::string& scenario, uint8_t total_players);
     bool joinGame(const std::string& game_room, Client& client);
+    std::list<GameInfoDTO> listGames();
+
     void cleanEndedGames();
 
 private:

@@ -6,15 +6,15 @@
 
 #include "../client/client.h"
 
-bool GamesManager::createGame(const std::string& game_room, const std::string& scenario) {
+bool GamesManager::createGame(const std::string& game_room, const std::string& scenario, uint8_t total_players) {
     std::lock_guard<std::mutex> lck(this->mtx);
 
     if (this->rooms.find(game_room) == this->rooms.end()) {
         return false;
     }
 
-    this->rooms.emplace(std::make_pair(game_room, GameRoom(game_room, scenario)));
-
+    this->rooms.emplace(std::make_pair(game_room, GameRoom(game_room, scenario, total_players)));
+    
     return true;
 }
 
@@ -29,6 +29,16 @@ bool GamesManager::joinGame(const std::string& game_room, Client& client) {
     iter->second.join(client);
 
     return true;
+}
+
+std::list<GameInfoDTO> GamesManager::listGames() {
+    std::list<GameInfoDTO> info_list;
+    
+    for (auto& game : this->rooms) {
+        info_list.push_back(std::move(game.second.getInfo()));
+    }
+
+    return info_list;
 }
 
 void GamesManager::cleanEndedGames() {

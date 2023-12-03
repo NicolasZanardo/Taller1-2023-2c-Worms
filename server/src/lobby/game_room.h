@@ -5,27 +5,34 @@
 #include <string>
 #include <unordered_map>
 
+#include "../../../common_base/Game/game_info_dto.h"
+
 class Client;
 
 class GameRoom {
 public:
     GameRoom();
-    explicit GameRoom(const std::string& game_room, const std::string& scenario);
+    explicit GameRoom(const std::string& name, const std::string& scenario, uint8_t total_players);
     ~GameRoom() = default;
 
     void join(Client& client);
     void leave(Client& client);
     void start();
 
-    const std::string& getName() const { return this->game_room; }
+    
+    const std::string& getName() const { return this->name; }
     const std::string& getScenario() const { return this->scenario; }
     bool wasEnded() const { return this->was_ended; }
+    
+    GameInfoDTO getInfo() const;
 
     void setEnd() { this->was_ended = true; }
 
 private:
-    std::string game_room;
+    std::string name;
     std::string scenario;
+    uint8_t total_players;
+
     std::unordered_map<uint32_t, Client&> players;
 
     bool was_ended;

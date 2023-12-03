@@ -7,9 +7,10 @@
 GameRoom::GameRoom()
     : was_ended(false) {}
 
-GameRoom::GameRoom(const std::string& game_room, const std::string& scenario)
-    : game_room(game_room)
-    , scenario(scenario) {}
+GameRoom::GameRoom(const std::string& name, const std::string& scenario, uint8_t total_pĺayers)
+    : name(name)
+    , scenario(scenario)
+    , total_players(total_pĺayers) {}
 
 void GameRoom::join(Client& client) {
     if (this->players.find(client.getID()) != this->players.end()) {
@@ -29,4 +30,8 @@ void GameRoom::leave(Client& client) {
 
 void GameRoom::start() {
     std::cout << "Starting game ...\n";
+}
+
+GameInfoDTO GameRoom::getInfo() const {
+    return std::move(GameInfoDTO(this->name, this->scenario, this->total_players, this->players.size()));
 }

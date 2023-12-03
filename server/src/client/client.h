@@ -5,16 +5,19 @@
 #include "client_reciever.h"
 #include "client_sender.h"
 
+#include "../lobby/games_manager.h"
+
 class Client {
     NetChannel channel;
     NetQueue  send_queue;
     NetQueue* game_queue;
     Reciever msg_reciever;
     Sender msg_sender;
+    GamesManager* games_manager;
 
     public:
     const int id;
-    Client(const int id, Socket skt);
+    Client(const int id, Socket skt, GamesManager& games_manager);
 
     const bool is_alive() const;
     int getID() const;

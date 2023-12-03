@@ -8,8 +8,10 @@
 #include <memory>
 #include "../lobby/waiting_lobby.h"
 #include "../lobby/client_accepter.h"
+#include "../lobby/games_manager.h"
 
 class Server {
+    GamesManager games_manager;
     WaitingLobby lobby;
     ClientAccepter accepter;
 

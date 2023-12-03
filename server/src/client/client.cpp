@@ -1,12 +1,13 @@
 #include "client.h"
 #include <iostream>
 
-Client::Client(const int id, Socket skt) :
+Client::Client(const int id, Socket skt, GamesManager& games_manager) :
     channel(std::move(skt)),
     send_queue(60),
     game_queue(nullptr),
-    msg_reciever(id, &this->channel),
+    msg_reciever(id, *this, &this->channel, this->send_queue, *(this->games_manager)),
     msg_sender(id, &this->channel, &this->send_queue),
+    games_manager(&games_manager),
     id(id)
     {
         msg_reciever.start();

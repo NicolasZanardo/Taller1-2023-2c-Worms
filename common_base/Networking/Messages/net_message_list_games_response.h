@@ -10,6 +10,7 @@
 class NetMessageListGamesResponse : public NetMessage {
 public:
     NetMessageListGamesResponse();
+    NetMessageListGamesResponse(std::list<GameInfoDTO> games_info);
     virtual ~NetMessageListGamesResponse() = default;
 
     void push_data_into(NetBuffer& container) override;
@@ -17,6 +18,7 @@ public:
     void execute(NetMessageBehaviour& interpreter) override;
 
     std::list<GameInfoDTO> games_info;
+    uint32_t num;
 };
 
 #endif  // COMMON_NET_MESSAGE_LIST_GAMES_RESPONSE_H_

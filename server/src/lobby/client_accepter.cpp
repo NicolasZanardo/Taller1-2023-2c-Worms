@@ -2,9 +2,10 @@
 #include "../client/client.h"
 #include <utility>
 
-ClientAccepter::ClientAccepter(const char* servname, WaitingLobby& lobby) :
+ClientAccepter::ClientAccepter(const char* servname, WaitingLobby& lobby, GamesManager& games_manager) :
     Thread(), host(servname),
-    lobby(lobby)
+    lobby(lobby),
+    games_manager(&games_manager)
     {}
 
 void ClientAccepter::run() {
@@ -12,7 +13,7 @@ void ClientAccepter::run() {
     while (keep_running_) {
         try {
             Socket skt = host.accept();
-            Client* newClient = new Client(next_id++, std::move(skt));
+            Client* newClient = new Client(next_id++, std::move(skt), *(this->games_manager));
             lobby.add(newClient);
         } catch (const std::exception& ex) {
             keep_running_ = false;

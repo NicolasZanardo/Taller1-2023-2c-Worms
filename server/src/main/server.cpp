@@ -85,7 +85,8 @@ void Server::start(vector<string>& values) {
 }
 
 Server::Server(const char* servname) : 
-	lobby(), accepter(servname, this->lobby),
+	games_manager(),
+	lobby(), accepter(servname, this->lobby, this->games_manager),
 	active_games_mtx(), active_games()
 	{}
 

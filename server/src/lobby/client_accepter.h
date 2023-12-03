@@ -8,9 +8,10 @@
 class ClientAccepter : public Thread {
     Socket host;
     WaitingLobby& lobby;
+    GamesManager* games_manager;
 
     public:
-    explicit ClientAccepter(const char* servname, WaitingLobby& lobby);
+    explicit ClientAccepter(const char* servname, WaitingLobby& lobby, GamesManager& games_manager);
 
     void run() override;
     void stop() override;
