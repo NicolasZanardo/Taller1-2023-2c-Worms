@@ -99,6 +99,7 @@ void GameEngineInstance::broadcast_initial_game_state(const GameScenarioData &sc
     }
 
     for (const auto &[clientId, worms]: game.get_clients_worms()) {
+        std::cout <<  "here\n";
         for (const auto &wrm: worms) {
             std::cout << "Init Worm id: " << wrm->toWormDto(clientId).entity_id
                       << " with client id: " << wrm->toWormDto(clientId).client_id << std::endl;

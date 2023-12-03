@@ -9,6 +9,7 @@
 #include "net_message_game_action.h"
 #include "net_message_player_changed_weapon.h"
 #include "net_message_player_changed_projectile_countdown.h"
+#include "net_message_player_toggle_cheat.h"
 
 NetMessage* NetMessageFactory::recieve(Socket& channel) {
     NetProtocolInterpreter interpreter(channel);
@@ -42,6 +43,9 @@ NetMessage* NetMessageFactory::recieve(Socket& channel) {
             break;
         case NET_MESSAGE_TYPE_PLAYER_CHANGED_PROJECTILE_COUNTDOWN:
             inst = new NetMessagePlayerChangedProjectileCountdown();
+            break;
+        case NET_MESSAGE_TYPE_PLAYER_TOGGLE_CHEAT:
+            inst = new NetMessagePlayerToggleCheat();
             break;
         default:
             break;

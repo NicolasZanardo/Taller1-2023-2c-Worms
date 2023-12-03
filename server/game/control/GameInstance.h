@@ -74,26 +74,12 @@ public:
     template <typename T>
     void perform_action_on_current_worm(const std::function<void(std::shared_ptr<Worm>, T)>& action, T parameter);
 
-    // Movement
-    void start_moving_current_worm_left();
-    void start_moving_current_worm_right();
-    void stop_moving_current_worm();
-    void jump_back_current_worm();
-    void jump_forward_current_worm();
+    void input_action_to_current_worm(GameAction action);
 
-    // Weapon
-    void start_aiming_up_current_worm();
-    void start_aiming_down_current_worm();
-    void stop_aiming_up_current_worm();
-    void stop_aiming_down_current_worm();
     void change_weapon_for_current_worm(WeaponTypeDto weapon);
-
-    // Shot
-    void start_shot_for_current_worm();
-    void end_shot_for_current_worm();
-
-    // Projectile
     void change_projectile_count_down_for_current_worm(ProjectileCountDown time);
+    void toggle_cheat_mode_for_current_worm(CheatType cheat);
+
 
 };
 

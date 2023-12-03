@@ -22,8 +22,6 @@ public:
 
     bool is_still() const;
 
-    float Angle() const;
-
     float AngleInDeg() const;
 
     void receive(Force &force);

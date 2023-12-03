@@ -21,6 +21,7 @@
 #include "Networking/Messages/net_message_player_changed_weapon.h"
 #include "Networking/Messages/net_message_player_changed_projectile_countdown.h"
 #include "Networking/Messages/net_message_game_ended.h"
+#include "Networking/Messages/net_message_player_toggle_cheat.h"
 
 #include "Networking/Messages/net_message_factory.h" 
 #include "Networking/Messages/net_message_behaviour.h"

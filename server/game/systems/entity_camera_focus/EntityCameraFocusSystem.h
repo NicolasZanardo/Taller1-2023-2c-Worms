@@ -9,6 +9,8 @@
 
 class EntityCameraFocusSystem {
     int focused_entity;
+
+    bool is_faster_than(b2Body* body);
 public:
     explicit EntityCameraFocusSystem();
 

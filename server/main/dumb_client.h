@@ -38,6 +38,7 @@ class DumbInterpreter : public NetMessageBehaviour {
     virtual void run(NetMessagePlayerChangedWeapon* msg) override;
     virtual void run(NetMessagePlayerChangedProjectileCountdown* msg) override;
     virtual void run(NetMessageGameEnded* msg) override;
+    virtual void run(NetMessagePlayerToggleCheat* msg) override;
 
     ~DumbInterpreter() {}
 };

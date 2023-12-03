@@ -188,51 +188,8 @@ GameInstance::perform_action_on_current_worm(const std::function<void(std::share
     }
 }
 
-// Movement
-void GameInstance::start_moving_current_worm_left() {
-    perform_action_on_current_worm([](auto worm) { worm->start_moving_left(); });
-}
-
-void GameInstance::start_moving_current_worm_right() {
-    perform_action_on_current_worm([](auto worm) { worm->start_moving_right(); });
-}
-
-void GameInstance::stop_moving_current_worm() {
-    perform_action_on_current_worm([](auto worm) { worm->stop_moving(); });
-}
-
-void GameInstance::jump_back_current_worm() {
-    perform_action_on_current_worm([](auto worm) { worm->jump_backwards(); });
-}
-
-void GameInstance::jump_forward_current_worm() {
-    perform_action_on_current_worm([](auto worm) { worm->jump_forward(); });
-}
-
-// Weapon
-void GameInstance::start_aiming_up_current_worm() {
-    perform_action_on_current_worm([](auto worm) { worm->start_aiming_up(); });
-}
-
-void GameInstance::start_aiming_down_current_worm() {
-    perform_action_on_current_worm([](auto worm) { worm->start_aiming_down(); });
-}
-
-void GameInstance::stop_aiming_up_current_worm() {
-    perform_action_on_current_worm([](auto worm) { worm->stop_aiming_up(); });
-}
-
-void GameInstance::stop_aiming_down_current_worm() {
-    perform_action_on_current_worm([](auto worm) { worm->stop_aiming_down(); });
-}
-
-// Shot
-void GameInstance::start_shot_for_current_worm() {
-    perform_action_on_current_worm([](auto worm) { worm->start_shooting(); });
-}
-
-void GameInstance::end_shot_for_current_worm() {
-    perform_action_on_current_worm([](auto worm) { worm->end_shooting(); });
+void GameInstance::input_action_to_current_worm(GameAction action) {
+    perform_action_on_current_worm([action](auto worm) { worm->act(action); });
 }
 
 void GameInstance::change_weapon_for_current_worm(WeaponTypeDto weapon) {
@@ -243,4 +200,7 @@ void GameInstance::change_projectile_count_down_for_current_worm(ProjectileCount
     perform_action_on_current_worm([count_down](auto worm) { worm->change_projectile_count_down(count_down); });
 }
 
+void GameInstance::toggle_cheat_mode_for_current_worm(CheatType cheat) {
+    perform_action_on_current_worm([cheat](auto worm) { worm->toggle_cheat_mode(cheat); });
+}
 

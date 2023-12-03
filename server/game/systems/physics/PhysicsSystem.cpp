@@ -26,11 +26,7 @@ void PhysicsSystem::update() {
     world.Step(timeStep, velocityIterations, positionIterations);
 }
 
-std::unique_ptr<WormBody> PhysicsSystem::spawn_worm(
-    WormScenarioData worm,
-    const std::shared_ptr<Worm> &worm_model,
-    WormCfg &worms_cfg
-) {
+std::unique_ptr<WormBody> PhysicsSystem::spawn_worm(WormScenarioData worm, WormCfg &worms_cfg) {
     // Body def
     b2BodyDef bodyDef;
     bodyDef.type = b2_dynamicBody;
@@ -50,7 +46,6 @@ std::unique_ptr<WormBody> PhysicsSystem::spawn_worm(
     fixtureDef.density = worms_cfg.body.density;
     fixtureDef.restitution = worms_cfg.body.restitution;
     fixtureDef.friction = 0.5;
-    fixtureDef.userData.pointer = reinterpret_cast<uintptr_t>(worm_model.get());
     fixtureDef.filter.categoryBits = WORM_CATEGORY_BIT;
     fixtureDef.filter.maskBits = GROUND_CATEGORY_BIT | PROJECTILE_CATEGORY_BIT | WATER_CATEGORY_BIT | BOUNDARY_CATEGORY_BIT;
     body->CreateFixture(&fixtureDef);
@@ -70,7 +65,6 @@ std::unique_ptr<WormBody> PhysicsSystem::spawn_worm(
     footSensorFixtureDef.density = 0;
     footSensorFixtureDef.shape = &footSensorBox;
     footSensorFixtureDef.isSensor = true; // Set as sensor to detect collisions without generating a response
-    footSensorFixtureDef.userData.pointer = reinterpret_cast<uintptr_t>(worm_model->get_foot_sensor());
     fixtureDef.filter.categoryBits = WORM_CATEGORY_BIT;
     fixtureDef.filter.maskBits = GROUND_CATEGORY_BIT | WATER_CATEGORY_BIT | BOUNDARY_CATEGORY_BIT;
     body->CreateFixture(&footSensorFixtureDef);

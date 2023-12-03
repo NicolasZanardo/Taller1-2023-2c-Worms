@@ -12,6 +12,7 @@
 #include "ScenarioBeams.h"
 #include "ScenarioWater.h"
 #include "ScenarioBoundaries.h"
+#include "WormBody.h"
 
 
 class PhysicsSystem {
@@ -22,7 +23,6 @@ public:
 
     std::unique_ptr<WormBody> spawn_worm(
         WormScenarioData wormScenarioData,
-        const std::shared_ptr<Worm> &worm_model,
         WormCfg &worms_cfg
         );
 

@@ -34,6 +34,7 @@ public:
     void run(NetMessagePlayerChangedWeapon* msg) override;
     void run(NetMessagePlayerChangedProjectileCountdown* msg) override;
     void run(NetMessageGameEnded* msg) override;
+    void run(NetMessagePlayerToggleCheat* msg) override;
 
 private:
     Queue<std::shared_ptr<ClientGameStateDTO>>& state_queue;

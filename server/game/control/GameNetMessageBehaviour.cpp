@@ -12,64 +12,10 @@ void GameNetMessageBehaviour::run(NetMessageChat *msg) {
 }
 
 void GameNetMessageBehaviour::run(NetMessageGameAction *msg) {
-
     if (!game.is_client_turn(msg->client_id)) {
         return;
     }
-    switch (msg->action) {
-
-        case GameAction::MOVE_RIGHT_INIT: {
-            game.start_moving_current_worm_right();
-            break;
-        }
-        case GameAction::MOVE_LEFT_INIT: {
-            game.start_moving_current_worm_left();
-            break;
-        }
-        case GameAction::MOVE_RIGHT_END: {
-            game.stop_moving_current_worm(); // TODO
-            break;
-        }
-        case GameAction::MOVE_LEFT_END: {
-            game.stop_moving_current_worm(); // TODO better mechanics
-            break;
-        }
-        case GameAction::JUMP_BACKWARDS: {
-            game.jump_back_current_worm();
-            break;
-        }
-        case GameAction::JUMP_FORWARD: {
-            game.jump_forward_current_worm();
-            break;
-        }
-        case GameAction::AIM_UP_INIT: {
-            game.start_aiming_up_current_worm();
-            break;
-        }
-        case GameAction::AIM_DOWN_INIT: {
-            game.start_aiming_down_current_worm();
-            break;
-        }
-        case GameAction::AIM_UP_STOPPED: {
-            game.stop_aiming_up_current_worm();
-            break;
-        }
-        case GameAction::AIM_DOWN_STOPPED: {
-            game.stop_aiming_down_current_worm();
-            break;
-        }
-        case GameAction::SHOOT_STARTED: {
-            game.start_shot_for_current_worm();
-            break;
-        }
-        case GameAction::SHOOT_ENDED: {
-            game.end_shot_for_current_worm();
-            break;
-        }
-        case GameAction::RESERVED: {
-            break;
-        }
-    }
+    game.input_action_to_current_worm(msg->action);
 }
 
 void GameNetMessageBehaviour::run(NetMessagePlayerChangedWeapon *msg) {
@@ -85,6 +31,14 @@ void GameNetMessageBehaviour::run(NetMessagePlayerChangedProjectileCountdown *ms
     }
     game.change_projectile_count_down_for_current_worm(msg->count_down);
 }
+
+void GameNetMessageBehaviour::run(NetMessagePlayerToggleCheat *msg) {
+    if (!game.is_client_turn(msg->client_id)) {
+        return;
+    }
+    game.toggle_cheat_mode_for_current_worm(msg->cheat);
+}
+
 
 void GameNetMessageBehaviour::run(NetMessageLeave *msg) {
     gameClients.remove(msg->client_id);

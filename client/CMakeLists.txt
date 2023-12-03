@@ -36,6 +36,8 @@ add_executable (client_app
     game/client_game_state.cpp game/client_game_state.h
     game/game_loop.cpp game/game_loop.h
     game/ui_utils.h game/ui_utils.cpp
+        game_managment/commands/ToggleCheatCommand.h
+        game_managment/commands/ToggleCheatCommand.cpp
 )
 
 target_include_directories(client_app PUBLIC

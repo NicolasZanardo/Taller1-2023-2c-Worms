@@ -20,6 +20,7 @@ class GameNetMessageBehaviour: public NetMessageBehaviour{
     void run(NetMessagePlayerChangedWeapon* msg) override;
     void run(NetMessagePlayerChangedProjectileCountdown* msg) override;
     void run(NetMessageGameEnded* msg) override;
+    void run(NetMessagePlayerToggleCheat* msg) override;
 
 public:
     GameNetMessageBehaviour(InGameClients& gameClients, GameInstance& game);

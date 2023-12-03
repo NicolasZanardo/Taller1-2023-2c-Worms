@@ -99,3 +99,7 @@ void ClientReceiver::run(NetMessagePlayerChangedProjectileCountdown* msg) {
 void ClientReceiver::run(NetMessageGameEnded* msg) {
     // TODO VICTORY/TIE/DEFEAT SCREEN flow
 }
+
+void ClientReceiver::run(NetMessagePlayerToggleCheat* msg) {
+    // TODO VICTORY/TIE/DEFEAT SCREEN flow
+}

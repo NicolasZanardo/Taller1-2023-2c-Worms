@@ -1,22 +1,37 @@
 #include "WormBody.h"
 #include "BuoyancyForce.h"
-#include "Logger.h"
+#include "Worm.h"
+#include <iostream>
 
 WormBody::WormBody(b2World&  world, b2Body* body, WormCfg &worm_cfg) :
-        Body(world, body, true),
-        state(State::IDLE),
-        speed(worm_cfg.body.speed),
-        forward_jump_height(worm_cfg.body.forward_jump_height),
-        forward_jump_reach(worm_cfg.body.forward_jump_reach),
-        backwards_jump_height(worm_cfg.body.backwards_jump_height),
-        backwards_jump_reach(worm_cfg.body.backwards_jump_reach),
-        is_moving(false),
-        is_jumping(false),
-        is_on_water(false),
-        is_on_ground(false){};
+        WormBodyComponent(world, body, worm_cfg) {};
 
-bool WormBody::facing_right() const {
-    return is_facing_right;
+WormBody::WormBody(std::shared_ptr<WormBodyComponent> &&other) : WormBodyComponent(std::move(other)) {}
+
+
+void WormBody::update(const std::shared_ptr<Worm>& worm) {
+    float y_velocity = body->GetLinearVelocity().y;
+
+    if (is_moving && is_on_ground) {
+        body->SetLinearVelocity((b2Vec2(facing_direction_sign() * speed, y_velocity)));
+    } else if(worm->is_on_water) {
+        BuoyancyForce force(world);
+        force.apply(this->body);
+    }
+
+    if (worm->is_on_water) {
+        worm->state = WormStateDto::SINKING;
+    } else if (is_jumping) {
+        worm->state = WormStateDto::JUMPING;
+    } else if (y_velocity < -epsilon_y) {
+        worm->state = WormStateDto::FALLING;
+    } else {
+        if (abs(body->GetLinearVelocity().x) < epsilon_y) {
+            worm->state = WormStateDto::IDLE;
+        } else {
+            worm->state = WormStateDto::MOVING;
+        }
+    }
 }
 
 void WormBody::on_sensed_one_new_ground_contact() {
@@ -92,49 +107,8 @@ void WormBody::jump_backwards() {
 void WormBody::sink() {
     is_moving = false;
     is_on_ground = false;
-    is_on_water = true;
-}
-
-void WormBody::on_update() {
-    float y_velocity = body->GetLinearVelocity().y;
-
-    if (is_moving && is_on_ground) {
-        body->SetLinearVelocity((b2Vec2(facing_direction_sign() * speed, y_velocity)));
-    } else if(is_on_water) {
-        BuoyancyForce force(world);
-        force.apply(this->body);
-    }
-
-    if (is_on_water) {
-        state = State::SINKING;
-    } else if (is_jumping) {
-        state = State::JUMPING;
-    } else if (y_velocity < -epsilon_y) {
-        state = State::FALLING;
-    } else {
-        if (abs(body->GetLinearVelocity().x) < epsilon_y) {
-            state = State::IDLE;
-        } else {
-            state = State::MOVING;
-        }
-    }
 }
 
 void WormBody::on_turn_ended() {
     is_moving = false;
-}
-
-MovementStateDto WormBody::state_to_dto() const {
-    switch (state) {
-        case State::IDLE:
-            return MovementStateDto::IDLE;
-        case State::MOVING:
-            return MovementStateDto::MOVING;
-        case State::JUMPING:
-            return MovementStateDto::GOING_UPWARDS;
-        case State::FALLING:
-            return MovementStateDto::FALLING;
-        case State::SINKING:
-            return MovementStateDto::SINKING;
-    }
 }

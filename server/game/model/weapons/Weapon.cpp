@@ -1,5 +1,5 @@
 #include "Weapon.h"
-
+#include <iostream>
 Weapon::Weapon(WeaponCfg &weapon_data, std::unique_ptr<ProjectileCountDownChanger> countdown_changer) :
     projectile_data(weapon_data.projectile),
     type(weapon_data.type), ammo_left(weapon_data.ammo),

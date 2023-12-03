@@ -53,8 +53,8 @@ add_executable(
     game/model/worm/WormBody.cpp
     game/model/worm/Worm.h
     game/model/worm/Worm.cpp
-    game/model/worm/Health.h
-    game/model/worm/Health.cpp
+        game/model/worm/HealthComponent.h
+        game/model/worm/HealthComponent.cpp
 
     game/model/weapons/Weapon.h
     game/model/weapons/Weapon.cpp
@@ -153,6 +153,12 @@ add_executable(
         game/model/weapons/DefaultProjectileCountDownChanger.cpp
         game/model/weapons/NoneProjectileCountDownChanger.h
         game/model/weapons/NoneProjectileCountDownChanger.cpp
+        game/model/worm/WeaponsComponent.cpp
+        game/model/worm/WormBodyComponent.h
+        game/model/worm/WormCheatBody.h
+        game/model/worm/WormCheatBody.cpp
+        game/model/worm/CheatManager.h
+        game/model/worm/CheatManager.cpp
 )
 
 target_include_directories(server_app PUBLIC
