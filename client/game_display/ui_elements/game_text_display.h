@@ -8,7 +8,6 @@
 #include "game_displayable.h"
 #include "game_sprite_info.h"
 
-
 enum TextAlign { left, center, right };
 enum TextLayer { UI, ingame };
 
@@ -16,6 +15,7 @@ class GameTextDisplay : public Displayable {
     GameCamera& cam;
     SDL2pp::Rect transform;
     float x,y;
+    SDL2pp::Color color;
     bool absolute;
     bool is_hidden;
     TextAlign align;
@@ -25,7 +25,7 @@ class GameTextDisplay : public Displayable {
 
     public:
     ~GameTextDisplay() override;
-    explicit GameTextDisplay(GameCamera& cam, float x, float y, SDL2pp::Font* font, TextAlign align, TextLayer layer, const std::string& text);
+    explicit GameTextDisplay(GameCamera& cam, float x, float y, SDL2pp::Font* font, TextAlign align, TextLayer layer, const std::string& text, SDL2pp::Color color);
 
     void update(const std::string& newval);
     void hidden(bool is_hidden);

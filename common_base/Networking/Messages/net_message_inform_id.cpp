@@ -5,7 +5,7 @@ NetMessageInformID::NetMessageInformID()
     {}
 
 
-NetMessageInformID::NetMessageInformID(int client_id)
+NetMessageInformID::NetMessageInformID(const int client_id)
     : NetMessage(NET_MESSAGE_TYPE_INFORM_ID),
     client_id(client_id)
     {}
