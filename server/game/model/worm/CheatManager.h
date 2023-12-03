@@ -3,6 +3,7 @@
 
 #include <unordered_map>
 #include "CheatType.h"
+#include <memory>
 
 class Worm;
 
