@@ -31,6 +31,8 @@ class GameTextDisplay : public Displayable {
     void hidden(bool is_hidden);
     void set_pos(float x, float y);
     void render(SDL2pp::Renderer& renderer, float delta_time) override;
+
+    friend class GameTurnDisplayer;
 };
 
 #endif

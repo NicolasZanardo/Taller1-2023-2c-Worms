@@ -38,6 +38,11 @@ void NetMessageInitialGameState::push_data_into(NetBuffer &container) {
         container.push_byte(static_cast<uint8_t>(it.weapon_hold));
         container.push_float(it.aiming_angle);
     }
+
+    container.push_short(client_ids_turn_order.size());
+    for (auto& it : client_ids_turn_order) {
+        container.push_int(it);
+    }
 }
 
 void NetMessageInitialGameState::pull_data_from(NetProtocolInterpreter &channel) {
@@ -70,6 +75,11 @@ void NetMessageInitialGameState::pull_data_from(NetProtocolInterpreter &channel)
 
         worms.emplace_back(client_id, entity_id, x, y, angle, is_facing_right, life, state, weapon_hold, aiming_angle);
     }
+
+    short clients_amount = channel.read_short();
+    for(int i = 0; i < clients_amount; i++) {
+        client_ids_turn_order.emplace_back(channel.read_int());
+    }
 }
 
 void NetMessageInitialGameState::add(const BeamDto &beam) {
@@ -78,6 +88,9 @@ void NetMessageInitialGameState::add(const BeamDto &beam) {
 
 void NetMessageInitialGameState::add(const WormDto &worm) {
     worms.push_back(worm);
+}
+void NetMessageInitialGameState::add(const int client_turn) {
+    client_ids_turn_order.push_back(client_turn);
 }
 
 void NetMessageInitialGameState::execute(NetMessageBehaviour &interpreter) {

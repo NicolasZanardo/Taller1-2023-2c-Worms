@@ -28,19 +28,15 @@ void ClientReceiver::run() {
 }
 
 void ClientReceiver::run(NetMessageInitialGameState* msg) {
-    std::cout << "Receiving initial game state.\n";
     auto game_state_dto = std::make_shared<ClientGameStateDTO>();
 
     game_state_dto->width = msg->room_width;
     game_state_dto->height = msg->room_height;
     game_state_dto->water_level_height = msg->water_height_level;
-
-    std::cout << "w: " << msg->room_width << " - h: " << msg->room_height << '\n';
-    std::cout << "worms in game " << msg->worms.size() << '\n';
-
     game_state_dto->beams = std::move(msg->beams);
     game_state_dto->worms = std::move(msg->worms);
-
+    game_state_dto->client_ids_turn_order = std::move(msg->client_ids_turn_order);
+    
     this->state_queue.push(game_state_dto);
 }
 

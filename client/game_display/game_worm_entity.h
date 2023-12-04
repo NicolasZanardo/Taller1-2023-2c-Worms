@@ -18,7 +18,7 @@ class WormEntity : public CameraTarget{
     GameTextDisplay* name;
 
     public:
-    WormEntity(GameDisplay& display, WormDto& values);
+    WormEntity(GameDisplay& display, WormDto& values, int color);
     void update(WormDto& new_values, bool active);
 
     float get_x() override;
