@@ -17,34 +17,31 @@ GameInstance::GameInstance(
     wind_system(world),
     explosions_system(instances_manager, world),
     entity_focus_system(),
-    
+
     turn_system(
-        instances_manager.get_projectiles(), 
+        instances_manager.get_projectiles(),
         instances_manager.get_worms(),
         turn_system_cfg.front().match_duration,
         turn_system_cfg.front().turn_duration,
         turn_system_cfg.front().time_after_ending_turn,
         rate
     ) {
-        assign_worms_to_clients(clients);
-        
-        auto on_worm_death = [this](int worm_id) {
-            turn_system.remove(worm_id);
-            remove_from_clients_worms_map(worm_id);
-        };
-        instances_manager.register_worm_death_callback(on_worm_death);
-    }
+    assign_worms_to_clients(clients);
+
+    auto on_worm_death = [this](int worm_id) {
+        turn_system.remove(worm_id);
+        remove_from_clients_worms_map(worm_id);
+    };
+    instances_manager.register_worm_death_callback(on_worm_death);
+}
 
 
 bool GameInstance::update(const int it) {
     auto worms = instances_manager.get_worms();
     auto projectiles = instances_manager.get_projectiles();
 
-    if (clients_worms.size() == 1) {
+    if (clients_worms.size() == 1 || clients_worms.empty())
         return true;
-    } else if (clients_worms.empty()) {
-        return true;
-    }
 
     auto current_turn_worm = turn_system.get_current_worm();
     updatables_system.update(it, worms, projectiles);
@@ -88,7 +85,7 @@ std::vector<std::shared_ptr<Projectile>> &GameInstance::get_projectiles() {
     return instances_manager.get_projectiles();
 }
 
-std::vector<ExplosionDto>& GameInstance::get_explosions() {
+std::vector<ExplosionDto> &GameInstance::get_explosions() {
     return explosions_system.get_explosions();
 }
 
@@ -135,7 +132,7 @@ void GameInstance::assign_worms_to_clients(const std::list<Client *> &clients) {
         for (const auto &worm: assignedSubset) {
             turn_system.add_player(clientId, worm);
         }
-        
+
 
         // assign Worm* to clients ids
         clients_worms[clientId] = std::move(assignedSubset);

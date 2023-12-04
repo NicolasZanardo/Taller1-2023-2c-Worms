@@ -104,19 +104,8 @@ void TurnManager::next_turn() {
     turn_remaining_time = turn_lenght;
 }
 
-void TurnManager::remove_dead_worms() {
-    /* for (auto cli : clients.values) {
-         cli->entities.remove_if([](auto worm) {
-             return !worm->is_alive();
-         });
-     }
-
-     clients.remove_if([](auto cli) {
-         return cli->entities.values.size() == 0;
-     });*/
-}
-
 void TurnManager::remove(int worm_id_to_remove) {
+    std::cout << "Removing worm" << worm_id_to_remove << std::endl;
     int client_turn_idx_to_be_removed = -1;
     bool removing_current_worm = get_current_worm_id() == worm_id_to_remove;
 
