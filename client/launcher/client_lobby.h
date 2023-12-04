@@ -12,7 +12,8 @@
 class ClientLobby {
 public:
     ClientLobby() = delete;
-    explicit ClientLobby(const char* host_name, const char* service_name);
+    // explicit ClientLobby(const char* host_name, const char* service_name, ClientLobbySettings& lobby_settings);
+    explicit ClientLobby(NetChannel& net_channel, ClientLobbySettings& lobby_settings);
     ~ClientLobby() = default;
 
     ClientLobby(const ClientLobby& other) = delete;
@@ -26,8 +27,8 @@ public:
 private:
     std::ifstream input_stream;
     LobbyParser parser;
-    ClientLobbySettings lobby_settings;
-    NetChannel net_channel;
+    NetChannel& net_channel;
+    ClientLobbySettings& lobby_settings;
 };
 
 #endif  // __CLIENT_LOBBY_H__

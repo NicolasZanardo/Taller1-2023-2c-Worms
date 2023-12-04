@@ -1,13 +1,13 @@
 #===============================================================================
 # Lobby del Cliente por Consola.
-add_executable(client_console_lobby
-    main_console_lobby.cpp
-    client_lobby.cpp client_lobby.h
-    client_lobby_settings.cpp client_lobby_settings.h
-    lobby_parser.cpp lobby_parser.h    
-)
+# add_executable(client_console_lobby
+#     main_console_lobby.cpp
+#     client_lobby.cpp client_lobby.h
+#     client_lobby_settings.cpp client_lobby_settings.h
+#     lobby_parser.cpp lobby_parser.h    
+# )
 
-target_link_libraries(client_console_lobby PUBLIC common)
+# target_link_libraries(client_console_lobby PUBLIC common)
 
 #===============================================================================
 set(PROJECT_SOURCES

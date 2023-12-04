@@ -12,11 +12,13 @@
 #include "client_game_state_dto.h"
 #include "game_display.h"
 #include "game_ui/utils_constants.h"
+#include "launcher/client_lobby_settings.h"
 
 class Client {
 public:
     Client() = delete;
-    explicit Client(const char* host_name, const char* service_name);
+    // explicit Client(const char* host_name, const char* service_name);
+    explicit Client(NetChannel& net_channel, ClientLobbySettings& lobby_settings);
     ~Client() = default;
 
     Client(const Client& other) = delete;
@@ -31,7 +33,8 @@ private:
     Queue<std::shared_ptr<Command>> command_queue;
     Queue<std::shared_ptr<ClientGameStateDTO>> state_queue;
 
-    NetChannel channel;
+    NetChannel& channel;
+    ClientLobbySettings& lobby_settings;
     GameDisplay display;
     ClientReceiver receiver;
     ClientSender sender;
