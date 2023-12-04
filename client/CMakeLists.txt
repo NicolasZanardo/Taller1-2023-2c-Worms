@@ -34,6 +34,7 @@ add_executable (client_app
         game_managment/commands/GameActionCommand.h game_managment/commands/GameActionCommand.cpp
     #game_ui/animation.cpp game_ui/animation.h
     game/client_game_state.cpp game/client_game_state.h
+    game/game_turn_displayer.cpp game/game_turn_displayer.h
     game/game_loop.cpp game/game_loop.h
     game/ui_utils.h game/ui_utils.cpp
 )

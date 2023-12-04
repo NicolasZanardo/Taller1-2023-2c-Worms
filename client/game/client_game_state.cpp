@@ -2,12 +2,15 @@
 #include "ui_utils.h"
 #include "constants.h"
 
+ClientGameState::~ClientGameState() {
+    delete(turnDisplay);
+}
 ClientGameState::ClientGameState(GameDisplay &display)
     : display(display),
+      turnMessage(nullptr),
       turnDisplay(nullptr),
       timer(display),
       worms(), 
-      client_order(),
       my_client_id(-1) { }
 
 void ClientGameState::load(const std::shared_ptr<ClientGameStateDTO> & game) {
@@ -21,19 +24,10 @@ void ClientGameState::load(const std::shared_ptr<ClientGameStateDTO> & game) {
     width = game->width;
     height = game->height;
 
-    display.new_text("TURNOS:",0, 80, TextAlign::left, TextLayer::UI, TextType::gametext, 0xFFFFFF);
+    turnDisplay = new GameTurnDisplayer(display, game->client_ids_turn_order, 0, 80);
+    turnMessage = display.new_text("Es mi turno!", 400, 0, TextAlign::center, TextLayer::UI, TextType::title, COLOR_BY_CLIENT[turnDisplay->client_order[my_client_id]]);
+    turnMessage->hidden(true);
 
-    int client_count = game->client_ids_turn_order.size();
-    for (int i = 0; i < client_count; i++) {
-        client_order.emplace(game->client_ids_turn_order[i], i);
-        display.new_text(
-            "Jugador " + std::to_string(game->client_ids_turn_order[i]),
-            8, 96+i*16, TextAlign::left, TextLayer::UI, TextType::gametext, COLOR_BY_CLIENT[i]
-        );
-    }
-
-    turnDisplay = display.new_text("Es mi turno!", 400, 0, TextAlign::center, TextLayer::UI, TextType::title, COLOR_BY_CLIENT[client_order[my_client_id]]);
-    turnDisplay->hidden(true);
 
     display.start_scenario(width, height, game->water_level_height);
 
@@ -56,7 +50,7 @@ void ClientGameState::load(const std::shared_ptr<ClientGameStateDTO> & game) {
 
     
     for (auto &worm: game->worms) {
-        worms.emplace(worm.entity_id, std::make_shared<WormEntity>(display, worm, COLOR_BY_CLIENT[client_order[worm.client_id]]));
+        worms.emplace(worm.entity_id, std::make_shared<WormEntity>(display, worm, COLOR_BY_CLIENT[turnDisplay->client_order[worm.client_id]]));
         display.camera.set_target(worms[worm.entity_id].get());
     }
 }
@@ -90,8 +84,10 @@ void ClientGameState::update(const std::shared_ptr<ClientGameStateDTO> &game_sta
         }
     }
 
-    turnDisplay->hidden(my_client_id != game_state_dto->current_turn_client_id);
+    turnMessage->hidden(my_client_id != game_state_dto->current_turn_client_id);
     focus_camera_on(game_state_dto->focused_entity_id);
+    
+    turnDisplay->update(game_state_dto->worms, game_state_dto->current_turn_client_id);
 }
 
 
