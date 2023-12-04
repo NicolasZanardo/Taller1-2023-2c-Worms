@@ -28,11 +28,11 @@ private:
 
     // Init methods
     void switch_clients_game_queue(std::list<Client *> clients);
-    void initial_broadcast(const GameScenarioData &scenario);
+    void initial_broadcast(const GameScenarioData &scenario, const std::vector<int>& order);
 
     void process_actions();
 
-    void broadcast_initial_game_state(const GameScenarioData &scenario);
+    void broadcast_initial_game_state(const GameScenarioData &scenario, const std::vector<int>& order);
     void broadcast_game_state_update();
     void broadcast_game_ended();
 

@@ -22,4 +22,8 @@ const float SHOT_OFFSET_FROM_WORM = (WORM_SIZE / 2) + PROJECTILE_RADIUS * 2;
 
 const float WATER_HEIGHT = 6;
 
+const int COLOR_BY_CLIENT[] = {
+    0xFF6969,0x69FFFF,0x87FF69,0xE169FF,0xE1FF69,0x8769FF
+};
+
 #endif

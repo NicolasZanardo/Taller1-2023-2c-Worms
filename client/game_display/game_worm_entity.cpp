@@ -1,11 +1,7 @@
 #include "game_worm_entity.h"
 #include "constants.h"
 
-const int COLOR_BY_CLIENT[] = {
-    0xFF6969,0x69FFFF,0x87FF69,0xE169FF,0xE1FF69,0x8769FF
-};
-
-WormEntity::WormEntity(GameDisplay& display, WormDto& values) :
+WormEntity::WormEntity(GameDisplay& display, WormDto& values, int color) :
     attributes(
         values.client_id, values.entity_id,
         values.x, values.y, values.angle,
@@ -14,7 +10,7 @@ WormEntity::WormEntity(GameDisplay& display, WormDto& values) :
     )
     , sprite(display.new_worm_animation(1.0f, 0.0f))
     , is_active(true)
-    , color(COLOR_BY_CLIENT[values.client_id-1])
+    , color(color)
     , name(display.new_text(
         std::to_string(values.life),
         values.x, values.y + 1,

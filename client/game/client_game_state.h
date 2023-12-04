@@ -17,6 +17,7 @@ class ClientGameState {
     float width;
     float height;
     GameTextDisplay* turnDisplay;
+    std::vector<GameTextDisplay*> turnWheel;
     GameTimer timer;
 
     // std::unique_ptr<ClientGameStateDTO> game_state_dto;
@@ -24,6 +25,7 @@ class ClientGameState {
     std::map<int, std::shared_ptr<WormEntity>> death_worms;
 
     std::map<int, std::shared_ptr<ProjectileEntity>> projectiles;
+    std::unordered_map<int, int> client_order;
 
     void transfer_death_worms(std::vector<WormDto> updated_worms);
     void destroy_old_projectiles(std::vector<ProjectileDto> updated_projectiles);
@@ -35,7 +37,7 @@ class ClientGameState {
     ClientGameState() = delete;
     ~ClientGameState() = default;
 
-    void load(const std::shared_ptr<ClientGameStateDTO>& game_state_dto);
+    void load(const std::shared_ptr<ClientGameStateDTO>& state);
     void update(const std::shared_ptr<ClientGameStateDTO>& game_state_dto);
     
 };

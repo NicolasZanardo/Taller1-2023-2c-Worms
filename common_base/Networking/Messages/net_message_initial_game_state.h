@@ -13,6 +13,7 @@ public:
     float water_height_level;
     std::vector<BeamDto> beams;
     std::vector<WormDto> worms;
+    std::vector<int> client_ids_turn_order;
     
     NetMessageInitialGameState();
     NetMessageInitialGameState(float room_width, float room_height, float water_height_level);
@@ -20,6 +21,8 @@ public:
 
     void add(const BeamDto& beam);
     void add(const WormDto& worm);
+
+    void add(const int turn);
 
     void push_data_into(NetBuffer& container) override;
     void pull_data_from(NetProtocolInterpreter& channel) override;

@@ -15,6 +15,7 @@ public:
     float width;
     float height;
     float water_level_height;
+    std::vector<int> client_ids_turn_order;
 
     int current_turn_client_id;
     int current_turn_worm_id;
