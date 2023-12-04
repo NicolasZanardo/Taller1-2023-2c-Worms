@@ -133,7 +133,7 @@ void TurnSystem::remove_worm(int worm_id) {
     }
 }
 
-void TurnSystem::randomly_assign_clients_turn() {
+/*void TurnSystem::randomly_assign_clients_turn() {
     if (clients_ids_to_worms_ids_iterator.empty()) {
         // Handle the case when there are no clients
         return;
@@ -185,3 +185,52 @@ bool TurnSystem::worms_are_still(std::unordered_map<int, std::shared_ptr<Worm>> 
 
     return true;
 }*/
+
+
+/*
+ *
+ * void TurnManager::remove(int worm_id_to_remove) {
+    int client_turn_idx_to_be_removed = -1;
+    bool removing_current_worm = get_current_worm_id() == worm_id_to_remove;
+
+    for (auto client_turn : clients_turns) {
+        client_turn->worms.erase(
+            std::remove_if(
+                client_turn->worms.begin(),
+                client_turn->worms.end(),
+                [worm_id_to_remove](const auto& worm) {
+                    return worm->is(worm_id_to_remove);
+                }
+            ),
+            client_turn->worms.end()
+        );
+
+        if (client_turn->worms.empty()) {
+            // Store the index of the ClientTurn to be removed
+            client_turn_idx_to_be_removed = std::distance(clients_turns.begin(), std::find(clients_turns.begin(), clients_turns.end(), client_turn));
+        }
+    }
+
+    // If the client_turn was left with 0 worms
+    if (client_turn_idx_to_be_removed != -1) {
+        bool removing_current_client = client_turn_idx_to_be_removed == current_client_idx;
+
+        // If it was previous to the current client_turn, decrease current_client_idx by one
+        if (client_turn_idx_to_be_removed < current_client_idx) {
+            current_client_idx--;
+        }
+        // If it was the current client_turn and not the last one, adapt the index
+        else if (removing_current_client && current_client_idx != (clients_turns.size() - 1)) {
+            current_client_idx = (current_client_idx + 1) % clients_turns.size();
+        }
+
+        // Erase the ClientTurn
+        clients_turns.erase(clients_turns.begin() + client_turn_idx_to_be_removed);
+    }
+
+    // After all was correctly set up, if we removed the current worm pass to the next turn
+    if (removing_current_worm) {
+        next_turn();
+    }
+}
+ */

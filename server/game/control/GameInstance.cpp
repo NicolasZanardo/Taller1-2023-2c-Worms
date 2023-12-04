@@ -28,7 +28,7 @@ GameInstance::GameInstance(
     ) {
         assign_worms_to_clients(clients);
         
-        auto on_worm_death = [this](size_t worm_id) {
+        auto on_worm_death = [this](int worm_id) {
             turn_system.remove(worm_id);
             remove_from_clients_worms_map(worm_id);
         };
@@ -46,7 +46,7 @@ bool GameInstance::update(const int it) {
         return true;
     }
 
-    auto current_turn_worm = turn_system.current_entity();
+    auto current_turn_worm = turn_system.get_current_worm();
     updatables_system.update(it, worms, projectiles);
     physics_system.update();
     shot_system.update(current_turn_worm);
@@ -59,9 +59,10 @@ bool GameInstance::update(const int it) {
 }
 
 GameState GameInstance::get_current_state() {
+    std::cout << "Call to get current id from get state\n";
     return {
         turn_system.current_client(),
-        turn_system.current_entity()->Id(),
+        turn_system.get_current_worm_id(),
         entity_focus_system.get_focused_entity_id(),
         wind_system.get_wind_speed(),
         turn_system.get_game_remaining_time(),
@@ -172,13 +173,21 @@ bool GameInstance::is_client_turn(int id) {
 
 // Actions
 void GameInstance::perform_action_on_current_worm(const std::function<void(std::shared_ptr<Worm>)> &action) {
-    action(turn_system.current_entity());
+    std::cout << "Perform action called get current worm\n";
+    auto current_worm = turn_system.get_current_worm();
+    if (current_worm) {
+        action(current_worm);
+    }
 }
 
 template<typename T>
 void
 GameInstance::perform_action_on_current_worm(const std::function<void(std::shared_ptr<Worm>, T)> &action, T parameter) {
-    action(turn_system.current_entity(),parameter);
+    std::cout << "Perform action param called get current worm\n";
+    auto current_worm = turn_system.get_current_worm();
+    if (current_worm) {
+        action(current_worm, parameter);
+    }
 }
 
 // Movement

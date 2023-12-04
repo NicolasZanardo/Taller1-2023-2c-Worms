@@ -96,13 +96,10 @@ void GameEngineInstance::broadcast_initial_game_state(const GameScenarioData &sc
 
     for (auto item: scenario.beams) {
         message->add(item.toBeamDto());
-        std::cout << "BeamDto x: " << item.toBeamDto().x << " y: " << item.toBeamDto().y << std::endl;
     }
 
     for (const auto &[clientId, worms]: game.get_clients_worms()) {
         for (const auto &wrm: worms) {
-            std::cout << "Init Worm id: " << wrm->toWormDto(clientId).entity_id
-                      << " with client id: " << wrm->toWormDto(clientId).client_id << std::endl;
             message->add(wrm->toWormDto(clientId));
         }
     }

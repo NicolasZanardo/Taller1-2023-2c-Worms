@@ -12,6 +12,7 @@ public:
     int Id() const;
     void Destroy();
     bool IsActive();
+    bool is(int id) const;
 
 };
 

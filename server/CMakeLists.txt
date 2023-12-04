@@ -156,6 +156,8 @@ add_executable(
         game/model/weapons/DefaultProjectileCountDownChanger.cpp
         game/model/weapons/NoneProjectileCountDownChanger.h
         game/model/weapons/NoneProjectileCountDownChanger.cpp
+        game/systems/turns/ClientTurn.h
+        game/systems/turns/ClientTurn.cpp
 )
 
 target_include_directories(server_app PUBLIC
