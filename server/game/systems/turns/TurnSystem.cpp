@@ -110,6 +110,19 @@ void TurnSystem::advance_to_next_turn() {
    // }
 }
 
+std::vector<int> TurnSystem::get_order() {
+    if (clients_ids_to_worms_ids_iterator.empty()) {
+        return std::vector<int>();
+    }
+
+    std::vector<int> order;
+    for (auto [id, cli] : clients_ids_to_worms_ids_iterator) {
+        order.emplace_back(id);
+    }
+    
+    return order;
+}
+
 void TurnSystem::add_player(int client_id, const std::list<int> &worm_ids_from_client) {
     if (worm_ids_from_client.empty()) {
         throw std::runtime_error("Worm id list could not be empty");

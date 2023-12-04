@@ -8,16 +8,17 @@ GameInstance::GameInstance(
     const std::list<Client *> &clients,
     int rate
 ) :
-    world(b2Vec2(xGravity, yGravity)),
-    physics_system(rate, world, scenarioData),
-    instances_manager(physics_system, scenarioData, worms_cfg.front(), weapons_cfg),
-    clients_worms(),
-    turn_system(rate, turn_system_cfg.front()),
-    updatables_system(rate),
-    shot_system(instances_manager),
-    wind_system(world),
-    explosions_system(instances_manager, world),
-    entity_focus_system() {
+world(b2Vec2(xGravity, yGravity)),
+physics_system(rate, world, scenarioData),
+instances_manager(physics_system, scenarioData, worms_cfg.front(), weapons_cfg),
+clients_worms(),
+turn_system(rate, turn_system_cfg.front()),
+updatables_system(rate),
+shot_system(instances_manager),
+wind_system(world),
+explosions_system(instances_manager, world),
+entity_focus_system() 
+{
     assign_worms_to_clients(clients);
     turn_system.randomly_assign_clients_turn();
 
@@ -164,6 +165,10 @@ void GameInstance::remove_from_clients_worms_map(size_t worm_id) {
             it = clients_worms.erase(it);
         }
     }
+}
+
+std::vector<int> GameInstance::client_turn_order(){
+    return turn_system.get_order();
 }
 
 

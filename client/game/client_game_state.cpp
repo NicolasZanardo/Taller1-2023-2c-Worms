@@ -6,11 +6,11 @@ ClientGameState::ClientGameState(GameDisplay &display)
     : display(display),
       turnDisplay(nullptr),
       timer(display),
-      worms(), my_client_id(-1) {
-    
-}
+      worms(), 
+      client_order(),
+      my_client_id(-1) { }
 
-void ClientGameState::load(const std::shared_ptr<ClientGameStateDTO> &game) {
+void ClientGameState::load(const std::shared_ptr<ClientGameStateDTO> & game) {
     std::cout << "Loading scenario size("
               << game->width << ","
               << game->height << ")"
@@ -21,8 +21,21 @@ void ClientGameState::load(const std::shared_ptr<ClientGameStateDTO> &game) {
     width = game->width;
     height = game->height;
 
-    turnDisplay = display.new_text("Es mi turno!", 400, 0, TextAlign::center, TextLayer::UI, TextType::title, COLOR_BY_CLIENT[my_client_id]);
-    display.start_scenario(game->width, game->height, game->water_level_height);
+    display.new_text("TURNOS:",0, 80, TextAlign::left, TextLayer::UI, TextType::gametext, 0xFFFFFF);
+
+    int client_count = game->client_ids_turn_order.size();
+    for (int i = 0; i < client_count; i++) {
+        client_order.emplace(game->client_ids_turn_order[i], i);
+        display.new_text(
+            "Jugador " + std::to_string(game->client_ids_turn_order[i]),
+            8, 96+i*16, TextAlign::left, TextLayer::UI, TextType::gametext, COLOR_BY_CLIENT[i]
+        );
+    }
+
+    turnDisplay = display.new_text("Es mi turno!", 400, 0, TextAlign::center, TextLayer::UI, TextType::title, COLOR_BY_CLIENT[client_order[my_client_id]]);
+    turnDisplay->hidden(true);
+
+    display.start_scenario(width, height, game->water_level_height);
 
     for (auto &beam: game->beams) {
         float beam_w = 0, beam_h = 0;
@@ -41,8 +54,9 @@ void ClientGameState::load(const std::shared_ptr<ClientGameStateDTO> &game) {
         image->set_pos(beam.x, beam.y);
     }
 
+    
     for (auto &worm: game->worms) {
-        worms.emplace(worm.entity_id, std::make_shared<WormEntity>(display, worm));
+        worms.emplace(worm.entity_id, std::make_shared<WormEntity>(display, worm, COLOR_BY_CLIENT[client_order[worm.client_id]]));
         display.camera.set_target(worms[worm.entity_id].get());
     }
 }
