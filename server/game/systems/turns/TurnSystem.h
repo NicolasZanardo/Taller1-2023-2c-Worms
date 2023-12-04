@@ -60,7 +60,7 @@ public:
     void advance_to_next_turn();
     void check_ending_turn_action(const std::shared_ptr<Worm>& active_worm);
     bool step_turn_time(const int it, const std::shared_ptr<Worm>& active_worm);
-
+    std::vector<int> get_order();
 
 };
 

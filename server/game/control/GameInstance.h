@@ -69,6 +69,8 @@ public:
 
     bool update(const int it);
     bool is_client_turn(int id);
+    bool is_client_turn(size_t id);
+    std::vector<int> client_turn_order();
 
     // Actions
     void perform_action_on_current_worm(const std::function<void(std::shared_ptr<Worm>)>& action);

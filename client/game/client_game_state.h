@@ -11,12 +11,15 @@
 #include "client_game_state_dto.h"
 #include "projectiles/game_projectile_entity.h"
 #include "game_timer.h"
+#include "game_turn_displayer.h"
 
 class ClientGameState {
     GameDisplay& display;
     float width;
     float height;
-    GameTextDisplay* turnDisplay;
+    
+    GameTextDisplay* turnMessage;
+    GameTurnDisplayer* turnDisplay;
     GameTimer timer;
 
     // std::unique_ptr<ClientGameStateDTO> game_state_dto;
@@ -24,18 +27,18 @@ class ClientGameState {
     std::map<int, std::shared_ptr<WormEntity>> death_worms;
 
     std::map<int, std::shared_ptr<ProjectileEntity>> projectiles;
-
+    
     void transfer_death_worms(std::vector<WormDto> updated_worms);
     void destroy_old_projectiles(std::vector<ProjectileDto> updated_projectiles);
     void focus_camera_on(int entity_id);
 
     public:
     int my_client_id;
+    ~ClientGameState();
     explicit ClientGameState(GameDisplay& display);
     ClientGameState() = delete;
-    ~ClientGameState() = default;
 
-    void load(const std::shared_ptr<ClientGameStateDTO>& game_state_dto);
+    void load(const std::shared_ptr<ClientGameStateDTO>& state);
     void update(const std::shared_ptr<ClientGameStateDTO>& game_state_dto);
     
 };

@@ -5,16 +5,17 @@ GameEngineInstance::GameEngineInstance(
     float yGravity,
     const GameScenarioData &scenario,
     const std::list<Client *> &clients
-) : rate(60),
-    game_clients(clients),
-    game(xGravity, yGravity, scenario, clients, rate),
-    game_queue(1000),
-    net_message_behaviour(game_clients, game),
-    keep_executing(true)
-    {
-        switch_clients_game_queue(clients);
-        initial_broadcast(scenario);
-    }
+) :
+rate(60),
+game_clients(clients),
+game(xGravity, yGravity, scenario, clients, rate),
+game_queue(1000),
+net_message_behaviour(game_clients, game),
+keep_executing(true)
+{
+    switch_clients_game_queue(clients);
+    initial_broadcast(scenario, game.client_turn_order());
+}
 
 void GameEngineInstance::run() {
     auto t1 = std::chrono::steady_clock::now();
@@ -80,14 +81,14 @@ void GameEngineInstance::switch_clients_game_queue(std::list<Client *> clients) 
 
 // Broadcasts
 
-void GameEngineInstance::initial_broadcast(const GameScenarioData &scenario) {
-    broadcast_initial_game_state(scenario);
+void GameEngineInstance::initial_broadcast(const GameScenarioData &scenario, const std::vector<int>& order) {
+    broadcast_initial_game_state(scenario, order);
     std::this_thread::sleep_for(std::chrono::seconds(1));
     broadcast_game_state_update();
 }
 
 
-void GameEngineInstance::broadcast_initial_game_state(const GameScenarioData &scenario) {
+void GameEngineInstance::broadcast_initial_game_state(const GameScenarioData &scenario, const std::vector<int>& order) {
     auto message = new NetMessageInitialGameState(
         scenario.room_width,
         scenario.room_height,
@@ -102,6 +103,10 @@ void GameEngineInstance::broadcast_initial_game_state(const GameScenarioData &sc
         for (const auto &wrm: worms) {
             message->add(wrm->toWormDto(clientId));
         }
+    }
+
+    for(auto client: order) {
+        message->add(client);
     }
 
     game_clients.send_all(message->share());

@@ -164,6 +164,10 @@ void GameInstance::remove_from_clients_worms_map(int worm_id) {
     }
 }
 
+std::vector<int> GameInstance::client_turn_order(){
+    return turn_system.get_order();
+}
+
 bool GameInstance::is_client_turn(int id) {
     return turn_system.current_client() == id;
 }
