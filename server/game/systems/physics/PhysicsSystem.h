@@ -22,6 +22,7 @@ public:
     void update();
 
     std::unique_ptr<WormBody> spawn_worm(
+        const std::shared_ptr<Worm> &worm_model,
         WormScenarioData wormScenarioData,
         WormCfg &worms_cfg
         );

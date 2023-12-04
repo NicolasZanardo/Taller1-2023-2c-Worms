@@ -29,9 +29,9 @@ public:
 
     bool is_moving_faster_than(const std::shared_ptr<Body> &other);
 
-    bool facing_right() const;
-
     ~Body();
+
+    bool facing_right() const;
 };
 
 

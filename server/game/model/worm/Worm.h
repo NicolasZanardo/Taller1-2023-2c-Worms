@@ -4,7 +4,6 @@
 #include <map>
 #include <memory>
 #include "wormDto.h"
-#include "WormBodyComponent.h"
 #include "WeaponTypeDto.h"
 #include "Updatable.h"
 #include "OnTurnEndedListener.h"
@@ -20,6 +19,7 @@
 #include "CheatType.h"
 #include "CheatManager.h"
 #include "GameAction.h"
+#include "WormBody.h"
 
 enum class WormState : uint8_t {
     IDLE = 0x00,
@@ -50,7 +50,6 @@ private:
 
     WormStateDto state;
     std::shared_ptr<WeaponsComponent> weapons_component;
-    std::shared_ptr<WormBodyComponent> body;
     HealthComponent health;
     CheatManager cheat_manager;
 
@@ -61,11 +60,11 @@ private:
     Worm(
         size_t id,
         WormCfg &worm_cfg,
-        std::shared_ptr<WeaponsComponent> weapons_component,
-        std::shared_ptr<WormBodyComponent> body
+        std::shared_ptr<WeaponsComponent> weapons_component
     );
 
 public:
+    std::shared_ptr<WormBody> body;
     WormDto toWormDto(size_t client_id);
 
     float X() const;
@@ -76,7 +75,7 @@ public:
 
     b2Body *B2Body() const;
 
-    std::shared_ptr<WormBodyComponent> get_body() const;
+    std::shared_ptr<WormBody> get_body() const;
 
     WormFootSensor *get_foot_sensor();
 

@@ -3,21 +3,18 @@
 #include "CollideableTags.h"
 #include "WeaponFactory.h"
 #include "CheatType.h"
-#include "WormCheatBody.h"
 #include "GameAction.h"
 #include <iostream>
 
 Worm::Worm(
     size_t id,
     WormCfg &worm_cfg,
-    std::shared_ptr<WeaponsComponent> weapons_component,
-    std::shared_ptr<WormBodyComponent> body
+    std::shared_ptr<WeaponsComponent> weapons_component
 ) :
     Collidable(WORM_TAG),
     Instance(id),
     state(WormStateDto::IDLE),
     weapons_component(std::move(weapons_component)),
-    body(std::move(body)),
     health(worm_cfg.health.default_health),
     foot_sensor(this),
     is_on_water(false),
@@ -67,7 +64,7 @@ void Worm::receive_force(Force& force) {
     body->receive(force);
 }
 
-std::shared_ptr<WormBodyComponent> Worm::get_body() const {
+std::shared_ptr<WormBody> Worm::get_body() const {
     return body;
 }
 
@@ -135,37 +132,27 @@ void Worm::act(GameAction action) {
             body->jump_backwards();
             break;
         case GameAction::AIM_UP_INIT:
-            if (!has_done_an_ending_turn_action) {
-                body->stop_moving();
+            if (!has_done_an_ending_turn_action)
                 weapons_component->start_aiming_up();
-            }
             break;
         case GameAction::AIM_DOWN_INIT:
-            if (!has_done_an_ending_turn_action) {
-                body->stop_moving();
+            if (!has_done_an_ending_turn_action)
                 weapons_component->start_aiming_down();
-            }
             break;
         case GameAction::AIM_UP_STOPPED:
             weapons_component->stop_aiming_up();
             break;
         case GameAction::AIM_DOWN_STOPPED:
-            if (!has_done_an_ending_turn_action) {
-                body->stop_moving();
+            if (!has_done_an_ending_turn_action)
                 weapons_component->stop_aiming_down();
-            }
             break;
         case GameAction::WEAPON_PRIMARY_ACTION:
-            if (!has_done_an_ending_turn_action) {
-                body->stop_moving();
+            if (!has_done_an_ending_turn_action)
                 weapons_component->do_weapon_primary_action(X(), Y(), body->facing_direction_sign());
-            }
             break;
         case GameAction::WEAPON_SECONDARY_ACTION:
-            if (!has_done_an_ending_turn_action) {
-                body->stop_moving();
+            if (!has_done_an_ending_turn_action)
                 weapons_component->do_weapon_secondary_action(X(), Y(), body->facing_direction_sign());
-            }
             break;
     }
 
@@ -200,11 +187,11 @@ void Worm::toggle_cheat_mode(CheatType type) {
 }
 
 void Worm::cheat_movement(bool toggled) {
-    if (toggled) {
+    /*if (toggled) {
         body = std::make_shared<WormCheatBody>(std::move(body));
     } else {
         body = std::make_shared<WormBody>(std::move(body));
-    }
+    }*/
 }
 
 void Worm::cheat_health() {

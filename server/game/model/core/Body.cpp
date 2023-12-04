@@ -13,11 +13,8 @@ Body::Body(Body&& other) noexcept
 }
 
 Body::~Body() {
-    std::cout << "Entered ~Body" << std::endl;
     if (body) {
-        std::cout << "body is not null" << std::endl;
         world.DestroyBody(body);
-        std::cout << "Destroyed body with world on ~Body\n";
         body = nullptr;
     }
 }

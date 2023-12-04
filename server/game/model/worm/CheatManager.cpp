@@ -1,6 +1,5 @@
 #include "CheatManager.h"
 #include "Worm.h"
-#include "WormCheatBody.h"
 #include "WormBody.h"
 
 CheatManager::CheatManager() : cheat_map{

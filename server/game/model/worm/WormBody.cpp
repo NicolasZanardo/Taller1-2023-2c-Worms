@@ -3,17 +3,27 @@
 #include "Worm.h"
 #include <iostream>
 
-WormBody::WormBody(b2World&  world, b2Body* body, WormCfg &worm_cfg) :
-        WormBodyComponent(world, body, worm_cfg) {};
+WormBody::WormBody(b2World &world, b2Body *body, WormCfg &worm_cfg) :
+    Body(world, body, true),
+    speed(worm_cfg.body.speed),
+    forward_jump_height(
+        worm_cfg.body.forward_jump_height),
+    forward_jump_reach(
+        worm_cfg.body.forward_jump_reach),
+    backwards_jump_height(
+        worm_cfg.body.backwards_jump_height),
+    backwards_jump_reach(
+        worm_cfg.body.backwards_jump_reach),
+    is_moving(false),
+    is_jumping(false),
+    is_on_ground(false) {}
 
-WormBody::WormBody(std::shared_ptr<WormBodyComponent> other) : WormBodyComponent(other) {}
-
-void WormBody::update(const std::shared_ptr<Worm>& worm) {
+void WormBody::update(const std::shared_ptr<Worm> &worm) {
     float y_velocity = body->GetLinearVelocity().y;
 
     if (is_moving && is_on_ground) {
         body->SetLinearVelocity((b2Vec2(facing_direction_sign() * speed, y_velocity)));
-    } else if(worm->is_on_water) {
+    } else if (worm->is_on_water) {
         BuoyancyForce force(world);
         force.apply(this->body);
     }
@@ -80,12 +90,12 @@ void WormBody::jump_forward() {
     if (is_on_ground) {
         is_moving = false;
         is_jumping = true;
-        body->SetLinearVelocity(b2Vec2(0,0));
+        body->SetLinearVelocity(b2Vec2(0, 0));
         body->ApplyLinearImpulseToCenter(
-                b2Vec2(
-                    facing_direction_sign() * forward_jump_reach * body->GetMass(),
-                    forward_jump_height * body->GetMass()
-                        ), true);
+            b2Vec2(
+                facing_direction_sign() * forward_jump_reach * body->GetMass(),
+                forward_jump_height * body->GetMass()
+            ), true);
     }
 }
 
@@ -93,13 +103,13 @@ void WormBody::jump_backwards() {
     if (is_on_ground) {
         is_moving = false;
         is_jumping = true;
-        body->SetLinearVelocity(b2Vec2(0,0));
+        body->SetLinearVelocity(b2Vec2(0, 0));
         body->ApplyLinearImpulseToCenter(
-                b2Vec2(
-                    (-facing_direction_sign()) * backwards_jump_reach * body->GetMass(),
-                    backwards_jump_height * body->GetMass()
-                        ),
-                true);
+            b2Vec2(
+                (-facing_direction_sign()) * backwards_jump_reach * body->GetMass(),
+                backwards_jump_height * body->GetMass()
+            ),
+            true);
     }
 }
 

@@ -154,9 +154,6 @@ add_executable(
         game/model/weapons/NoneProjectileCountDownChanger.h
         game/model/weapons/NoneProjectileCountDownChanger.cpp
         game/model/worm/WeaponsComponent.cpp
-        game/model/worm/WormBodyComponent.h
-        game/model/worm/WormCheatBody.h
-        game/model/worm/WormCheatBody.cpp
         game/model/worm/CheatManager.h
         game/model/worm/CheatManager.cpp
 )

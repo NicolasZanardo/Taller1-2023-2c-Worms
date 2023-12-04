@@ -5,11 +5,10 @@ HealthComponent::HealthComponent(float initial_health): actual_health(initial_he
 
 bool HealthComponent::update(const std::shared_ptr<Worm>& worm, const int it, const int rate) {
     if (is_dead) {
-        std::cout << "Now is dead so ill destroy the instance\n";
         worm->Destroy();
         return false;
     }
-    if (worm->is_on_water && !on_cheat_mode) {
+    if (worm->is_on_water) {
         water_death_timer -= it * rate;
         if (water_death_timer <= 0) {
             die(worm);
@@ -31,7 +30,6 @@ bool HealthComponent::receive_damage(float damage) {
     if (!on_cheat_mode) {
         actual_health -= damage;
         if (actual_health <= 0) {
-            std::cout << "Died\n";
             actual_health = 0;
             is_dead = true;
             return true;
