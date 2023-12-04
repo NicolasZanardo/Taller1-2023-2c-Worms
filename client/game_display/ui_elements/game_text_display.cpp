@@ -40,7 +40,10 @@ void GameTextDisplay::render(Renderer& renderer, float delta_time) {
     if (is_hidden)
         return;
 
-    if (!absolute) {
+    if (absolute) {
+        transform.SetX(x);
+        transform.SetY(y);
+    } else {
         transform.SetX(cam.transform_x(x));
         transform.SetY(cam.transform_y(y));
     }
