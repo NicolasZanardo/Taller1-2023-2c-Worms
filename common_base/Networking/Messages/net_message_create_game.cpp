@@ -15,7 +15,6 @@ void NetMessageCreateGame::push_data_into(NetBuffer& container) {
     NetMessage::push_data_into(container);
     container.push_string(this->game_room);
     container.push_string(this->scenario);
-    std::cout << "sending uint16: (" << this->num_players << ")\n"; 
     container.push_short(this->num_players);
 }
 
@@ -23,7 +22,6 @@ void NetMessageCreateGame::pull_data_from(NetProtocolInterpreter& channel) {
     this->game_room = channel.read_string();
     this->scenario = channel.read_string();
     this->num_players = channel.read_short();
-    std::cout << "receive uint16: (" << this->num_players << ")\n";
 }
 
 void NetMessageCreateGame::execute(NetMessageBehaviour& interpreter) {

@@ -13,7 +13,7 @@ public:
     void run(NetMessageChat* msg) override { }
     void run(NetMessageLeave* msg) override { }
     void run(NetMessage_test* msg) override { }
-    void run(NetMessageInformID* msg) override { }
+    void run(NetMessageInformID* msg) override;
     void run(NetMessageInitialGameState* msg) override { }
     void run(NetMessageGameStateUpdate* msg) override { }
     void run(NetMessageGameAction* msg) override { }

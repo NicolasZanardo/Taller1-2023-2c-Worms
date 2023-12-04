@@ -10,12 +10,12 @@
 class GamesManager;
 
 class Client {
+    GamesManager* games_manager;
     NetChannel channel;
     NetQueue  send_queue;
     NetQueue* game_queue;
     Reciever msg_reciever;
     Sender msg_sender;
-    GamesManager* games_manager;
 
     public:
     const int id;

@@ -1,6 +1,5 @@
 #include "games_manager.h"
 
-#include <algorithm>
 #include <iostream>
 #include <utility>
 
@@ -10,16 +9,13 @@ GamesManager::GamesManager()
     : rooms() {}
 
 bool GamesManager::createGame(const std::string& game_room, const std::string& scenario, uint16_t total_players) {
-    std::cout << "create game\n - name: " << game_room << '|' << scenario << " | " << total_players;
-    // std::lock_guard<std::mutex> lck(this->mtx);
-    std::cout << "in mutex\n";
-    if (this->rooms.empty() || (this->rooms.find(game_room) == this->rooms.end())) {
+    std::cout << "Enters here\n";
+    std::lock_guard<std::mutex> lck(this->mtx);
+    if ((this->rooms.find(game_room) == this->rooms.end())) {
         return false;
     }
 
-    std::cout << "creating\n";
     this->rooms.emplace(std::make_pair(game_room, GameRoom(game_room, scenario, total_players)));
-    std::cout << "created\n";
     return true;
 }
 

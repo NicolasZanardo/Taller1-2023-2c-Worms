@@ -40,7 +40,7 @@ void Reciever::switch_lobby(NetQueue* new_game_queue) {
 }
 
 void Reciever::run(NetMessageCreateGame* msg) {
-    std::cout << "room: " << msg->game_room << "- scenario: " << msg->scenario << " - players: " <<  msg->num_players << '\n';
+    std::cout << "room: " << msg->game_room << "- scenario: " << msg->scenario << " - players: " <<  msg->num_players << "was created\n";
     bool success = this->games_manager->createGame(msg->game_room, msg->scenario, msg->num_players);
 
     std::shared_ptr<NetMessage> response = std::make_shared<NetMessageCreateGameResponse>(success);
@@ -49,6 +49,7 @@ void Reciever::run(NetMessageCreateGame* msg) {
 }
 
 void Reciever::run(NetMessageListGames* msg) {
+    std::cout << "Listed games for client: " << this->client_id << "\n";
     std::list<GameInfoDTO> info_list = this->games_manager->listGames();
 
     std::shared_ptr<NetMessage> response = std::make_shared<NetMessageListGamesResponse>(std::move(info_list));
@@ -57,6 +58,7 @@ void Reciever::run(NetMessageListGames* msg) {
 }
 
 void Reciever::run(NetMessageJoinGame* msg) {
+    std::cout << "Client: " << this->client_id  << "joined to a game " << "\n";
     bool success = this->games_manager->joinGame(msg->game_room, *(this->client));
     this->game_room = msg->game_room;
 

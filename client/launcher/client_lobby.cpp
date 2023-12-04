@@ -11,6 +11,8 @@ ClientLobby::ClientLobby(const char *host_name, const char *service_name)
     : net_channel(host_name, service_name) {}
 
 void ClientLobby::execute() {
+    std::unique_ptr<NetMessage> received_id_msg(this->net_channel.read_message());
+    received_id_msg->execute(this->lobby_settings);
     while (!input_stream.eof()) {
         std::string input_string;
 
@@ -28,6 +30,7 @@ void ClientLobby::execute() {
         this->net_channel.send_message(*request);
 
         std::unique_ptr<NetMessage> response(this->net_channel.read_message());
+        std::cout <<  static_cast<int>(response->msg_type) << std::endl;
         response->execute(this->lobby_settings);
 
         if (this->lobby_settings.isReadyToStart()) {

@@ -22,16 +22,18 @@ std::unique_ptr<NetMessage> LobbyParser::parse(const std::string& str) {
 
         // Los nombres de la sala y el escenario no deben tener espacios.
         iss >> game_room >> scenario >> num_players;
-        std::cout << "room: " << game_room << "- scenario: " << scenario << " - players: " <<  num_players;
+        std::cout << "Request to create a game sended\n";
 
         return std::make_unique<NetMessageCreateGame>(game_room, scenario, num_players);
     } else if (action == CLIENT_COMMAND_JOIN) {
         std::string game_room;
 
         std::getline(iss, game_room);
+        std::cout << "Request to join a game sended\n";
 
         return std::make_unique<NetMessageJoinGame>(game_room);
     } else if (action == CLIENT_COMMAND_LIST) {
+        std::cout << "Request to list all games sended\n";
         return std::make_unique<NetMessageListGames>();
     } else {
         std::runtime_error("Error: parse invalid action.\n");
