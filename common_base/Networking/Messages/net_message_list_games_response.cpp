@@ -10,6 +10,9 @@ NetMessageListGamesResponse::NetMessageListGamesResponse(std::list<GameInfoDTO> 
 void NetMessageListGamesResponse::push_data_into(NetBuffer& container) {
     NetMessage::push_data_into(container);
 
+        // auto& a = info_list.back();
+        // std::cout << a.name << '-' << a.scenario << '-' << a.total_players << '-' << a.joined_players;
+
     container.push_int(static_cast<uint32_t>(this->games_info.size()));
 
     for (auto& game : this->games_info) {
@@ -31,7 +34,7 @@ void NetMessageListGamesResponse::pull_data_from(NetProtocolInterpreter& channel
 
         GameInfoDTO dto(GameInfoDTO(std::move(name), std::move(scenario), total_players, joined_players));
 
-        // this->games_info.push_back(std::move(dto));
+        this->games_info.push_back(std::move(dto));
     }
 }
 

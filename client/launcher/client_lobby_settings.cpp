@@ -1,5 +1,6 @@
 #include "client_lobby_settings.h"
 
+
 ClientLobbySettings::ClientLobbySettings()
     : ready_to_start(false) {}
 
@@ -33,11 +34,29 @@ void ClientLobbySettings::run(NetMessageListGamesResponse* msg) {
     for (auto& game_info : msg->games_info) {
         std::cout << "Room: " << game_info.name
                 << " - Scenario: " << game_info.scenario
-                << " - Players (" << game_info.joined_players
-                << '/' << game_info.total_players << '\n';
+                << " - Players (" << static_cast<uint16_t>(game_info.joined_players)
+                << '/' << static_cast<uint16_t>(game_info.total_players) << '\n';
     }
 }
 
 void ClientLobbySettings::run(NetMessageStartGame* msg) {
+    std::cout << "client starting game\n";
     this->ready_to_start = true;
 }
+
+// void ClientLobbySettings::run(NetMessageInitialGameState* msg) {
+//     std::cout << "Receiving initial game state.\n";
+//     game_state_dto = std::make_shared<ClientGameStateDTO>();
+
+//     game_state_dto->width = msg->room_width;
+//     game_state_dto->height = msg->room_height;
+//     game_state_dto->water_level_height = msg->water_height_level;
+
+//     std::cout << "w: " << msg->room_width << " - h: " << msg->room_height << '\n';
+//     std::cout << "worms in game " << msg->worms.size() << '\n';
+
+//     game_state_dto->beams = std::move(msg->beams);
+//     game_state_dto->worms = std::move(msg->worms);
+
+//     this->ready_to_start = true;
+// }

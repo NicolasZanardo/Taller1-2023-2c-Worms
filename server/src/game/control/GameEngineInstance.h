@@ -32,6 +32,7 @@ private:
     void switch_clients_game_queue(std::list<Client *> clients);
     void initial_broadcast(const GameScenarioData &scenario);
 
+    void start_game_();
     void _broadcast_initial_game_state(const GameScenarioData &scenario);
 
     // Loop methods
