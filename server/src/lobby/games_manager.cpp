@@ -9,9 +9,8 @@ GamesManager::GamesManager()
     : rooms() {}
 
 bool GamesManager::createGame(const std::string& game_room, const std::string& scenario, uint16_t total_players) {
-    std::cout << "Enters here\n";
     std::lock_guard<std::mutex> lck(this->mtx);
-    if ((this->rooms.find(game_room) == this->rooms.end())) {
+    if ((this->rooms.find(game_room) != this->rooms.end())) {
         return false;
     }
 

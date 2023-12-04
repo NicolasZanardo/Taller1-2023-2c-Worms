@@ -31,6 +31,8 @@ public:
     void run(NetMessageStartGame* msg) override;
 
     bool isReadyToStart() const { return this->ready_to_start; }
+    
+    int id;
 
 private:
     std::string game_room;

@@ -6,7 +6,7 @@ ClientLobbySettings::ClientLobbySettings()
 void ClientLobbySettings::run(NetMessageInformID* msg) {
     std::cout << "Received my id, im client: " << msg->client_id <<"\n";
 
-    std::cout << "Game Room was not created.\n";
+    this->id = msg->client_id;
 }
 
 
@@ -14,18 +14,18 @@ void ClientLobbySettings::run(NetMessageCreateGameResponse* msg) {
     std::cout << "Response of create game was.\n";
     if (msg->was_created) {
         std::cout << "Game Room was created.\n";
+    } else {
+        std::cout << "Game Room was not created.\n";
     }
-
-    std::cout << "Game Room was not created.\n";
 }
 
 void ClientLobbySettings::run(NetMessageJoinGameResponse* msg) {
     std::cout << "Response of join game was.\n";
     if (msg->was_joined) {
-        std::cout << "Game Room was created.\n";
+        std::cout << "Game Room was joined.\n";
+    } else {
+        std::cout << "Game Room was not joined.\n";
     }
-
-    std::cout << "Game Room was not created.\n";
 }
 
 void ClientLobbySettings::run(NetMessageListGamesResponse* msg) {

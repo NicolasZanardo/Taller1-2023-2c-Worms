@@ -13,6 +13,7 @@ ClientLobby::ClientLobby(const char *host_name, const char *service_name)
 void ClientLobby::execute() {
     std::unique_ptr<NetMessage> received_id_msg(this->net_channel.read_message());
     received_id_msg->execute(this->lobby_settings);
+    
     while (!input_stream.eof()) {
         std::string input_string;
 
