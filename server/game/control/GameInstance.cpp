@@ -50,13 +50,12 @@ bool GameInstance::update(const int it) {
     wind_system.update(projectiles);
     explosions_system.update(projectiles);
     entity_focus_system.update(worms, current_turn_worm, projectiles);
-    turn_system.update(it);
     instances_manager.update();
+    turn_system.update(it);
     return turn_system.game_has_ended();
 }
 
 GameState GameInstance::get_current_state() {
-    std::cout << "Call to get current id from get state\n";
     return {
         turn_system.current_client(),
         turn_system.get_current_worm_id(),
@@ -174,7 +173,6 @@ bool GameInstance::is_client_turn(int id) {
 
 // Actions
 void GameInstance::perform_action_on_current_worm(const std::function<void(std::shared_ptr<Worm>)> &action) {
-    std::cout << "Perform action called get current worm\n";
     auto current_worm = turn_system.get_current_worm();
     if (current_worm) {
         action(current_worm);
@@ -184,7 +182,6 @@ void GameInstance::perform_action_on_current_worm(const std::function<void(std::
 template<typename T>
 void
 GameInstance::perform_action_on_current_worm(const std::function<void(std::shared_ptr<Worm>, T)> &action, T parameter) {
-    std::cout << "Perform action param called get current worm\n";
     auto current_worm = turn_system.get_current_worm();
     if (current_worm) {
         action(current_worm, parameter);

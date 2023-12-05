@@ -29,8 +29,8 @@ void WormEntity::update(WormDto& new_values, bool active) {
     attributes.y = new_values.y;
 
     name->set_pos(attributes.x, attributes.y+1);
-    if (attributes.life != new_values.life)
-       name->update(std::to_string(new_values.life));
+    //if (attributes.life != new_values.life)
+    name->update(std::to_string(new_values.entity_id));//std::to_string(new_values.life));
     attributes.life = new_values.life;
 
     sprite->aiming(active);

@@ -27,9 +27,9 @@ void TurnManager::update(int it) {
     game_remaining_time -= it * time_rate;
 
     if (state == TurnState::WAITING_TO_START_NEXT_TURN) {
-        std::cout << "Waiting to advance turn\n";
+        // std::cout << "Waiting to advance turn\n";
         if (worms_are_still() && projectiles.empty()) {
-            std::cout << "advance turn\n";
+            //  std::cout << "advance turn\n";
             next_turn();
         }
     } else {
@@ -39,18 +39,18 @@ void TurnManager::update(int it) {
 
 void TurnManager::step_turn_time(const int it) {
     turn_remaining_time -= it * time_rate;
-    std::cout << "turn time left: " << turn_remaining_time << "\n";
-    std::cout << "Inside turn manager call to get current worm\n";
+    // std::cout << "turn time left: " << turn_remaining_time << "\n";
+    // std::cout << "Inside turn manager call to get current worm\n";
     auto current_worm = get_current_worm();
-    std::cout << "After getting current worm\n";
+    // std::cout << "After getting current worm\n";
     if (turn_remaining_time <= 0) {
         if (current_worm) {
-            std::cout << "On turn ended callback\n";
+            // std::cout << "On turn ended callback\n";
             current_worm->on_turn_ended();
         }
-        std::cout << "After On turn ended callback\n";
+        // std::cout << "After On turn ended callback\n";
         state = TurnState::WAITING_TO_START_NEXT_TURN;
-        std::cout << "Set waiting to advance to true\n";
+        //  std::cout << "Set waiting to advance to true\n";
     } else {
         // If it has done an ending turn action but we already are in POST_ACTION_TIME we dont want to enter
         if (current_worm && current_worm->has_done_ending_turn_action() && state == TurnState::TURN_TIME) {
@@ -63,18 +63,16 @@ void TurnManager::step_turn_time(const int it) {
 int TurnManager::current_client() {
     if (state == TurnState::WAITING_TO_START_NEXT_TURN)
         return -1;
-    std::cout << "Asked for current client\n";
+    // std::cout << "Current client is: " << clients_turns[current_client_idx]->client_id << "\n";
     return clients_turns[current_client_idx]->client_id;
 }
 
 std::shared_ptr<Worm> TurnManager::get_current_worm() {
     if (state == TurnState::WAITING_TO_START_NEXT_TURN) {
-        std::cout << "Returning nullptr\n";
+        //  std::cout << "Returning nullptr\n";
         return nullptr;
     }
     auto worm = clients_turns[current_client_idx]->get_current_worm();
-    std::cout << "The worm I got from client turn was is alive:" << worm->is_alive() << "and is active" << worm->IsActive() << "\n";
-    std::cout << "The worm I got from client turn was:" << worm->Id() << "\n";
     return worm;
 }
 
@@ -89,24 +87,17 @@ int TurnManager::get_current_worm_id() {
 
 void TurnManager::next_turn() {
     state = TurnState::TURN_TIME;
-    // If current was last client and it was removed, current index should go to beginning
-    if (current_client_idx >= clients_turns.size()) {
+    clients_turns[current_client_idx]->advance_next_worm();
+    current_client_idx++;
+    if (current_client_idx >= clients_turns.size())
         current_client_idx = 0;
-        std::cout << "Current client index was last and now is 0" << std::endl;
-    } else {
-        clients_turns[current_client_idx]->advance_next_worm();
-        std::cout << "Current client index was: " << current_client_idx << std::endl;
-        current_client_idx++;
-        if (current_client_idx >= clients_turns.size())
-            current_client_idx = 0;
-        std::cout << "Now current client index is: " << current_client_idx << std::endl;
-    }
     turn_remaining_time = turn_lenght;
 }
 
 void TurnManager::remove(int worm_id_to_remove) {
-    std::cout << "Removing worm" << worm_id_to_remove << std::endl;
+    std::cout << "Worm id to remove: " << worm_id_to_remove << std::endl;
     int client_turn_idx_to_be_removed = -1;
+    std::cout << "Before removing, the current was id: " << get_current_worm_id() << std::endl;
     bool removing_current_worm = get_current_worm_id() == worm_id_to_remove;
 
     for (auto client_turn: clients_turns) {
@@ -114,9 +105,13 @@ void TurnManager::remove(int worm_id_to_remove) {
 
         if (client_turn->worms.empty()) {
             // Store the index of the ClientTurn to be removed
-            client_turn_idx_to_be_removed = std::distance(clients_turns.begin(), std::find(clients_turns.begin(), clients_turns.end(), client_turn));
+            client_turn_idx_to_be_removed = std::distance(clients_turns.begin(),
+                                                          std::find(clients_turns.begin(), clients_turns.end(),
+                                                                    client_turn));
+            std::cout << "Removed the last worm of client index: " << client_turn_idx_to_be_removed << std::endl;
         }
     }
+    bool removing_current_client = client_turn_idx_to_be_removed == current_client_idx;
 
     // If the client_turn was left with 0 worms
     if (client_turn_idx_to_be_removed != -1) {
@@ -124,15 +119,33 @@ void TurnManager::remove(int worm_id_to_remove) {
         // If it was previous to the current client_turn we should decrease current_client_idx by one
         if (client_turn_idx_to_be_removed < current_client_idx) {
             current_client_idx--;
+        } else if (removing_current_client && current_client_idx == (clients_turns.size() - 1)) {
+            current_client_idx = 0;
         }
 
         // Erase the ClientTurn
+        std::cout << "Sinced i removed client indx: " << client_turn_idx_to_be_removed << " which is client id: "
+        << clients_turns[client_turn_idx_to_be_removed]->client_id << " Now the left clients are: ";
         clients_turns.erase(clients_turns.begin() + client_turn_idx_to_be_removed);
+        for (auto turn: clients_turns) {
+            std::cout << "Client with id: " << turn->client_id << std::endl;
+        }
+
     }
 
     // After all was correctly set up, if we removed the current worm pass to next turn
-    if (removing_current_worm)
-        next_turn();
+    if (removing_current_worm) {
+        if (!removing_current_client) {
+            current_client_idx++;
+            if (current_client_idx >= clients_turns.size())
+                current_client_idx = 0;
+        }
+
+        state = TurnState::TURN_TIME;
+        turn_remaining_time = turn_lenght;
+    }
+
+    std::cout << "After removing, te current was id: " << get_current_worm_id() << std::endl;
 }
 
 /*    int entity = current_entity()->Id();
@@ -184,6 +197,19 @@ int TurnManager::get_game_remaining_time() const {
 
 int TurnManager::get_turn_remaining_time() const {
     return turn_remaining_time;
+}
+
+std::vector<int> TurnManager::get_order() {
+    if (clients_turns.empty()) {
+        return std::vector<int>();
+    }
+
+    std::vector<int> order;
+    order.reserve(clients_turns.size());
+    for (auto client_turn: clients_turns) {
+        order.push_back(client_turn->client_id);
+    }
+    return order;
 }
 
 bool TurnManager::worms_are_still() {

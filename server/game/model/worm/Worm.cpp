@@ -212,7 +212,6 @@ void Worm::adjust_health_to(float amount) {
 }
 
 void Worm::receive_damage(float damage) {
-    std::cout << "Worm id: " << id << " received: " << damage << " damage\n";
     health.receive_damage(damage);
 }
 

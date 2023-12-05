@@ -56,5 +56,7 @@ class TurnManager {
 
     void remove(int entity_id);
     void update(int delta_time);
+
+    std::vector<int> get_order();
 };
 #endif

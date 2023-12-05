@@ -69,7 +69,6 @@ public:
 
     bool update(const int it);
     bool is_client_turn(int id);
-    bool is_client_turn(size_t id);
     std::vector<int> client_turn_order();
 
     // Actions
