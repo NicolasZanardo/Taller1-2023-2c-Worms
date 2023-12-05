@@ -130,3 +130,8 @@ void DumbInterpreter::run(NetMessageGameEnded * msg) {
     // Client shouldnt receive
 }
 
+void DumbInterpreter::run(NetMessagePlayerToggleCheat * msg) {
+    // Client shouldnt receive
+}
+
+

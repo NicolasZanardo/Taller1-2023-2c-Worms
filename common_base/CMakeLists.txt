@@ -18,6 +18,7 @@ add_library(common
         Game/ProjectileCountDown.h
         Game/ProjectileTypeDto.h
         Game/ExplosionDto.h
+        Game/CheatType.h
 
     liberror.cpp liberror.h
     network_channel.cpp network_channel.h
@@ -74,6 +75,8 @@ add_library(common
     Networking/Messages/net_message_join_game.cpp
     Networking/Messages/net_message_join_game_response.h
     Networking/Messages/net_message_join_game_response.cpp
+    Networking/Messages/net_message_player_toggle_cheat.h
+    Networking/Messages/net_message_player_toggle_cheat.cpp
 
     Networking/Messages/net_message_start_game.h
     Networking/Messages/net_message_start_game.cpp

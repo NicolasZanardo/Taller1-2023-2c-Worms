@@ -20,7 +20,6 @@ void GameRoom::join(Client& client) {
     }
 
     this->players.emplace(client.getID(), client);
-    std::cout << "Added client: " << client.id << std::endl;
     this->list_clients.push_back(&client);
 }
 
@@ -33,8 +32,6 @@ void GameRoom::leave(Client& client) {
 }
 
 void GameRoom::start() {
-    std::cout << "Starting game ...\n";
-    
     this->game_instance = new GameEngineInstance(
             0, -40, HardcodedScenarioData::get(),  // TODO GameConfig struct
             this->list_clients

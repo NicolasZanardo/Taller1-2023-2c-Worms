@@ -27,9 +27,6 @@ bool Body::is_still() const {
         std::abs(body->GetLinearVelocity().y) < EPSILON;
 }
 
-float Body::Angle() const {
-    return body->GetAngle();
-}
 
 float Body::AngleInDeg() const {
     return body->GetAngle() * RAD_TO_DEG;

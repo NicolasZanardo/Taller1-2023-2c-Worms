@@ -158,3 +158,4 @@ void WaitingLobby::removeAll() {
 // void WaitingLobby::run(NetMessageGameEnded* msg) {
 //     cerr << "Error: received GameEnded in lobby..";
 // }
+

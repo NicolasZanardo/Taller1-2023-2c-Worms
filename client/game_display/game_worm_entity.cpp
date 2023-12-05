@@ -9,7 +9,6 @@ WormEntity::WormEntity(GameDisplay& display, WormDto& values, int color) :
         values.weapon_hold, values.aiming_angle
     )
     , sprite(display.new_worm_animation(1.0f, 0.0f))
-    , is_active(true)
     , color(color)
     , name(display.new_text(
         std::to_string(values.life),

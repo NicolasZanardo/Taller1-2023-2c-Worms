@@ -48,8 +48,16 @@ void InstancesManager::remove_dead_instances(std::unordered_map<int, std::shared
 std::shared_ptr<Worm> InstancesManager::instantiate_worm(
     const WormScenarioData &wormScenarioData
 ) {
-    auto worm = std::shared_ptr<Worm>(new Worm(++total_entities_created, worms_cfg,weapons_cfg));
-    worm->body = physics_system.spawn_worm(wormScenarioData, worm, worms_cfg);
+    auto worm = std::shared_ptr<Worm>(
+        new Worm(
+            ++total_entities_created,
+            worms_cfg,
+            std::make_unique<WeaponsComponent>(weapons_cfg)
+        )
+    );
+    auto worm_body = physics_system.spawn_worm( worm, wormScenarioData, worms_cfg);
+
+    worm->body = std::move(worm_body);
     return worm;
 }
 

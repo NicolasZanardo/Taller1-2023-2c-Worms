@@ -30,7 +30,7 @@ public:
     void removeZombies();
     void removeAll();
 
-    // GameEngineInstance* start_game(); // TODO For now 1 Game
+    // GameEngineInstance* start_game();
 
     // void run(NetMessageChat* msg) override;
     // void run(NetMessageLeave* msg) override;

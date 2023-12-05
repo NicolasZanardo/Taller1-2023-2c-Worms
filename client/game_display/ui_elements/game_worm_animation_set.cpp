@@ -26,12 +26,12 @@ WormAnimationSet::WormAnimationSet(
         GameSprite* aiming_dynamite
     ) :
     worm_state_sprite({
-{ MovementStateDto::IDLE          , idle },
-{ MovementStateDto::MOVING        , moving },
-{ MovementStateDto::GOING_UPWARDS , going_upwards },
-{ MovementStateDto::FALLING       , falling },
-{ MovementStateDto::DEAD          , dead },
-{ MovementStateDto::SINKING       , sinking }
+{ WormStateDto::IDLE          , idle },
+{ WormStateDto::MOVING        , moving },
+{ WormStateDto::JUMPING , going_upwards },
+{ WormStateDto::FALLING       , falling },
+{ WormStateDto::DEAD          , dead },
+{ WormStateDto::SINKING       , sinking }
     }),
     aiming_idle_sprite({
 { WeaponTypeDto::BAZOOKA       , aiming_bazooka },
@@ -42,7 +42,7 @@ WormAnimationSet::WormAnimationSet(
     }),
     active_body(falling), 
     aiming_body(aiming_bazooka), 
-    state(MovementStateDto::FALLING),
+    state(WormStateDto::FALLING),
     weapon(WeaponTypeDto::BAZOOKA),
     is_aiming(false)
     {
@@ -50,7 +50,7 @@ WormAnimationSet::WormAnimationSet(
             val->set_angle_range(-90,90);
     }
 
-void WormAnimationSet::update_state(MovementStateDto newstate) {
+void WormAnimationSet::update_state(WormStateDto newstate) {
     if (state == newstate)
         return;
     
@@ -101,7 +101,7 @@ void WormAnimationSet::image_flipped(bool image_is_flipped) {
 }
 
 void WormAnimationSet::render(SDL2pp::Renderer& renderer, float delta_time) {
-    if (is_aiming && state == MovementStateDto::IDLE)
+    if (is_aiming && state == WormStateDto::IDLE)
         aiming_body->render(renderer, delta_time);
     else
         active_body->render(renderer, delta_time);

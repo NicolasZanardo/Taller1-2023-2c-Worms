@@ -3,10 +3,10 @@
 #include <cstdint>
 #include "WeaponTypeDto.h"
 
-enum class MovementStateDto : uint8_t {
+enum class WormStateDto : uint8_t {
     IDLE    = 0x00,
     MOVING = 0x01,
-    GOING_UPWARDS = 0x02,
+    JUMPING = 0x02,
     FALLING = 0x03,
     SINKING = 0x04,
     DEAD = 0x05
@@ -21,21 +21,21 @@ struct WormDto {
     float angle;
     bool is_facing_right;
     int life;
-    MovementStateDto movement_state;
+    WormStateDto movement_state;
     WeaponTypeDto weapon_hold;
     float aiming_angle;
 
     WormDto(
-            int client_id,
-            int entity_id,
-            float x,
-            float y,
-            float angle,
-            bool is_facing_right,
-            int life,
-            MovementStateDto state,
-            WeaponTypeDto weapon_hold,
-            float aiming_angle //  TODO maybe weapon_charged_amount later
+        int client_id,
+        int entity_id,
+        float x,
+        float y,
+        float angle,
+        bool is_facing_right,
+        int life,
+        WormStateDto state,
+        WeaponTypeDto weapon_hold,
+        float aiming_angle //  TODO maybe weapon_charged_amount later
     ) :
         client_id(client_id),
         entity_id(entity_id),

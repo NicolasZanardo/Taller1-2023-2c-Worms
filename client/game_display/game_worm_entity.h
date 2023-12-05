@@ -13,7 +13,6 @@
 class WormEntity : public CameraTarget{
     WormDto attributes;
     WormAnimationSet* sprite;
-    bool is_active;
     int color;
     GameTextDisplay* name;
 
