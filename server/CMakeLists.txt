@@ -36,8 +36,7 @@ add_executable(
     game/control/GameInstance.h
     game/control/GameInstance.cpp
     game/core/configs/Config.h
-    game/core/configs/GameCfg.h
-    game/core/configs/model/WeaponCfg.h
+        game/core/configs/model/WeaponCfg.h
     game/core/configs/model/WeaponConfig.cpp
     game/core/configs/model/WormCfg.h
     game/core/configs/model/WormConfig.cpp

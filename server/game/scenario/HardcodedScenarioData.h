@@ -12,7 +12,7 @@ public:
         scenario.water_height_level = 12;
         // Populate large beams next to each other at y=0
         float i = 0;
-        // scenario.beams.emplace_back(18.9, 15.7f, -12.0f, BeamScenarioData::Type::LONG);
+        scenario.beams.emplace_back(18.9, 15.7f, -12.0f, BeamScenarioData::Type::LONG);
         scenario.beams.emplace_back(i++ * 6.0f + 23.0f, 13.0f, 00.0f, BeamScenarioData::Type::LONG);
         scenario.beams.emplace_back(i++ * 6.0f + 23.0f, 13.0f, 10.0f, BeamScenarioData::Type::LONG);
         scenario.beams.emplace_back(i++ * 6.0f + 23.0f, 13.0f,350.0f, BeamScenarioData::Type::LONG);
@@ -20,16 +20,9 @@ public:
         scenario.beams.emplace_back(i++ * 6.0f + 23.0f, 13.0f,325.0f, BeamScenarioData::Type::LONG);
         scenario.beams.emplace_back(i++ * 6.0f + 23.0f, 13.0f, 45.0f, BeamScenarioData::Type::LONG);
         scenario.beams.emplace_back(i++ * 6.0f + 23.0f, 13.0f, 90.0f, BeamScenarioData::Type::LONG);
-        // scenario.beams.emplace_back(27.0f, 16.0f, 10.0f, BeamScenarioData::Type::LONG);
+        scenario.beams.emplace_back(27.0f, 16.0f, 10.0f, BeamScenarioData::Type::LONG);
         // Populate large beams at y=1 in the middle of the scenario
-        /*for (int i = 0; i < 2; i++) {
-            scenario.beams.emplace_back(
-                    10.0f + i * 2.0f, // x
-                    1.0f, // y
-                    0.0f, // angle
-                    BeamScenarioData::Type::LONG
-            );
-        }*/
+
 
         // Populate worms on each side of the map
         scenario.worms.emplace_back(24.0f, 18.0f);
