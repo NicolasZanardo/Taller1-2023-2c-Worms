@@ -5,8 +5,8 @@
 
 #include "networking.h"
 
-#include "../game_ui/client_game_state_dto.h"
 #include "../../common_base/Game/game_info_dto.h"
+#include "../game/client_game_state_dto.h"
 
 class ClientLobbySettings : public NetMessageBehaviour {
 public:

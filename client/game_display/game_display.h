@@ -7,7 +7,7 @@
 #include "queue.h"
 #include "game_camera.h"
 #include "event_handler.h"
-#include "game_sprite_manager.h"
+#include "game_resources_manager.h"
 #include "game_displayable.h"
 #include "game_sprite.h"
 #include "Game/GameAction.h"
@@ -20,8 +20,11 @@ class GameDisplay {
     SDL2pp::SDLTTF ttf;
     SDL2pp::Window window;
     SDL2pp::Renderer renderer;
-    GameSpriteManager texture_manager;
+    ResourceManager resources;
     std::list<Displayable*> images;
+    std::list<Displayable*> foreground;
+    std::list<Displayable*> user_interface;
+    std::list<Displayable*> toremove;
     public:
     GameCamera camera;
     EventHandler event_handler;
@@ -30,9 +33,14 @@ class GameDisplay {
 
     void update(float delta_time);
     void remove(Displayable* item);
+    void start_scenario(float width, float height, float water_level);
     WormAnimationSet* new_worm_animation(float size_scale, float angle);
-    GameTextDisplay* new_text(const std::string& text, float x, float y, int fnt_size, TextAlign align, TextLayer layer);
+    GameTextDisplay* new_text(const std::string& text, float x, float y, TextAlign align, TextLayer layer, TextType type, int color = 0xFFFFFF);
     GameSprite* new_sprite(const std::string& spritekey, float width, float height, float angle = 0);
+    void new_vfx(const std::string& spritekey, float x, float y, float width, float height, float angle = 0);
+
+    private:
+    void clean_removed_sprites();
 };
 
 #endif

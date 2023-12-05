@@ -22,10 +22,13 @@ class WormAnimationSet : public Displayable {
         GameSprite* moving,
         GameSprite* going_upwards,
         GameSprite* falling,
+        GameSprite* dead,
 
         GameSprite* aiming_bazooka,
         GameSprite* aiming_mortar,
-        GameSprite* aiming_green_granade
+        GameSprite* aiming_green_granade,
+        GameSprite* aiming_hgrenade,
+        GameSprite* aiming_dynamite
     );
 
     void update_state(MovementStateDto newstate);

@@ -33,6 +33,7 @@ public:
     void run(NetMessageGameAction* msg) override;
     void run(NetMessagePlayerChangedWeapon* msg) override;
     void run(NetMessagePlayerChangedProjectileCountdown* msg) override;
+    void run(NetMessageGameEnded* msg) override;
 
     void run(NetMessageCreateGame* msg) override { }
     void run(NetMessageListGames* msg) override { }

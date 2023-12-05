@@ -8,18 +8,15 @@ add_executable(client_app
     client.cpp client.h
     # dumb_simple_client/dumb_client.cpp dumb_simple_client/dumb_client.h
 
-# main_console_lobby.cpp
 launcher/client_lobby.cpp launcher/client_lobby.h
 launcher/client_lobby_settings.cpp launcher/client_lobby_settings.h
 launcher/lobby_parser.cpp launcher/lobby_parser.h
 
-    game_display/game_sprite_manager.h game_display/game_sprite_manager.cpp
-    game_display/game_clock.h game_display/game_clock.cpp
+    game_display/game_resources_manager.h game_display/game_resources_manager.cpp
     game_display/game_display.h game_display/game_display.cpp
         
-    game_display/worm/game_worm_entity.h game_display/worm/game_worm_entity.cpp
-    game_display/worm/worm_anim_key_mapper.h game_display/worm/worm_anim_key_mapper.cpp
-        game_display/worm/worm_anim_key.h
+    game_display/game_worm_entity.h game_display/game_worm_entity.cpp
+    game_display/game_timer.h game_display/game_timer.cpp
 
     game_display/projectiles/game_projectile_entity.h game_display/projectiles/game_projectile_entity.cpp
     game_display/projectiles/projectile_sprite_key_mapper.h game_display/projectiles/projectile_sprite_key_mapper.cpp
@@ -41,15 +38,16 @@ launcher/lobby_parser.cpp launcher/lobby_parser.h
         game_managment/commands/ChangeProjectileCountDownCommand.h game_managment/commands/ChangeProjectileCountDownCommand.cpp
         game_managment/commands/GameActionCommand.h game_managment/commands/GameActionCommand.cpp
     #game_ui/animation.cpp game_ui/animation.h
-    game_ui/client_game_state.cpp game_ui/client_game_state.h
-    game_ui/game_loop.cpp game_ui/game_loop.h
-    game_ui/utils_constants.h game_ui/utils_constants.cpp
+    game/client_game_state.cpp game/client_game_state.h
+    game/game_turn_displayer.cpp game/game_turn_displayer.h
+    game/game_loop.cpp game/game_loop.h
+    game/utils_constants.h game/utils_constants.cpp
 )
 
 target_include_directories(client_app PUBLIC
     "${CMAKE_CURRENT_SOURCE_DIR}/"
     "${CMAKE_CURRENT_SOURCE_DIR}/game_managment"
-    "${CMAKE_CURRENT_SOURCE_DIR}/game_ui"
+    "${CMAKE_CURRENT_SOURCE_DIR}/game"
     "${CMAKE_CURRENT_SOURCE_DIR}/game_display"
     "${CMAKE_CURRENT_SOURCE_DIR}/game_display/worm"
     "${CMAKE_CURRENT_SOURCE_DIR}/game_display/projectiles"
@@ -77,8 +75,6 @@ target_link_libraries(client_app PUBLIC
 # target_link_libraries(client_app common ${SDL2PP_LIBRARIES})
 
 file(COPY resources DESTINATION ${CMAKE_BINARY_DIR}/bin)
-
-add_subdirectory(launcher)
 
 #===============================================================================
 # include_directories(PUBLIC ${SDL2PP_INCLUDE_DIRS})

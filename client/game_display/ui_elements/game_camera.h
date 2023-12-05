@@ -16,6 +16,9 @@ class GameCamera : public Displayable {
     float xoffset;
     float yoffset;
 
+    float room_width;
+    float room_height;
+
     float scale;
     CameraTarget* target;
 
@@ -28,10 +31,13 @@ class GameCamera : public Displayable {
     float transform_y(float y);
     float transform_w(float w);
     float transform_h(float h);
+    float px_to_w(int pixels);
+    float px_to_h(int pixels);
 
     void body_to_transform(float x, float y, float w, float h, SDL2pp::Rect& transform);
 
     void set_pos(float x, float y);
+    void set_bounds(float width, float height);
     void render(SDL2pp::Renderer& renderer, float delta_time) override;
 };
 #endif

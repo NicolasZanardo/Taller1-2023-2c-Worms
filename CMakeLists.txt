@@ -58,6 +58,14 @@ find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
 
 #===============================================================================
+# YAML-cpp
+FetchContent_Declare(
+        yaml-cpp
+        GIT_REPOSITORY https://github.com/jbeder/yaml-cpp.git
+        GIT_TAG        0.8.0
+)
+
+FetchContent_MakeAvailable(yaml-cpp)
 add_subdirectory(common_base)
 add_subdirectory(client)
 add_subdirectory(server)

@@ -20,7 +20,7 @@
 #include "lobby_parser.h"
 #include "queue.h"
 #include "networking.h"
-#include "../game_ui/utils_constants.h"
+#include "game/utils_constants.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class Launcher; }

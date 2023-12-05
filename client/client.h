@@ -7,12 +7,9 @@
 
 #include "queue.h"
 #include "networking.h"
-#include "client_receiver.h"
 #include "client_sender.h"
-#include "client_game_state_dto.h"
-#include "game_display.h"
-#include "game_ui/utils_constants.h"
 #include "launcher/client_lobby_settings.h"
+#include "game_display/game_display.h"
 
 class Client {
 public:

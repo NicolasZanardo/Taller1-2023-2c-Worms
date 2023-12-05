@@ -1,24 +1,29 @@
 #ifndef TP_WORMS_PROJECTILEDTO_H
 #define TP_WORMS_PROJECTILEDTO_H
 
-#include "WeaponTypeDto.h"
+#include "ProjectileTypeDto.h"
 
 struct ProjectileDto {
     int entity_id;
-    WeaponTypeDto from_weapon;
+    ProjectileTypeDto type;
     float x;
     float y;
+    bool spawned_facing_right;
+    float angle;
 
     ProjectileDto(
         int entity_id,
-        WeaponTypeDto from_weapon,
+        ProjectileTypeDto type,
         float x,
-        float y
+        float y,
+        bool spawned_facing_right,
+        float angle
     ) :
         entity_id(entity_id),
-        from_weapon(from_weapon),
-        x(x), y(y) {}
+        type(type),
+        x(x), y(y),
+        spawned_facing_right(spawned_facing_right),
+        angle(angle) {};
 };
-
 
 #endif

@@ -1,9 +1,4 @@
 #include "client.h"
-
-#include <cmath>
-#include <chrono>
-#include <thread>
-
 #include "game_loop.h"
 #include "client_game_state.h"
 

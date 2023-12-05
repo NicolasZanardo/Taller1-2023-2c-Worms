@@ -1,10 +1,10 @@
 add_library(common
     Networking/socket_connection_lost_error.h 
-    Networking/socket_connection_lost_error.cpp 
-    Networking/net_buffer.h 
-    Networking/net_buffer.cpp 
+    Networking/socket_connection_lost_error.cpp
+    Networking/net_buffer.h
+    Networking/net_buffer.cpp
     Networking/net_protocol_interpreter.h
-    Networking/net_protocol_interpreter.cpp 
+    Networking/net_protocol_interpreter.cpp
 
         Game/game_info_dto.h
         Game/beamDto.h
@@ -16,6 +16,8 @@ add_library(common
         Game/GameAction.h
         Game/GameWorldEventType.h
         Game/ProjectileCountDown.h
+        Game/ProjectileTypeDto.h
+        Game/ExplosionDto.h
 
     liberror.cpp liberror.h
     network_channel.cpp network_channel.h
@@ -28,7 +30,7 @@ add_library(common
 
     Networking/net_operator.h
     Networking/net_operator.cpp
-    
+
     Networking/Messages/net_message.h
     Networking/Messages/net_message.cpp
     Networking/Messages/net_queue.h
@@ -54,6 +56,8 @@ add_library(common
     Networking/Messages/net_message_initial_game_state.h
     Networking/Messages/net_message_initial_game_state.cpp
     Networking/Messages/net_message_game_state_update.h
+    Networking/Messages/net_message_game_ended.h
+    Networking/Messages/net_message_game_ended.cpp
     Networking/Messages/net_message_game_state_update.cpp
 
     Networking/Messages/net_message_create_game.h
@@ -65,7 +69,7 @@ add_library(common
     Networking/Messages/net_message_list_games.cpp
     Networking/Messages/net_message_list_games_response.h
     Networking/Messages/net_message_list_games_response.cpp
-    
+
     Networking/Messages/net_message_join_game.h
     Networking/Messages/net_message_join_game.cpp
     Networking/Messages/net_message_join_game_response.h
@@ -75,11 +79,14 @@ add_library(common
     Networking/Messages/net_message_start_game.cpp
 
     Networking/net_channel.h
-    Networking/net_channel.cpp 
+    Networking/net_channel.cpp
 
     networking.h
 
     constants.h
+    roulete.h
+    Game/game_clock.h
+    Game/game_clock.cpp
 )
 
 target_include_directories(common PUBLIC
