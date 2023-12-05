@@ -1,8 +1,14 @@
-#include <iostream>
+#include "launcher.h"
+
+#include <QApplication>
+
 #include <stdexcept>
 #include <string>
 
-#include "client.h"
+#include "../client.h"
+
+#include "launcher/client_lobby_settings.h"
+#include "networking.h"
 
 #define CLIENT_CMND_LINE_ARGS 2
 #define CLIENT_MSG_ERROR_NUM_CLARGS "Invalid numbers of arguments."
@@ -16,8 +22,21 @@ int main(int argc, char* argv[]) {
 
         // DumbClient client(argv[1], argv[2]);
         // client.start();
+
+        NetChannel net_channel(argv[1], argv[2]);
+        ClientLobbySettings lobby_settings;
+
+        std::unique_ptr<NetMessage> received_id_msg(net_channel.read_message());
+        received_id_msg->execute(lobby_settings);
         
-        Client client(argv[1], argv[2]);
+        // Qt.
+        QApplication a(argc, argv);
+        Launcher w(net_channel, lobby_settings);
+        w.show();
+        a.exec();
+
+        // SDL.
+        Client client(net_channel, lobby_settings);
         client.execute();
 
         return 0;

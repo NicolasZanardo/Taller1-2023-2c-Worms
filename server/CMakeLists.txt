@@ -7,19 +7,26 @@ add_executable(
     main/dumb_client.h
     main/dumb_client.cpp
 
-    main/client/client_reciever.h
-    main/client/client_reciever.cpp
-    main/client/client_sender.h
-    main/client/client_sender.cpp
-    main/client/client.h
-    main/client/client.cpp
-    main/client/client_accepter.h
-    main/client/client_accepter.cpp
+        main/client/server_client_reciever.h
+        main/client/server_client_reciever.cpp
+        main/client/server_client_sender.h
+        main/client/server_client_sender.cpp
+        main/client/server_client.h
+        main/client/server_client.cpp
+        main/client/server_client_accepter.h
+        main/client/server_client_accepter.cpp
 
     main/lobby/host.h
     main/lobby/host.cpp
     main/lobby/waiting_lobby.h
     main/lobby/waiting_lobby.cpp
+
+    main/lobby/id_generator.cpp
+    main/lobby/id_generator.h
+    main/lobby/game_room.cpp
+    main/lobby/game_room.h
+    main/lobby/games_manager.cpp
+    main/lobby/games_manager.h
 
 
     game/control/InGameClients.h

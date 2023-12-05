@@ -12,6 +12,14 @@
 #define NET_MESSAGE_TYPE_PLAYER_CHANGED_PROJECTILE_COUNTDOWN 8
 #define NET_MESSAGE_TYPE_GAME_ENDED 9
 
+#define NET_MESSAGE_TYPE_CREATE_GAME 100
+#define NET_MESSAGE_TYPE_CREATE_GAME_RESPONSE 101
+#define NET_MESSAGE_TYPE_LIST_GAMES 102
+#define NET_MESSAGE_TYPE_LIST_GAMES_RESPONSE 103
+#define NET_MESSAGE_TYPE_JOIN_GAME 104
+#define NET_MESSAGE_TYPE_JOIN_GAME_RESPONSE 105
+#define NET_MESSAGE_TYPE_START_GAME 106
+
 class NetMessageChat;
 class NetMessageLeave;
 class NetMessage_test;
@@ -23,8 +31,16 @@ class NetMessagePlayerChangedWeapon;
 class NetMessagePlayerChangedProjectileCountdown;
 class NetMessageGameEnded;
 
+class NetMessageCreateGame;
+class NetMessageCreateGameResponse;
+class NetMessageListGames;
+class NetMessageListGamesResponse;
+class NetMessageJoinGame;
+class NetMessageJoinGameResponse;
+class NetMessageStartGame;
+
 class NetMessageBehaviour {
-    public:
+public:
     virtual void run(NetMessageChat* msg) = 0;
     virtual void run(NetMessageLeave* msg) = 0;
     virtual void run(NetMessage_test* msg) = 0;
@@ -35,6 +51,15 @@ class NetMessageBehaviour {
     virtual void run(NetMessagePlayerChangedWeapon* msg) = 0;
     virtual void run(NetMessagePlayerChangedProjectileCountdown* msg) = 0;
     virtual void run(NetMessageGameEnded* msg) = 0;
+
+    virtual void run(NetMessageCreateGame* msg) = 0;
+    virtual void run(NetMessageCreateGameResponse* msg) = 0;
+    virtual void run(NetMessageListGames* msg) = 0;
+    virtual void run(NetMessageListGamesResponse* msg) = 0;
+    virtual void run(NetMessageJoinGame* msg) = 0;
+    virtual void run(NetMessageJoinGameResponse* msg) = 0;
+
+    virtual void run(NetMessageStartGame* msg) = 0;
 
     virtual ~NetMessageBehaviour() {};
 };

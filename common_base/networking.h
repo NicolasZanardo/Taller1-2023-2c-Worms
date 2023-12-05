@@ -22,6 +22,15 @@
 #include "Networking/Messages/net_message_player_changed_projectile_countdown.h"
 #include "Networking/Messages/net_message_game_ended.h"
 
+#include "Networking/Messages/net_message_create_game.h"
+#include "Networking/Messages/net_message_create_game_response.h"
+#include "Networking/Messages/net_message_list_games.h"
+#include "Networking/Messages/net_message_list_games_response.h"
+#include "Networking/Messages/net_message_join_game.h"
+#include "Networking/Messages/net_message_join_game_response.h"
+
+#include "Networking/Messages/net_message_start_game.h"
+
 #include "Networking/Messages/net_message_factory.h" 
 #include "Networking/Messages/net_message_behaviour.h"
 

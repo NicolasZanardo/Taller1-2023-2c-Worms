@@ -1,5 +1,5 @@
-#ifndef __CLIENT_RECEIVER_H__
-#define __CLIENT_RECEIVER_H__
+#ifndef CLIENT_CLIENT_RECEIVER_H_
+#define CLIENT_CLIENT_RECEIVER_H_
 
 #include <memory>
 #include "queue.h"
@@ -34,6 +34,16 @@ public:
     void run(NetMessagePlayerChangedWeapon* msg) override;
     void run(NetMessagePlayerChangedProjectileCountdown* msg) override;
     void run(NetMessageGameEnded* msg) override;
+
+    void run(NetMessageCreateGame* msg) override { }
+    void run(NetMessageListGames* msg) override { }
+    void run(NetMessageJoinGame* msg) override { }
+
+    void run(NetMessageCreateGameResponse* msg) override {}
+    void run(NetMessageJoinGameResponse* msg) override {}
+    void run(NetMessageListGamesResponse* msg) override {}
+
+    void run(NetMessageStartGame* msg) override {}
 
 private:
     Queue<std::shared_ptr<ClientGameStateDTO>>& state_queue;
