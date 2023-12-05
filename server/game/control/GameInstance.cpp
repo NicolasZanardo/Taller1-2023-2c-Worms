@@ -89,6 +89,10 @@ std::vector<ExplosionDto> &GameInstance::get_explosions() {
 }
 
 void GameInstance::assign_worms_to_clients(const std::list<Client *> &clients) {
+    std::cout << "Clients list is size: " << clients.size() << std::endl;
+    for (auto client: clients) {
+        std::cout << "Client id is: " << client->id << std::endl;
+    }
     // Seed for random number generation
     std::srand(static_cast<unsigned int>(std::time(nullptr)));
 

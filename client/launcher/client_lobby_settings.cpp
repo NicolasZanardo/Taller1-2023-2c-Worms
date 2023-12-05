@@ -45,7 +45,6 @@ void ClientLobbySettings::run(NetMessageStartGame* msg) {
 }
 
 void ClientLobbySettings::run(NetMessageInitialGameState* msg) {
-     std::cout << "Receiving initial game state while in lobby settings.\n";
     game_state_dto = std::make_shared<ClientGameStateDTO>();
 
     game_state_dto->width = msg->room_width;
@@ -54,6 +53,4 @@ void ClientLobbySettings::run(NetMessageInitialGameState* msg) {
     game_state_dto->beams = std::move(msg->beams);
     game_state_dto->worms = std::move(msg->worms);
     game_state_dto->client_ids_turn_order = std::move(msg->client_ids_turn_order);
-
-    //this->state_queue.push(game_state_dto);
 }

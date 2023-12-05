@@ -41,7 +41,6 @@ void ClientReceiver::run(NetMessageInitialGameState* msg) {
 }
 
 void ClientReceiver::run(NetMessageGameStateUpdate* msg) {
-    std::cout << "Also received here\n";
     auto game_state_dto = std::make_shared<ClientGameStateDTO>();
 
     game_state_dto->current_turn_client_id = msg->current_turn_client_id;

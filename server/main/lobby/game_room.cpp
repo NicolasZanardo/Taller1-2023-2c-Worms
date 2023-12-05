@@ -9,10 +9,10 @@
 GameRoom::GameRoom()
     : was_ended(false) {}
 
-GameRoom::GameRoom(const std::string& name, const std::string& scenario, uint8_t total_pĺayers)
+GameRoom::GameRoom(const std::string& name, const std::string& scenario, uint8_t total_players)
     : name(name)
     , scenario(scenario)
-    , total_players(total_pĺayers) {}
+    , total_players(total_players) {}
 
 void GameRoom::join(Client& client) {
     if (this->players.find(client.getID()) != this->players.end()) {
@@ -20,6 +20,7 @@ void GameRoom::join(Client& client) {
     }
 
     this->players.emplace(client.getID(), client);
+    std::cout << "Added client: " << client.id << std::endl;
     this->list_clients.push_back(&client);
 }
 
@@ -38,7 +39,6 @@ void GameRoom::start() {
             0, -40, HardcodedScenarioData::get(),  // TODO GameConfig struct
             this->list_clients
             );
-
 
     this->game_instance->start();
 }

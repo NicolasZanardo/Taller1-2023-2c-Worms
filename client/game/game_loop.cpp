@@ -25,17 +25,11 @@ void GameLoop::execute(EventHandler &event_handler, ClientGameState &game_state)
 
 void GameLoop::update(ClientGameState &game_state) {
     std::shared_ptr<ClientGameStateDTO> game_state_dto;
-/*    //std::cout << "Inicializando estado del juego.\n";
-    state_queue.try_pop(game_state_dto);
-    if (game_state_dto == nullptr) {
-        return;
-    } else {*/
-        bool receive_new_state = false;
-        while (state_queue.try_pop(game_state_dto)) {
-            receive_new_state = true;
-        }
-        if (receive_new_state) {
-            game_state.update(game_state_dto);
-        }
-    //}
+    bool receive_new_state = false;
+    while (state_queue.try_pop(game_state_dto)) {
+        receive_new_state = true;
+    }
+    if (receive_new_state) {
+        game_state.update(game_state_dto);
+    }
 }
