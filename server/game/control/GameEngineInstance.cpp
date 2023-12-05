@@ -112,9 +112,7 @@ void GameEngineInstance::broadcast_initial_game_state(const GameScenarioData &sc
 }
 
 void GameEngineInstance::broadcast_game_state_update() {
-    // std::cout << "Before get state \n";
     GameState state = game.get_current_state();
-    // std::cout << "After get state \n";
     auto msg = new NetMessageGameStateUpdate(
         state.current_turn_client_id,
         state.current_turn_worm_id,
@@ -123,15 +121,12 @@ void GameEngineInstance::broadcast_game_state_update() {
         state.remaining_game_time,
         state.remaining_turn_time
         );
-    // std::cout << "After net message created \n";
 
     for (const auto &[client_id, worms]: game.get_clients_worms()) {
         for (const auto& worm: worms) {
             msg->add(worm->toWormDto(client_id));
         }
     }
-
-    // std::cout << "After iterate worms\n";
 
     for (const auto &projectile : game.get_projectiles()) {
         msg->add(projectile->to_dto());

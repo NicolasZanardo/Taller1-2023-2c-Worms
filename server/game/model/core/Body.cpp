@@ -1,6 +1,6 @@
 #include "Body.h"
 #include <cmath>
-#include <iostream>
+
 const float EPSILON = 0.005;
 const float RAD_TO_DEG = 180.0f / M_PI;
 

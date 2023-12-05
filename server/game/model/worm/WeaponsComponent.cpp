@@ -39,6 +39,7 @@ float WeaponsComponent::AimedAngle() const {
     if (actual_weapon) {
         return actual_weapon->AimedAngle();
     }
+    return 0;
 }
 
 void WeaponsComponent::start_aiming_down() {

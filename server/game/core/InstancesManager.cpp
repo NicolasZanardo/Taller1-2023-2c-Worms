@@ -22,7 +22,6 @@ void InstancesManager::update() {
     projectiles_to_add.clear();
     remove_dead_instances(projectiles);
     remove_dead_instances(worms);
-    // std::cout << " after trying to remove dead worm\n";
 }
 
 template<typename T>
