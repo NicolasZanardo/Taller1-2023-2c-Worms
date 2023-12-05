@@ -14,5 +14,9 @@ bool Instance::IsActive() {
     return is_active;
 }
 
+bool Instance::is(int compared_id) const {
+    return id == compared_id;
+}
+
 
 

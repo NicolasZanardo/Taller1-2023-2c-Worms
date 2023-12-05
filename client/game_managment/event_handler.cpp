@@ -2,6 +2,7 @@
 #include "commands/GameActionCommand.h"
 #include "commands/ChangeWeaponCommand.h"
 #include "commands/ChangeProjectileCountDownCommand.h"
+#include "commands/ToggleCheatCommand.h"
 
 #include <iostream>
 
@@ -35,7 +36,7 @@ bool EventHandler::handleEvents() {
                         this->command_queue.push(std::make_shared<GameActionCommand>(GameAction::AIM_DOWN_INIT));
                         break;
                     case SDLK_SPACE:
-                        this->command_queue.push(std::make_shared<GameActionCommand>(GameAction::SHOOT_STARTED));
+                        this->command_queue.push(std::make_shared<GameActionCommand>(GameAction::WEAPON_PRIMARY_ACTION));
                         break;
                     case SDLK_q:
                         this->command_queue.push(std::make_shared<ChangeWeaponCommand>(WeaponTypeDto::BAZOOKA));
@@ -67,6 +68,15 @@ bool EventHandler::handleEvents() {
                     case SDLK_5:
                         this->command_queue.push(std::make_shared<ChangeProjectileCountDownCommand>(ProjectileCountDown::FIVE));
                         break;
+                    case SDLK_z:
+                        this->command_queue.push(std::make_shared<ToggleCheatCommand>(CheatType::HEALTH));
+                        break;
+                    case SDLK_x:
+                        this->command_queue.push(std::make_shared<ToggleCheatCommand>(CheatType::MOVEMENT));
+                        break;
+                    case SDLK_c:
+                        this->command_queue.push(std::make_shared<ToggleCheatCommand>(CheatType::WEAPON));
+                        break;
                 }
             }
                 break;
@@ -86,7 +96,7 @@ bool EventHandler::handleEvents() {
                         this->command_queue.push(std::make_shared<GameActionCommand>(GameAction::AIM_DOWN_STOPPED));
                         break;
                     case SDLK_SPACE:
-                        this->command_queue.push(std::make_shared<GameActionCommand>(GameAction::SHOOT_ENDED));
+                        this->command_queue.push(std::make_shared<GameActionCommand>(GameAction::WEAPON_SECONDARY_ACTION));
                         break;
                 }
             }

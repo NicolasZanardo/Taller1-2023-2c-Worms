@@ -1,7 +1,7 @@
 #ifndef _CLIENT_GAME_WORM_ENTITY_H_
 #define _CLIENT_GAME_WORM_ENTITY_H_
 
-#include "ui_utils.h"
+#include "utils_constants.h"
 #include "networking.h"
 #include "game_display.h"
 #include "game_displayable.h"
@@ -13,7 +13,6 @@
 class WormEntity : public CameraTarget{
     WormDto attributes;
     WormAnimationSet* sprite;
-    bool is_active;
     int color;
     GameTextDisplay* name;
 

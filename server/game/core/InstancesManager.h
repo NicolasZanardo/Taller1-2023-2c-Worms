@@ -53,7 +53,7 @@ public:
     // Worms
     void instantiate_worms(const GameScenarioData &gameScenarioData);
 
-    std::unordered_map<int, std::shared_ptr<Worm>> get_worms();
+    std::unordered_map<int, std::shared_ptr<Worm>>& get_worms();
 
     std::shared_ptr<Worm> get_worm(int id);
 
@@ -69,7 +69,7 @@ public:
         b2Vec2 speed
     );
 
-    std::vector<std::shared_ptr<Projectile>> &get_projectiles();
+    std::vector<std::shared_ptr<Projectile>>& get_projectiles();
 };
 
 

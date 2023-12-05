@@ -4,74 +4,89 @@
 #include <map>
 #include <memory>
 #include "wormDto.h"
-#include "WormBody.h"
 #include "WeaponTypeDto.h"
 #include "Updatable.h"
 #include "OnTurnEndedListener.h"
 #include "Weapon.h"
-#include "Health.h"
+#include "HealthComponent.h"
 #include "Collidable.h"
 #include "WormFootSensor.h"
 #include "ProjectileCountDown.h"
 #include "WeaponCfg.h"
 #include "Config.h"
 #include "WormCfg.h"
+#include "WeaponsComponent.h"
+#include "CheatType.h"
+#include "CheatManager.h"
+#include "GameAction.h"
+#include "WormBody.h"
 
-typedef std::map<WeaponTypeDto, std::shared_ptr<Weapon>> WeaponMap;
+enum class WormState : uint8_t {
+    IDLE = 0x00,
+    MOVING = 0x01,
+    JUMPING = 0x02,
+    FALLING = 0x03,
+    SINKING = 0x04,
+    DEAD = 0x05
+};
+
 
 class InstancesManager;
 class WormFootSensor;
+class HealthComponent;
 
-class Worm: public Collidable, public Instance, Updatable, OnTurnEndedListener {
+class Worm
+    : public Collidable, public Instance, Updatable, OnTurnEndedListener, public std::enable_shared_from_this<Worm> {
 private:
     friend class InstancesManager;
-    int WATER_DEATH_TIME = 1500;
-    bool is_dead;
-    WeaponMap weapons;
-    std::shared_ptr<Weapon> actual_weapon;
-    Health health;
+    friend class HealthComponent;
+    friend class WormBody;
+    friend class WormCheatBody;
+
+    friend class CheatManager;
+    void cheat_movement(bool toggled);
+    void cheat_health();
+    void cheat_weapon(int new_ammo, float new_damage);
+
+    WormStateDto state;
+    std::shared_ptr<WeaponsComponent> weapons_component;
+    HealthComponent health;
+    CheatManager cheat_manager;
+
     WormFootSensor foot_sensor;
     bool is_on_water;
-    int water_death_timer;
-    bool has_done_an_ending_turn_action;
+    bool finished_turn;
 
-    Worm(size_t id, WormCfg &worm_cfg, Config<WeaponCfg> &weapons_cfg);
-    static WeaponMap create_default_weapons(Config<WeaponCfg> &weapons_cfg);
+    Worm(
+        size_t id,
+        WormCfg &worm_cfg,
+        std::shared_ptr<WeaponsComponent> weapons_component
+    );
+
 public:
     std::shared_ptr<WormBody> body;
-
     WormDto toWormDto(size_t client_id);
 
     float X() const;
     float Y() const;
     bool is_still() const;
-    b2Body* B2Body() const;
-    WormFootSensor* get_foot_sensor();
+    b2Body *B2Body() const;
+    std::shared_ptr<WormBody> get_body() const;
+    WormFootSensor *get_foot_sensor();
 
     void update(int it, const int rate) override;
     void on_turn_ended() override;
 
     bool has_done_ending_turn_action() const;
 
+    void act(GameAction action);
+
     // Movement
     void on_sensed_one_new_ground_contact() const;
     void on_sensed_one_ground_contact_ended() const;
-    void start_moving_right() const;
-    void start_moving_left() const;
-    void stop_moving() const;
-    void jump_forward() const;
-    void jump_backwards() const;
+
     void sink();
 
-    // Aim
-    void start_aiming_up();
-    void start_aiming_down();
-    void stop_aiming_up();
-    void stop_aiming_down();
-
-    // Shot
-    void start_shooting();
-    void end_shooting();
     std::unique_ptr<CShot> shot_component();
 
     // Weapon
@@ -81,6 +96,11 @@ public:
     // health
     void adjust_health_to(float amount);
     void receive_damage(float damage);
+
+    // Cheat
+    void toggle_cheat_mode(CheatType type);
+
+    void receive_force(Force& force);
 
     ~Worm() = default;
 };

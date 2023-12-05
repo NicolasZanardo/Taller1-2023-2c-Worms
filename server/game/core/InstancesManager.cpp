@@ -26,9 +26,10 @@ void InstancesManager::update() {
 
 template<typename T>
 void InstancesManager::remove_dead_instances(std::vector<std::shared_ptr<T>> &instances_vec) {
-    instances_vec.erase(std::remove_if(instances_vec.begin(), instances_vec.end(),
-                                       [](const std::shared_ptr<T> &e) { return !e->IsActive(); }),
-                        instances_vec.end());
+    instances_vec.erase(
+        std::remove_if(instances_vec.begin(), instances_vec.end(),
+            [](const std::shared_ptr<T> &e) { return !e->IsActive(); }),
+    instances_vec.end());
 }
 
 // Specialization definition for Worm type
@@ -47,8 +48,16 @@ void InstancesManager::remove_dead_instances(std::unordered_map<int, std::shared
 std::shared_ptr<Worm> InstancesManager::instantiate_worm(
     const WormScenarioData &wormScenarioData
 ) {
-    auto worm = std::shared_ptr<Worm>(new Worm(++total_entities_created, worms_cfg,weapons_cfg));
-    worm->body = physics_system.spawn_worm(wormScenarioData, worm, worms_cfg);
+    auto worm = std::shared_ptr<Worm>(
+        new Worm(
+            ++total_entities_created,
+            worms_cfg,
+            std::make_unique<WeaponsComponent>(weapons_cfg)
+        )
+    );
+    auto worm_body = physics_system.spawn_worm( worm, wormScenarioData, worms_cfg);
+
+    worm->body = std::move(worm_body);
     return worm;
 }
 
@@ -59,7 +68,7 @@ void InstancesManager::instantiate_worms(const GameScenarioData &gameScenarioDat
     }
 }
 
-std::unordered_map<int, std::shared_ptr<Worm>> InstancesManager::get_worms() {
+std::unordered_map<int, std::shared_ptr<Worm>>& InstancesManager::get_worms() {
     return worms;
 }
 
@@ -90,7 +99,7 @@ void InstancesManager::instantiate_fragment_projectile(
     projectiles_to_add.push_back(projectile);
 }
 
-std::vector<std::shared_ptr<Projectile>> &InstancesManager::get_projectiles() {
+std::vector<std::shared_ptr<Projectile>>&InstancesManager::get_projectiles() {
     return projectiles;
 }
 

@@ -22,7 +22,6 @@ client_order()
     int client_count = client_turn_order.size();
     for (int i = 0; i < client_count; i++) {
         int curr_cli = client_turn_order[i];
-
         client_order.emplace(curr_cli, i);
         client_life.emplace_back(curr_cli);
 
@@ -52,8 +51,8 @@ void GameTurnDisplayer::update(const std::vector<WormDto>& worms, const int acti
 
         if (client_life[i] != newvals[i]) {
             const std::string val(
-                "Jugador " + 
-                std::to_string(client_order[i]) +
+                "Jugador " +
+                NAME_BY_CLIENT[i] +
                 ": "+ std::to_string(newvals[i])
             );
             text->update(val);

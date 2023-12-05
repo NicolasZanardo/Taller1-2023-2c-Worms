@@ -98,3 +98,5 @@ void ClientReceiver::run(NetMessageGameEnded* msg) {
     game_state_dto->winner = msg->winner_client_id;
     this->state_queue.push(game_state_dto);
 }
+
+void ClientReceiver::run(NetMessagePlayerToggleCheat* msg) {}

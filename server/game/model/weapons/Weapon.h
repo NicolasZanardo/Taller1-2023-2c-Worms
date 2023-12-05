@@ -52,6 +52,8 @@ public:
 
     std::unique_ptr<CShot> shot_component();
 
+    void upgrade(int ammo, float damage);
+
     virtual ~Weapon() = default;
 };
 

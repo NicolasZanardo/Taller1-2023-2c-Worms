@@ -31,6 +31,6 @@ void OnExplosionWormsQuery::act_on_found(b2World& world, std::unique_ptr<CExplos
         float damage = explosion->max_damage * (1.0f - distance / explosion->radius);
         worm->receive_damage(damage);
         ExplosionForce force(world, explosion_point, explosion->radius);
-        force.apply(body);
+        worm->receive_force(force);
     }
 }

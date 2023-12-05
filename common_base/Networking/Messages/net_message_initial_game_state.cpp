@@ -1,4 +1,5 @@
 #include "net_message_initial_game_state.h"
+#include <iostream>
 
 NetMessageInitialGameState::NetMessageInitialGameState()
     : NetMessage(NET_MESSAGE_TYPE_INITIAL_STATE) {}
@@ -69,7 +70,7 @@ void NetMessageInitialGameState::pull_data_from(NetProtocolInterpreter &channel)
         auto angle     = channel.read_float();
         auto is_facing_right = channel.read_bool();
         auto life      = channel.read_int();
-        auto state     = static_cast<MovementStateDto>(channel.read_byte());
+        auto state     = static_cast<WormStateDto>(channel.read_byte());
         auto weapon_hold     = static_cast<WeaponTypeDto>(channel.read_byte());
         auto aiming_angle     = channel.read_float();
 

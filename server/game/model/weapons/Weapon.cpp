@@ -1,5 +1,5 @@
 #include "Weapon.h"
-
+#include <iostream>
 Weapon::Weapon(WeaponCfg &weapon_data, std::unique_ptr<ProjectileCountDownChanger> countdown_changer) :
     projectile_data(weapon_data.projectile),
     type(weapon_data.type), ammo_left(weapon_data.ammo),
@@ -85,4 +85,9 @@ std::unique_ptr<CShot> Weapon::shoot(float from_x, float from_y, char facing_sig
             projectile_data.rotation
         )
     );
+}
+
+void Weapon::upgrade(int ammo, float damage) {
+    projectile_data.max_damage = damage;
+    ammo_left = ammo;
 }

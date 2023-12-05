@@ -19,16 +19,16 @@ WormAnimationSet::WormAnimationSet(
     aiming_idle_sprite(),
     active_body(falling), 
     aiming_body(aiming_bazooka), 
-    state(MovementStateDto::FALLING),
+    state(WormStateDto::FALLING),
     weapon(WeaponTypeDto::BAZOOKA),
     is_aiming(false)
     {
-        worm_state_sprite[MovementStateDto::IDLE]          = std::unique_ptr<GameSprite>(idle);
-        worm_state_sprite[MovementStateDto::MOVING]        = std::unique_ptr<GameSprite>(moving);
-        worm_state_sprite[MovementStateDto::GOING_UPWARDS] = std::unique_ptr<GameSprite>(going_upwards);
-        worm_state_sprite[MovementStateDto::FALLING]       = std::unique_ptr<GameSprite>(falling);
-        worm_state_sprite[MovementStateDto::DEAD]          = std::unique_ptr<GameSprite>(dead);
-        worm_state_sprite[MovementStateDto::SINKING]       = std::unique_ptr<GameSprite>(sinking);
+        worm_state_sprite[WormStateDto::IDLE]          = std::unique_ptr<GameSprite>(idle);
+        worm_state_sprite[WormStateDto::MOVING]        = std::unique_ptr<GameSprite>(moving);
+        worm_state_sprite[WormStateDto::GOING_UPWARDS] = std::unique_ptr<GameSprite>(going_upwards);
+        worm_state_sprite[WormStateDto::FALLING]       = std::unique_ptr<GameSprite>(falling);
+        worm_state_sprite[WormStateDto::DEAD]          = std::unique_ptr<GameSprite>(dead);
+        worm_state_sprite[WormStateDto::SINKING]       = std::unique_ptr<GameSprite>(sinking);
 
         aiming_idle_sprite[WeaponTypeDto::BAZOOKA]        = std::unique_ptr<GameSprite>(aiming_bazooka);
         aiming_idle_sprite[WeaponTypeDto::MORTAR]         = std::unique_ptr<GameSprite>(aiming_mortar);
@@ -40,7 +40,7 @@ WormAnimationSet::WormAnimationSet(
             val->set_angle_range(-90,90);
     }
 
-void WormAnimationSet::update_state(MovementStateDto newstate) {
+void WormAnimationSet::update_state(WormStateDto newstate) {
     if (state == newstate)
         return;
 
@@ -91,7 +91,7 @@ void WormAnimationSet::image_flipped(bool image_is_flipped) {
 }
 
 void WormAnimationSet::render(SDL2pp::Renderer& renderer, float delta_time) {
-    if (is_aiming && state == MovementStateDto::IDLE)
+    if (is_aiming && state == WormStateDto::IDLE)
         aiming_body->render(renderer, delta_time);
     else
         active_body->render(renderer, delta_time);

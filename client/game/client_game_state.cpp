@@ -1,5 +1,5 @@
 #include "client_game_state.h"
-#include "ui_utils.h"
+#include "utils_constants.h"
 #include "constants.h"
 
 ClientGameState::~ClientGameState() {

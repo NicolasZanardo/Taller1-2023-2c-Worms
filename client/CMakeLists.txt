@@ -1,12 +1,15 @@
 #===============================================================================
 include_directories(${SDL2PP_INCLUDE_DIRS})
 
-add_executable (client_app
-    client_main.cpp
+add_executable(client_app
+    launcher/main.cpp
+    launcher/launcher.cpp launcher/launcher.h launcher/launcher.ui
+    # client_main.cpp
     client.cpp client.h
 
-    game_display/game_resources_manager.h game_display/game_resources_manager.cpp
-    game_display/game_clock.h game_display/game_clock.cpp
+        launcher/client_lobby_settings.cpp launcher/client_lobby_settings.h
+
+        game_display/game_resources_manager.h game_display/game_resources_manager.cpp
     game_display/game_display.h game_display/game_display.cpp
         
     game_display/game_worm_entity.h game_display/game_worm_entity.cpp
@@ -35,7 +38,9 @@ add_executable (client_app
     game/client_game_state.cpp game/client_game_state.h
     game/game_turn_displayer.cpp game/game_turn_displayer.h
     game/game_loop.cpp game/game_loop.h
-    game/ui_utils.h game/ui_utils.cpp
+    game/utils_constants.h game/utils_constants.cpp
+        game_managment/commands/ToggleCheatCommand.h
+        game_managment/commands/ToggleCheatCommand.cpp
 )
 
 target_include_directories(client_app PUBLIC
@@ -49,7 +54,25 @@ target_include_directories(client_app PUBLIC
     "${CMAKE_CURRENT_SOURCE_DIR}/game_display/ui_elements"
 )
 
-target_link_libraries(client_app common ${SDL2PP_LIBRARIES})
+# if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
+#     qt_add_executable(client_app
+#         MANUAL_FINALIZATION
+#         ${PROJECT_SOURCES}
+#     )
+# else()
+#     add_executable(client_app
+#         ${PROJECT_SOURCES}
+#     )
+# endif()
+
+target_link_libraries(client_app PUBLIC
+    Qt${QT_VERSION_MAJOR}::Widgets
+    common
+    ${SDL2PP_LIBRARIES}
+)
+
+
+# target_link_libraries(client_app common ${SDL2PP_LIBRARIES})
 
 file(COPY resources DESTINATION ${CMAKE_BINARY_DIR}/bin)
 

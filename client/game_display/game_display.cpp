@@ -1,5 +1,5 @@
 #include "game_display.h"
-#include "ui_utils.h"
+#include "game/utils_constants.h"
 #include "game_sprite.h"
 #include "sprite_animation.h"
 
@@ -24,7 +24,7 @@ GameDisplay::GameDisplay(Queue<std::shared_ptr<Command>> &command_queue, int fps
     resources.add_texture("ui_dynamite", "resources/weapon_icons/dynamite.png");
 
     resources.add_texture("explosion", "resources/sprites/effects/circle50.png",100,100,0,0,0,SpriteAnimationType::FREEZE,28);
-    
+
     // Scenario
     resources.add_texture("beam_large", "resources/sprites/scenario/beam_large.png");
     resources.add_texture("fondo", "resources/sprites/scenario/fondo.png");
@@ -139,7 +139,7 @@ void GameDisplay::start_scenario(float width, float height, float water_level) {
     camera.set_bounds(width, height);
     float gameW = camera.px_to_w(128);
     float gameH = camera.px_to_h(24);
-    
+
 
     GameSprite *background = new GameSprite(camera, *resources.get_sprite("fondo"), width, height, 0.0);
     background->set_pos(width/2, water_level - gameH/2);
@@ -165,7 +165,7 @@ void GameDisplay::start_scenario(float width, float height, float water_level) {
 
     for (auto it : overlay)
         foreground.emplace_back(it);
-    
+
     ((GameSprite*)overlay[1])->set_pos(42,0);
     ((GameSprite*)overlay[2])->set_pos(88,0);
     ((GameSprite*)overlay[3])->set_pos(134,0);

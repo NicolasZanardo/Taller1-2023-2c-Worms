@@ -22,17 +22,15 @@ public:
 
     bool is_still() const;
 
-    float Angle() const;
-
     float AngleInDeg() const;
 
-    void receive(Force &force);
+    virtual void receive(Force &force);
 
     bool is_moving_faster_than(const std::shared_ptr<Body> &other);
 
-    bool facing_right() const;
+    virtual ~Body();
 
-    ~Body();
+    bool facing_right() const;
 };
 
 

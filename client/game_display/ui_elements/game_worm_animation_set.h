@@ -9,11 +9,11 @@
 #include "game_sprite.h"
 
 class WormAnimationSet : public Displayable {
-    std::unordered_map<MovementStateDto, std::unique_ptr<GameSprite>> worm_state_sprite;
+    std::unordered_map<WormStateDto, std::unique_ptr<GameSprite>> worm_state_sprite;
     std::unordered_map<WeaponTypeDto, std::unique_ptr<GameSprite>> aiming_idle_sprite;
     GameSprite* active_body;
     GameSprite* aiming_body;
-    MovementStateDto state;
+    WormStateDto state;
     WeaponTypeDto weapon;
     bool is_aiming;
 
@@ -33,7 +33,7 @@ class WormAnimationSet : public Displayable {
         GameSprite* aiming_dynamite
     );
 
-    void update_state(MovementStateDto newstate);
+    void update_state(WormStateDto newstate);
     void update_weapon(WeaponTypeDto newweapon);
 
     void aiming(bool is_aiming);

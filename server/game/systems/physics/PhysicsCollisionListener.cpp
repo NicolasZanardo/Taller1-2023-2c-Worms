@@ -35,7 +35,6 @@ void PhysicsCollisionListener::EndContact(b2Contact *contact) {
         if (resolver)
             resolver(collidable_a, collidable_b, contact);
     }
-
 }
 
 PhysicsCollisionListener::PhysicsCollisionListener() : beginning_hit_map(), ending_hit_map() {
