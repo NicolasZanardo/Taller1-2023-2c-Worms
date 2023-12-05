@@ -110,11 +110,10 @@ add_executable(
     game/scenario/ScenarioReader.h
     game/scenario/ScenarioReader.cpp
 
-    game/systems/turns/TurnSystem.h
-    game/systems/turns/TurnSystem.cpp
-    game/systems/turns/WormIdIterator.h
-    game/systems/turns/WormIdIterator.cpp
-    game/systems/updatables/UpdatablesSystem.h
+    game/systems/turns/TurnManager.h
+    game/systems/turns/TurnManager.cpp
+
+        game/systems/updatables/UpdatablesSystem.h
     game/systems/updatables/UpdatablesSystem.cpp
     game/systems/shot/ShotSystem.h
     game/systems/shot/ShotSystem.cpp
@@ -153,6 +152,8 @@ add_executable(
         game/model/weapons/DefaultProjectileCountDownChanger.cpp
         game/model/weapons/NoneProjectileCountDownChanger.h
         game/model/weapons/NoneProjectileCountDownChanger.cpp
+        game/systems/turns/ClientTurn.h
+        game/systems/turns/ClientTurn.cpp
 )
 
 target_include_directories(server_app PUBLIC

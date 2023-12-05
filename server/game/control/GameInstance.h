@@ -14,7 +14,7 @@
 #include "InstancesManager.h"
 #include "client.h"
 #include "PhysicsSystem.h"
-#include "TurnSystem.h"
+#include "TurnManager.h"
 #include "UpdatablesSystem.h"
 #include "ShotSystem.h"
 #include "WindSystem.h"
@@ -40,12 +40,12 @@ class GameInstance {
     PhysicsSystem physics_system;
     InstancesManager instances_manager;
     ClientsWorms clients_worms;
-    TurnSystem turn_system;
     UpdatablesSystem updatables_system;
     ShotSystem shot_system;
     WindSystem wind_system;
     ExplosionsSystem explosions_system;
     EntityCameraFocusSystem entity_focus_system;
+    TurnManager turn_system;
 
     void assign_worms_to_clients(const std::list<Client *> &clients);
 
@@ -64,10 +64,10 @@ public:
     std::vector<ExplosionDto>& get_explosions();
     int get_winner_client_id();
 
-    void remove_from_clients_worms_map(size_t worm_id);
+    void remove_from_clients_worms_map(int worm_id);
 
     bool update(const int it);
-    bool is_client_turn(size_t id);
+    bool is_client_turn(int id);
     std::vector<int> client_turn_order();
 
     // Actions

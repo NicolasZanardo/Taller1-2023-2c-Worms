@@ -5,13 +5,13 @@ GameEngineInstance::GameEngineInstance(
     float yGravity,
     const GameScenarioData &scenario,
     const std::list<Client *> &clients
-) : 
+) :
 rate(60),
 game_clients(clients),
 game(xGravity, yGravity, scenario, clients, rate),
 game_queue(1000),
 net_message_behaviour(game_clients, game),
-keep_executing(true) 
+keep_executing(true)
 {
     switch_clients_game_queue(clients);
     initial_broadcast(scenario, game.client_turn_order());
@@ -83,7 +83,7 @@ void GameEngineInstance::switch_clients_game_queue(std::list<Client *> clients) 
 
 void GameEngineInstance::initial_broadcast(const GameScenarioData &scenario, const std::vector<int>& order) {
     broadcast_initial_game_state(scenario, order);
-    std::this_thread::sleep_for(std::chrono::seconds(1));
+    std::this_thread::sleep_for(std::chrono::seconds(2));
     broadcast_game_state_update();
 }
 
@@ -97,13 +97,10 @@ void GameEngineInstance::broadcast_initial_game_state(const GameScenarioData &sc
 
     for (auto item: scenario.beams) {
         message->add(item.toBeamDto());
-        std::cout << "BeamDto x: " << item.toBeamDto().x << " y: " << item.toBeamDto().y << std::endl;
     }
 
     for (const auto &[clientId, worms]: game.get_clients_worms()) {
         for (const auto &wrm: worms) {
-            std::cout << "Init Worm id: " << wrm->toWormDto(clientId).entity_id
-                      << " with client id: " << wrm->toWormDto(clientId).client_id << std::endl;
             message->add(wrm->toWormDto(clientId));
         }
     }
@@ -111,7 +108,7 @@ void GameEngineInstance::broadcast_initial_game_state(const GameScenarioData &sc
     for(auto client: order) {
         message->add(client);
     }
-    
+
     game_clients.send_all(message->share());
 }
 
