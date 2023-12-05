@@ -2,7 +2,7 @@
 
 #include <stdexcept>
 
-#include "../client/client.h"  // Del server.
+#include "client/server_client.h"  // Del server.
 #include "../game/scenario/HardcodedScenarioData.h"
 #include "GameEngineInstance.h"
 

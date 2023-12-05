@@ -1,4 +1,4 @@
-#include "client_sender.h"
+#include "server_client_sender.h"
 
 Sender::Sender(const int client_id,  NetChannel* channel, NetQueue* client_queue) : 
     Thread(), 

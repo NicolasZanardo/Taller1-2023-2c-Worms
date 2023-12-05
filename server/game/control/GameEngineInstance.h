@@ -12,7 +12,7 @@
 #include "networking.h"
 #include "thread.h"
 #include "GameScenarioData.h"
-#include "client.h"
+#include "server_client.h"
 #include "GameNetMessageBehaviour.h"
 #include "InGameClients.h"
 

@@ -1,5 +1,5 @@
-#ifndef __CLIENT_RECEIVER_H__
-#define __CLIENT_RECEIVER_H__
+#ifndef CLIENT_CLIENT_RECEIVER_H_
+#define CLIENT_CLIENT_RECEIVER_H_
 
 #include <memory>
 #include "queue.h"

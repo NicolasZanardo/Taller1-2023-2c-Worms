@@ -7,7 +7,7 @@
 #include <vector>
 #include <memory>
 #include "waiting_lobby.h"
-#include "client_accepter.h"
+#include "server_client_accepter.h"
 #include "games_manager.h"
 class Server {
     GamesManager games_manager;

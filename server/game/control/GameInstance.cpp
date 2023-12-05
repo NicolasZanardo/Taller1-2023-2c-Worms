@@ -1,8 +1,6 @@
 #include "GameInstance.h"
 #include "Logger.h"
 
-#include "../../client/client.h"
-
 GameInstance::GameInstance(
     float xGravity,
     float yGravity,

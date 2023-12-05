@@ -1,4 +1,4 @@
-#include "client.h"
+#include "server_client.h"
 #include <iostream>
 
 #include "../lobby/games_manager.h"

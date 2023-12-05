@@ -1,16 +1,14 @@
-#ifndef __CLIENT_H__
-#define __CLIENT_H__
+#ifndef TP_WORMS_CLIENT_H_
+#define TP_WORMS_CLIENT_H_
 
-#include <SDL2pp/SDL2pp.hh>
 #include <unistd.h>
 #include <memory>
-
 #include "queue.h"
 #include "networking.h"
-#include "client_receiver.h"
-#include "client_sender.h"
 #include "launcher/client_lobby_settings.h"
 #include "game_display/game_display.h"
+#include "client_receiver.h"
+#include "client_sender.h"
 
 class Client {
 public:
@@ -38,4 +36,4 @@ private:
     ClientSender sender;
 };
 
-#endif  // __CLIENT_H__
+#endif

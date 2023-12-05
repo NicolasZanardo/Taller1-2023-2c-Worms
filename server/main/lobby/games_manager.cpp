@@ -3,7 +3,7 @@
 #include <iostream>
 #include <utility>
 
-#include "../client/client.h"
+#include "client/server_client.h"
 
 GamesManager::GamesManager()
     : rooms() {}

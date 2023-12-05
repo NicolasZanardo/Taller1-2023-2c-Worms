@@ -1,7 +1,5 @@
 #include "InGameClients.h"
 
-#include "../../client/client.h"
-
 InGameClients::InGameClients(const std::list<Client *> &clients): clients() {
     for (const auto &client: clients) {
         this->clients.emplace(client->id, client);

@@ -1,6 +1,6 @@
-#include "client_reciever.h"
+#include "server_client_reciever.h"
 
-#include "client.h"
+#include "server_client.h"
 
 Reciever::Reciever(const int client_id, Client& client, NetChannel* channel, NetQueue& send_queue, GamesManager& games_manager) : 
     Thread(), 

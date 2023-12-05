@@ -5,7 +5,7 @@
 #include <mutex>
 #include <string>
 #include "GameEngineInstance.h"
-#include "client.h"
+#include "server_client.h"
 #include "thread.h"
 #include "networking.h"
 

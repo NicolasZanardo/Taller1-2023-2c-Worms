@@ -3,16 +3,14 @@
 
 #include <list>
 #include <string>
-#include <SDL2pp/SDL2pp.hh>
 #include "queue.h"
-#include "game_camera.h"
-#include "event_handler.h"
 #include "game_resources_manager.h"
-#include "game_displayable.h"
-#include "game_sprite.h"
 #include "Game/GameAction.h"
-#include "game_text_display.h"
-#include "game_worm_animation_set.h"
+#include "ui_elements/game_displayable.h"
+#include "ui_elements/game_camera.h"
+#include "ui_elements/game_worm_animation_set.h"
+#include "ui_elements/game_text_display.h"
+#include "event_handler.h"
 
 class GameDisplay {
     int fps;

@@ -2,8 +2,8 @@
 #define SERVER_CLIENT_H_
 
 #include "networking.h"
-#include "client_reciever.h"
-#include "client_sender.h"
+#include "server_client_reciever.h"
+#include "server_client_sender.h"
 
 #include "../lobby/games_manager.h"
 

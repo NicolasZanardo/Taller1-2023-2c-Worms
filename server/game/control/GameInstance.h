@@ -12,7 +12,7 @@
 #include <ctime>     // Include for std::time
 #include "Worm.h"
 #include "InstancesManager.h"
-#include "client.h"
+#include "server_client.h"
 #include "PhysicsSystem.h"
 #include "TurnManager.h"
 #include "UpdatablesSystem.h"
