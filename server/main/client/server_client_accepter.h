@@ -10,11 +10,12 @@ class ClientAccepter : public Thread {
     WaitingLobby& lobby;
     GamesManager* games_manager;
 
-    public:
+public:
     explicit ClientAccepter(const char* servname, WaitingLobby& lobby, GamesManager& games_manager);
+    virtual ~ClientAccepter();
 
     void run() override;
     void stop() override;
 };
-#endif
 
+#endif  // SERVER_CLIENT_ACCEPTER_H_
