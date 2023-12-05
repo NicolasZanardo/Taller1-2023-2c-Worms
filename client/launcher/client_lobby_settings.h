@@ -33,6 +33,8 @@ public:
 
     void run(NetMessageStartGame* msg) override;
 
+    void run(NetMessageGameEnded* msg) override { }
+
     bool isReadyToStart() const { return this->ready_to_start; }
     
     int id;

@@ -7,6 +7,7 @@
 
 #include "queue.h"
 #include "networking.h"
+#include "client_receiver.h"
 #include "client_sender.h"
 #include "launcher/client_lobby_settings.h"
 #include "game_display/game_display.h"
