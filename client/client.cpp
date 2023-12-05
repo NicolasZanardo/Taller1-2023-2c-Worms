@@ -19,6 +19,7 @@ Client::Client(NetChannel& net_channel, ClientLobbySettings& lobby_settings)
     , sender(command_queue, channel) {}
 
 void Client::execute() {
+    std::cout << "Ejecutando SDL\n";
     ClientGameState game_state(display);
     game_state.my_client_id = this->lobby_settings.id;
     display.camera.set_pos(0, 0);

@@ -17,18 +17,18 @@ set(PROJECT_SOURCES
         launcher.ui
 )
 
-if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
-    qt_add_executable(launcher_worms
-        MANUAL_FINALIZATION
-        ${PROJECT_SOURCES}
-    )
-else()
-    add_executable(launcher_worms
-        ${PROJECT_SOURCES}
-    )
-endif()
+# if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
+#     qt_add_executable(launcher_worms
+#         MANUAL_FINALIZATION
+#         ${PROJECT_SOURCES}
+#     )
+# else()
+#     add_executable(launcher_worms
+#         ${PROJECT_SOURCES}
+#     )
+# endif()
 
-target_link_libraries(launcher_worms PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
+# target_link_libraries(launcher_worms PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
 
 
 # # Run the uic tool manually to generate the corresponding C++ code from the .ui file

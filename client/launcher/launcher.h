@@ -16,6 +16,12 @@
 #include <QVBoxLayout>
 #include <QMessageBox>
 
+#include "client_lobby_settings.h"
+#include "lobby_parser.h"
+#include "queue.h"
+#include "networking.h"
+#include "../game_ui/utils_constants.h"
+
 QT_BEGIN_NAMESPACE
 namespace Ui { class Launcher; }
 QT_END_NAMESPACE
@@ -25,7 +31,7 @@ class Launcher : public QMainWindow
     Q_OBJECT
 
 public:
-    Launcher(QWidget *parent = nullptr);
+    Launcher(NetChannel& net_channel, ClientLobbySettings& lobby_settings, QWidget *parent = nullptr);
     ~Launcher();
 
 private:
@@ -51,5 +57,8 @@ private:
     QPushButton* push_button_start;  // pushButtonStart
 
     QLineEdit* line_edit_messages;  // lineEditMessages
+
+    NetChannel& net_channel;
+    ClientLobbySettings& lobby_settings;
 };
 #endif // LAUNCHER_H

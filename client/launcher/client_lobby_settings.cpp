@@ -37,6 +37,7 @@ void ClientLobbySettings::run(NetMessageListGamesResponse* msg) {
                 << " - Players (" << static_cast<uint16_t>(game_info.joined_players)
                 << '/' << static_cast<uint16_t>(game_info.total_players) << '\n';
     }
+    this->games_info = std::move(msg->games_info);
 }
 
 void ClientLobbySettings::run(NetMessageStartGame* msg) {

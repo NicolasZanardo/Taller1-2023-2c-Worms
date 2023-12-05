@@ -2,7 +2,9 @@
 include_directories(${SDL2PP_INCLUDE_DIRS})
 
 add_executable(client_app
-    client_main.cpp
+    launcher/main.cpp
+    launcher/launcher.cpp launcher/launcher.h launcher/launcher.ui
+    # client_main.cpp
     client.cpp client.h
     # dumb_simple_client/dumb_client.cpp dumb_simple_client/dumb_client.h
 
@@ -54,7 +56,25 @@ target_include_directories(client_app PUBLIC
     "${CMAKE_CURRENT_SOURCE_DIR}/game_display/ui_elements"
 )
 
-target_link_libraries(client_app common ${SDL2PP_LIBRARIES})
+# if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
+#     qt_add_executable(client_app
+#         MANUAL_FINALIZATION
+#         ${PROJECT_SOURCES}
+#     )
+# else()
+#     add_executable(client_app
+#         ${PROJECT_SOURCES}
+#     )
+# endif()
+
+target_link_libraries(client_app PUBLIC
+    Qt${QT_VERSION_MAJOR}::Widgets
+    common
+    ${SDL2PP_LIBRARIES}
+)
+
+
+# target_link_libraries(client_app common ${SDL2PP_LIBRARIES})
 
 file(COPY resources DESTINATION ${CMAKE_BINARY_DIR}/bin)
 
