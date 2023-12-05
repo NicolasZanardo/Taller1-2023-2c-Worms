@@ -1,5 +1,6 @@
 # Documentación Técnica
 
+
 ## ¿Cómo usar las librerías externas con CMake?
 
 ### Box2D
