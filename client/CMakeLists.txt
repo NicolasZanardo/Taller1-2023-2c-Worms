@@ -7,7 +7,6 @@ add_executable (client_app
     # dumb_simple_client/dumb_client.cpp dumb_simple_client/dumb_client.h
 
     game_display/game_resources_manager.h game_display/game_resources_manager.cpp
-    game_display/game_clock.h game_display/game_clock.cpp
     game_display/game_display.h game_display/game_display.cpp
         
     game_display/game_worm_entity.h game_display/game_worm_entity.cpp

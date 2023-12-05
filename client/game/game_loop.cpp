@@ -1,5 +1,5 @@
 #include "game_loop.h"
-#include "game_clock.h"
+#include "Game/game_clock.h"
 
 GameLoop::GameLoop(GameDisplay& display, Queue<std::shared_ptr<ClientGameStateDTO>>& state_queue)
     : display(display), state_queue(state_queue), game_state_was_initialized(false) 

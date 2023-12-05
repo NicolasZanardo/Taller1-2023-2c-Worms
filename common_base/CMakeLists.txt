@@ -64,6 +64,9 @@ add_library(common
     networking.h
 
     constants.h
+    roulete.h
+    Game/game_clock.h
+    Game/game_clock.cpp
 )
 
 target_include_directories(common PUBLIC
