@@ -41,4 +41,6 @@ Documentación que use:
 - The double dispatch pattern (article 31 in Meyer's more effective C++)
 para la resolución de colisiones.
 
+Trabaje en MacOS de sistema operativo y con CLion de IDE:
 
+Justo tuve un cambio de laburo y cambio de compu, y me vino con algunas desventajas por la diferencia de arquitectura y ciertos soportes de librerias.
