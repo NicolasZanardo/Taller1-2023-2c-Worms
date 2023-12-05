@@ -13,6 +13,9 @@ public:
     ClientGameStateDTO() = default;
     ~ClientGameStateDTO() = default;
 
+    bool ended;
+    int winner;
+
     float width;
     float height;
     float water_level_height;
