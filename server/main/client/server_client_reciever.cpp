@@ -110,6 +110,12 @@ void Reciever::run(NetMessagePlayerChangedProjectileCountdown* msg) {
     }
 }
 
+void Reciever::run(NetMessagePlayerToggleCheat* msg) {
+    if (game_queue != nullptr) {
+        game_queue->push(this->msg);
+    }
+}
+
 void Reciever::run(NetMessageGameEnded *msg) {
     // TODO
     std::cout << "Termino la partida el id ganador: " << msg->winner_client_id << std::endl;

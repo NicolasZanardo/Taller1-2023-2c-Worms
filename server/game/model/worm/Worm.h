@@ -55,7 +55,6 @@ private:
 
     WormFootSensor foot_sensor;
     bool is_on_water;
-    int water_death_timer;
     bool finished_turn;
 
     Worm(

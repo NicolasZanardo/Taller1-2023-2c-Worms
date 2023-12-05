@@ -158,10 +158,4 @@ void WaitingLobby::removeAll() {
 // void WaitingLobby::run(NetMessageGameEnded* msg) {
 //     cerr << "Error: received GameEnded in lobby..";
 // }
-void WaitingLobby::run(NetMessageGameEnded* msg) {
-    cerr << "Error: received action in lobby..";
-}
 
-void WaitingLobby::run(NetMessagePlayerToggleCheat* msg) {
-    cerr << "Error: received action in lobby..";
-}

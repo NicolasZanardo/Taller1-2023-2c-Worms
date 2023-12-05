@@ -18,7 +18,6 @@ Worm::Worm(
     health(worm_cfg.health.default_health),
     foot_sensor(this),
     is_on_water(false),
-    water_death_timer(WATER_DEATH_TIME),
     finished_turn(false),
     body(nullptr)
     {}
@@ -135,26 +134,27 @@ void Worm::act(GameAction action) {
             body->jump_backwards();
             break;
         case GameAction::AIM_UP_INIT:
-            if (!has_done_an_ending_turn_action)
+            if (!finished_turn)
                 weapons_component->start_aiming_up();
             break;
         case GameAction::AIM_DOWN_INIT:
-            if (!has_done_an_ending_turn_action)
+            if (!finished_turn)
                 weapons_component->start_aiming_down();
             break;
         case GameAction::AIM_UP_STOPPED:
+            if (!finished_turn)
             weapons_component->stop_aiming_up();
             break;
         case GameAction::AIM_DOWN_STOPPED:
-            if (!has_done_an_ending_turn_action)
+            if (!finished_turn)
                 weapons_component->stop_aiming_down();
             break;
         case GameAction::WEAPON_PRIMARY_ACTION:
-            if (!has_done_an_ending_turn_action)
+            if (!finished_turn)
                 weapons_component->do_weapon_primary_action(X(), Y(), body->facing_direction_sign());
             break;
         case GameAction::WEAPON_SECONDARY_ACTION:
-            if (!has_done_an_ending_turn_action)
+            if (!finished_turn)
                 weapons_component->do_weapon_secondary_action(X(), Y(), body->facing_direction_sign());
             break;
     }
