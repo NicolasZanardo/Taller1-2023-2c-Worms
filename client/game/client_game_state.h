@@ -21,6 +21,7 @@ class ClientGameState {
     GameTextDisplay* turnMessage;
     GameTurnDisplayer* turnDisplay;
     GameTimer* timer;
+    GameTextDisplay* endingTitle;
 
     // std::unique_ptr<ClientGameStateDTO> game_state_dto;
     std::map<int, std::shared_ptr<WormEntity>> worms;
@@ -40,7 +41,8 @@ class ClientGameState {
 
     void load(const std::shared_ptr<ClientGameStateDTO>& state);
     void update(const std::shared_ptr<ClientGameStateDTO>& game_state_dto);
-    
+    void end(const std::shared_ptr<ClientGameStateDTO>& game_state_dto);
+
 };
 
 #endif // __PLAYER_STATE_H__

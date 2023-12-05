@@ -1,5 +1,4 @@
 #include "net_message_game_ended.h"
-
 NetMessageGameEnded::NetMessageGameEnded()
     : NetMessage(NET_MESSAGE_TYPE_GAME_ENDED)
 {}

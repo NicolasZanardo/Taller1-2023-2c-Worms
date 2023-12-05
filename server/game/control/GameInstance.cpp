@@ -69,7 +69,7 @@ GameState GameInstance::get_current_state() {
 int GameInstance::get_winner_client_id() {
     if (clients_worms.size() == 1) {
         return clients_worms.begin()->first; // Winner id
-    } else if (clients_worms.empty()) {
+    } else if (clients_worms.empty() || turn_system.get_game_remaining_time() <= 0) {
         return 0; // Tie
     } else {
         return -1; // Game Ended by error
@@ -164,7 +164,7 @@ void GameInstance::remove_from_clients_worms_map(int worm_id) {
     }
 }
 
-std::vector<int> GameInstance::client_turn_order(){
+std::vector<int> GameInstance::client_turn_order() {
     return turn_system.get_order();
 }
 

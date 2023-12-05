@@ -30,6 +30,7 @@ void ClientReceiver::run() {
 void ClientReceiver::run(NetMessageInitialGameState* msg) {
     auto game_state_dto = std::make_shared<ClientGameStateDTO>();
 
+    game_state_dto->ended = false;
     game_state_dto->width = msg->room_width;
     game_state_dto->height = msg->room_height;
     game_state_dto->water_level_height = msg->water_height_level;
@@ -43,6 +44,7 @@ void ClientReceiver::run(NetMessageInitialGameState* msg) {
 void ClientReceiver::run(NetMessageGameStateUpdate* msg) {
     auto game_state_dto = std::make_shared<ClientGameStateDTO>();
 
+    game_state_dto->ended = false; // Todo in constructor
     game_state_dto->current_turn_client_id = msg->current_turn_client_id;
     game_state_dto->current_turn_worm_id = msg->current_turn_worm_id;
     game_state_dto->focused_entity_id = msg->focused_entity_id;

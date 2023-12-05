@@ -24,7 +24,7 @@ private:
     GameInstance game;
     NetQueue game_queue;
     GameNetMessageBehaviour net_message_behaviour;
-    std::atomic_bool keep_executing;
+
 
     // Init methods
     void switch_clients_game_queue(std::list<Client *> clients);
@@ -47,6 +47,8 @@ public:
     void run() override;
 
     void stop() override;
+
+    bool has_ended();
 
 };
 

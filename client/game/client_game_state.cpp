@@ -5,13 +5,16 @@
 ClientGameState::~ClientGameState() {
     delete(timer);
     delete(turnDisplay);
+    delete(endingTitle);
 }
+
 ClientGameState::ClientGameState(GameDisplay &display)
     : display(display),
       turnMessage(nullptr),
       turnDisplay(nullptr),
       timer(nullptr),
-      worms(), 
+      endingTitle(nullptr),
+      worms(),
       my_client_id(-1) { }
 
 void ClientGameState::load(const std::shared_ptr<ClientGameStateDTO> & game) {
@@ -127,4 +130,29 @@ void ClientGameState::destroy_old_projectiles(std::vector<ProjectileDto> updated
             ++it;
         }
     }
+}
+
+void ClientGameState::end(const std::shared_ptr<ClientGameStateDTO> &game_state_dto) {
+    display.clear_screen();
+    if (game_state_dto->winner == -1)
+        return;
+
+    std::string end_wording;
+    if (game_state_dto->winner == my_client_id) {
+        end_wording = "Victory!";
+    } else if (game_state_dto->winner == 0) {
+        end_wording = "Tie!";
+    } else {
+        end_wording = "Defeat!";
+    }
+
+    turnMessage = display.new_text(
+        end_wording,
+        400,
+        400,
+        TextAlign::center,
+        TextLayer::UI,
+        TextType::title,
+        COLOR_BY_CLIENT[turnDisplay->client_order[my_client_id]]
+        );
 }

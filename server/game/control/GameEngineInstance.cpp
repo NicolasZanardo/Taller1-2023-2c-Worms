@@ -10,8 +10,7 @@ rate(60),
 game_clients(clients),
 game(xGravity, yGravity, scenario, clients, rate),
 game_queue(1000),
-net_message_behaviour(game_clients, game),
-keep_executing(true)
+net_message_behaviour(game_clients, game)
 {
     switch_clients_game_queue(clients);
     initial_broadcast(scenario, game.client_turn_order());
@@ -24,10 +23,10 @@ void GameEngineInstance::run() {
     int rest = 0, behind = 0, lost = 0;
     int it = 1;
 
-    while (keep_executing) {
+    while (Thread::keep_running_) {
         process_actions();
         if (game.update(it)) {
-            keep_executing = false;
+            Thread::keep_running_ = false;
             break;
         }
         // _maintain_connections();
@@ -57,12 +56,15 @@ void GameEngineInstance::run() {
     }
 
     broadcast_game_ended();
-    // TODO clients back to lobby?
-    // game_queue.close();
 }
 
 void GameEngineInstance::stop() {
-    // TODO Clients back to WaitingLobbyx
+    keep_running_ = false;
+    game_queue.close();
+}
+
+bool GameEngineInstance::has_ended() {
+    return !keep_running_;
 }
 
 void GameEngineInstance::process_actions() {
@@ -77,7 +79,6 @@ void GameEngineInstance::switch_clients_game_queue(std::list<Client *> clients) 
         client->switch_lobby(&game_queue);
     }
 }
-
 
 // Broadcasts
 void GameEngineInstance::initial_broadcast(const GameScenarioData &scenario, const std::vector<int>& order) {
@@ -140,6 +141,8 @@ void GameEngineInstance::broadcast_game_state_update() {
 }
 
 void GameEngineInstance::broadcast_game_ended() {
-    auto end_game_message = new NetMessageGameEnded(game.get_winner_client_id());
+    int winner_id = game.get_winner_client_id();
+    std::cout << "Winner was: " << winner_id << "\n";
+    auto end_game_message = new NetMessageGameEnded(winner_id);
     game_clients.send_all(end_game_message->share());
 }

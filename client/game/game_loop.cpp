@@ -33,6 +33,9 @@ void GameLoop::update(ClientGameState &game_state) {
         receive_new_state = true;
     }
     if (receive_new_state) {
+        if (game_state_dto->ended) {
+            game_state.end(game_state_dto);
+        }
         game_state.update(game_state_dto);
     }
 }

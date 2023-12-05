@@ -76,6 +76,9 @@ NetMessage* NetMessageFactory::recieve(Socket& channel) {
         case NET_MESSAGE_TYPE_START_GAME:
             inst = new NetMessageStartGame();
             break;
+        case NET_MESSAGE_TYPE_GAME_ENDED:
+            inst = new NetMessageStartGame();
+            break;
         default:
             break;
     }
