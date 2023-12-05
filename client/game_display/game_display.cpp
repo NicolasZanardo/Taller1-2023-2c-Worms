@@ -146,6 +146,7 @@ WormAnimationSet* GameDisplay::new_worm_animation(float size_scale, float angle)
         new GameSprite(camera, *resources.get_sprite("wjumpu"), WORM_SIZE*size_scale, WORM_SIZE*size_scale, angle),
         new GameSprite(camera, *resources.get_sprite("wfall") , WORM_SIZE*size_scale, WORM_SIZE*size_scale, angle),
         new GameSprite(camera, *resources.get_sprite("wdead") , WORM_SIZE*size_scale, WORM_SIZE*size_scale, angle),
+        new GameSprite(camera, *resources.get_sprite("wfall") , WORM_SIZE*size_scale, WORM_SIZE*size_scale, angle),
 
         new GameSprite(camera, *resources.get_sprite("w_bazooka")      , WORM_SIZE*size_scale, WORM_SIZE*size_scale, angle),
         new GameSprite(camera, *resources.get_sprite("w_mortar")       , WORM_SIZE*size_scale, WORM_SIZE*size_scale, angle),
