@@ -14,6 +14,8 @@ void Reciever::run() {
                 game_queue->push(msg);
         } catch (const std::exception& ex) {
             keep_running_ = false;
+            std::shared_ptr<NetMessage> msg( new NetMessageLeave(client_id));
+            game_queue->push(msg);
         }
     }
 }

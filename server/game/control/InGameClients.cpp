@@ -1,12 +1,12 @@
 #include "InGameClients.h"
 
-InGameClients::InGameClients(const std::list<Client *> &clients): clients() {
+InGameClients::InGameClients(const std::list<Client *> &clients) : clients() {
     for (const auto &client: clients) {
         this->clients.emplace(client->id, client);
     }
 }
 
-size_t InGameClients::size(){
+size_t InGameClients::size() {
     return clients.size();
 }
 
@@ -26,6 +26,17 @@ void InGameClients::remove(size_t clientId) {
             client->disconnect();
         } else {
             client->communicate(std::shared_ptr<NetMessage>(new NetMessageChat(clientId, "I'm leaving.")));
+        }
+    }
+}
+
+void InGameClients::reap_dead_clients() {
+    for (auto it = clients.begin(); it != clients.end();) {
+        if (!it->second->is_alive()) {
+            it->second->disconnect();
+            it = clients.erase(it);
+        } else {
+            ++it;
         }
     }
 }

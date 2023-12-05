@@ -1,14 +1,14 @@
 #include "GameNetMessageBehaviour.h"
 
 GameNetMessageBehaviour::GameNetMessageBehaviour(InGameClients &gameClients, GameInstance &game) :
-        gameClients(gameClients),
-        game(game) {}
+    game_clients(gameClients),
+    game(game) {}
 
 void GameNetMessageBehaviour::run(NetMessageChat *msg) {
     std::shared_ptr<NetMessage> message(new NetMessageChat(
         msg->client_id, msg->chat
     ));
-    gameClients.send_all(message);
+    game_clients.send_all(message);
 }
 
 void GameNetMessageBehaviour::run(NetMessageGameAction *msg) {
@@ -87,8 +87,7 @@ void GameNetMessageBehaviour::run(NetMessagePlayerChangedProjectileCountdown *ms
 }
 
 void GameNetMessageBehaviour::run(NetMessageLeave *msg) {
-    gameClients.remove(msg->client_id);
-    std::cout << "Kicking client " << msg->client_id << "\n";
+    game.on_client_disconnection(msg->client_id);
 }
 
 void GameNetMessageBehaviour::run(NetMessageInformID *msg) {

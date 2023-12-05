@@ -7,7 +7,7 @@
 
 class GameNetMessageBehaviour: public NetMessageBehaviour{
 
-    InGameClients& gameClients;
+    InGameClients& game_clients;
     GameInstance& game;
 
     void run(NetMessageChat* msg) override;

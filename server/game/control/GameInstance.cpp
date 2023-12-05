@@ -28,11 +28,11 @@ GameInstance::GameInstance(
     ) {
     assign_worms_to_clients(clients);
 
-    auto on_worm_death = [this](int worm_id) {
+    auto on_worm_destroyed = [this](int worm_id) {
         turn_system.remove(worm_id);
         remove_from_clients_worms_map(worm_id);
     };
-    instances_manager.register_worm_death_callback(on_worm_death);
+    instances_manager.register_worm_destroyed_callback(on_worm_destroyed);
 }
 
 
@@ -243,4 +243,12 @@ void GameInstance::change_projectile_count_down_for_current_worm(ProjectileCount
     perform_action_on_current_worm([count_down](auto worm) { worm->change_projectile_count_down(count_down); });
 }
 
-
+void GameInstance::on_client_disconnection(int client_id) {
+    auto it = clients_worms.find(client_id);
+    if (it != clients_worms.end()) {
+        for (const auto& worm : it->second) {
+            worm->Destroy();
+        }
+        clients_worms.erase(it);
+    }
+}

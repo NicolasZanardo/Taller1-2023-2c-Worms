@@ -30,9 +30,9 @@ void GameEngineInstance::run() {
             keep_executing = false;
             break;
         }
-        // _maintain_connections();
+        game_clients.reap_dead_clients( );
         broadcast_game_state_update();
-        // _synchronize()
+        // synchronize()
 
         // https://eldipa.github.io/book-of-gehn/articles/2019/10/23/Constant-Rate-Loop.html
         // Drop n rest
@@ -42,7 +42,6 @@ void GameEngineInstance::run() {
         rest = rate - std::ceil(diff.count());
 
         if (rest < 0) {
-            // fprintf(stderr, ">> Ciclo principal: pérdida de frame/s.\n");
             behind = -rest;
             // lost = rate + (behind - behind % rate);
             rest = rate - behind % rate;

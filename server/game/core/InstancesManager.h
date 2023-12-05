@@ -57,7 +57,7 @@ public:
 
     std::shared_ptr<Worm> get_worm(int id);
 
-    void register_worm_death_callback(std::function<void(int)> callback);
+    void register_worm_destroyed_callback(std::function<void(int)> callback);
 
     // Projectiles
     void instantiate_projectiles(std::unique_ptr<CShot> shot);

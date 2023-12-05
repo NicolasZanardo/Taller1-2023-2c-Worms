@@ -14,6 +14,7 @@ public:
 
     void send_all(std::shared_ptr<NetMessage> msg);
     void send(size_t clientId, std::shared_ptr<NetMessage> msg);
+    void reap_dead_clients();
 
     size_t size();
 

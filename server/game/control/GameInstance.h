@@ -64,6 +64,8 @@ public:
     std::vector<ExplosionDto>& get_explosions();
     int get_winner_client_id();
 
+    void on_client_disconnection(int client_id);
+
     void remove_from_clients_worms_map(int worm_id);
 
     bool update(const int it);

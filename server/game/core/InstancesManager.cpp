@@ -95,6 +95,6 @@ std::vector<std::shared_ptr<Projectile>>&InstancesManager::get_projectiles() {
     return projectiles;
 }
 
-void InstancesManager::register_worm_death_callback(std::function<void(int)> callback) {
+void InstancesManager::register_worm_destroyed_callback(std::function<void(int)> callback) {
     worm_death_callback = std::move(callback);
 }
