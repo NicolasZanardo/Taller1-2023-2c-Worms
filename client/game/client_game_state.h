@@ -20,7 +20,7 @@ class ClientGameState {
     
     GameTextDisplay* turnMessage;
     GameTurnDisplayer* turnDisplay;
-    GameTimer timer;
+    GameTimer* timer;
 
     // std::unique_ptr<ClientGameStateDTO> game_state_dto;
     std::map<int, std::shared_ptr<WormEntity>> worms;

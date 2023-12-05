@@ -3,13 +3,14 @@
 #include "constants.h"
 
 ClientGameState::~ClientGameState() {
+    delete(timer);
     delete(turnDisplay);
 }
 ClientGameState::ClientGameState(GameDisplay &display)
     : display(display),
       turnMessage(nullptr),
       turnDisplay(nullptr),
-      timer(display),
+      timer(nullptr),
       worms(), 
       my_client_id(-1) { }
 
@@ -24,6 +25,7 @@ void ClientGameState::load(const std::shared_ptr<ClientGameStateDTO> & game) {
     width = game->width;
     height = game->height;
 
+    timer = new GameTimer(display);
     turnDisplay = new GameTurnDisplayer(display, game->client_ids_turn_order, 0, 80);
     turnMessage = display.new_text("Es mi turno!", 400, 0, TextAlign::center, TextLayer::UI, TextType::title, COLOR_BY_CLIENT[turnDisplay->client_order[my_client_id]]);
     turnMessage->hidden(true);
@@ -56,7 +58,7 @@ void ClientGameState::load(const std::shared_ptr<ClientGameStateDTO> & game) {
 }
 
 void ClientGameState::update(const std::shared_ptr<ClientGameStateDTO> &game_state_dto) {
-    timer.update(game_state_dto->remaining_turn_time, game_state_dto->remaining_game_time);
+    timer->update(game_state_dto->remaining_turn_time, game_state_dto->remaining_game_time);
 
 
     for (auto &explosion: game_state_dto->explosions) {

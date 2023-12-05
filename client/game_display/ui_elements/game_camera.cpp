@@ -1,5 +1,6 @@
 #include "game_camera.h"
 #include <iostream>
+#include <math.h>
 
 GameCamera::GameCamera(float width, float height, float scale) :
     hlf_width(width / 2.0f),

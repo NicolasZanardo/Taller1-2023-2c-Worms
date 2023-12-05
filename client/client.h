@@ -1,11 +1,10 @@
 #ifndef __CLIENT_H__
 #define __CLIENT_H__
 
-#include <SDL2pp/SDL2pp.hh>
-#include <unistd.h>
 #include <memory>
-
+#include <unistd.h>
 #include "queue.h"
+#include "Command.h"
 #include "networking.h"
 #include "client_receiver.h"
 #include "client_sender.h"
@@ -36,5 +35,4 @@ private:
     ClientReceiver receiver;
     ClientSender sender;
 };
-
 #endif  // __CLIENT_H__

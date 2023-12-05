@@ -4,7 +4,6 @@ include_directories(${SDL2PP_INCLUDE_DIRS})
 add_executable (client_app
     client_main.cpp
     client.cpp client.h
-    # dumb_simple_client/dumb_client.cpp dumb_simple_client/dumb_client.h
 
     game_display/game_resources_manager.h game_display/game_resources_manager.cpp
     game_display/game_clock.h game_display/game_clock.cpp
@@ -22,6 +21,7 @@ add_executable (client_app
     game_display/ui_elements/game_sprite_info.h  game_display/ui_elements/game_sprite_info.cpp
     game_display/ui_elements/game_sprite.h       game_display/ui_elements/game_sprite.cpp
     game_display/ui_elements/game_worm_animation_set.h game_display/ui_elements/game_worm_animation_set.cpp
+    game_display/ui_elements/sprite_animation.h game_display/ui_elements/sprite_animation.cpp
     game_display/sprite_keys.h
 
     game_managment/client_receiver.cpp game_managment/client_receiver.h
@@ -32,7 +32,6 @@ add_executable (client_app
         game_managment/commands/ChangeWeaponCommand.h game_managment/commands/ChangeWeaponCommand.cpp
         game_managment/commands/ChangeProjectileCountDownCommand.h game_managment/commands/ChangeProjectileCountDownCommand.cpp
         game_managment/commands/GameActionCommand.h game_managment/commands/GameActionCommand.cpp
-    #game_ui/animation.cpp game_ui/animation.h
     game/client_game_state.cpp game/client_game_state.h
     game/game_turn_displayer.cpp game/game_turn_displayer.h
     game/game_loop.cpp game/game_loop.h
@@ -42,6 +41,7 @@ add_executable (client_app
 target_include_directories(client_app PUBLIC
     "${CMAKE_CURRENT_SOURCE_DIR}/"
     "${CMAKE_CURRENT_SOURCE_DIR}/game_managment"
+    "${CMAKE_CURRENT_SOURCE_DIR}/game_managment/commands"
     "${CMAKE_CURRENT_SOURCE_DIR}/game"
     "${CMAKE_CURRENT_SOURCE_DIR}/game_display"
     "${CMAKE_CURRENT_SOURCE_DIR}/game_display/worm"

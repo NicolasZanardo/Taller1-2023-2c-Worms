@@ -1,5 +1,4 @@
 #include "game_text_display.h"
-#include <SDL_ttf.h>
 using namespace SDL2pp;
 using namespace std;
 
@@ -62,7 +61,5 @@ void GameTextDisplay::render(Renderer& renderer, float delta_time) {
 }
 
 GameTextDisplay::~GameTextDisplay() {
-    if (texture != nullptr) {
-        delete(texture);
-    }
+    delete(texture);
 }

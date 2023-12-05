@@ -2,6 +2,7 @@
 #define _CLIENT_GAME_SPRITE_H_
 
 #include <string>
+#include <memory>
 #include <SDL2pp/SDL2pp.hh>
 #include "game_camera.h"
 #include "game_displayable.h"
@@ -19,8 +20,7 @@ class GameSprite : public Displayable {
     GameCamera* cam;
 
     public:
-    SpriteAnimation* animation;
-    ~GameSprite() override;
+    std::unique_ptr<SpriteAnimation> animation;
     explicit GameSprite(GameSpriteInfo& info, float width, float height, float angle);
     explicit GameSprite(GameCamera& cam, GameSpriteInfo& info, float width, float height, float angle);
 
@@ -33,6 +33,7 @@ class GameSprite : public Displayable {
     void set_pos(float x, float y);
     void image_flipped(bool image_is_flipped);
     void render(SDL2pp::Renderer& renderer, float delta_time) override;
+    
     friend class WormAnimationSet;
 };
 

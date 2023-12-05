@@ -1,14 +1,16 @@
 #ifndef _CLIENT_GAME_WORM_ANIMATION_SET_H_
 #define _CLIENT_GAME_WORM_ANIMATION_SET_H_
 
+#include <memory>
+#include <unordered_map>
 #include <SDL2pp/SDL2pp.hh>
 #include "networking.h"
 #include "game_displayable.h"
 #include "game_sprite.h"
 
 class WormAnimationSet : public Displayable {
-    std::unordered_map<MovementStateDto, GameSprite*> worm_state_sprite;
-    std::unordered_map<WeaponTypeDto, GameSprite*> aiming_idle_sprite;
+    std::unordered_map<MovementStateDto, std::unique_ptr<GameSprite>> worm_state_sprite;
+    std::unordered_map<WeaponTypeDto, std::unique_ptr<GameSprite>> aiming_idle_sprite;
     GameSprite* active_body;
     GameSprite* aiming_body;
     MovementStateDto state;
@@ -16,13 +18,13 @@ class WormAnimationSet : public Displayable {
     bool is_aiming;
 
     public:
-    ~WormAnimationSet() override;
     explicit WormAnimationSet(
         GameSprite* idle,
         GameSprite* moving,
         GameSprite* going_upwards,
         GameSprite* falling,
         GameSprite* dead,
+        GameSprite* sinking,
 
         GameSprite* aiming_bazooka,
         GameSprite* aiming_mortar,

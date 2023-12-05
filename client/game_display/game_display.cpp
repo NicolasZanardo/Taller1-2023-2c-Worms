@@ -3,16 +3,18 @@
 #include "game_sprite.h"
 #include "sprite_animation.h"
 
-GameDisplay::GameDisplay(Queue<std::shared_ptr<Command>> &command_queue, int fps) :
-        fps(fps), sdl(SDL_INIT_VIDEO), ttf(),
-        window("Worms",
+GameDisplay::GameDisplay(Queue<std::shared_ptr<Command>> &command_queue, int fps)
+        : fps(fps)
+        , sdl(SDL_INIT_VIDEO)
+        , ttf()
+        , window("Worms",
                SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
                UiUtils::WINDOW_WIDTH, UiUtils::WINDOW_HEIGHT,
-               SDL_WINDOW_RESIZABLE),
-        renderer(window, -1, SDL_RENDERER_ACCELERATED),
-        resources(renderer),
-        camera(UiUtils::WINDOW_WIDTH, UiUtils::WINDOW_HEIGHT, 30.0f),
-        event_handler(window, command_queue)
+               SDL_WINDOW_RESIZABLE)
+        , renderer(window, -1, SDL_RENDERER_ACCELERATED)
+        , resources(renderer)
+        , camera(UiUtils::WINDOW_WIDTH, UiUtils::WINDOW_HEIGHT, 30.0f)
+        , event_handler(window, command_queue)
 {
     // UI
     resources.add_texture("ui_bazooka"      , "resources/weapon_icons/bazooka.png");
@@ -56,37 +58,22 @@ GameDisplay::GameDisplay(Queue<std::shared_ptr<Command>> &command_queue, int fps
     resources.add_texture("p_dynamite"      , "resources/sprites/projectiles/dynamite.png"     ,w,h,xoff,yoff,sep, 90,360);
 }
 
-GameDisplay::~GameDisplay() {
-    for (auto spr: images) {
-        delete (spr);
-    }
-
-    for (auto spr: foreground) {
-        delete (spr);
-    }
-    
-    for (auto spr: user_interface) {
-        delete (spr);
-    }
-
-    for (auto spr: toremove) {
-        delete (spr);
-    }
-}
-
 void GameDisplay::update(float delta_time) {
     clean_removed_sprites();
 
     camera.render(renderer, delta_time);
     renderer.Clear();
-        for (auto spr: images)
-            spr->render(renderer, delta_time);
+        for (const auto& ptr : images) {
+            ptr->render(renderer, delta_time);
+        }
 
-        for (auto spr: foreground)
-            spr->render(renderer, delta_time);
+        for (const auto& ptr : foreground) {
+            ptr->render(renderer, delta_time);
+        }
 
-        for (auto spr: user_interface)
-            spr->render(renderer, delta_time);
+        for (const auto& ptr : user_interface) {
+            ptr->render(renderer, delta_time);
+        }
     renderer.Present();
 
     clean_removed_sprites();
@@ -97,28 +84,16 @@ void GameDisplay::remove(Displayable* item) {
 }
 void GameDisplay::clean_removed_sprites() {
     for (auto item : toremove) {
-        images.remove_if([item](Displayable* displayable) {
-            if (displayable == item) {
-                delete(item);
-                return true;
-            }
-            return false;
+        images.remove_if([item](const auto& displayable) {
+            return displayable.get() == item;
         });
 
-        foreground.remove_if([item](Displayable* displayable) {
-            if (displayable == item) {
-                delete(item);
-                return true;
-            }
-            return false;
+        foreground.remove_if([item](const auto& displayable) {
+            return displayable.get() == item;
         });
 
-        user_interface.remove_if([item](Displayable* displayable) {
-            if (displayable == item) {
-                delete(item);
-                return true;
-            }
-            return false;
+        user_interface.remove_if([item](const auto& displayable) {
+            return displayable.get() == item;
         });
     }
     toremove.clear();
@@ -146,6 +121,7 @@ WormAnimationSet* GameDisplay::new_worm_animation(float size_scale, float angle)
         new GameSprite(camera, *resources.get_sprite("wjumpu"), WORM_SIZE*size_scale, WORM_SIZE*size_scale, angle),
         new GameSprite(camera, *resources.get_sprite("wfall") , WORM_SIZE*size_scale, WORM_SIZE*size_scale, angle),
         new GameSprite(camera, *resources.get_sprite("wdead") , WORM_SIZE*size_scale, WORM_SIZE*size_scale, angle),
+        new GameSprite(camera, *resources.get_sprite("wfall") , WORM_SIZE*size_scale, WORM_SIZE*size_scale, angle),
 
         new GameSprite(camera, *resources.get_sprite("w_bazooka")      , WORM_SIZE*size_scale, WORM_SIZE*size_scale, angle),
         new GameSprite(camera, *resources.get_sprite("w_mortar")       , WORM_SIZE*size_scale, WORM_SIZE*size_scale, angle),
@@ -203,9 +179,14 @@ void GameDisplay::new_vfx(const std::string& spritekey, float x, float y, float 
     sprite->set_pos(x,y);
 
     auto vfx = new VFXAnimation(info);
-    delete(sprite->animation);
-    sprite->animation = vfx;
+    sprite->animation = std::unique_ptr<SpriteAnimation>(vfx);
     vfx->setup(*this, *sprite);
 
     images.emplace_back(sprite);
+}
+
+void GameDisplay::clear_screen() {
+    //images.clear();
+    foreground.clear();
+    user_interface.clear();
 }

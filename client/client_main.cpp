@@ -14,9 +14,6 @@ int main(int argc, char* argv[]) {
             return 1;
         }
 
-        // DumbClient client(argv[1], argv[2]);
-        // client.start();
-        
         Client client(argv[1], argv[2]);
         client.execute();
 

@@ -6,6 +6,7 @@
 #include "Game/beamDto.h"
 #include "Game/ProjectileDto.h"
 #include "Game/eventDto.h"
+#include "Game/ExplosionDto.h"
 
 class ClientGameStateDTO {
 public:
