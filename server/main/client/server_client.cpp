@@ -30,8 +30,11 @@ int Client::getID() const {
 }
 
 void Client::switch_lobby(NetQueue* new_game_queue) {
+    std::cout << "1 -- id: " << this->id << '\n';
     game_queue = new_game_queue;
+    std::cout << "2\n";
     msg_reciever.switch_lobby(new_game_queue);
+    std::cout << "3\n";
 }
 
 void Client::communicate(std::shared_ptr<NetMessage> net_message) {

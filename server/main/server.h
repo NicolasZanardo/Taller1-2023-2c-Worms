@@ -6,9 +6,11 @@
 #include <string>
 #include <vector>
 #include <memory>
+
 #include "waiting_lobby.h"
 #include "server_client_accepter.h"
 #include "games_manager.h"
+
 class Server {
     GamesManager games_manager;
     WaitingLobby lobby;
@@ -20,14 +22,15 @@ class Server {
 public:
     explicit Server(const char* servname);
     ~Server();
+    
     void execute();
 
-    void handle_input();
-    void kick(std::vector<std::string>&);
-    void chat(std::vector<std::string>&);
-    void start(std::vector<std::string>&);
-    void send_test_message(std::vector<std::string>&);
-    void error(std::vector<std::string>&, std::string&);
+    // void handle_input();
+    // void kick(std::vector<std::string>&);
+    // void chat(std::vector<std::string>&);
+    // void start(std::vector<std::string>&);
+    // void send_test_message(std::vector<std::string>&);
+    // void error(std::vector<std::string>&, std::string&);
 
 private:
     Server() = delete;
