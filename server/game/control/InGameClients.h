@@ -3,7 +3,7 @@
 
 #include <unordered_map>
 #include <list>
-#include "client.h"
+#include "client/server_client.h"
 
 class InGameClients {
 

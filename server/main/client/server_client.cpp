@@ -1,11 +1,14 @@
-#include "client.h"
+#include "server_client.h"
 #include <iostream>
 
-Client::Client(const int id, Socket skt) :
+#include "../lobby/games_manager.h"
+
+Client::Client(const int id, Socket skt, GamesManager& games_manager) :
+    games_manager(&games_manager),
     channel(std::move(skt)),
     send_queue(60),
     game_queue(nullptr),
-    msg_reciever(id, &this->channel),
+    msg_reciever(id, *this, &this->channel, this->send_queue, *(this->games_manager)),
     msg_sender(id, &this->channel, &this->send_queue),
     id(id)
     {
@@ -20,6 +23,10 @@ const bool Client::is_alive() const {
 Client::~Client() {
     if (is_alive())
         disconnect();
+}
+
+int Client::getID() const {
+    return this->id;
 }
 
 void Client::switch_lobby(NetQueue* new_game_queue) {

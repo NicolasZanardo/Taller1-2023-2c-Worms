@@ -11,6 +11,14 @@
 #include "net_message_player_changed_projectile_countdown.h"
 #include "net_message_player_toggle_cheat.h"
 
+#include "net_message_create_game.h"
+#include "net_message_create_game_response.h"
+#include "net_message_list_games.h"
+#include "net_message_list_games_response.h"
+#include "net_message_join_game.h"
+#include "net_message_join_game_response.h"
+#include "net_message_start_game.h"
+
 NetMessage* NetMessageFactory::recieve(Socket& channel) {
     NetProtocolInterpreter interpreter(channel);
     uint16_t type = interpreter.read_byte();
@@ -46,6 +54,27 @@ NetMessage* NetMessageFactory::recieve(Socket& channel) {
             break;
         case NET_MESSAGE_TYPE_PLAYER_TOGGLE_CHEAT:
             inst = new NetMessagePlayerToggleCheat();
+            break;
+        case NET_MESSAGE_TYPE_CREATE_GAME:
+            inst = new NetMessageCreateGame();
+            break;
+        case NET_MESSAGE_TYPE_CREATE_GAME_RESPONSE:
+            inst = new NetMessageCreateGameResponse();
+            break;
+        case NET_MESSAGE_TYPE_LIST_GAMES:
+            inst = new NetMessageListGames();
+            break;
+        case NET_MESSAGE_TYPE_LIST_GAMES_RESPONSE:
+            inst = new NetMessageListGamesResponse();
+            break;
+        case NET_MESSAGE_TYPE_JOIN_GAME:
+            inst = new NetMessageJoinGame();
+            break;
+        case NET_MESSAGE_TYPE_JOIN_GAME_RESPONSE:
+            inst = new NetMessageJoinGameResponse();
+            break;
+        case NET_MESSAGE_TYPE_START_GAME:
+            inst = new NetMessageStartGame();
             break;
         default:
             break;

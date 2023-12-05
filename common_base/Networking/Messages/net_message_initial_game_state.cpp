@@ -1,4 +1,5 @@
 #include "net_message_initial_game_state.h"
+#include <iostream>
 
 NetMessageInitialGameState::NetMessageInitialGameState()
     : NetMessage(NET_MESSAGE_TYPE_INITIAL_STATE) {}

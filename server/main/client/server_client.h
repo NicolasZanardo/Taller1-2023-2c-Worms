@@ -2,10 +2,15 @@
 #define SERVER_CLIENT_H_
 
 #include "networking.h"
-#include "client_reciever.h"
-#include "client_sender.h"
+#include "server_client_reciever.h"
+#include "server_client_sender.h"
+
+#include "../lobby/games_manager.h"
+
+class GamesManager;
 
 class Client {
+    GamesManager* games_manager;
     NetChannel channel;
     NetQueue  send_queue;
     NetQueue* game_queue;
@@ -14,9 +19,10 @@ class Client {
 
     public:
     const int id;
-    Client(const int id, Socket skt);
+    Client(const int id, Socket skt, GamesManager& games_manager);
 
     const bool is_alive() const;
+    int getID() const;
     void switch_lobby(NetQueue* game_queue);
     void communicate(std::shared_ptr<NetMessage> net_message);
     void disconnect();

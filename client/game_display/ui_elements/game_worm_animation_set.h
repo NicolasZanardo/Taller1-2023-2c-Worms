@@ -23,6 +23,7 @@ class WormAnimationSet : public Displayable {
         GameSprite* going_upwards,
         GameSprite* falling,
         GameSprite* dead,
+        GameSprite* sinking,
 
         GameSprite* aiming_bazooka,
         GameSprite* aiming_mortar,

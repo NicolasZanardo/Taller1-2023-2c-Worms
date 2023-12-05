@@ -17,6 +17,7 @@ WormAnimationSet::WormAnimationSet(
         GameSprite* going_upwards,
         GameSprite* falling,
         GameSprite* dead,
+        GameSprite* sinking,
 
         GameSprite* aiming_bazooka,
         GameSprite* aiming_mortar,
@@ -25,12 +26,12 @@ WormAnimationSet::WormAnimationSet(
         GameSprite* aiming_dynamite
     ) :
     worm_state_sprite({
-{WormStateDto::IDLE          , idle },
-{WormStateDto::MOVING        , moving },
-{WormStateDto::JUMPING ,       going_upwards },
-{WormStateDto::FALLING       , falling },
-{WormStateDto::DEAD          , dead },
-{WormStateDto::SINKING       , falling } // TODO for now same as falling
+{ WormStateDto::IDLE          , idle },
+{ WormStateDto::MOVING        , moving },
+{ WormStateDto::JUMPING , going_upwards },
+{ WormStateDto::FALLING       , falling },
+{ WormStateDto::DEAD          , dead },
+{ WormStateDto::SINKING       , sinking }
     }),
     aiming_idle_sprite({
 { WeaponTypeDto::BAZOOKA       , aiming_bazooka },

@@ -4,8 +4,7 @@
 #include <map>
 #include <string>
 #include <cstdint>
-#include <SDL2pp/SDL2pp.hh>
-#include "game_sprite_info.h"
+#include "ui_elements/game_sprite_info.h"
 
 enum TextType { title, gametext };
 class ResourceManager {

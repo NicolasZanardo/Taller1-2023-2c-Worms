@@ -55,7 +55,8 @@ private:
 
     WormFootSensor foot_sensor;
     bool is_on_water;
-    bool has_done_an_ending_turn_action;
+    int water_death_timer;
+    bool finished_turn;
 
     Worm(
         size_t id,
@@ -68,28 +69,21 @@ public:
     WormDto toWormDto(size_t client_id);
 
     float X() const;
-
     float Y() const;
-
     bool is_still() const;
-
     b2Body *B2Body() const;
-
     std::shared_ptr<WormBody> get_body() const;
-
     WormFootSensor *get_foot_sensor();
 
     void update(int it, const int rate) override;
-
     void on_turn_ended() override;
-
-    void act(GameAction action);
 
     bool has_done_ending_turn_action() const;
 
+    void act(GameAction action);
+
     // Movement
     void on_sensed_one_new_ground_contact() const;
-
     void on_sensed_one_ground_contact_ended() const;
 
     void sink();
@@ -98,12 +92,10 @@ public:
 
     // Weapon
     void change_weapon(WeaponTypeDto weapon);
-
     void change_projectile_count_down(ProjectileCountDown time);
 
     // health
     void adjust_health_to(float amount);
-
     void receive_damage(float damage);
 
     // Cheat

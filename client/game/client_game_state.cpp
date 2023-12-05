@@ -1,5 +1,5 @@
 #include "client_game_state.h"
-#include "ui_utils.h"
+#include "utils_constants.h"
 #include "constants.h"
 
 ClientGameState::~ClientGameState() {
@@ -14,15 +14,19 @@ ClientGameState::ClientGameState(GameDisplay &display)
       my_client_id(-1) { }
 
 void ClientGameState::load(const std::shared_ptr<ClientGameStateDTO> & game) {
-    std::cout << "Loading scenario size("
+/*    std::cout << "Loading scenario size("
               << game->width << ","
               << game->height << ")"
               << "   Water level: " << game->water_level_height
               << "   Beams: " << game->beams.size()
-              << "   Worms: " << game->worms.size() << "\n";
+              << "   Worms: " << game->worms.size()
+              << "With mi id as: " << this->my_client_id << "\n";*/
+
 
     width = game->width;
     height = game->height;
+
+
 
     turnDisplay = new GameTurnDisplayer(display, game->client_ids_turn_order, 0, 80);
     turnMessage = display.new_text("Es mi turno!", 400, 0, TextAlign::center, TextLayer::UI, TextType::title, COLOR_BY_CLIENT[turnDisplay->client_order[my_client_id]]);

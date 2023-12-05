@@ -18,7 +18,10 @@ Worm::Worm(
     health(worm_cfg.health.default_health),
     foot_sensor(this),
     is_on_water(false),
-    has_done_an_ending_turn_action(false) {}
+    water_death_timer(WATER_DEATH_TIME),
+    finished_turn(false),
+    body(nullptr)
+    {}
 
 WormDto Worm::toWormDto(size_t client_id) {
     return WormDto(
@@ -76,11 +79,11 @@ WormFootSensor *Worm::get_foot_sensor() {
 void Worm::on_turn_ended() {
     body->on_turn_ended();
     weapons_component->on_turn_ended();
-    has_done_an_ending_turn_action = false;
+    finished_turn = false;
 }
 
 bool Worm::has_done_ending_turn_action() const {
-    return has_done_an_ending_turn_action;
+    return finished_turn;
 }
 
 // Movement
@@ -102,7 +105,7 @@ void Worm::sink() {
 std::unique_ptr<CShot> Worm::shot_component() {
     auto c_shot = weapons_component->shot_component();
     if (c_shot) {
-        has_done_an_ending_turn_action = true;
+        finished_turn = true;
     }
     return c_shot;
 }
