@@ -41,4 +41,5 @@ const bool NetChannel::is_open() const {
 void NetChannel::dissconect() {
     socket.shutdown(2);
     socket.close();
+    socket_open = false;
 }

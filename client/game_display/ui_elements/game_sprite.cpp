@@ -13,10 +13,6 @@ inline float normalize_angle(float angle, float min, float max) {
     return angle - (float)(angle > 360) * 360.0f;
 }
 
-GameSprite::~GameSprite() {
-    delete(animation);
-}
-
 GameSprite::GameSprite(GameCamera& cam, GameSpriteInfo& info, float width, float height, float angle) :
     GameSprite(info, width, height, angle) { this->cam = &cam; }
 

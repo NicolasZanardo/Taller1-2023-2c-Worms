@@ -23,8 +23,13 @@ void Client::execute() {
     GameLoop game_loop(display, state_queue, lobby_settings.game_state_dto, game_state);
     game_loop.execute(display.event_handler, game_state);
 
-    command_queue.close();
     state_queue.close();
+    command_queue.close();
+
+    receiver.stop();
+    sender.stop();
+
+    channel.dissconect();
 
     receiver.join();
     sender.join();

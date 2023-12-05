@@ -17,10 +17,13 @@ void GameLoop::execute(EventHandler &event_handler, ClientGameState &game_state)
 
     while (running) {
         running = event_handler.handleEvents();
-        update(game_state);
-        display.update(clock.delta());
-        clock.sync();
+        if (running) {
+            update(game_state);
+            display.update(clock.delta());
+            clock.sync();
+        }
     }
+    display.clear_screen();
 }
 
 void GameLoop::update(ClientGameState &game_state) {

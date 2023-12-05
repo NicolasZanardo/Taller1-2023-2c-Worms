@@ -6,7 +6,6 @@
 #include <SDL2pp/SDL2pp.hh>
 #include "game_camera.h"
 #include "game_displayable.h"
-#include "game_sprite_info.h"
 
 enum TextAlign { left, center, right };
 enum TextLayer { UI, ingame };
