@@ -118,7 +118,7 @@ void GameInstance::assign_worms_to_clients(const std::list<Client *> &clients) {
         // Adjust health for worms of players with fewer worms
         if (extraWorms > 0) {
             for (auto &worm: assignedSubset) {
-                worm->adjust_health_to(worms_cfg.front().health.default_health);
+                worm->adjust_health_to(worms_cfg.front().health.disadvantage_health);
             }
             --extraWorms;
         }
