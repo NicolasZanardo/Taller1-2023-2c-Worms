@@ -39,6 +39,7 @@ class Reciever : public Thread, public NetMessageBehaviour {
     void run(NetMessageGameAction* msg) override;
     void run(NetMessagePlayerChangedWeapon* msg) override;
     void run(NetMessagePlayerChangedProjectileCountdown* msg) override;
+    void run(NetMessagePlayerToggleCheat* msg) override;
     void run(NetMessageGameEnded* msg) override;
 
     void run(NetMessageCreateGame* msg) override;

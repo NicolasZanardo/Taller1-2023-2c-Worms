@@ -40,6 +40,8 @@ add_executable(client_app
     game/game_turn_displayer.cpp game/game_turn_displayer.h
     game/game_loop.cpp game/game_loop.h
     game/utils_constants.h game/utils_constants.cpp
+        game_managment/commands/ToggleCheatCommand.h
+        game_managment/commands/ToggleCheatCommand.cpp
 )
 
 target_include_directories(client_app PUBLIC

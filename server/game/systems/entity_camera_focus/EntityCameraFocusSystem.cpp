@@ -30,7 +30,7 @@ void EntityCameraFocusSystem::update(
     if (!worms.empty()) {
         std::shared_ptr<Worm> fastest_worm = worms.cbegin()->second;
         for (const auto &[_, worm]: worms) {
-            if (worm->IsActive() && worm->body->is_moving_faster_than(fastest_worm->body)) {
+            if (worm->IsActive() && worm->get_body()->is_moving_faster_than(fastest_worm->get_body())) {
                 fastest_worm = worm;
             }
         }

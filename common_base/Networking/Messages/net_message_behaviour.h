@@ -11,6 +11,7 @@
 #define NET_MESSAGE_TYPE_PLAYER_CHANGED_WEAPON 7
 #define NET_MESSAGE_TYPE_PLAYER_CHANGED_PROJECTILE_COUNTDOWN 8
 #define NET_MESSAGE_TYPE_GAME_ENDED 9
+#define NET_MESSAGE_TYPE_PLAYER_TOGGLE_CHEAT 10
 
 #define NET_MESSAGE_TYPE_CREATE_GAME 100
 #define NET_MESSAGE_TYPE_CREATE_GAME_RESPONSE 101
@@ -30,6 +31,7 @@ class NetMessageGameAction;
 class NetMessagePlayerChangedWeapon;
 class NetMessagePlayerChangedProjectileCountdown;
 class NetMessageGameEnded;
+class NetMessagePlayerToggleCheat;
 
 class NetMessageCreateGame;
 class NetMessageCreateGameResponse;
@@ -51,6 +53,7 @@ public:
     virtual void run(NetMessagePlayerChangedWeapon* msg) = 0;
     virtual void run(NetMessagePlayerChangedProjectileCountdown* msg) = 0;
     virtual void run(NetMessageGameEnded* msg) = 0;
+    virtual void run(NetMessagePlayerToggleCheat* msg) = 0;
 
     virtual void run(NetMessageCreateGame* msg) = 0;
     virtual void run(NetMessageCreateGameResponse* msg) = 0;

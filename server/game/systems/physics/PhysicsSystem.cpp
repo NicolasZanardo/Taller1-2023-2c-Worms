@@ -3,7 +3,6 @@
 #include "OnExplosionWormsQuery.h"
 
 const float DEG_TO_RAD = M_PI / 180.0f;
-const float RAD_TO_DEG = 180.0f / M_PI;
 
 PhysicsSystem::PhysicsSystem(
     int rate,
@@ -27,10 +26,10 @@ void PhysicsSystem::update() {
 }
 
 std::unique_ptr<WormBody> PhysicsSystem::spawn_worm(
-    WormScenarioData worm,
     const std::shared_ptr<Worm> &worm_model,
+    WormScenarioData worm,
     WormCfg &worms_cfg
-) {
+    ) {
     // Body def
     b2BodyDef bodyDef;
     bodyDef.type = b2_dynamicBody;
