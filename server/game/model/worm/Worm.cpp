@@ -60,10 +60,6 @@ bool Worm::is_still() const {
     return body->is_still();
 }
 
-bool Worm::is_alive() const {
-    return !is_dead;
-}
-
 b2Body* Worm::B2Body() const {
     return body->B2Body();
 }

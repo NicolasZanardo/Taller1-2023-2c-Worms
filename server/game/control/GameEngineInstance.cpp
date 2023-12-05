@@ -83,7 +83,7 @@ void GameEngineInstance::switch_clients_game_queue(std::list<Client *> clients) 
 
 void GameEngineInstance::initial_broadcast(const GameScenarioData &scenario, const std::vector<int>& order) {
     broadcast_initial_game_state(scenario, order);
-    std::this_thread::sleep_for(std::chrono::seconds(5));
+    std::this_thread::sleep_for(std::chrono::seconds(2));
     broadcast_game_state_update();
 }
 
@@ -113,7 +113,6 @@ void GameEngineInstance::broadcast_initial_game_state(const GameScenarioData &sc
 }
 
 void GameEngineInstance::broadcast_game_state_update() {
-    // std::cout << "PREV TO NET MESSAGE\n";
     GameState state = game.get_current_state();
     auto msg = new NetMessageGameStateUpdate(
         state.current_turn_client_id,
