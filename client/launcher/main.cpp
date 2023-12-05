@@ -28,7 +28,7 @@ int main(int argc, char* argv[]) {
 
         std::unique_ptr<NetMessage> received_id_msg(net_channel.read_message());
         received_id_msg->execute(lobby_settings);
-        
+
         // Qt.
         QApplication a(argc, argv);
         Launcher w(net_channel, lobby_settings);

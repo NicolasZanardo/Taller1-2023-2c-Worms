@@ -3,7 +3,9 @@
 
 #include <unistd.h>
 #include <memory>
+#include <unistd.h>
 #include "queue.h"
+#include "Command.h"
 #include "networking.h"
 #include "launcher/client_lobby_settings.h"
 #include "game_display/game_display.h"

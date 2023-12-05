@@ -3,6 +3,8 @@
 
 #include <list>
 #include <string>
+#include <memory>
+#include <SDL2pp/SDL2pp.hh>
 #include "queue.h"
 #include "game_resources_manager.h"
 #include "Game/GameAction.h"
@@ -19,15 +21,14 @@ class GameDisplay {
     SDL2pp::Window window;
     SDL2pp::Renderer renderer;
     ResourceManager resources;
-    std::list<Displayable*> images;
-    std::list<Displayable*> foreground;
-    std::list<Displayable*> user_interface;
+    std::list<std::unique_ptr<Displayable>> images;
+    std::list<std::unique_ptr<Displayable>> foreground;
+    std::list<std::unique_ptr<Displayable>> user_interface;
     std::list<Displayable*> toremove;
     public:
     GameCamera camera;
     EventHandler event_handler;
     GameDisplay(Queue<std::shared_ptr<Command>> &command_queue, int fps);
-    ~GameDisplay();
 
     void update(float delta_time);
     void remove(Displayable* item);
@@ -36,6 +37,7 @@ class GameDisplay {
     GameTextDisplay* new_text(const std::string& text, float x, float y, TextAlign align, TextLayer layer, TextType type, int color = 0xFFFFFF);
     GameSprite* new_sprite(const std::string& spritekey, float width, float height, float angle = 0);
     void new_vfx(const std::string& spritekey, float x, float y, float width, float height, float angle = 0);
+    void clear_screen();
 
     private:
     void clean_removed_sprites();

@@ -1,15 +1,5 @@
 #include "game_worm_animation_set.h"
 #include "sprite_animation.h"
-#include <iostream>
-
-WormAnimationSet::~WormAnimationSet() {
-    for (auto [key, val] : worm_state_sprite) {
-        delete(val);
-    }
-    for (auto [key, val] : aiming_idle_sprite) {
-        delete(val);
-    }
-}
 
 WormAnimationSet::WormAnimationSet(
         GameSprite* idle,
@@ -25,36 +15,36 @@ WormAnimationSet::WormAnimationSet(
         GameSprite* aiming_hgrenade,
         GameSprite* aiming_dynamite
     ) :
-    worm_state_sprite({
-{ WormStateDto::IDLE          , idle },
-{ WormStateDto::MOVING        , moving },
-{ WormStateDto::JUMPING , going_upwards },
-{ WormStateDto::FALLING       , falling },
-{ WormStateDto::DEAD          , dead },
-{ WormStateDto::SINKING       , sinking }
-    }),
-    aiming_idle_sprite({
-{ WeaponTypeDto::BAZOOKA       , aiming_bazooka },
-{ WeaponTypeDto::MORTAR        , aiming_mortar },
-{ WeaponTypeDto::GREEN_GRENADE , aiming_green_granade },
-{ WeaponTypeDto::HOLY_GRENADE , aiming_hgrenade },
-{ WeaponTypeDto::DYNAMITE , aiming_dynamite }
-    }),
+    worm_state_sprite(),
+    aiming_idle_sprite(),
     active_body(falling), 
     aiming_body(aiming_bazooka), 
     state(WormStateDto::FALLING),
     weapon(WeaponTypeDto::BAZOOKA),
     is_aiming(false)
     {
-        for (auto [key, val] : aiming_idle_sprite)
+        worm_state_sprite[WormStateDto::IDLE]          = std::unique_ptr<GameSprite>(idle);
+        worm_state_sprite[WormStateDto::MOVING]        = std::unique_ptr<GameSprite>(moving);
+        worm_state_sprite[WormStateDto::JUMPING] = std::unique_ptr<GameSprite>(going_upwards);
+        worm_state_sprite[WormStateDto::FALLING]       = std::unique_ptr<GameSprite>(falling);
+        worm_state_sprite[WormStateDto::DEAD]          = std::unique_ptr<GameSprite>(dead);
+        worm_state_sprite[WormStateDto::SINKING]       = std::unique_ptr<GameSprite>(sinking);
+
+        aiming_idle_sprite[WeaponTypeDto::BAZOOKA]        = std::unique_ptr<GameSprite>(aiming_bazooka);
+        aiming_idle_sprite[WeaponTypeDto::MORTAR]         = std::unique_ptr<GameSprite>(aiming_mortar);
+        aiming_idle_sprite[WeaponTypeDto::GREEN_GRENADE]  = std::unique_ptr<GameSprite>(aiming_green_granade);
+        aiming_idle_sprite[WeaponTypeDto::HOLY_GRENADE]   = std::unique_ptr<GameSprite>(aiming_hgrenade);
+        aiming_idle_sprite[WeaponTypeDto::DYNAMITE]       = std::unique_ptr<GameSprite>(aiming_dynamite);
+
+        for (const auto& [key, val] : aiming_idle_sprite)
             val->set_angle_range(-90,90);
     }
 
 void WormAnimationSet::update_state(WormStateDto newstate) {
     if (state == newstate)
         return;
-    
-    auto newsprite = worm_state_sprite[newstate];
+
+    GameSprite* newsprite = worm_state_sprite[newstate].get();
 
     newsprite->x = active_body->x;
     newsprite->y = active_body->y;
@@ -74,7 +64,7 @@ void WormAnimationSet::update_weapon(WeaponTypeDto newweapon) {
     if (weapon == newweapon)
         return;
 
-    auto newsprite = aiming_idle_sprite[newweapon];
+    GameSprite* newsprite = aiming_idle_sprite[newweapon].get();
 
     newsprite->x = aiming_body->x;
     newsprite->y = aiming_body->y;

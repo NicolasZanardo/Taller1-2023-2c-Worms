@@ -105,7 +105,8 @@ bool EventHandler::handleEvents() {
             break;
         case SDL_QUIT:
             std::cout << "Quit :(" << std::endl;
-        return false;
+            return false;
+            
         default:
             break;
     }

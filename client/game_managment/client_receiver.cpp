@@ -93,9 +93,10 @@ void ClientReceiver::run(NetMessagePlayerChangedProjectileCountdown* msg) {
 }
 
 void ClientReceiver::run(NetMessageGameEnded* msg) {
-    // TODO VICTORY/TIE/DEFEAT SCREEN flow
+    auto game_state_dto = std::make_shared<ClientGameStateDTO>();
+    game_state_dto->ended = true;
+    game_state_dto->winner = msg->winner_client_id;
+    this->state_queue.push(game_state_dto);
 }
 
-void ClientReceiver::run(NetMessagePlayerToggleCheat* msg) {
-    // TODO VICTORY/TIE/DEFEAT SCREEN flow
-}
+void ClientReceiver::run(NetMessagePlayerToggleCheat* msg) {}
