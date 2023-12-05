@@ -318,6 +318,20 @@
         </widget>
        </item>
        <item>
+        <widget class="QPushButton" name="pushButtonWaitStart">
+         <property name="font">
+          <font>
+           <family>Monospace</family>
+           <pointsize>12</pointsize>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>Ir a Sala de Espera</string>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="QPushButton" name="pushButtonStart">
          <property name="font">
           <font>

@@ -12,7 +12,7 @@
 //       display(command_queue, CLIENT_FPS), receiver(state_queue, channel), sender(command_queue, channel) {}
 
 Client::Client(NetChannel& net_channel, ClientLobbySettings& lobby_settings)
-    : channel(channel)
+    : channel(net_channel)
     , lobby_settings(lobby_settings)
     , display(command_queue, CLIENT_FPS)
     , receiver(state_queue, channel)
@@ -21,10 +21,15 @@ Client::Client(NetChannel& net_channel, ClientLobbySettings& lobby_settings)
 void Client::execute() {
     std::cout << "Ejecutando SDL\n";
     ClientGameState game_state(display);
+    std::cout << "Ejecutando SDL2\n";
     game_state.my_client_id = this->lobby_settings.id;
+    std::cout << "Ejecutando SDL3\n";
     display.camera.set_pos(0, 0);
+    std::cout << "Ejecutando SDL4\n";
     receiver.switch_game(game_state);
+    std::cout << "Ejecutando SDL5\n";
     sender.switch_game(game_state);
+    std::cout << "Ejecutando SDL6\n";
 
 
     receiver.start();

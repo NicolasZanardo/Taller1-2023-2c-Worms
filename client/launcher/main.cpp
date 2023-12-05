@@ -30,15 +30,13 @@ int main(int argc, char* argv[]) {
         std::unique_ptr<NetMessage> received_id_msg(net_channel.read_message());
         received_id_msg->execute(lobby_settings);
         
+        // Qt.
         QApplication a(argc, argv);
         Launcher w(net_channel, lobby_settings);
         w.show();
         a.exec();
 
-        // ClientLobby client_lobby(net_channel, lobby_settings);
-        // client_lobby.execute();
-        
-            // Client client(argv[1], argv[2]);
+        // SDL.
         Client client(net_channel, lobby_settings);
         client.execute();
 

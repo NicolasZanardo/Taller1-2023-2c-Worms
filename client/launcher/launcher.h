@@ -39,6 +39,7 @@ private:
     void handleRefreshGameList_();
     void handleJoinGame_();
     void handleStartGame_();
+    void handleWaitStart_();
     void handleLeaveGame_();
 
     Ui::Launcher *ui;
@@ -54,6 +55,7 @@ private:
     QCheckBox* check_box_music;  // checkBoxMusic
     QCheckBox* check_box_sound_effects;   // checkBoxSoundEffects
     QPushButton* push_button_join;  // pushButtonJoin
+    QPushButton* push_button_wait_start;  // pushButtonWaitStart
     QPushButton* push_button_start;  // pushButtonStart
 
     QLineEdit* line_edit_messages;  // lineEditMessages
