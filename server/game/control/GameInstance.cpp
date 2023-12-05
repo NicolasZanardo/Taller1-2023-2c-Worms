@@ -89,56 +89,53 @@ std::vector<ExplosionDto> &GameInstance::get_explosions() {
 }
 
 void GameInstance::assign_worms_to_clients(const std::list<Client *> &clients) {
-    std::cout << "Clients list is size: " << clients.size() << std::endl;
-    for (auto client: clients) {
-        std::cout << "Client id is: " << client->id << std::endl;
-    }
     // Seed for random number generation
     std::srand(static_cast<unsigned int>(std::time(nullptr)));
 
     // Convert the unordered_map to a vector for shuffling
-    std::vector<std::shared_ptr<Worm>> allWorms;
+    std::vector<std::shared_ptr<Worm>> all_worms;
     for (const auto &[_, worm]: instances_manager.get_worms()) {
-        allWorms.push_back(worm);
+        all_worms.push_back(worm);
     }
 
     // Shuffle the worms randomly
-    std::shuffle(allWorms.begin(), allWorms.end(), std::default_random_engine(std::rand()));
+    std::shuffle(all_worms.begin(), all_worms.end(), std::default_random_engine(std::rand()));
 
     // Calculate the number of worms per player
-    size_t totalWorms = allWorms.size();
-    size_t numPlayers = clients.size();
-    size_t wormsPerPlayer = totalWorms / numPlayers;
-    size_t extraWorms = totalWorms % numPlayers; // Extra worms for players with fewer worms
+    size_t total_worms = all_worms.size();
+    size_t num_players = clients.size();
+    size_t worms_per_player = total_worms / num_players;
+    size_t extra_worms = total_worms % num_players; // Extra worms for players with fewer worms
 
     // Iterate through each client
     for (const auto &client: clients) {
         int clientId = client->id;
 
         // Assign worms to the client
-        size_t numWormsToAssign = wormsPerPlayer + (extraWorms > 0 ? 1 : 0);
-        std::vector<std::shared_ptr<Worm>> assignedSubset(allWorms.begin(), allWorms.begin() + numWormsToAssign);
+        size_t num_worms_to_assign = worms_per_player + (extra_worms > 0 ? 1 : 0);
+        std::vector<std::shared_ptr<Worm>> assigned_subset(all_worms.begin(), all_worms.begin() + num_worms_to_assign);
 
         // Adjust health for worms of players with fewer worms
-        if (extraWorms > 0) {
-            for (auto &worm: assignedSubset) {
+        if (extra_worms > 0) {
+            --extra_worms;
+        } else {
+            for (auto &worm: assigned_subset) {
                 worm->adjust_health_to(worms_cfg.front().health.disadvantage_health);
             }
-            --extraWorms;
         }
 
         // Remove assigned worms from the pool
-        allWorms.erase(allWorms.begin(), allWorms.begin() + numWormsToAssign);
+        all_worms.erase(all_worms.begin(), all_worms.begin() + num_worms_to_assign);
 
 
         // add client with its worms ids to the TurnManager
-        for (const auto &worm: assignedSubset) {
+        for (const auto &worm: assigned_subset) {
             turn_system.add_player(clientId, worm);
         }
 
 
         // assign Worm* to clients ids
-        clients_worms[clientId] = std::move(assignedSubset);
+        clients_worms[clientId] = std::move(assigned_subset);
     }
 }
 
