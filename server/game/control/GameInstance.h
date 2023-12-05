@@ -40,7 +40,6 @@ class GameInstance {
     PhysicsSystem physics_system;
     InstancesManager instances_manager;
     ClientsWorms clients_worms;
-    //TurnSystem turn_system;
     UpdatablesSystem updatables_system;
     ShotSystem shot_system;
     WindSystem wind_system;
