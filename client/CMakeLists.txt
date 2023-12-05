@@ -8,11 +8,9 @@ add_executable(client_app
     client.cpp client.h
     # dumb_simple_client/dumb_client.cpp dumb_simple_client/dumb_client.h
 
-launcher/client_lobby.cpp launcher/client_lobby.h
-launcher/client_lobby_settings.cpp launcher/client_lobby_settings.h
-launcher/lobby_parser.cpp launcher/lobby_parser.h
+        launcher/client_lobby_settings.cpp launcher/client_lobby_settings.h
 
-    game_display/game_resources_manager.h game_display/game_resources_manager.cpp
+        game_display/game_resources_manager.h game_display/game_resources_manager.cpp
     game_display/game_display.h game_display/game_display.cpp
         
     game_display/game_worm_entity.h game_display/game_worm_entity.cpp

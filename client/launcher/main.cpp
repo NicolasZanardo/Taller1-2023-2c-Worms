@@ -7,7 +7,6 @@
 
 #include "../client.h"
 
-#include "launcher/client_lobby.h"
 #include "launcher/client_lobby_settings.h"
 #include "networking.h"
 

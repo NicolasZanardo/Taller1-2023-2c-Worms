@@ -80,7 +80,6 @@ void GameEngineInstance::switch_clients_game_queue(std::list<Client *> clients) 
 
 
 // Broadcasts
-
 void GameEngineInstance::initial_broadcast(const GameScenarioData &scenario, const std::vector<int>& order) {
     broadcast_initial_game_state(scenario, order);
     std::this_thread::sleep_for(std::chrono::seconds(2));
@@ -106,6 +105,7 @@ void GameEngineInstance::broadcast_initial_game_state(const GameScenarioData &sc
     }
 
     for(auto client: order) {
+        std::cout << "Order: " << client << std::endl;
         message->add(client);
     }
 

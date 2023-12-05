@@ -1,4 +1,5 @@
 #include "net_message_initial_game_state.h"
+#include <iostream>
 
 NetMessageInitialGameState::NetMessageInitialGameState()
     : NetMessage(NET_MESSAGE_TYPE_INITIAL_STATE) {}
@@ -78,7 +79,9 @@ void NetMessageInitialGameState::pull_data_from(NetProtocolInterpreter &channel)
 
     short clients_amount = channel.read_short();
     for(int i = 0; i < clients_amount; i++) {
-        client_ids_turn_order.emplace_back(channel.read_int());
+        auto num_id = channel.read_int();
+        std::cout << "Order is: " << num_id << std::endl;
+        client_ids_turn_order.emplace_back();
     }
 }
 

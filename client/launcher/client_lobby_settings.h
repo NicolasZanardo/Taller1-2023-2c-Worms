@@ -17,7 +17,7 @@ public:
     void run(NetMessageLeave* msg) override { }
     void run(NetMessage_test* msg) override { }
     void run(NetMessageInformID* msg) override;
-    void run(NetMessageInitialGameState* msg) override { }
+    void run(NetMessageInitialGameState* msg) override;
     void run(NetMessageGameStateUpdate* msg) override { }
     void run(NetMessageGameAction* msg) override { }
     void run(NetMessagePlayerChangedWeapon* msg) override { }
@@ -34,11 +34,8 @@ public:
     void run(NetMessageStartGame* msg) override;
 
     void run(NetMessageGameEnded* msg) override { }
-
-    bool isReadyToStart() const { return this->ready_to_start; }
     
     int id;
-
     std::shared_ptr<ClientGameStateDTO> game_state_dto;
     std::list<GameInfoDTO> games_info;
 

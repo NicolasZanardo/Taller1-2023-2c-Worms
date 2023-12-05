@@ -17,7 +17,6 @@
 #include <QMessageBox>
 
 #include "client_lobby_settings.h"
-#include "lobby_parser.h"
 #include "queue.h"
 #include "networking.h"
 #include "game/utils_constants.h"
