@@ -21,7 +21,6 @@
 #include "ExplosionsSystem.h"
 #include "EntityCameraFocusSystem.h"
 #include "GameState.h"
-#include "GameCfg.h"
 #include "Config.h"
 #include "TurnSystemCfg.h"
 #include "WormCfg.h"
