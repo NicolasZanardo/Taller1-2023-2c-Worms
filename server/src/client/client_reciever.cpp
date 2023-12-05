@@ -68,6 +68,7 @@ void Reciever::run(NetMessageJoinGame* msg) {
 }
 
 void Reciever::run(NetMessageStartGame* msg) {
+    std::cout << "starting game\n";
     this->games_manager->startGame(this->game_room);
 }
 

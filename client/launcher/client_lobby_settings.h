@@ -5,6 +5,9 @@
 
 #include "networking.h"
 
+#include "../game_ui/client_game_state_dto.h"
+#include "../../common_base/Game/game_info_dto.h"
+
 class ClientLobbySettings : public NetMessageBehaviour {
 public:
     ClientLobbySettings();
@@ -33,6 +36,9 @@ public:
     bool isReadyToStart() const { return this->ready_to_start; }
     
     int id;
+
+    std::shared_ptr<ClientGameStateDTO> game_state_dto;
+    std::list<GameInfoDTO> games_info;
 
 private:
     std::string game_room;

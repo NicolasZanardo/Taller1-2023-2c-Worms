@@ -7,8 +7,13 @@
 
 #include "networking.h"
 
-ClientLobby::ClientLobby(const char *host_name, const char *service_name)
-    : net_channel(host_name, service_name) {}
+// ClientLobby::ClientLobby(const char *host_name, const char *service_name, ClientLobbySettings& lobby_settings)
+    // : lobby_settings(lobby_settings)
+    // , net_channel(host_name, service_name) {}
+
+ClientLobby::ClientLobby(NetChannel& net_channel, ClientLobbySettings& lobby_settings)
+    : net_channel(net_channel)
+    , lobby_settings(lobby_settings) {}
 
 void ClientLobby::execute() {
     std::unique_ptr<NetMessage> received_id_msg(this->net_channel.read_message());

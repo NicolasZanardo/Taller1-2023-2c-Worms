@@ -9,6 +9,7 @@
 #define CLIENT_COMMAND_CREATE "create"
 #define CLIENT_COMMAND_JOIN "join"
 #define CLIENT_COMMAND_LIST "list"
+#define CLIENT_COMMANF_START "start"
 
 std::unique_ptr<NetMessage> LobbyParser::parse(const std::string& str) {
     std::string action;
@@ -35,6 +36,9 @@ std::unique_ptr<NetMessage> LobbyParser::parse(const std::string& str) {
     } else if (action == CLIENT_COMMAND_LIST) {
         std::cout << "Request to list all games sended\n";
         return std::make_unique<NetMessageListGames>();
+    } else if (action == CLIENT_COMMANF_START) {
+        std::cout << "Request start\n";
+        return std::make_unique<NetMessageStartGame>();
     } else {
         std::runtime_error("Error: parse invalid action.\n");
     }

@@ -69,7 +69,13 @@ void GameEngineInstance::stop() {
 
 // Init methods
 
+void GameEngineInstance::start_game_() {
+    std::shared_ptr<NetMessage> msg = std::make_shared<NetMessageStartGame>();
+    gameClients.sendAll(msg);
+}
+
 void GameEngineInstance::initial_broadcast(const GameScenarioData &scenario) {
+    this->start_game_();
     _broadcast_initial_game_state(scenario);
     std::this_thread::sleep_for(std::chrono::seconds(1));
     _broadcast_game_state_update();
