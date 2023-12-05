@@ -1,6 +1,6 @@
 1:
   type: P_BAZOOKA
-  max_damage: 400
+  max_damage: 50
   explosion_radius: 2
   affected_by_wind: true
   rotation_type: VELOCITY_ALIGNED
