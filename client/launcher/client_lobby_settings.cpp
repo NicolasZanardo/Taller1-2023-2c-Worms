@@ -5,13 +5,11 @@ ClientLobbySettings::ClientLobbySettings()
     : ready_to_start(false) {}
 
 void ClientLobbySettings::run(NetMessageInformID* msg) {
-    std::cout << "Received my id, im client: " << msg->client_id <<"\n";
     this->id = msg->client_id;
 }
 
 
 void ClientLobbySettings::run(NetMessageCreateGameResponse* msg) {
-    std::cout << "Response of create game was.\n";
     if (msg->was_created) {
         std::cout << "Game Room was created.\n";
     } else {
@@ -20,7 +18,6 @@ void ClientLobbySettings::run(NetMessageCreateGameResponse* msg) {
 }
 
 void ClientLobbySettings::run(NetMessageJoinGameResponse* msg) {
-    std::cout << "Response of join game was.\n";
     if (msg->was_joined) {
         std::cout << "Game Room was joined.\n";
     } else {
@@ -29,13 +26,6 @@ void ClientLobbySettings::run(NetMessageJoinGameResponse* msg) {
 }
 
 void ClientLobbySettings::run(NetMessageListGamesResponse* msg) {
-    std::cout << "Response of list games was.\n";
-    for (auto& game_info : msg->games_info) {
-        std::cout << "Room: " << game_info.name
-                << " - Scenario: " << game_info.scenario
-                << " - Players (" << static_cast<uint16_t>(game_info.joined_players)
-                << '/' << static_cast<uint16_t>(game_info.total_players) << '\n';
-    }
     this->games_info = std::move(msg->games_info);
 }
 

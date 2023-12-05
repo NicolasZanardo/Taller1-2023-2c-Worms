@@ -105,7 +105,6 @@ void GameEngineInstance::broadcast_initial_game_state(const GameScenarioData &sc
     }
 
     for(auto client: order) {
-        std::cout << "Order: " << client << std::endl;
         message->add(client);
     }
 
