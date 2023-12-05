@@ -18,6 +18,7 @@
 #include "net_message_join_game.h"
 #include "net_message_join_game_response.h"
 #include "net_message_start_game.h"
+#include "net_message_game_ended.h"
 
 NetMessage* NetMessageFactory::recieve(Socket& channel) {
     NetProtocolInterpreter interpreter(channel);
@@ -75,6 +76,9 @@ NetMessage* NetMessageFactory::recieve(Socket& channel) {
             break;
         case NET_MESSAGE_TYPE_START_GAME:
             inst = new NetMessageStartGame();
+            break;
+        case NET_MESSAGE_TYPE_GAME_ENDED:
+            inst = new NetMessageGameEnded();
             break;
         default:
             break;
