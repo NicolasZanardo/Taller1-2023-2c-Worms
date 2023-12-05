@@ -53,7 +53,7 @@ void GameTurnDisplayer::update(const std::vector<WormDto>& worms, const int acti
         if (client_life[i] != newvals[i]) {
             const std::string val(
                 "Jugador " + 
-                std::to_string(client_order[i]) +
+                NAME_BY_CLIENT[i] +
                 ": "+ std::to_string(newvals[i])
             );
             text->update(val);

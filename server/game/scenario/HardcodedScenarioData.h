@@ -36,6 +36,7 @@ public:
         scenario.worms.emplace_back(27.0f, 18.0f);
         scenario.worms.emplace_back(30.0f, 18.0f);
         scenario.worms.emplace_back(33.0f, 18.0f);
+        scenario.worms.emplace_back(36.0f, 18.0f);
         return scenario;
     }
 };

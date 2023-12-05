@@ -1,6 +1,8 @@
 #ifndef TP_WORMS_CONSTANTS_H
 #define TP_WORMS_CONSTANTS_H
 
+#include <string>
+
 // DIMENS
 const float WORM_SIZE = 1.0f;
 const float CLIENT_FPS = 25.0f;
@@ -24,6 +26,10 @@ const float WATER_HEIGHT = 6;
 
 const int COLOR_BY_CLIENT[] = {
     0xFF6969,0x69FFFF,0x87FF69,0xE169FF,0xE1FF69,0x8769FF
+};
+
+const std::string NAME_BY_CLIENT[] = {
+    "rojo","azul","verde","violeta","amarillo","jose"
 };
 
 #endif
