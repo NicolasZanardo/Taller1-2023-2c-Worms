@@ -5,7 +5,7 @@
 #include <mutex>
 #include <string>
 #include "GameEngineInstance.h"
-#include "client.h"
+#include "server_client.h"
 #include "thread.h"
 #include "networking.h"
 
@@ -13,32 +13,45 @@ class Client;
 class GameEngineInstance;
 #include "HardcodedScenarioData.h"
 
-class WaitingLobby : public Thread, public NetMessageBehaviour {
-    std::mutex clients_mtx;
-    std::list<Client*> clients;
+class WaitingLobby { // : public Thread, public NetMessageBehaviour {
+    std::mutex mtx;
+    // std::list<Client*> clients;
+    std::list<std::unique_ptr<Client>> clients;
     NetQueue input_queue;
 
-    void remove_zombies();
-
-    public:
+public:
     explicit WaitingLobby();
+    ~WaitingLobby() = default;
 
-    void run() override;
-    void stop() override;
-    void add(Client* new_client);
-    GameEngineInstance* start_game(); // TODO For now 1 Game
+    // void run() override;
+    // void stop() override;
+    // void add(Client* new_client);
+    void addClient(const int id, Socket skt, GamesManager& games_manager);
+    void removeZombies();
+    void removeAll();
 
+    // GameEngineInstance* start_game(); // TODO For now 1 Game
 
-    void run(NetMessageChat* msg) override;
-    void run(NetMessageLeave* msg) override;
-    void run(NetMessage_test* msg) override;
-    void run(NetMessageInformID* msg) override;
-    void run(NetMessageInitialGameState* msg) override;
-    void run(NetMessageGameStateUpdate* msg) override;
-    void run(NetMessageGameAction* msg) override;
-    void run(NetMessagePlayerChangedWeapon* msg) override;
-    void run(NetMessagePlayerChangedProjectileCountdown* msg) override;
-    void run(NetMessageGameEnded* msg) override;
+    // void run(NetMessageChat* msg) override;
+    // void run(NetMessageLeave* msg) override;
+    // void run(NetMessage_test* msg) override;
+    // void run(NetMessageInformID* msg) override;
+    // void run(NetMessageInitialGameState* msg) override;
+    // void run(NetMessageGameStateUpdate* msg) override;
+    // void run(NetMessageGameAction* msg) override;
+    // void run(NetMessagePlayerChangedWeapon* msg) override;
+    // void run(NetMessagePlayerChangedProjectileCountdown* msg) override;
+    // void run(NetMessageGameEnded* msg) override;
+
+    // void run(NetMessageCreateGame* msg) override { }
+    // void run(NetMessageListGames* msg) override { }
+    // void run(NetMessageJoinGame* msg) override { }
+
+    // void run(NetMessageCreateGameResponse* msg) override { }
+    // void run(NetMessageJoinGameResponse* msg) override { }
+    // void run(NetMessageListGamesResponse* msg) override { }
+
+    // void run(NetMessageStartGame* msg) override { }
 };
-#endif
 
+#endif  // SERVER_WAITING_LOBBY_H_

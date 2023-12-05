@@ -12,7 +12,7 @@
 #include "networking.h"
 #include "thread.h"
 #include "GameScenarioData.h"
-#include "client.h"
+#include "server_client.h"
 #include "GameNetMessageBehaviour.h"
 #include "InGameClients.h"
 
@@ -29,7 +29,7 @@ private:
     // Init methods
     void switch_clients_game_queue(std::list<Client *> clients);
     void initial_broadcast(const GameScenarioData &scenario, const std::vector<int>& order);
-
+    void start_game_();
     void process_actions();
 
     void broadcast_initial_game_state(const GameScenarioData &scenario, const std::vector<int>& order);

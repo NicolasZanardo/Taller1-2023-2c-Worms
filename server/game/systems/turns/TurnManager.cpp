@@ -130,11 +130,13 @@ void TurnManager::add_player(int client_id, const std::shared_ptr<Worm> &worm) {
     // If client was already on the turn manager
     for (auto cli: clients_turns) {
         if (cli->client_id == client_id) {
+            std::cout << "Added worm: " << worm->Id() << "to player: " << client_id << std::endl;
             cli->worms.push_back(worm);
             return;
         }
     }
     // Else add him
+    std::cout << "Added player: " << client_id << "with worm: " << worm->Id()<< std::endl;
     auto client = new ClientTurn(client_id);
     clients_turns.push_back(client);
     client->worms.push_back(worm);

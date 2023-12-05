@@ -11,13 +11,17 @@
 class GameLoop {
     GameDisplay &display;
     Queue<std::shared_ptr<ClientGameStateDTO>> &state_queue;
-    bool game_state_was_initialized;
     
     void update(ClientGameState &game_state);
     
     public:
     GameLoop() = delete;
-    explicit GameLoop(GameDisplay& display, Queue<std::shared_ptr<ClientGameStateDTO>>& state_queue);
+    GameLoop(
+        GameDisplay& display,
+        Queue<std::shared_ptr<ClientGameStateDTO>>& state_queue,
+        const std::shared_ptr<ClientGameStateDTO>& initial_game_state_dto,
+        ClientGameState &game_state
+        );
     ~GameLoop() = default;
 
     void execute(EventHandler& event_handler, ClientGameState& player);

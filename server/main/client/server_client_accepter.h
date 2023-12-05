@@ -8,12 +8,14 @@
 class ClientAccepter : public Thread {
     Socket host;
     WaitingLobby& lobby;
+    GamesManager* games_manager;
 
-    public:
-    explicit ClientAccepter(const char* servname, WaitingLobby& lobby);
+public:
+    explicit ClientAccepter(const char* servname, WaitingLobby& lobby, GamesManager& games_manager);
+    virtual ~ClientAccepter();
 
     void run() override;
     void stop() override;
 };
-#endif
 
+#endif  // SERVER_CLIENT_ACCEPTER_H_
