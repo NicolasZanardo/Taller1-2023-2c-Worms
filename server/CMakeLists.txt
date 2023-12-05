@@ -112,12 +112,8 @@ add_executable(
 
     game/systems/turns/TurnManager.h
     game/systems/turns/TurnManager.cpp
-    
-    game/systems/turns/TurnSystem.h
-    game/systems/turns/TurnSystem.cpp
-    game/systems/turns/WormIdIterator.h
-    game/systems/turns/WormIdIterator.cpp
-    game/systems/updatables/UpdatablesSystem.h
+
+        game/systems/updatables/UpdatablesSystem.h
     game/systems/updatables/UpdatablesSystem.cpp
     game/systems/shot/ShotSystem.h
     game/systems/shot/ShotSystem.cpp

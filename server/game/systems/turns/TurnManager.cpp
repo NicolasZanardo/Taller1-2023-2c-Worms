@@ -14,9 +14,9 @@ TurnManager::TurnManager(
     int time_rate
 ) : state(TurnState::TURN_TIME),
     projectiles(projectiles), worms(worms),
-    turn_lenght(turn_lenght), turn_remaining_time(turn_lenght),
+    turn_length(turn_lenght), turn_remaining_time(turn_lenght),
     game_remaining_time(game_time), post_action_time(post_action_time),
-    time_rate(time_rate), on_overtime(false) {}
+    time_rate(time_rate) {}
 
 void TurnManager::update(int it) {
     if (game_has_ended()) {
@@ -80,7 +80,7 @@ void TurnManager::next_turn() {
     current_client_idx++;
     if (current_client_idx >= clients_turns.size())
         current_client_idx = 0;
-    turn_remaining_time = turn_lenght;
+    turn_remaining_time = turn_length;
 }
 
 void TurnManager::remove(int worm_id_to_remove) {
@@ -122,7 +122,7 @@ void TurnManager::remove(int worm_id_to_remove) {
         }
 
         state = TurnState::TURN_TIME;
-        turn_remaining_time = turn_lenght;
+        turn_remaining_time = turn_length;
     }
 }
 
@@ -141,11 +141,8 @@ void TurnManager::add_player(int client_id, const std::shared_ptr<Worm> &worm) {
 }
 
 bool TurnManager::game_has_ended() const {
-    if (clients_turns.size() <= 1 || game_remaining_time <= 0) {
-        // current_client_id = -1;
-        // current_worm_id = -1;
+    if (clients_turns.size() <= 1 || game_remaining_time <= 0)
         return true;
-    }
     return false;
 }
 

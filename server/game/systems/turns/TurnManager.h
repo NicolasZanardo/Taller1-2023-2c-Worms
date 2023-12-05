@@ -21,30 +21,27 @@ class TurnManager {
     std::vector<std::shared_ptr<Projectile>>& projectiles;
     std::unordered_map<int, std::shared_ptr<Worm>>& worms;
 
-    int turn_lenght;
+    std::vector<ClientTurn*> clients_turns;
+    int current_client_idx = 0;
+
+    int turn_length;
     int turn_remaining_time;
     int game_remaining_time;
     int post_action_time;
     int time_rate;
-    bool on_overtime;
-    void remove_dead_worms();
 
-    bool worms_are_still();
+    void next_turn();
     void step_turn_time(int it);
-    void check_ending_turn_action();
+    bool worms_are_still();
 
     public:
     ~TurnManager();
     TurnManager(
         std::vector<std::shared_ptr<Projectile>>& projectiles,
         std::unordered_map<int, std::shared_ptr<Worm>>& worms,
-        int game_time, int turn_lenght, int post_action_time,
+        int game_time, int turn_length, int post_action_time,
         int time_rate
     );
-    // Roulete<ClientTurn*> clients;
-    std::vector<ClientTurn*> clients_turns;
-    int current_client_idx = 0;
-    void next_turn();
 
     int current_client();
     std::shared_ptr<Worm> get_current_worm();

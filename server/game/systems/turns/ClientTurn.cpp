@@ -4,39 +4,27 @@ ClientTurn::ClientTurn(int client_id) :
     client_id(client_id), worms() {}
 
 std::shared_ptr<Worm> ClientTurn::get_current_worm() {
-    try {
-        // std::cout << "Returning the worm with id: ";
-        return worms[current_worm_idx];
-    } catch (...) {
-        throw std::runtime_error("Inedx out of worms bounds\n");
-    }
+    return worms[current_worm_idx];
 };
 
 void ClientTurn::advance_next_worm() {
-    // If current was last worm, and it was removed, current index should go to beginning
+    // TODO not sure if the if is needed anymore, no time to test
     if (current_worm_idx >= worms.size()) {
         current_worm_idx = 0;
-        // std::cout << "Current worm index was last and now its 0"<< std::endl;
     } else {
-        // std::cout << "Current worm index was: " << current_worm_idx << std::endl;
         current_worm_idx++;
         if (current_worm_idx >= worms.size()) {
             current_worm_idx = 0;
         }
     }
-    // std::cout << "Now current worm index is: " << current_worm_idx << std::endl;
 }
 
 /*
-curr_cli_idx = 1
-[1, 2]
-
-curr_wor = 1[1, 4] |
-[3, 2]
-curr_wor = 0
-*/
-
-
+ * If present removes the worm pointer from the worms vector and adjust the current_idx to a correct state
+ *
+ * if the removed worm was at an index previous to the current_idx, decrease the current_idx by one
+ * if the removed worm was at the end of the vector, reset the current_idx to 0
+ */
 void ClientTurn::remove(int worm_id) {
     int removed_idx = -1;
     worms.erase(

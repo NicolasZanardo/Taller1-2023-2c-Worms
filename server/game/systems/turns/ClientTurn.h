@@ -9,7 +9,6 @@
 class ClientTurn {
 public:
     int client_id;
-    // Roulete<std::shared_ptr<Worm>> entities;
     int current_worm_idx = 0;
     std::vector<std::shared_ptr<Worm>> worms;
 
