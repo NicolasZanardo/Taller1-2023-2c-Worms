@@ -25,7 +25,7 @@ WormAnimationSet::WormAnimationSet(
     {
         worm_state_sprite[WormStateDto::IDLE]          = std::unique_ptr<GameSprite>(idle);
         worm_state_sprite[WormStateDto::MOVING]        = std::unique_ptr<GameSprite>(moving);
-        worm_state_sprite[WormStateDto::GOING_UPWARDS] = std::unique_ptr<GameSprite>(going_upwards);
+        worm_state_sprite[WormStateDto::JUMPING] = std::unique_ptr<GameSprite>(going_upwards);
         worm_state_sprite[WormStateDto::FALLING]       = std::unique_ptr<GameSprite>(falling);
         worm_state_sprite[WormStateDto::DEAD]          = std::unique_ptr<GameSprite>(dead);
         worm_state_sprite[WormStateDto::SINKING]       = std::unique_ptr<GameSprite>(sinking);
