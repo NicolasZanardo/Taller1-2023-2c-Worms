@@ -14,6 +14,7 @@
 #include <QDialog>
 #include <QDialogButtonBox>
 #include <QVBoxLayout>
+#include <QMessageBox>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class Launcher; }

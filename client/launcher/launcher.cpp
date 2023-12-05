@@ -60,14 +60,40 @@ void Launcher::handleCreateGame_() {
 
 void Launcher::handleRefreshGameList_() {
     std::cout << "[Refresh rooms list]\n";
+
+    // Limpiar elementos viejos.
+    this->tree_widget_list->model()->removeRows(0, this->tree_widget_list->model()->rowCount());
+
+    QTreeWidgetItem* item = new QTreeWidgetItem(this->tree_widget_list);
+    item->setText(0, "qqq");
+    item->setText(1, "Escenario 1");
+    item->setText(2, "(1/2)");
+
+    QTreeWidgetItem* item2 = new QTreeWidgetItem(this->tree_widget_list);
+    item2->setText(0, "www");
+    item2->setText(1, "Escenario 2");
+    item2->setText(2, "(1/2)");
 }
 
 void Launcher::handleJoinGame_() {
-    std::cout << "[Join game]\n";
+    // int current_room = this->tree_widget_list->currentColumn();
+    // std::cout << "[Join game]: [" << current_room << "]\n";
+
+    QTreeWidgetItem* item = this->tree_widget_list->currentItem();
+    std::string game_room = item->text(0).toStdString();
+
+    std::cout << "[Join game]: [" << game_room << "]\n";
 }
 
 void Launcher::handleStartGame_() {
     std::cout << "[Start game]\n";
+
+    // Cerrar launcher para pasar a SDL.
+    QMessageBox::StandardButton reply = QMessageBox::question(
+        this, "Confirmar", "Desea iniciar el juego?", QMessageBox::Yes | QMessageBox::No);
+    if (reply == QMessageBox::Yes) {
+        this->close();
+    }
 }
 
 void Launcher::handleLeaveGame_() {
